@@ -23,26 +23,9 @@ public class CryptoPrefs(context: Context, fileName: String, key: String) {
         get() = preferences.getAllPreferencesList()
 
 
-    public fun put(key: String, value: String) {
+    public fun put(key: String, value: Any) {
         preferences.put(key, value)
     }
-
-    public fun put(key: String, value: Boolean) {
-        preferences.put(key, value.toString())
-    }
-
-    public fun put(key: String, value: Int) {
-        preferences.put(key, value.toString())
-    }
-
-    public fun put(key: String, value: Float) {
-        preferences.put(key, value.toString())
-    }
-
-    public fun put(key: String, value: Double) {
-        preferences.put(key, value.toString())
-    }
-
 
     public fun getString(key: String, default: Any): String {
         return preferences.get(key, default)
@@ -63,7 +46,6 @@ public class CryptoPrefs(context: Context, fileName: String, key: String) {
     public fun getDouble(key: String, default: Any): Double {
         return preferences.get(key, default).toDouble()
     }
-
 
 
     public fun queue(key: String, value: Any) {

@@ -52,10 +52,8 @@ internal class CryptoWrapper(context: Context, autoPrefs: Pair<String, String>) 
     }
 
 
-    fun put(key: String, value: String) {
-        val encryptedKey = crypto.encrypt(key)
-        val encryptedValue = crypto.encrypt(value)
-        crypto.prefWriter.putString(encryptedKey, encryptedValue).apply()
+    fun put(key: String, value: Any) {
+        crypto.prefWriter.putString(crypto.encrypt(key), crypto.encrypt(value.toString())).apply()
     }
 
     fun queue(key: String, value: Any) {
