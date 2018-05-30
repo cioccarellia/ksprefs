@@ -13,72 +13,72 @@ public class CryptoPrefs(context: Context, fileName: String, key: String) {
 
     private var preferences = CryptoWrapper(context, Pair(fileName, key))
 
-    val allPrefsBundle: Bundle
+    public val allPrefsBundle: Bundle
         get() = preferences.getAllPreferencesBundle()
 
-    val allPrefsMap: Map<String, String>
+    public val allPrefsMap: Map<String, String>
         get() = preferences.getAllPreferencesMap()
 
-    val allPrefsList: ArrayList<Pair<String, String>>
+    public val allPrefsList: ArrayList<Pair<String, String>>
         get() = preferences.getAllPreferencesList()
 
 
-    fun put(key: String, value: String) {
+    public fun put(key: String, value: String) {
         preferences.put(key, value)
     }
 
-    fun put(key: String, value: Boolean) {
+    public fun put(key: String, value: Boolean) {
         preferences.put(key, value.toString())
     }
 
-    fun put(key: String, value: Int) {
+    public fun put(key: String, value: Int) {
         preferences.put(key, value.toString())
     }
 
-    fun put(key: String, value: Float) {
+    public fun put(key: String, value: Float) {
         preferences.put(key, value.toString())
     }
 
-    fun put(key: String, value: Double) {
+    public fun put(key: String, value: Double) {
         preferences.put(key, value.toString())
     }
 
 
-    fun getString(key: String, default: Any): String {
+    public fun getString(key: String, default: Any): String {
         return preferences.get(key, default)
     }
 
-    fun getBoolean(key: String, default: Any): Boolean {
+    public fun getBoolean(key: String, default: Any): Boolean {
         return preferences.get(key, default).toBoolean()
     }
 
-    fun getInt(key: String, default: Any): Int {
+    public fun getInt(key: String, default: Any): Int {
         return preferences.get(key, default).toInt()
     }
 
-    fun getFloat(key: String, default: Any): Float {
+    public fun getFloat(key: String, default: Any): Float {
         return preferences.get(key, default).toFloat()
     }
 
-    fun getDouble(key: String, default: Any): Double {
+    public fun getDouble(key: String, default: Any): Double {
         return preferences.get(key, default).toDouble()
     }
 
 
 
-    fun queue(key: String, value: Any) {
+    public fun queue(key: String, value: Any) {
         preferences.queue(key, value)
     }
 
-    fun apply() {
+    public fun apply() {
         preferences.apply()
     }
 
-    fun remove(key: String) {
+    public fun remove(key: String) {
         preferences.remove(key)
     }
 
-    fun erase() {
+    public fun erase() {
         preferences.erase()
     }
 
