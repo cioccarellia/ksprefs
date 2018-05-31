@@ -8,7 +8,9 @@ import java.io.UnsupportedEncodingException
 import java.security.GeneralSecurityException
 import java.security.KeyException
 import java.security.MessageDigest
+import javax.crypto.BadPaddingException
 import javax.crypto.Cipher
+import javax.crypto.IllegalBlockSizeException
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
 
@@ -19,6 +21,10 @@ import javax.crypto.spec.SecretKeySpec
 
 @SuppressLint("CommitPrefEdits")
 internal class PreferencesEncrypter(context: Context, auto: Pair<String, String>) {
+
+    private val transformation = "AES/CBC/PKCS5Padding"
+    private val algorithm = "SHA-256"
+    private val charset = "UTF-8"
 
     private var writer: Cipher
     private var reader: Cipher
@@ -38,11 +44,9 @@ internal class PreferencesEncrypter(context: Context, auto: Pair<String, String>
 
             initCiphers(auto.second)
         } catch (e: GeneralSecurityException) {
-            throw SecurePreferencesException(e, "Error while initializing the preferences ciphers.")
+            throw SecurePreferencesException(e, "Error while initializing the preferences ciphers keys")
         } catch (e: UnsupportedEncodingException) {
             throw SecurePreferencesException(e, "Error while initializing the preferences ciphers, unsupported charset.")
-        } catch (e: RuntimeException) {
-            throw SecurePreferencesException(e, "Error while initializing the preferences ciphers.")
         } catch (e: KeyException) {
             throw SecurePreferencesException(e, "Error while initializing the preferences ciphers.")
         }
@@ -60,7 +64,7 @@ internal class PreferencesEncrypter(context: Context, auto: Pair<String, String>
     private fun getSecretKey(key: String): SecretKeySpec {
         val md = MessageDigest.getInstance(algorithm)
         md.reset()
-        val keyBytes = md.digest(key.toByteArray(charset(CHARSET)))
+        val keyBytes = md.digest(key.toByteArray(charset(charset)))
 
         return SecretKeySpec(keyBytes, transformation)
     }
@@ -73,44 +77,39 @@ internal class PreferencesEncrypter(context: Context, auto: Pair<String, String>
         }
 
 
-    fun encrypt(value: String): String {
+    internal fun encrypt(value: String): String {
         val encodedValue: ByteArray
 
         try {
-            encodedValue = finalize(writer, value.toByteArray(charset(CHARSET)))
+            encodedValue = finalize(writer, value.toByteArray(charset(charset)))
         } catch (e: UnsupportedEncodingException) {
-            throw SecurePreferencesException(e, "Error while initializing the preferences ciphers, unsupported charset.")
+            throw SecurePreferencesException(e, "Error while initializing the encryption ciphers, unsupported charset.")
         }
 
         return Base64.encodeToString(encodedValue, Base64.NO_WRAP)
     }
 
 
-    fun decrypt(securedEncodedValue: String): String {
+    internal fun decrypt(securedEncodedValue: String): String {
         val encodedValue = Base64.decode(securedEncodedValue, Base64.NO_WRAP)
         val value = finalize(reader, encodedValue)
 
         return try {
             String(value, Charsets.UTF_8)
         } catch (e: UnsupportedEncodingException) {
-            throw SecurePreferencesException(e, "Error while initializing the preferences ciphers, unsupported charset.")
+            throw SecurePreferencesException(e, "Error while initializing the decryption ciphers, unsupported charset.")
         }
     }
 
-
-    companion object {
-
-        private const val transformation = "AES/CBC/PKCS5Padding"
-        private const val algorithm = "SHA-256"
-        private const val CHARSET = "UTF-8"
-
-        private fun finalize(finalizer: Cipher, input: ByteArray): ByteArray {
-            try {
-                return finalizer.doFinal(input)
-            } catch (e: Exception) {
-                throw SecurePreferencesException(e, "Error while finalizing encryption")
-            }
+    private fun finalize(finalizer: Cipher, input: ByteArray): ByteArray {
+        try {
+            return finalizer.doFinal(input)
+        } catch (e: IllegalStateException) {
+            throw SecurePreferencesException(e, "Cipher is not initialized.")
+        } catch (e: IllegalBlockSizeException) {
+            throw SecurePreferencesException(e, "Cipher is without padding.")
+        } catch (e: BadPaddingException) {
+            throw SecurePreferencesException(e, "Cipher decryption data is with a wrong padding.")
         }
     }
-
 }
