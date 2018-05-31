@@ -14,8 +14,6 @@ internal class CryptoWrapper(context: Context, autoPrefs: Pair<String, String>) 
 
     private val crypto = PreferencesEncrypter(context, autoPrefs)
 
-    val all: Map<String, *> = crypto.prefReader.all
-
     internal fun getAllPreferencesBundle(): Bundle {
         val result = Bundle()
 

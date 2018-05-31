@@ -42,7 +42,7 @@ internal class PreferencesEncrypter(context: Context, auto: Pair<String, String>
             prefReader = context.getSharedPreferences(auto.first, Context.MODE_PRIVATE)
             prefWriter = context.getSharedPreferences(auto.first, Context.MODE_PRIVATE).edit()
 
-            initCiphers(auto.second)
+            initializeCiphers(auto.second)
         } catch (e: GeneralSecurityException) {
             throw SecurePreferencesException(e, "Error while initializing the preferences ciphers keys")
         } catch (e: UnsupportedEncodingException) {
@@ -52,7 +52,7 @@ internal class PreferencesEncrypter(context: Context, auto: Pair<String, String>
         }
     }
 
-    private fun initCiphers(key: String) {
+    private fun initializeCiphers(key: String) {
         val ivSpec = iv
         val secretKey = getSecretKey(key)
 
