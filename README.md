@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/hexpm/l/plug.svg)](https://github.com/AndreaCioccarelli/CryptoPrefs/blob/master/LICENSE)	
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b294eaf4988842c090584b1315a5f348)](https://www.codacy.com/app/cioccarelliandrea01/CryptoPrefs)
 
-CryptoPrefs is the new cutting-edge andorid library for storing encrypted preferences securely and protecting them from indiscrete user's eyesights.
+CryptoPrefs is the new kotlin powered cutting-edge andorid library for storing encrypted preferences securely and protecting them from indiscrete user's eyesights.
 All data you are going to store are encrypted using AES/CBC/PKCS5Padding algorithm and wrapped up using standard Base64 encoding.
 This library focuses on reliability, security, lightness and speed.
 
