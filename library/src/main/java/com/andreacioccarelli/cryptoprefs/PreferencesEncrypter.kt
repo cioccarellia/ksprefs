@@ -19,7 +19,6 @@ import javax.crypto.spec.SecretKeySpec
  * Part of the package com.andreacioccarelli.cryptoprefs.preferences
  */
 
-@SuppressLint("CommitPrefEdits")
 internal class PreferencesEncrypter(context: Context, auto: Pair<String, String>) {
 
     private val transformation = "AES/CBC/PKCS5Padding"
@@ -42,6 +41,7 @@ internal class PreferencesEncrypter(context: Context, auto: Pair<String, String>
             prefReader = context.getSharedPreferences(auto.first, Context.MODE_PRIVATE)
             prefWriter = context.getSharedPreferences(auto.first, Context.MODE_PRIVATE).edit()
 
+            if (auto.second.isEmpty()) throw IllegalStateException("Encryption key length is 0")
             initializeCiphers(auto.second)
         } catch (e: GeneralSecurityException) {
             throw SecurePreferencesException(e, "Error while initializing the preferences ciphers keys")

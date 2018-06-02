@@ -9,7 +9,6 @@ import android.os.Bundle
  * Part of the package com.andreacioccarelli.cryptoprefs.sharedPreferences
  */
 
-@SuppressLint("GetInstance")
 internal class CryptoWrapper(context: Context, autoPrefs: Pair<String, String>) {
 
     private val crypto = PreferencesEncrypter(context, autoPrefs)

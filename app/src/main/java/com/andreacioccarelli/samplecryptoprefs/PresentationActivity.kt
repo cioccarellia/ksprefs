@@ -11,6 +11,8 @@ import com.andreacioccarelli.cryptoprefs.CryptoPrefs
 
 import kotlinx.android.synthetic.main.activity_presentation.*
 import kotlinx.android.synthetic.main.content_presentation.*
+import android.content.Intent
+import android.net.Uri
 
 
 /**
@@ -31,14 +33,17 @@ class PresentationActivity : AppCompatActivity() {
         prefs.put(startCountKey, prefs.getInt(startCountKey, 0) + 1)
 
         button.setOnClickListener {
+            // Put some sample values to the preferences
             prefs.put("crypto_sample_string", "a")
             prefs.put("crypto_sample_int", 1)
             prefs.put("crypto_sample_boolean", true)
 
+            // You don't have to cast them before passing as arguments
             updateView()
         }
 
         button2.setOnClickListener {
+            // Standard reading operations
             val x = "${prefs.getString("crypto_sample_string", "a")}\n" +
                     "${prefs.getString("crypto_sample_int", 1)}\n" +
                     prefs.getString("crypto_sample_boolean", true)
@@ -47,19 +52,23 @@ class PresentationActivity : AppCompatActivity() {
 
 
         button3.setOnClickListener {
+            // Function that will return back the number of times the app has started
             toast(prefs.getInt(startCountKey, 0))
         }
 
         button4.setOnClickListener {
+            // Example for enqueuing
             for (i in 1..10) {
                 prefs.queue("index[$i]", i)
             }
 
+            // Calling apply() to commit changes
             prefs.apply()
             updateView()
         }
 
         button5.setOnClickListener {
+            // Reading raw file to check the values are encrypted
             var x = ""
             for (pref in getSharedPreferences(fileName, Context.MODE_PRIVATE).all) {
                 x += "${pref.key} ${pref.value}\n"
@@ -69,6 +78,7 @@ class PresentationActivity : AppCompatActivity() {
         }
 
         button6.setOnClickListener {
+            // Clear all preferences
             prefs.erase()
             updateView()
         }
@@ -104,7 +114,10 @@ class PresentationActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_github -> {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/AndreaCioccarelli/CryptoPrefs")))
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

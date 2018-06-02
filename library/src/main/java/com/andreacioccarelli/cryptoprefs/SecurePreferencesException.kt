@@ -6,3 +6,4 @@ package com.andreacioccarelli.cryptoprefs
  */
 
 internal class SecurePreferencesException internal constructor(e: Throwable, s: String) : RuntimeException("$s $e")
+

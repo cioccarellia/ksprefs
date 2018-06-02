@@ -6,11 +6,8 @@ import android.os.Bundle
 /**
  * Created by andrea on 2018/May.
  * Part of the package com.andreacioccarelli.cryptoprefs.preferences
- *
- * This is the top-level class with the one you can interact in to manage your preferences.
  */
 
-@Suppress("unused", "RedundantVisibilityModifier")
 public class CryptoPrefs(context: Context, fileName: String, key: String) {
 
     private val preferences = CryptoWrapper(context, Pair(fileName, key))
@@ -129,13 +126,15 @@ public class CryptoPrefs(context: Context, fileName: String, key: String) {
         preferences.queue(key, value)
     }
 
+
     /**
      * Applies the queue modifications list to the file.
      * */
     public fun apply() {
         preferences.apply()
     }
-    
+
+
     /**
      * Removes a field from the preferences file
      * 
@@ -145,11 +144,11 @@ public class CryptoPrefs(context: Context, fileName: String, key: String) {
         preferences.remove(key)
     }
 
+
     /**
      * Erases all the preferences that have been saved in the file
      * */
     public fun erase() {
         preferences.erase()
     }
-
 }

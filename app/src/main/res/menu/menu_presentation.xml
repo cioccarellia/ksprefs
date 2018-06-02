@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.andreacioccarelli.samplecryptoprefs.PresentationActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_github"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:title="GitHub repository"
+        android:icon="@drawable/open_repo"
+        app:showAsAction="always" />
 </menu>
