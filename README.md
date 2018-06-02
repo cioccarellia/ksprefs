@@ -69,7 +69,7 @@ prefs.apply()
 Sometimes SharedPreferences are used to store a huge number of items and in these cases I/O operations can be cpu intensive and slow down your main thread.
 Because of that, you can enqueue your modifications on the go just like normally using `put()`, but to actually apply them to the file you will have to call `apply()` once.
 
-**Warning #1:** calling `put()` means that all the queued modifications will be applied.
+**Warning #1:** calling `put()` automatically applies all queued modifications.
 **Warning #2:** `get` fetches the key on the file and not on the queue.
 
 
