@@ -3,13 +3,13 @@
 [![License](https://img.shields.io/hexpm/l/plug.svg)](https://github.com/AndreaCioccarelli/CryptoPrefs/blob/master/LICENSE)	
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b294eaf4988842c090584b1315a5f348)](https://www.codacy.com/app/cioccarelliandrea01/CryptoPrefs)
 
-CryptoPrefs is the new cutting edge andorid library for storing encrypted preferences securely and keeping them apart from indiscrete user's eyesights.
-Your keys and values are encrypted using _AES/CBC/PKCS5Padding_ algorithm and wrapped up using standard Base64 encoding. 
-This library focus is put on reliability, security, lightness and speed.
+CryptoPrefs is the new cutting-edge andorid library for storing encrypted preferences securely and protecting them from indiscrete user's eyesights.
+All data you are going to store are encrypted using _AES/CBC/PKCS5Padding_ algorithm and wrapped up using standard Base64 encoding.
+This library focuses on reliability, security, lightness and speed.
 
 ## Repository
 CryptoPrefs uses jitpack as packages repository.
-To use it you need to add this code to your project build.gradle file
+To use it you need to add the repository to your project build.gradle file
 ```gradle
 allprojects {
     repositories {
@@ -26,27 +26,39 @@ dependencies {
 ```
 
 ## Usage
-To use CryptoPrefs you first need to create an istance of this class
 ```kotlin
 val prefs = CryptoPrefs(applicationContext, "CryptoFileName", "c29maWE=")
 ```
-As you can see you need to pass 3 parameters
+You need to pass 3 parameters in order to create an istance of the class CryptoPrefs:
 - The context of your Activity/Fragment
 - The file preferences name
 - Your secret key
 
-Once your instance is ready the API usage is very simple and effective
+**Warning #1:** Multiple files support is currently provided, however remember that saving preferences to one single file is much simpler<br>
+**Warning #2:** If your project needs an even stronger security layer, consider placing the encryption key in the native libraries. (I personally like [chiper.so](https://github.com/MEiDIK/Cipher.so))
 
-#### Put/Update values
+
+#### Set/Update values
 ```kotlin
 prefs.put("crypto_age", 16)
 ```
+This functions accepts 2 parameters, key and value, that are used to store the preference.
+If an item with the matching key is found, its value will be overwritten. Else, a preference is created
 
+The `value` parameter is an `Any` type, it means that it can be everything.
 
 #### Read values
 ```kotlin
-var someValue = prefs.get("crypto_name", "Andrea")
+var someValue = prefs.getString("crypto_name", "Andrea")
 ```
+
+This functions accepts 2 parameters, key and default. Key is used to search the preference into the list, and default is returned if no preference with the matching key is found. This means that if you need to use and create an item you can do it in just one line.
+
+```kotlin
+val startCounter = prefs.getInt("start_count", 0)
+```
+
+
 
 #### Queue operations
 ```kotlin
