@@ -1,6 +1,5 @@
 package com.andreacioccarelli.cryptoprefs
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 
@@ -16,8 +15,8 @@ internal class CryptoWrapper(context: Context, autoPrefs: Pair<String, String>) 
     internal fun getAllPreferencesBundle(): Bundle {
         val result = Bundle()
 
-        for (pref in crypto.prefReader.all) {
-            result.putString(crypto.decrypt(pref.key), crypto.decrypt(pref.value.toString()))
+        crypto.prefReader.all.map {
+            result.putString(crypto.decrypt(it.key), crypto.decrypt(it.value.toString()))
         }
 
         return result
@@ -26,8 +25,8 @@ internal class CryptoWrapper(context: Context, autoPrefs: Pair<String, String>) 
     internal fun getAllPreferencesMap(): Map<String, String> {
         val result = HashMap<String, String>()
 
-        for (pref in crypto.prefReader.all) {
-            result[crypto.decrypt(pref.key)] = crypto.decrypt(pref.value.toString())
+        crypto.prefReader.all.map {
+            result[crypto.decrypt(it.key)] = crypto.decrypt(it.value.toString())
         }
 
         return result
@@ -36,8 +35,8 @@ internal class CryptoWrapper(context: Context, autoPrefs: Pair<String, String>) 
     internal fun getAllPreferencesList(): ArrayList<Pair<String, String>> {
         val result = ArrayList<Pair<String, String>>()
 
-        for (pref in crypto.prefReader.all) {
-            result.add(Pair(crypto.decrypt(pref.key), crypto.decrypt(pref.value.toString())))
+        crypto.prefReader.all.map {
+            result.add(crypto.decrypt(it.key) to crypto.decrypt(it.value.toString()))
         }
 
         return result
@@ -54,9 +53,7 @@ internal class CryptoWrapper(context: Context, autoPrefs: Pair<String, String>) 
     }
 
     internal fun queue(key: String, value: Any) {
-        val encryptedKey = crypto.encrypt(key)
-        val encryptedValue = crypto.encrypt(value.toString())
-        crypto.prefWriter.putString(encryptedKey, encryptedValue)
+        crypto.prefWriter.putString(crypto.encrypt(key), crypto.encrypt(value.toString()))
     }
 
     internal fun apply() {

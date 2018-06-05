@@ -1,9 +1,9 @@
 # CryptoPrefs
-[![Build](https://jitpack.io/v/AndreaCioccarelli/CryptoPrefs.svg)](https://jitpack.io/#AndreaCioccarelli/CryptoPrefs)	
-[![License](https://img.shields.io/hexpm/l/plug.svg)](https://github.com/AndreaCioccarelli/CryptoPrefs/blob/master/LICENSE)	
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b294eaf4988842c090584b1315a5f348)](https://www.codacy.com/app/cioccarelliandrea01/CryptoPrefs)
+[![Latest commit](https://jitpack.io/v/AndreaCioccarelli/CryptoPrefs.svg)](https://jitpack.io/#AndreaCioccarelli/CryptoPrefs)
+[![Codacy badge](https://api.codacy.com/project/badge/Grade/b294eaf4988842c090584b1315a5f348)](https://www.codacy.com/app/cioccarelliandrea01/CryptoPrefs)
+[![License](https://img.shields.io/hexpm/l/plug.svg)](https://github.com/AndreaCioccarelli/CryptoPrefs/blob/master/LICENSE)
 
-CryptoPrefs is the new kotlin powered cutting-edge andorid library for storing encrypted preferences securely and protecting them from indiscrete user's eyesights.
+CryptoPrefs is a kotlin powered cutting-edge andorid library for storing encrypted preferences securely and protecting them from indiscrete user's eyesights.
 All data you are going to store are encrypted using AES/CBC/PKCS5Padding algorithm and wrapped up using standard Base64 encoding.
 This library focuses on reliability, security, lightness and speed.
 
@@ -33,7 +33,7 @@ You need to pass 3 parameters in order to create an istance of the class CryptoP
 - The file preferences name
 - Your secret key
 
-**Warning #1:** multiple files support is currently provided, however remember that saving preferences to one single file is much easier.<br>
+**Warning #1:** this library supports (indirectly) multi-files and multi-keys operations; However remember that saving all the preferences to one single file is much easier and has a better performance rate. View the [multi files and multi keys details](#multi)<br>
 **Warning #2:** if your project needs an even stronger security layer, consider placing the encryption key in the native libraries. (I personally like [chiper.so](https://github.com/MEiDIK/Cipher.so)).
 
 
@@ -50,7 +50,11 @@ If you need to store another type of variable you can consider the idea of conve
 
 #### Read values
 ```kotlin
-var someValue = prefs.getString("crypto_name", "Andrea")
+val name = prefs.getString("crypto_name", "Andrea")
+val age = prefs.getInt("crypto_age", 16)
+val pillsDouble = prefs.getDouble("crypto_pills", 2.5)
+val isMajor = prefs.getBoolean("crypto_is_major", false)
+val roomNumber = prefs.getFloat("crypto_room_number", 107.0F)
 ```
 This functions accepts 2 parameters, key and default. 
 Key is used to search the preference into the file, and default is put in the matching key position and then returned if no item is matching with the given key.
@@ -59,14 +63,14 @@ This means that if you need to use and create an item you can do it in just one 
 val startCounter = prefs.getInt("start_count", 0) // Creates the field start_count and set it at 0
 ```
 
-#### Queue operations
+#### Batch operations
 ```kotlin
 for (i in 1..10000) {
     prefs.queue("$i", (i*i).toFloat())
 }
 prefs.apply()
 ```
-Sometimes SharedPreferences are used to store a huge number of items and in these cases I/O operations can be cpu intensive and slow down your main thread.
+Sometimes SharedPreferences are used to store a huge number of items and in these cases I/O operations can be cpu intensive and slow down your app.
 Because of that, you can enqueue your modifications on the go just like normally using `put()`, but to actually apply them to the file you will have to call `apply()` once.
 
 **Warning #1:** calling `put()` automatically applies all queued modifications.<br>
@@ -97,7 +101,35 @@ prefs.erase()
 This is simply a wrap of the `clear()` function of the android standard library
 
 
-## SharedPreferences plain text XML vs CryptoPrefs encrypted XML
+## Smartcast
+A clean and fast approach is what this library aims to provide. I always found myself in java working with `String.valueOf()`, `Integer.parseInt()` while reading SharedPreferences, and then I decided I didn't want to see that happen again.
+Every argument you pass as value or default is an `Any` type, so it can be everything. CryptoPrefs will convert it back to string for the encryption and eventually you will do the conversion from string to your target type.
+
+This is an example for a situation where you have a JSON response and you want to parse it later. You will find it also in the sample project.
+```json
+{
+    "key": "Error",
+    "details": "PizzaWithPineappleException",
+    "mistakenIngredient": {
+        "name": "Pineapple",
+        "description": "Tropical fruit"
+    }
+}
+```
+
+```kotlin
+prefs.put("json_response", jsonErrorString)
+val jsonFromPrefs = JSONObject(prefs.getString("json_response", ""))
+```
+
+
+## <a name="multi"></a> Multi-files and multi-keys
+I decided to not implement built in support for multiple files because it would have impacted on performances. Instead, if you wish, you can have 2 instances and different filenames/keys for every file. Please keep in your mind that:
+- Saving a preference to one file won't make it available als on the other one
+- If you lose your key, your preferences won't be readable again
+- If you change your key for every file, opening the wrong file with a key will result in a bunch of unreadable stuff
+
+## SharedPreferences plain XML vs CryptoPrefs encrypted XML
 ```xml
 <map>
   <boolean name="pro" value="true" />
@@ -120,5 +152,15 @@ This library aims to terminate easy application
 
 ## License
 ```
-CryptoPrefs is licensed under Apache License 2.0 Version 2.0
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 ```

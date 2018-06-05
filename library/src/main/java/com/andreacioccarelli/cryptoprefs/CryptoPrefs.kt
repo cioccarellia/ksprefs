@@ -10,7 +10,7 @@ import android.os.Bundle
 
 public class CryptoPrefs(context: Context, fileName: String, key: String) {
 
-    private val preferences = CryptoWrapper(context, Pair(fileName, key))
+    private val preferences = CryptoWrapper(context, fileName to key)
     
     public val allPrefsBundle: Bundle
         get() = preferences.getAllPreferencesBundle()
@@ -34,7 +34,6 @@ public class CryptoPrefs(context: Context, fileName: String, key: String) {
         preferences.put(key, value)
     }
 
-    
     /**
      * Returns the String found in pair with the matching key.
      * If no key is found in the file, the default value will 
