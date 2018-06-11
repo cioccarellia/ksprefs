@@ -20,7 +20,11 @@ allprojects {
 And the dependency to your module build.gradle file:
 ```gradle
 dependencies {
+<<<<<<< HEAD
     implementation 'com.github.AndreaCioccarelli:CryptoPrefs:1.1.0'
+=======
+    implementation 'com.github.AndreaCioccarelli:CryptoPrefs:1.0.1'
+>>>>>>> 934713213b2a06c0e914dde979e764cd611911ef
 }
 ```
 
