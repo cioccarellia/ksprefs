@@ -1,4 +1,4 @@
-package com.andreacioccarelli.cryptoprefs
+package com.andreacioccarelli.cryptoprefs.exceptions
 
 /**
  * Created by andrea on 2018/May.

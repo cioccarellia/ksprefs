@@ -8,9 +8,9 @@ import android.os.Bundle
  * Part of the package com.andreacioccarelli.cryptoprefs.preferences
  */
 
-public class CryptoPrefs(context: Context, fileName: String, key: String) {
+public class CryptoPrefs(context: Context, fileName: String, key: String, shouldEncrypt: Boolean = true) {
 
-    private val preferences = CryptoWrapper(context, fileName to key)
+    private val preferences = CryptoWrapper(context, fileName to key, shouldEncrypt)
     
     public val allPrefsBundle: Bundle
         get() = preferences.getAllPreferencesBundle()

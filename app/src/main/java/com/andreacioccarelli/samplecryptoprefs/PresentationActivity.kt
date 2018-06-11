@@ -2,18 +2,17 @@ package com.andreacioccarelli.samplecryptoprefs
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.andreacioccarelli.cryptoprefs.CryptoPrefs
-
 import kotlinx.android.synthetic.main.activity_presentation.*
 import kotlinx.android.synthetic.main.content_presentation.*
-import android.content.Intent
-import android.net.Uri
-import android.util.Log
 import org.json.JSONObject
 
 
@@ -24,6 +23,7 @@ class PresentationActivity : AppCompatActivity() {
 
     private lateinit var prefs: CryptoPrefs
     private val fileName = "Crypto"
+    private val key = "U29maWE="
     private val startCountKey = "start_count"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +31,7 @@ class PresentationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_presentation)
         setSupportActionBar(toolbar)
 
-        prefs = CryptoPrefs(applicationContext, fileName, "U29maWE=")
+        prefs = CryptoPrefs(applicationContext, fileName, key)
         prefs.put(startCountKey, prefs.getInt(startCountKey, 0) + 1)
 
         button.setOnClickListener {

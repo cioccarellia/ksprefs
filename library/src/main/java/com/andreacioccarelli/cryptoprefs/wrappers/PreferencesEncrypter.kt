@@ -1,9 +1,13 @@
-package com.andreacioccarelli.cryptoprefs
+package com.andreacioccarelli.cryptoprefs.wrappers
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Base64
+import com.andreacioccarelli.cryptoprefs.constants.CryptoConstants.algorithm
+import com.andreacioccarelli.cryptoprefs.constants.CryptoConstants.charset
+import com.andreacioccarelli.cryptoprefs.constants.CryptoConstants.transformation
+import com.andreacioccarelli.cryptoprefs.exceptions.SecurePreferencesException
+import com.andreacioccarelli.cryptoprefs.interfaces.Wrapper
 import java.io.UnsupportedEncodingException
 import java.security.GeneralSecurityException
 import java.security.KeyException
@@ -19,29 +23,23 @@ import javax.crypto.spec.SecretKeySpec
  * Part of the package com.andreacioccarelli.cryptoprefs.preferences
  */
 
-internal class PreferencesEncrypter(context: Context, auto: Pair<String, String>) {
-
-    private val transformation = "AES/CBC/PKCS5Padding"
-    private val algorithm = "SHA-256"
-    private val charset = "UTF-8"
+internal class PreferencesEncrypter(context: Context, auto: Pair<String, String>) : Wrapper {
 
     private var writer: Cipher
     private var reader: Cipher
     private var keyCrypt: Cipher
 
-    var prefReader: SharedPreferences
-    var prefWriter: SharedPreferences.Editor
+    override val prefReader: SharedPreferences = context.getSharedPreferences(auto.first, Context.MODE_PRIVATE)
+    override val prefWriter: SharedPreferences.Editor = context.getSharedPreferences(auto.first, Context.MODE_PRIVATE).edit()
 
     init {
         try {
+            if (auto.second.isEmpty()) throw IllegalStateException("Encryption key length is 0")
+
             writer = Cipher.getInstance(transformation)
             reader = Cipher.getInstance(transformation)
             keyCrypt = Cipher.getInstance(transformation)
 
-            prefReader = context.getSharedPreferences(auto.first, Context.MODE_PRIVATE)
-            prefWriter = context.getSharedPreferences(auto.first, Context.MODE_PRIVATE).edit()
-
-            if (auto.second.isEmpty()) throw IllegalStateException("Encryption key length is 0")
             initializeCiphers(auto.second)
         } catch (e: GeneralSecurityException) {
             throw SecurePreferencesException(e, "Error while initializing the preferences ciphers keys")
@@ -77,7 +75,7 @@ internal class PreferencesEncrypter(context: Context, auto: Pair<String, String>
         }
 
 
-    internal fun encrypt(value: String): String {
+    override fun encrypt(value: String): String {
         val encodedValue: ByteArray
 
         try {
@@ -90,12 +88,12 @@ internal class PreferencesEncrypter(context: Context, auto: Pair<String, String>
     }
 
 
-    internal fun decrypt(securedEncodedValue: String): String {
-        val encodedValue = Base64.decode(securedEncodedValue, Base64.NO_WRAP)
-        val value = finalize(reader, encodedValue)
+    override fun decrypt(value: String): String {
+        val encodedValue = Base64.decode(value, Base64.NO_WRAP)
+        val finalized = finalize(reader, encodedValue)
 
         return try {
-            String(value, Charsets.UTF_8)
+            String(finalized, Charsets.UTF_8)
         } catch (e: UnsupportedEncodingException) {
             throw SecurePreferencesException(e, "Error while initializing the decryption ciphers, unsupported charset.")
         }
@@ -107,7 +105,7 @@ internal class PreferencesEncrypter(context: Context, auto: Pair<String, String>
         } catch (e: IllegalStateException) {
             throw SecurePreferencesException(e, "Cipher is not initialized.")
         } catch (e: IllegalBlockSizeException) {
-            throw SecurePreferencesException(e, "Cipher is without padding.")
+            throw SecurePreferencesException(e, "Cipher is without padding, you are probably attempting to a file that is in plain/text format.")
         } catch (e: BadPaddingException) {
             throw SecurePreferencesException(e, "Cipher decryption data is with a wrong padding.")
         }

@@ -2,15 +2,18 @@ package com.andreacioccarelli.cryptoprefs
 
 import android.content.Context
 import android.os.Bundle
+import com.andreacioccarelli.cryptoprefs.interfaces.Wrapper
+import com.andreacioccarelli.cryptoprefs.wrappers.PreferencesEncrypter
+import com.andreacioccarelli.cryptoprefs.wrappers.PreferencesWrapper
 
 /**
  * Created by andrea on 2018/May.
- * Part of the package com.andreacioccarelli.cryptoprefs.sharedPreferences
+ * Part of the package com.andreacioccarelli.cryptoprefs.reader
  */
 
-internal class CryptoWrapper(context: Context, autoPrefs: Pair<String, String>) {
+internal class CryptoWrapper(context: Context, autoPrefs: Pair<String, String>, shouldEncrypt: Boolean) {
 
-    private val crypto = PreferencesEncrypter(context, autoPrefs)
+    private val crypto: Wrapper = if (shouldEncrypt) PreferencesEncrypter(context, autoPrefs) else PreferencesWrapper(context, autoPrefs.first)
 
     internal fun getAllPreferencesBundle(): Bundle {
         val result = Bundle()
