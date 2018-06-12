@@ -6,7 +6,7 @@ import com.andreacioccarelli.cryptoprefs.interfaces.Wrapper
 
 /**
  * Created by andrea on 2018/Jun.
- * Part of the package com.andreacioccarelli.cryptoprefs.preferences
+ * Part of the package com.andreacioccarelli.cryptoprefs.wrappers
  */
 
 internal class PreferencesWrapper(context: Context, filename: String): Wrapper {

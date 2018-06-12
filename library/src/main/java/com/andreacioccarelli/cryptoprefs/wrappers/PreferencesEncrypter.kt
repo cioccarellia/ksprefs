@@ -20,7 +20,7 @@ import javax.crypto.spec.SecretKeySpec
 
 /**
  * Created by andrea on 2018/May.
- * Part of the package com.andreacioccarelli.cryptoprefs.preferences
+ * Part of the package com.andreacioccarelli.cryptoprefs.wrappers
  */
 
 internal class PreferencesEncrypter(context: Context, auto: Pair<String, String>) : Wrapper {

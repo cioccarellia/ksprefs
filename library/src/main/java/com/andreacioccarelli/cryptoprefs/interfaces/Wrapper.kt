@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 
 /**
  * Created by andrea on 2018/Jun.
- * Part of the package com.andreacioccarelli.cryptoprefs
+ * Part of the package com.andreacioccarelli.cryptoprefs.interfaces
  */
 interface Wrapper {
     val prefReader: SharedPreferences

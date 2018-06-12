@@ -5,7 +5,7 @@ import android.os.Bundle
 
 /**
  * Created by andrea on 2018/May.
- * Part of the package com.andreacioccarelli.cryptoprefs.preferences
+ * Part of the package com.andreacioccarelli.cryptoprefs
  */
 
 public class CryptoPrefs(context: Context, fileName: String, key: String, shouldEncrypt: Boolean = true) {

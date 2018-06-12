@@ -32,7 +32,7 @@ You need to pass 3 parameters in order to create an instance of the class Crypto
 - The context of your Activity/Fragment
 - The file preferences name
 - Your secret key
-- Optionally, a boolean, if you wish to encrypt the preferences (see [the dedicated paragraph](#plain))
+- Optionally, a boolean, if you wish to not encrypt the preferences (see [the dedicated paragraph](#plain))
 
 **Warning #1:** this library supports (indirectly) multi-files and multi-keys operations; However remember that saving all the preferences to one single file is much easier and has a better performance rate. View the [multi files and multi keys details](#multi)<br>
 **Warning #2:** if your project needs an even stronger security layer, consider placing the encryption key in the native libraries. (I personally like [chiper.so](https://github.com/MEiDIK/Cipher.so)).
@@ -103,8 +103,10 @@ This is simply a wrap of the `clear()` function of the android standard library
 
 
 ## Smart cast
-A clean and fast approach is what this library aims to provide. I always found myself in java working with `String.valueOf()`, `Integer.parseInt()` while reading SharedPreferences, and then I decided I didn't want to see that happen again.
-Every argument you pass as finalized or default is an `Any` type, so it can be everything. CryptoPrefs will convert it back to string for the encryption and eventually you will do the conversion from string to your target type.
+A clean and fast approach is what this library aims to provide. I always found myself in java working with `String.valueOf()`, `Integer.parseInt()`, `Boolean.parseBoolean()` while reading SharedPreferences, 
+and then I decided I didn't want to see that happen again.
+Every argument you pass as finalized or default is an `Any` type, so it can be everything. CryptoPrefs will convert it back to string for the encryption 
+and eventually you will do the conversion from string to your target type.
 
 This is an example for a situation where you have a JSON response and you want to parse it later. You will find it also in the sample project.
 ```json
@@ -125,7 +127,8 @@ val jsonFromPrefs = JSONObject(prefs.getString("json_response", ""))
 
 
 ## <a name="multi"></a> Multi-files and multi-keys
-I decided to not implement built in support for multiple files because it would have impacted on performances. Instead, if you wish, you can have 2 instances and different filenames/keys for every file. Please keep in your mind that:
+I decided to not implement built in support for multiple files because it would have impacted on performances. 
+Instead, if you wish, you can have 2 instances and different filenames/keys for every file. Please keep in your mind that:
 - Saving a preference to one file won't make it available als on the other one
 - If you lose your key, your preferences won't be readable again
 - If you change your key for every file, opening the wrong file with a key will result in a bunch of unreadable stuff

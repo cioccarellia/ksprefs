@@ -8,7 +8,7 @@ import com.andreacioccarelli.cryptoprefs.wrappers.PreferencesWrapper
 
 /**
  * Created by andrea on 2018/May.
- * Part of the package com.andreacioccarelli.cryptoprefs.reader
+ * Part of the package com.andreacioccarelli.cryptoprefs
  */
 
 internal class CryptoWrapper(context: Context, autoPrefs: Pair<String, String>, shouldEncrypt: Boolean) {
