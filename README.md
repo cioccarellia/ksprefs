@@ -56,6 +56,7 @@ val age = prefs.getInt("crypto_age", 17)
 val pillsDouble = prefs.getDouble("crypto_pills", 2.5)
 val isMajor = prefs.getBoolean("crypto_is_major", false)
 val roomNumber = prefs.getFloat("crypto_room_number", 107.0F)
+val infinite = prefs.getLong("crypto_∞", 999999999999)
 ```
 This functions accepts 2 parameters, key and default. 
 Key is used to search the preference into the file, and default is put in the matching key position and then returned if no item is matching with the given key.
