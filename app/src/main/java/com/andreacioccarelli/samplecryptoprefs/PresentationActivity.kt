@@ -22,17 +22,14 @@ import org.json.JSONObject
 class PresentationActivity : AppCompatActivity() {
 
     private lateinit var prefs: CryptoPrefs
-    private val fileName = "Crypto"
-    private val key = "U29maWE="
-    private val startCountKey = "start_count"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_presentation)
         setSupportActionBar(toolbar)
 
-        prefs = CryptoPrefs(applicationContext, fileName, key)
-        prefs.put(startCountKey, prefs.getInt(startCountKey, 0) + 1)
+        prefs = CryptoPrefs(applicationContext, Keys.System.filename, Keys.System.key)
+        prefs.put(Keys.startCount, prefs.getInt(Keys.startCount, 0) + 1)
 
         button.setOnClickListener {
             // Put some sample values to the preferences
@@ -51,7 +48,7 @@ class PresentationActivity : AppCompatActivity() {
                     "    \"details\": \"PizzaWithPineappleException\",\n" +
                     "    \"mistakenIngredients\": {\n" +
                     "        \"name\": \"Pineapple\",\n" +
-                    "        \"description\": \"Tropical fruit\"\n" +
+                    "        \"description\": \"Tropical fruit on pizza throws an exception\"\n" +
                     "    }\n" +
                     "}"
 
@@ -67,7 +64,7 @@ class PresentationActivity : AppCompatActivity() {
 
         button3.setOnClickListener {
             // Function that will return back the number of times the app has started
-            toast(prefs.getInt(startCountKey, 0))
+            toast(prefs.getInt(Keys.startCount, 0))
         }
 
         button4.setOnClickListener {
@@ -91,7 +88,7 @@ class PresentationActivity : AppCompatActivity() {
         button5.setOnClickListener {
             // Reading raw file to check the values are encrypted
             var x = ""
-            for (pref in getSharedPreferences(fileName, Context.MODE_PRIVATE).all) {
+            for (pref in getSharedPreferences(Keys.System.filename, Context.MODE_PRIVATE).all) {
                 x += "${pref.key} ${pref.value}\n"
             }
 
@@ -117,7 +114,7 @@ class PresentationActivity : AppCompatActivity() {
 
 
         content.text = "${content.text}\n\n\n*Shared Prefs view*\n\n"
-        for (pref in getSharedPreferences(fileName, Context.MODE_PRIVATE).all) {
+        for (pref in getSharedPreferences(Keys.System.filename, Context.MODE_PRIVATE).all) {
             content.text = "${content.text}key \"${pref.key}\", value=\"${pref.value}\";\n"
         }
 

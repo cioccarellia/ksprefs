@@ -105,7 +105,7 @@ internal class PreferencesEncrypter(context: Context, auto: Pair<String, String>
         } catch (e: IllegalStateException) {
             throw SecurePreferencesException(e, "Cipher is not initialized.")
         } catch (e: IllegalBlockSizeException) {
-            throw SecurePreferencesException(e, "Cipher is without padding, you are probably attempting to a file that is in plain/text format.")
+            throw SecurePreferencesException(e, "Cipher is without padding, you are probably attempting to read a file that is in plain/text format.")
         } catch (e: BadPaddingException) {
             throw SecurePreferencesException(e, "Cipher decryption data is with a wrong padding.")
         }

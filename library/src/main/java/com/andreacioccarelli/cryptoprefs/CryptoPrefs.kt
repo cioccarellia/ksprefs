@@ -139,6 +139,21 @@ public class CryptoPrefs(context: Context, fileName: String, key: String, should
 
 
     /**
+     * Returns the Byte found in pair with the matching key.
+     * If no key is found in the file, the default value will
+     * be returned and then, a field containing the key and the
+     * given default value will be created on the preferences.
+     *
+     * @param key the key of the item that will be searched
+     * @param default the default value, in case the key doesn't
+     *                exists in the file
+     * */
+    public fun getByte(key: String, default: Any): Byte {
+        return preferences.get(key, default).toByte()
+    }
+
+
+    /**
      * Enqueues a modification that is kept on a volatile copy 
      * of the file, also with every eventual new modification 
      * enqueued with this function.
