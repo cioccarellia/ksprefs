@@ -33,7 +33,6 @@ You need to pass 3 parameters in order to create an instance of the class Crypto
 - The context of your Activity/Fragment
 - The file preferences name
 - Your secret key
-- *Optionally*, a boolean, if you wish to not encrypt the preferences (see [the dedicated paragraph](#plain))
 
 **Warning #1:** this library supports (indirectly) multi-files and multi-keys operations; However remember that saving all the preferences to one single file is much easier and has a better performance rate. View the [multi files and multi keys details](#multi)<br>
 **Warning #2:** if your project needs an even stronger security layer, consider placing the encryption key in the native library that you'll bundle with your app. (I personally like [chiper.so](https://github.com/MEiDIK/Cipher.so)).
