@@ -34,8 +34,8 @@ You need to pass 3 parameters in order to create an instance of the class Crypto
 - The file preferences name
 - Your secret key
 
-**Warning #1:** this library supports (indirectly) multi-files and multi-keys operations; However remember that saving all the preferences to one single file is much easier and has a better performance rate. View the [multi files and multi keys details](#multi)<br>
-**Warning #2:** if your project needs an even stronger security layer, consider placing the encryption key in the native library that you'll bundle with your app. (I personally like [chiper.so](https://github.com/MEiDIK/Cipher.so)).
+**Warning #1:** this library supports (indirectly) multi-files and multi-keys operations; However remember that saving all the preferences to one single file is much easier and has got a better performance rate. View the [multi files and multi keys details](#multi)<br>
+**Warning #2:** if your project needs an even stronger security layer, consider placing the encryption key in the native library that you'll bundle with your app, so that a full decryption will be made extremely difficult. (I personally like [chiper.so](https://github.com/MEiDIK/Cipher.so)).
 
 
 #### Set/Update values
@@ -141,14 +141,15 @@ Please keep in mind that:
 ## <a name="plain"></a> Handling unencrypted files
 Even though this library is all about encryption, you still can operate with standard unencrypted preferences. Why?
 - For the purpose of testing, for example if in your app you need to debug SharedPreferences and you want to see the effective data
-- For providing compatibility with files that have been stored not just with this library 
+- To provide compatibility with files that have been stored in the past without decryption
+- To provide compatibility with files that have been created using android settings
 
-To do so, just initialize the preferences like this
+To do so, you have to initialize the instance like this
 ```kotlin
 val prefs = CryptoPrefs(applicationContext, "CryptoFileName", "c29maWE=", false)
 ```
 
-**Warning:** Remember than encrypted files cannot be read without a key and that a plain text file read with a key will throw an exception with a clear message, use that just for debug purposes or if you know what you're doing
+**Warning:** Remember than encrypted files cannot be read without a key and that a plain text file read with a key will throw an exception with a clear message: use that if you know what you're doing
 
 
 ## SharedPreferences plain XML vs CryptoPrefs encrypted XML
