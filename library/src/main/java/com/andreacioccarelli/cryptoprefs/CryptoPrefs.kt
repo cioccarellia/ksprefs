@@ -59,7 +59,7 @@ public class CryptoPrefs(context: Context, fileName: String, key: String, should
      * @param default the default value, in case the key doesn't
      *                exists in the file
      * */
-    public fun getBoolean(key: String, default: Any): Boolean {
+    public fun getBoolean(key: String, default: Boolean): Boolean {
         return preferences.get(key, default).toBoolean()
     }
 
@@ -74,7 +74,7 @@ public class CryptoPrefs(context: Context, fileName: String, key: String, should
      * @param default the default value, in case the key doesn't
      *                exists in the file
      * */
-    public fun getInt(key: String, default: Any): Int {
+    public fun getInt(key: String, default: Number): Int {
         return preferences.get(key, default).toInt()
     }
 
@@ -89,7 +89,7 @@ public class CryptoPrefs(context: Context, fileName: String, key: String, should
      * @param default the default value, in case the key doesn't
      *                exists in the file
      * */
-    public fun getFloat(key: String, default: Any): Float {
+    public fun getFloat(key: String, default: Number): Float {
         return preferences.get(key, default).toFloat()
     }
 
@@ -104,7 +104,7 @@ public class CryptoPrefs(context: Context, fileName: String, key: String, should
      * @param default the default value, in case the key doesn't
      *                exists in the file
      * */
-    public fun getDouble(key: String, default: Any): Double {
+    public fun getDouble(key: String, default: Number): Double {
         return preferences.get(key, default).toDouble()
     }
 
@@ -119,7 +119,7 @@ public class CryptoPrefs(context: Context, fileName: String, key: String, should
      * @param default the default value, in case the key doesn't
      *                exists in the file
      * */
-    public fun getLong(key: String, default: Any): Long {
+    public fun getLong(key: String, default: Number): Long {
         return preferences.get(key, default).toLong()
     }
 
@@ -133,7 +133,7 @@ public class CryptoPrefs(context: Context, fileName: String, key: String, should
      * @param default the default value, in case the key doesn't
      *                exists in the file
      * */
-    public fun getShort(key: String, default: Any): Short {
+    public fun getShort(key: String, default: Number): Short {
         return preferences.get(key, default).toShort()
     }
 
@@ -148,7 +148,7 @@ public class CryptoPrefs(context: Context, fileName: String, key: String, should
      * @param default the default value, in case the key doesn't
      *                exists in the file
      * */
-    public fun getByte(key: String, default: Any): Byte {
+    public fun getByte(key: String, default: Byte): Byte {
         return preferences.get(key, default).toByte()
     }
 
