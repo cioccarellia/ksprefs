@@ -168,8 +168,8 @@ val prefs = CryptoPrefs(applicationContext, "CryptoFileName", "c29maWE=", false)
 ## SharedPreferences plain XML vs CryptoPrefs encrypted XML
 ```xml
 <map>
-  <boolean name="pro" finalized="true" />
-  <int name="user_coins" finalized="200" />
+  <boolean name="pro" value="true" />
+  <int name="user_coins" value="200" />
 </map>
 ```
 ```xml
