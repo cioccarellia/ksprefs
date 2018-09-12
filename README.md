@@ -55,18 +55,18 @@ If you need to store another type of variable you can consider the idea of conve
 
 #### Read values
 ```kotlin
-val name = prefs.getString("crypto_name", "Andrea")
-val age = prefs.getInt("crypto_age", 17)
-val pillsDouble = prefs.getDouble("crypto_pills", 2.5)
-val isMajor = prefs.getBoolean("crypto_is_major", false)
-val roomNumber = prefs.getFloat("crypto_room_number", 107.0F)
-val infinite = prefs.getLong("crypto_∞", 999999999999)
+val name = prefs.get("crypto_name", "Andrea")
+val age = prefs.get("crypto_age", 17)
+val pillsDouble = prefs.get("crypto_pills", 2.5)
+val isMajor = prefs.get("crypto_is_major", false)
+val roomNumber = prefs.get("crypto_room_number", 107.0F)
+val infinite = prefs.get("crypto_∞", 999999999999)
 ```
 These functions accepts 2 parameters, `key` and `default`.
 Key is used to search the preference into the file, and default is put in the matching key position and then returned if no item is found with the given key.
 This means that if you need to use and create an item you can do it in just one line.
 ```kotlin
-val startCounter = prefs.getInt("start_count", 0) // Creates the field start_count and set it at 0
+val startCounter = prefs.get("start_count", 0) // Creates the field start_count and set it at 0
 ```
 
 #### Batch operations
