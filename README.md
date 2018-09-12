@@ -62,7 +62,7 @@ val isMajor = prefs.get("crypto_is_major", false)
 val roomNumber = prefs.get("crypto_room_number", 107.0F)
 val infinite = prefs.get("crypto_∞", 999999999999)
 ```
-These functions accepts 2 parameters, `key` and `default`.
+These function accepts 2 parameters, `key` and `default`. This generic method returns the found value as cast of the  type of the provided default value (second parameter).
 Key is used to search the preference into the file, and default is put in the matching key position and then returned if no item is found with the given key.
 This means that if you need to use and create an item you can do it in just one line.
 ```kotlin
@@ -130,7 +130,7 @@ prefs.put("json_response", jsonErrorString)
 ```
 
 ```kotlin
-val jsonFromPrefs = JSONObject(prefs.getString("json_response", ""))
+val jsonFromPrefs = JSONObject(prefs.get("json_response", ""))
 ```
 
 Also, as said before, you can create extension functions using kotlin. It would simplify the way you interact with your preferences, because doing so you can store and fetch custom types for your specific app architecture. Let's suppose that you are using a class called `Pizza` to parse a json response with gson. To save it for offline use, you just have to write 1 extension function used to parse it.
