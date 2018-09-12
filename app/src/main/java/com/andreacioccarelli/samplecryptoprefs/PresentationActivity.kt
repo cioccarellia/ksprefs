@@ -29,13 +29,18 @@ class PresentationActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         prefs = CryptoPrefs(applicationContext, Keys.System.filename, Keys.System.key)
-        prefs.put(Keys.startCount, prefs.getInt(Keys.startCount, 0) + 1)
+        prefs.put(Keys.startCount, prefs.get(Keys.startCount, 0) + 1)
 
         button.setOnClickListener {
             // Put some sample values to the preferences
-            prefs.put("crypto_sample_string", "a")
-            prefs.put("crypto_sample_int", 1)
             prefs.put("crypto_sample_boolean", true)
+            prefs.put("crypto_sample_byte", 1.toByte())
+            prefs.put("crypto_sample_double", 2.toDouble())
+            prefs.put("crypto_sample_float", 3.toFloat())
+            prefs.put("crypto_sample_int", 4)
+            prefs.put("crypto_sample_long", 5.toLong())
+            prefs.put("crypto_sample_short", 6.toShort())
+            prefs.put("crypto_sample_string", "a")
 
             // You don't have to cast them before passing as arguments
             updateView()
@@ -54,7 +59,7 @@ class PresentationActivity : AppCompatActivity() {
 
             val key = "json_response"
             prefs.put(key, jsonErrorLog)
-            val jsonFromPrefs = JSONObject(prefs.getString(key, ""))
+            val jsonFromPrefs = JSONObject(prefs.get(key, ""))
 
             toast(jsonFromPrefs.getString("details"))
 
@@ -64,7 +69,7 @@ class PresentationActivity : AppCompatActivity() {
 
         button3.setOnClickListener {
             // Function that will return back the number of times the app has started
-            toast(prefs.getInt(Keys.startCount, 0))
+            toast(prefs.get(Keys.startCount, 0))
         }
 
         button4.setOnClickListener {
