@@ -25,7 +25,7 @@ allprojects {
 And the dependency to your module build.gradle file:
 ```gradle
 dependencies {
-    implementation 'com.github.AndreaCioccarelli:CryptoPrefs:1.1.2.1'
+    implementation 'com.github.AndreaCioccarelli:CryptoPrefs:1.2.0.0'
 }
 ```
 
