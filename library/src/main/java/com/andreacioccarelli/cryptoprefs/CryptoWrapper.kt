@@ -47,7 +47,7 @@ internal class CryptoWrapper(context: Context, autoPrefs: Pair<String, String>, 
 
     internal fun get(key: String, default: Any): String {
         val encryptedString = crypto.prefReader.getString(crypto.encrypt(key), crypto.encrypt(default.toString()))
-        return crypto.decrypt(encryptedString)
+        return crypto.decrypt(encryptedString!!)
     }
 
 

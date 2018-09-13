@@ -55,12 +55,12 @@ If you need to store another type of variable you can consider the idea of conve
 
 #### Read values
 ```kotlin
-val name = prefs.get("crypto_name", "Andrea")
-val age = prefs.get("crypto_age", 17)
-val pillsDouble = prefs.get("crypto_pills", 2.5)
-val isMajor = prefs.get("crypto_is_major", false)
-val roomNumber = prefs.get("crypto_room_number", 107.0F)
-val infinite = prefs.get("crypto_∞", 999999999999)
+val name = prefs.get("crypto_name", "Andrea") // (String)
+val age = prefs.get("crypto_age", 17) // (Int)
+val pillsDouble = prefs.get("crypto_pills", 2.5) // (Float)
+val isMajor = prefs.get("crypto_is_major", false) // (Boolean)
+val roomNumber = prefs.get("crypto_room_number", 107.0F) // (Float)
+val infinite = prefs.get("crypto_∞", 9223372036854775807) // (Long)
 ```
 These function accepts 2 parameters, `key` and `default`. This generic method returns the found value as cast of the  type of the provided default value (second parameter).
 Key is used to search the preference into the file, and default is put in the matching key position and then returned if no item is found with the given key.
