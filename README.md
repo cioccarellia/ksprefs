@@ -6,8 +6,6 @@
 [![Min sdk](https://img.shields.io/badge/minsdk-14-yellow.svg)](https://github.com/AndreaCioccarelli/LogKit/blob/master/library/build.gradle)
 [![License](https://img.shields.io/hexpm/l/plug.svg)](https://github.com/AndreaCioccarelli/CryptoPrefs/blob/master/LICENSE)
 
-
-
 CryptoPrefs is a stable, kotlin powered, cutting-edge Android library for storing encrypted preferences securely and protecting them from indiscrete user's eyes.
 All data you are going to store are encrypted using AES/CBC/PKCS5Padding algorithm and wrapped up using standard Base64 encoding.
 This library focus is on reliability, security, lightness and speed.
@@ -62,7 +60,7 @@ val isMajor = prefs.get("crypto_is_major", false) // (Boolean)
 val roomNumber = prefs.get("crypto_room_number", 107.0F) // (Float)
 val infinite = prefs.get("crypto_∞", 9223372036854775807) // (Long)
 ```
-These function accepts 2 parameters, `key` and `default`. This generic method returns the found value as cast of the  type of the provided default value (second parameter).
+Those functions accepts 2 parameters, `key` and `default`. This generic method returns the casted result of the provided type for the default value parameter.
 Key is used to search the preference into the file, and default is put in the matching key position and then returned if no item is found with the given key.
 This means that if you need to use and create an item you can do it in just one line.
 ```kotlin
@@ -81,7 +79,7 @@ Because of that, you should enqueue your modifications just like using `put()`, 
 Remember that doing these I/O operations in a background/asynchronous thread is not advisable, but if you already are are in a thread and you can't do other way it's ok.
 
 **Warning #1:** calling `put()` automatically applies all the queued modifications.<br>
-**Warning #2:** `get` fetches the values on the file, and not on the modification queue.
+**Warning #2:** `get()` fetches the values on the file, and not on the modification queue.
 
 
 #### All preferences lists
@@ -108,7 +106,7 @@ prefs.erase()
 This a simple wrap of the `clear()` function of the android standard library, so what it does is deleting the whole file content. Use with caution.
 
 
-## Smart cast
+## Smart cast & Extensibility
 A clean and fast approach is what this library aims to provide. I always found myself in java working with `String.valueOf()`, `Integer.parseInt()`, `Boolean.parseBoolean()` while reading SharedPreferences, and then I decided I didn't want to see that happen again with kotlin.
 Every argument you pass as value or default is of `Any` type, so that it can be everything. CryptoPrefs will convert it back to string for the encryption and eventually you will do the conversion from string to your target type.
 
@@ -142,6 +140,24 @@ fun CryptoPrefs.getPizza(key: String, default: String): Pizza {
 }
 ```
 
+On the other side, you can extend this library to create your own functions and simplify your code.
+For example, let's take a very common pattern
+```kotlin
+preferences.put("startCount", preferences.get("startCount", 0) + 1);
+val count =  preferences.get("startCount", 0)
+```
+The above code is used to increment a counter every time the user starts the app, but is something primitive and hard to read.
+
+```kotlin
+fun CryptoPrefs.incrementCounter(key: String, default: String): Int {
+    val times = preferences.get("startCount", 0)
+    preferences.put("startCount", times + 1)
+    return times
+}
+
+fun CryptoPrefs.readCounter(key: String, default: String) = preferences.get("startCount", 0)
+```
+Like that you can simply call `preferences.incrementCounter()` and the work is done for you, you have the number returned and incremented easily with elegant code.
 
 ## <a name="multi"></a> Multi-files and multi-keys
 I decided to not provide built-in support for multiple files because it would have slightly impacted performances. 
