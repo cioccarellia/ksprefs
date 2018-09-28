@@ -6,10 +6,11 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.andreacioccarelli.samplecryptoprefs"
+        buildToolsVersion "28.0.3"
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode 6
-        versionName "1.2.0.1"
+        versionCode 7
+        versionName "1.2.0.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
