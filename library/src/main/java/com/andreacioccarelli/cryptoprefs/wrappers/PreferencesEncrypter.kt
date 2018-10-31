@@ -70,7 +70,7 @@ internal class PreferencesEncrypter(context: Context, auth: Pair<String, String>
     private val iv: IvParameterSpec
         get() {
             val iv = ByteArray(writer.blockSize)
-            java.lang.System.arraycopy("abcdefghijklmnopqrstsvwxyz123456789".toByteArray(), 0, iv, 0, writer.blockSize)
+            java.lang.System.arraycopy("abcdefghijklmnopqrstuvwxyz123456789".toByteArray(), 0, iv, 0, writer.blockSize)
             return IvParameterSpec(iv)
         }
 
