@@ -8,10 +8,10 @@
 
 CryptoPrefs is a stable, kotlin powered, cutting-edge Android library for storing encrypted preferences securely and protecting them from indiscrete user's eyes.
 All data you are going to store are encrypted using AES/CBC/PKCS5Padding algorithm and wrapped up using standard Base64 encoding.
-This library focus is on reliability, security, lightness and speed.
+This library is focused on reliability, security, lightness and speed.
 
 ## Repository
-CryptoPrefs uses jitpack as packages repository.
+CryptoPrefs uses [jitpack](https://jitpack.io/#AndreaCioccarelli/CryptoPrefs) as packages repository.
 To use it you need to add the repository to your project build.gradle file:
 ```gradle
 allprojects {
