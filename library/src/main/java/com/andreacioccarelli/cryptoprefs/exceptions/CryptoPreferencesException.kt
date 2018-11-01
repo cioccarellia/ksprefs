@@ -5,5 +5,5 @@ package com.andreacioccarelli.cryptoprefs.exceptions
  * Part of the package com.andreacioccarelli.cryptoprefs.exceptions
  */
 
-internal class SecurePreferencesException internal constructor(x: Throwable, y: String) : RuntimeException("$y $x")
+internal class CryptoPreferencesException internal constructor(x: Throwable, y: String) : RuntimeException("$y $x")
 

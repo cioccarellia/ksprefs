@@ -9,3 +9,7 @@ internal object CryptoConstants {
     const val algorithm = "SHA-256"
     const val charset = "UTF-8"
 }
+
+const val TRANSFORMATION = "AES/GCM/NoPadding"
+const val KEYSTORE = "AndroidKeyStore"
+const val ALIAS = "Alias"

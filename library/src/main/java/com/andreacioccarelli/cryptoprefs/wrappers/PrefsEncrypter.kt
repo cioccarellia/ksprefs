@@ -1,12 +1,10 @@
 package com.andreacioccarelli.cryptoprefs.wrappers
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.util.Base64
 import com.andreacioccarelli.cryptoprefs.constants.CryptoConstants.algorithm
 import com.andreacioccarelli.cryptoprefs.constants.CryptoConstants.charset
 import com.andreacioccarelli.cryptoprefs.constants.CryptoConstants.transformation
-import com.andreacioccarelli.cryptoprefs.exceptions.SecurePreferencesException
+import com.andreacioccarelli.cryptoprefs.exceptions.CryptoPreferencesException
 import com.andreacioccarelli.cryptoprefs.interfaces.Wrapper
 import java.io.UnsupportedEncodingException
 import java.security.GeneralSecurityException
@@ -23,14 +21,11 @@ import javax.crypto.spec.SecretKeySpec
  * Part of the package com.andreacioccarelli.cryptoprefs.wrappers
  */
 
-internal class PreferencesEncrypter(context: Context, auth: Pair<String, String>) : Wrapper {
+internal class PrefsEncrypter(auth: Pair<String, String>) : Wrapper {
 
     private var writer: Cipher
     private var reader: Cipher
     private var keyCrypt: Cipher
-
-    override val prefReader: SharedPreferences = context.getSharedPreferences(auth.first, Context.MODE_PRIVATE)
-    override val prefWriter: SharedPreferences.Editor = context.getSharedPreferences(auth.first, Context.MODE_PRIVATE).edit()
 
     init {
         try {
@@ -42,11 +37,11 @@ internal class PreferencesEncrypter(context: Context, auth: Pair<String, String>
 
             initializeCiphers(auth.second)
         } catch (e: GeneralSecurityException) {
-            throw SecurePreferencesException(e, "Error while initializing the preferences ciphers keys [file = ${auth.first}]")
+            throw CryptoPreferencesException(e, "Error while initializing the preferences ciphers keys [file = ${auth.first}]")
         } catch (e: UnsupportedEncodingException) {
-            throw SecurePreferencesException(e, "Error while initializing the preferences ciphers, unsupported charset [file = ${auth.first}].")
+            throw CryptoPreferencesException(e, "Error while initializing the preferences ciphers, unsupported charset [file = ${auth.first}].")
         } catch (e: KeyException) {
-            throw SecurePreferencesException(e, "Error while initializing the preferences ciphers [file = ${auth.first}].")
+            throw CryptoPreferencesException(e, "Error while initializing the preferences ciphers [file = ${auth.first}].")
         }
     }
 
@@ -70,18 +65,19 @@ internal class PreferencesEncrypter(context: Context, auth: Pair<String, String>
     private val iv: IvParameterSpec
         get() {
             val iv = ByteArray(writer.blockSize)
-            java.lang.System.arraycopy("abcdefghijklmnopqrstsvwxyz123456789".toByteArray(), 0, iv, 0, writer.blockSize)
+            java.lang.System.arraycopy("abcdefghijklmnopqrstuvwxyz123456789".toByteArray(), 0, iv, 0, writer.blockSize)
             return IvParameterSpec(iv)
         }
 
 
     override fun encrypt(value: String): String {
+        if (value.isEmpty()) return ""
         val encodedValue: ByteArray
 
         try {
             encodedValue = finalize(writer, value.toByteArray(charset(charset)))
         } catch (e: UnsupportedEncodingException) {
-            throw SecurePreferencesException(e, "Error while initializing the encryption ciphers, unsupported charset. [value = $value]")
+            throw CryptoPreferencesException(e, "Error while initializing the encryption ciphers, unsupported charset. [value = $value]")
         }
 
         return Base64.encodeToString(encodedValue, Base64.NO_WRAP)
@@ -89,13 +85,14 @@ internal class PreferencesEncrypter(context: Context, auth: Pair<String, String>
 
 
     override fun decrypt(value: String): String {
+        if (value.isEmpty()) return ""
         val encodedValue = Base64.decode(value, Base64.NO_WRAP)
         val finalized = finalize(reader, encodedValue)
 
         return try {
             String(finalized, Charsets.UTF_8)
         } catch (e: UnsupportedEncodingException) {
-            throw SecurePreferencesException(e, "Error while initializing the decryption ciphers, unsupported charset. [value = $value]")
+            throw CryptoPreferencesException(e, "Error while initializing the decryption ciphers, unsupported charset. [value = $value]")
         }
     }
 
@@ -103,11 +100,11 @@ internal class PreferencesEncrypter(context: Context, auth: Pair<String, String>
         try {
             return finalizer.doFinal(input)
         } catch (e: IllegalStateException) {
-            throw SecurePreferencesException(e, "Cipher is not initialized.")
+            throw CryptoPreferencesException(e, "Cipher not initialized for input = [$input]")
         } catch (e: IllegalBlockSizeException) {
-            throw SecurePreferencesException(e, "Cipher is without padding, you are probably attempting to read a file that is in plain/text format.")
+            throw CryptoPreferencesException(e, "Cipher is without padding, you are probably attempting to read a file that is in plain/text format. input = [$input]")
         } catch (e: BadPaddingException) {
-            throw SecurePreferencesException(e, "Cipher decryption data is with a wrong padding.")
+            throw CryptoPreferencesException(e, "Cipher decryption data is with a wrong padding. input = [$input]")
         }
     }
 }

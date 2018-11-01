@@ -23,7 +23,7 @@ allprojects {
 And the dependency to your module build.gradle file:
 ```gradle
 dependencies {
-    implementation 'com.github.AndreaCioccarelli:CryptoPrefs:1.2.0.2'
+    implementation 'com.github.AndreaCioccarelli:CryptoPrefs:1.3.1.0'
 }
 ```
 
@@ -47,8 +47,8 @@ prefs.put("crypto_age", 17)
 This functions accepts 2 parameters, key and value, that are used to store the preference.
 If an item with the matching key is found, its value will be overwritten. Else, a preference is created.
 
-The `value` parameter is of `Any` type (For java programmers, Object), it means that it can be everything; however when you get back the value you will have to choose to parse it to String, Boolean, Int, Float, and so forth.
-If you need to store another type of variable you can consider the idea of converting it to String before storing in the preferences. Even, you can create an extension function to make a custom parser (e.g. get and put JSON objects using gson).
+The `value` parameter is of `Any` type (For java programmers, Object), it means that it can be everything; however when you get back the value it will be converted in the type you used to define the default value.
+If you need to store another type of variable you can consider the idea of converting it to String before storing in the preferences. Also, you can create an extension function to create a custom parser (e.g. get and put JSON objects using gson).
 
 
 #### Read values
@@ -63,6 +63,7 @@ val infinite = prefs.get("crypto_∞", 9223372036854775807) // (Long)
 Those functions accepts 2 parameters, `key` and `default`. This generic method returns the casted result of the provided type for the default value parameter.
 Key is used to search the preference into the file, and default is put in the matching key position and then returned if no item is found with the given key.
 This means that if you need to use and create an item you can do it in just one line.
+The built-in types so far are `String`, `Boolean`, `Int`, `Short`, `Long`, `Float`, `Double`, `Byte`, `UInt`, `UFloat`, `ULong`, `UByte`.
 ```kotlin
 val startCounter = prefs.get("start_count", 0) // Creates the field start_count and set it at 0
 ```
@@ -74,12 +75,11 @@ for (i in 1..10000) {
 }
 prefs.apply()
 ```
-Sometimes SharedPreferences are used to store a huge number of values and in these cases I/O operations can be cpu intensive and slow down your app, since them are executed on the main thread.
-Because of that, you should enqueue your modifications just like using `put()`, but actually apply them to the file with `apply()`.
-Remember that doing these I/O operations in a background/asynchronous thread is not advisable, but if you already are are in a thread and you can't do other way it's ok.
+Sometimes SharedPreferences are used to store a huge number of values and in those scenarios I/O operations can be cpu intensive and slow down your app, since it's all executed on the main thread.
+Because of that, you should enqueue your modifications using `queue()` just like using `put()`, but actually apply them to the file with `apply()` when you are done.
 
 **Warning #1:** calling `put()` automatically applies all the queued modifications.<br>
-**Warning #2:** `get()` fetches the values on the file, and not on the modification queue.
+**Warning #2:** `get()` fetches the values on the file, and not on the modification queue since they are not available yet.
 
 
 #### All preferences lists

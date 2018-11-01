@@ -1,7 +1,6 @@
 package com.andreacioccarelli.cryptoprefs
 
 import android.content.Context
-import android.os.Bundle
 
 /**
  * Created by andrea on 2018/May.
@@ -12,14 +11,22 @@ public class CryptoPrefs(context: Context, fileName: String, key: String, should
 
     private val preferences = CryptoWrapper(context, fileName to key, shouldEncrypt)
 
-    public val allPrefsBundle: Bundle
-        get() = preferences.getAllPreferencesBundle()
+    /**
+     * Returns the whole file content in a bundle
+     * */
+    public val allPrefsBundle = preferences.getAllPreferencesBundle()
 
-    public val allPrefsMap: Map<String, String>
-        get() = preferences.getAllPreferencesMap()
 
-    public val allPrefsList: ArrayList<Pair<String, String>>
-        get() = preferences.getAllPreferencesList()
+    /**
+     * Returns the whole file content in a map
+     * */
+    public val allPrefsMap = preferences.getAllPreferencesMap()
+
+
+    /**
+     * Returns the whole file content in a mutable list
+     * */
+    public val allPrefsList = preferences.getAllPreferencesList()
 
 
     /**
@@ -55,7 +62,11 @@ public class CryptoPrefs(context: Context, fileName: String, key: String, should
         Double::class -> preferences.get(key, default).toDouble()
         Short::class -> preferences.get(key, default).toShort()
         Byte::class -> preferences.get(key, default).toByte()
-        else -> throw IllegalStateException("Cannot cast string [$key] to type ${default::class}; create your own extension function to parse it properly")
+        UInt::class -> preferences.get(key, default).toUInt()
+        ULong::class -> preferences.get(key, default).toULong()
+        UShort::class -> preferences.get(key, default).toUShort()
+        UByte::class -> preferences.get(key, default).toUByte()
+        else -> throw IllegalStateException("Cannot cast value found in [$key] -> [${preferences.get(key, default)}] to [${default::class}]. Create your own extension function to parse it properly")
     } as T
 
 
@@ -71,17 +82,13 @@ public class CryptoPrefs(context: Context, fileName: String, key: String, should
      *            temporary location
      * @param value the value that is going to be stored in the file
      * */
-    public fun queue(key: String, value: Any) {
-        preferences.queue(key, value)
-    }
+    public fun queue(key: String, value: Any) = preferences.queue(key, value)
 
 
     /**
      * Applies the queue modifications list to the file.
      * */
-    public fun apply() {
-        preferences.apply()
-    }
+    public fun apply() = preferences.apply()
 
 
     /**
@@ -89,15 +96,11 @@ public class CryptoPrefs(context: Context, fileName: String, key: String, should
      *
      * @param key The key of the entry that is going to be deleted
      * */
-    public fun remove(key: String) {
-        preferences.remove(key)
-    }
+    public fun remove(key: String) = preferences.remove(key)
 
 
     /**
      * Erases all the preferences that have been saved in the file
      * */
-    public fun erase() {
-        preferences.erase()
-    }
+    public fun erase() = preferences.erase()
 }
