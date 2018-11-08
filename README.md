@@ -29,22 +29,22 @@ dependencies {
 
 ## Usage
 ```kotlin
-val prefs = CryptoPrefs(this, "CryptoFileName", "c29maWE=")
+val prefs = CryptoPrefs(context, "CryptoFileName", "c29maWE=")
 ```
 You need to pass 3 parameters in order to create an instance of the class CryptoPrefs:
-- The context of your Activity/Fragment
+- The context of your Application/Activity
 - The file name, internally used to store the preferences
 - Your secret key
 
-**Warning #1:** this library supports (indirectly) multi-files and multi-keys operations; However remember that saving all the preferences to one single file is much easier and has got a better performance rate. View the [multi files and multi keys details](#multi)<br>
-**Warning #2:** if your project needs an even stronger security layer, consider placing the encryption key in the native library that you'll bundle with your app, so that a full decryption will be made extremely difficult. (I personally like [chiper.so](https://github.com/MEiDIK/Cipher.so)).
+**Warning #1:** this library supports (indirectly) multi-files and multi-keys operations; however remember that saving all the preferences to one single file is much easier and has got a better performance rate. View the [multi files and multi keys details](#multi)<br>
+**Warning #2:** if your project needs an even stronger security layer, consider placing the encryption key in the native library that you'll bundle with your app, so that a full decryption will be made extremely difficult. (I personally like so much [chiper.so](https://github.com/MEiDIK/Cipher.so)).
 
 
 #### Set/Update values
 ```kotlin
 prefs.put("crypto_age", 17)
 ```
-This functions accepts 2 parameters, key and value, that are used to store the preference.
+This method accepts 2 parameters, key and value, that are used to store the preference.
 If an item with the matching key is found, its value will be overwritten. Else, a preference is created.
 
 The `value` parameter is of `Any` type (For java programmers, Object), it means that it can be everything; however when you get back the value it will be converted in the type you used to define the default value.
@@ -60,7 +60,7 @@ val isMajor = prefs.get("crypto_is_major", false) // (Boolean)
 val roomNumber = prefs.get("crypto_room_number", 107.0F) // (Float)
 val infinite = prefs.get("crypto_∞", 9223372036854775807) // (Long)
 ```
-Those functions accepts 2 parameters, `key` and `default`. This generic method returns the casted result of the provided type for the default value parameter.
+Those methods accepts 2 parameters, `key` and `default`. This generic method returns the casted result of the provided type for the default value parameter.
 Key is used to search the preference into the file, and default is put in the matching key position and then returned if no item is found with the given key.
 This means that if you need to use and create an item you can do it in just one line.
 The built-in types so far are `String`, `Boolean`, `Int`, `Short`, `Long`, `Float`, `Double`, `Byte`, `UInt`, `UFloat`, `ULong`, `UByte`.
@@ -103,14 +103,14 @@ You can remove a record from a file just passing its key to `remove()`. If no it
 ```kotlin
 prefs.erase()
 ```
-This a simple wrap of the `clear()` function of the android standard library, so what it does is deleting the whole file content. Use with caution.
+This a simple wrap of the `clear()` method of the android standard library, so what it does is deleting the whole file content. Use with caution.
 
 
 ## Smart cast & Extensibility
-A clean and fast approach is what this library aims to provide. I always found myself in java working with `String.valueOf()`, `Integer.parseInt()`, `Boolean.parseBoolean()` while reading SharedPreferences, and then I decided I didn't want to see that happen again with kotlin.
+A clean and fast approach is what this library aims to provide. I always found myself in java working with stuff like `String.valueOf()`, `Integer.parseInt()`, `Boolean.parseBoolean()` while reading SharedPreferences, and then I decided I didn't want to see that happen again with kotlin.
 Every argument you pass as value or default is of `Any` type, so that it can be everything. CryptoPrefs will convert it back to string for the encryption and eventually you will do the conversion from string to your target type.
 
-This is an example for a situation where you have a JSON response and you want to parse it later. You will find it also in the sample project.
+This is an example for a situation where you have a JSON response and you want to store it for a separate-session parsing. You will find it also in the sample project.
 ```json
 {
     "key": "Error",
@@ -140,7 +140,7 @@ fun CryptoPrefs.getPizza(key: String, default: String): Pizza {
 }
 ```
 
-On the other side, you can extend this library to create your own functions and simplify your code.
+On the other side, you can extend this library to create your own methods and simplify your code.
 For example, let's take a very common pattern
 ```kotlin
 preferences.put("startCount", preferences.get("startCount", 0) + 1);
@@ -160,7 +160,7 @@ fun CryptoPrefs.readCounter(key: String, default: String) = preferences.get("sta
 Like that you can simply call `preferences.incrementCounter()` and the work is done for you, you have the number returned and incremented easily with elegant code.
 
 ## <a name="multi"></a> Multi-files and multi-keys
-I decided to not provide built-in support for multiple files because it would have slightly impacted performances. 
+I decided not to provide built-in support for multiple files because it would have slightly impacted performances. 
 Instead, if you wish, you can have 2 instances and different filenames/keys for every file, that actually is the best solution for code style, logical division and performances.
 Please keep in mind that:
 - Saving a preference to one file won't make it available also on the other one
