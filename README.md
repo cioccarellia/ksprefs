@@ -11,8 +11,8 @@ All data you are going to store are encrypted using AES/CBC/PKCS5Padding algorit
 This library is focused on reliability, security, lightness and speed.
 
 ## Repository
-CryptoPrefs uses [jitpack](https://jitpack.io/#AndreaCioccarelli/CryptoPrefs) as packages repository.
-To use it you need to add the repository to your project build.gradle file:
+CryptoPrefs uses [jitpack](https://jitpack.io/#AndreaCioccarelli/CryptoPrefs) as package repository.
+To use it you need to add that line to your project build.gradle file:
 ```gradle
 allprojects {
     repositories {
