@@ -92,7 +92,7 @@ internal class PrefsEncrypter(auth: Pair<String, String>) : Wrapper {
         return try {
             String(finalized, Charsets.UTF_8)
         } catch (e: UnsupportedEncodingException) {
-            throw CryptoPreferencesException(e, "Error while initializing the decryption ciphers, unsupported charset. [value = $value]")
+            throw CryptoPreferencesException(e, "Error while initializing the decryption ciphers, unsupported charset. [value = ${value}]")
         }
     }
 
@@ -100,11 +100,11 @@ internal class PrefsEncrypter(auth: Pair<String, String>) : Wrapper {
         try {
             return finalizer.doFinal(input)
         } catch (e: IllegalStateException) {
-            throw CryptoPreferencesException(e, "Cipher not initialized for input = [$input]")
+            throw CryptoPreferencesException(e, "Cipher not initialized for input = [${input.toString(Charsets.UTF_8)}]")
         } catch (e: IllegalBlockSizeException) {
-            throw CryptoPreferencesException(e, "Cipher is without padding, you are probably attempting to read a file that is in plain/text format. input = [$input]")
+            throw CryptoPreferencesException(e, "Cipher is without padding, you are probably attempting to read a file that is in plain/text format. input = [${input.toString(Charsets.UTF_8)}]")
         } catch (e: BadPaddingException) {
-            throw CryptoPreferencesException(e, "Cipher decryption data is with a wrong padding. input = [$input]")
+            throw CryptoPreferencesException(e, "Cipher decryption data is with a wrong padding. input = [${input.toString(Charsets.UTF_8)}]")
         }
     }
 }

@@ -11,9 +11,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.andreacioccarelli.cryptoprefs.CryptoPrefs
-import kotlinx.android.synthetic.main.activity_presentation.*
-import kotlinx.android.synthetic.main.content_presentation.*
 import org.json.JSONObject
+import java.util.*
 
 
 /**
@@ -143,5 +142,17 @@ class PresentationActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    protected fun randomString(): String {
+        val SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz<>-@"
+        val salt = StringBuilder()
+        val rnd = Random()
+        while (salt.length < 18) { // length of the random string.
+            val index = (rnd.nextFloat() * SALTCHARS.length) as Int
+            salt.append(SALTCHARS[index])
+        }
+        return salt.toString()
+
     }
 }

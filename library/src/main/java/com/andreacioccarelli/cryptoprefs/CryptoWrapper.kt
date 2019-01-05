@@ -22,7 +22,7 @@ internal class CryptoWrapper(context: Context, auth: Pair<String, String>, shoul
     internal fun getAllPreferencesBundle(): Bundle {
         val result = Bundle()
 
-        reader.all.map {
+        reader.all.forEach {
             result.putString(crypto.decrypt(it.key), crypto.decrypt(it.value.toString()))
         }
 
@@ -32,7 +32,7 @@ internal class CryptoWrapper(context: Context, auth: Pair<String, String>, shoul
     internal fun getAllPreferencesMap(): Map<String, String> {
         val result = HashMap<String, String>()
 
-        reader.all.map {
+        reader.all.forEach {
             result[crypto.decrypt(it.key)] = crypto.decrypt(it.value.toString())
         }
 
@@ -42,7 +42,7 @@ internal class CryptoWrapper(context: Context, auth: Pair<String, String>, shoul
     internal fun getAllPreferencesList(): MutableList<Pair<String, String>> {
         val result = mutableListOf<Pair<String, String>>()
 
-        reader.all.map {
+        reader.all.forEach {
             result.add(crypto.decrypt(it.key) to crypto.decrypt(it.value.toString()))
         }
 
