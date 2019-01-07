@@ -11,6 +11,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import com.andreacioccarelli.cryptoprefs.CryptoPrefs
+import kotlinx.android.synthetic.main.activity_presentation.*
+import kotlinx.android.synthetic.main.content_presentation.*
 import org.json.JSONObject
 import java.util.*
 
@@ -32,14 +34,14 @@ class PresentationActivity : AppCompatActivity() {
 
         button.setOnClickListener {
             // Put some sample values to the preferences
-            prefs.put("crypto_sample_boolean", true)
-            prefs.put("crypto_sample_byte", 1.toByte())
-            prefs.put("crypto_sample_double", 2.toDouble())
-            prefs.put("crypto_sample_float", 3.toFloat())
-            prefs.put("crypto_sample_int", 4)
-            prefs.put("crypto_sample_long", 5.toLong())
-            prefs.put("crypto_sample_short", 6.toShort())
-            prefs.put("crypto_sample_string", "a")
+
+            for (i in 0..1_000) {
+                prefs.put(UUID.randomUUID().toString(), UUID.randomUUID().toString())
+            }
+
+            for (i in 0..1_000) {
+                prefs.get(UUID.randomUUID().toString(), UUID.randomUUID().toString())
+            }
 
             // You don't have to cast them before passing as arguments
             updateView()
