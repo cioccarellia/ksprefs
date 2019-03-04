@@ -35,11 +35,11 @@ class PresentationActivity : AppCompatActivity() {
         button.setOnClickListener {
             // Put some sample values to the preferences
 
-            for (i in 0..1_000) {
+            for (i in 0..10_000) {
                 prefs.put(UUID.randomUUID().toString(), UUID.randomUUID().toString())
             }
 
-            for (i in 0..1_000) {
+            for (i in 0..10_000) {
                 prefs.get(UUID.randomUUID().toString(), UUID.randomUUID().toString())
             }
 

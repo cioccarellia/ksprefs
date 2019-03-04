@@ -62,11 +62,7 @@ public class CryptoPrefs(context: Context, fileName: String, key: String, should
         Double::class -> preferences.get(key, default).toDouble()
         Short::class -> preferences.get(key, default).toShort()
         Byte::class -> preferences.get(key, default).toByte()
-        UInt::class -> preferences.get(key, default).toUInt()
-        ULong::class -> preferences.get(key, default).toULong()
-        UShort::class -> preferences.get(key, default).toUShort()
-        UByte::class -> preferences.get(key, default).toUByte()
-        else -> throw IllegalStateException("Cannot cast value found in [$key] -> [${preferences.get(key, default)}] to [${default::class}]. Create your own extension function to parse it properly")
+        else -> throw IllegalStateException("Cannot cast value found in key [$key] -> [${preferences.get(key, default)}] to [${default::class}]. Create your own extension function to parse it properly")
     } as T
 
 

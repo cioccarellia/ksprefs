@@ -92,19 +92,21 @@ internal class PrefsEncrypter(auth: Pair<String, String>) : Wrapper {
         return try {
             String(finalized, Charsets.UTF_8)
         } catch (e: UnsupportedEncodingException) {
-            throw CryptoPreferencesException(e, "Error while initializing the decryption ciphers, unsupported charset. [value = ${value}]")
+            throw CryptoPreferencesException(e, "Error while initializing the decryption ciphers, unsupported charset. [value = $value]")
         }
     }
 
-    private fun finalize(finalizer: Cipher, input: ByteArray): ByteArray {
+    private fun finalize(cipher: Cipher, input: ByteArray): ByteArray {
         try {
-            return finalizer.doFinal(input)
+            return cipher.doFinal(input)
         } catch (e: IllegalStateException) {
-            throw CryptoPreferencesException(e, "Cipher not initialized for input = [${input.toString(Charsets.UTF_8)}]")
+            throw CryptoPreferencesException(e, "Cipher not initialized (IllegalStateException). input -> [${input.toString(Charsets.UTF_8)}], cipher = $cipher")
+        } catch (e: IllegalArgumentException) {
+            throw CryptoPreferencesException(e, "Null input buffer (IllegalArgumentException). input -> [${input.toString(Charsets.UTF_8)}], cipher = $cipher")
         } catch (e: IllegalBlockSizeException) {
-            throw CryptoPreferencesException(e, "Cipher is without padding, you are probably attempting to read a file that is in plain/text format. input = [${input.toString(Charsets.UTF_8)}]")
+            throw CryptoPreferencesException(e, "Cipher is without padding (IllegalBlockSizeException), you are probably attempting to read a file that is in plain/text format. input = [${input.toString(Charsets.UTF_8)}]")
         } catch (e: BadPaddingException) {
-            throw CryptoPreferencesException(e, "Cipher decryption data is with a wrong padding. input = [${input.toString(Charsets.UTF_8)}]")
+            throw CryptoPreferencesException(e, "Cipher decryption data is with a wrong padding (BadPaddingException). input = [${input.toString(Charsets.UTF_8)}]")
         }
     }
 }

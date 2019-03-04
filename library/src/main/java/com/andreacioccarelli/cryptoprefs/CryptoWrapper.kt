@@ -63,11 +63,11 @@ internal class CryptoWrapper(context: Context, auth: Pair<String, String>, shoul
         writer.putString(crypto.encrypt(key), crypto.encrypt(value.toString()))
     }
 
-    internal fun apply() = writer.apply()
-
     internal fun remove(key: String) {
         writer.remove(crypto.encrypt(key)).apply()
     }
+
+    internal fun apply() = writer.apply()
 
     internal fun erase() {
         writer.clear().apply()
