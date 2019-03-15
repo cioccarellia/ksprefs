@@ -2,7 +2,6 @@ package com.andreacioccarelli.cryptoprefs
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.os.Bundle
 import com.andreacioccarelli.cryptoprefs.interfaces.Wrapper
 import com.andreacioccarelli.cryptoprefs.wrappers.PrefsEncrypter
 import com.andreacioccarelli.cryptoprefs.wrappers.PrefsWrapper
@@ -19,34 +18,14 @@ internal class CryptoWrapper(context: Context, auth: Pair<String, String>, shoul
 
     private val crypto: Wrapper = if (shouldEncrypt) PrefsEncrypter(auth) else PrefsWrapper()
 
-    internal fun getAllPreferencesBundle(): Bundle {
-        val result = Bundle()
+    internal fun getAll(): Map<String, String> {
+        val result: MutableMap<String, String> = mutableMapOf()
 
         reader.all.forEach {
-            result.putString(crypto.decrypt(it.key), crypto.decrypt(it.value.toString()))
+            result[crypto.decrypt(it.key.toString())] = crypto.decrypt(it.value.toString())
         }
 
-        return result
-    }
-
-    internal fun getAllPreferencesMap(): Map<String, String> {
-        val result = HashMap<String, String>()
-
-        reader.all.forEach {
-            result[crypto.decrypt(it.key)] = crypto.decrypt(it.value.toString())
-        }
-
-        return result
-    }
-
-    internal fun getAllPreferencesList(): MutableList<Pair<String, String>> {
-        val result = mutableListOf<Pair<String, String>>()
-
-        reader.all.forEach {
-            result.add(crypto.decrypt(it.key) to crypto.decrypt(it.value.toString()))
-        }
-
-        return result
+        return result.toMap()
     }
 
     internal fun get(key: String, default: Any): String {
@@ -69,7 +48,5 @@ internal class CryptoWrapper(context: Context, auth: Pair<String, String>, shoul
 
     internal fun apply() = writer.apply()
 
-    internal fun erase() {
-        writer.clear().apply()
-    }
+    internal fun erase() = writer.clear().apply()
 }

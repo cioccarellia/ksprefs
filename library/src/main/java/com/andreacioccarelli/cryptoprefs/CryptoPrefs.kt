@@ -12,21 +12,9 @@ public class CryptoPrefs(context: Context, fileName: String, key: String, should
     private val preferences = CryptoWrapper(context, fileName to key, shouldEncrypt)
 
     /**
-     * Returns the whole file content in a bundle
-     * */
-    public val allPrefsBundle = preferences.getAllPreferencesBundle()
-
-
-    /**
-     * Returns the whole file content in a map
-     * */
-    public val allPrefsMap = preferences.getAllPreferencesMap()
-
-
-    /**
      * Returns the whole file content in a mutable list
      * */
-    public val allPrefsList = preferences.getAllPreferencesList()
+    public fun getAll(): Map<String, String> = preferences.getAll()
 
 
     /**

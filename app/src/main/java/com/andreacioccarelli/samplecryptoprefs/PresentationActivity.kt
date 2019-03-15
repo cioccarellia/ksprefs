@@ -16,14 +16,15 @@ import kotlinx.android.synthetic.main.content_presentation.*
 import org.json.JSONObject
 import java.util.*
 
-
 /**
  * Presentation containing the most useful approaches to the library
  * */
-class PresentationActivity : AppCompatActivity() {
+
+open class PresentationActivity : AppCompatActivity() {
 
     private lateinit var prefs: CryptoPrefs
 
+    @SuppressLint("LogConditional")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_presentation)
@@ -34,16 +35,14 @@ class PresentationActivity : AppCompatActivity() {
 
         button.setOnClickListener {
             // Put some sample values to the preferences
-
-            for (i in 0..10_000) {
+            for (i in 0..100) {
                 prefs.put(UUID.randomUUID().toString(), UUID.randomUUID().toString())
             }
 
-            for (i in 0..10_000) {
+            for (i in 0..100) {
                 prefs.get(UUID.randomUUID().toString(), UUID.randomUUID().toString())
             }
 
-            // You don't have to cast them before passing as arguments
             updateView()
         }
 
@@ -71,11 +70,13 @@ class PresentationActivity : AppCompatActivity() {
         button3.setOnClickListener {
             // Function that will return back the number of times the app has started
             toast(prefs.get(Keys.startCount, 0))
+            prefs.put("A", "B")
+            updateView()
         }
 
         button4.setOnClickListener {
             // Example for enqueuing
-            for (i in 1..10) {
+            for (i in 1..100) {
                 prefs.queue("index[$i]", i)
             }
 
@@ -83,7 +84,7 @@ class PresentationActivity : AppCompatActivity() {
             prefs.apply()
 
 
-            for (pref in prefs.allPrefsMap) {
+            for (pref in prefs.getAll()) {
                 Log.d(this.javaClass.name, "${pref.key}: ${pref.value}")
             }
 
@@ -98,6 +99,8 @@ class PresentationActivity : AppCompatActivity() {
                 x += "${pref.key} ${pref.value}\n"
             }
 
+            prefs.remove("A")
+            updateView()
             toast(x)
         }
 
@@ -112,14 +115,14 @@ class PresentationActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun updateView() {
-        content.text = "*CryptoPrefs view*\n\n"
+        content.text = "[CryptoPrefs view]\n\n"
 
-        for (pref in prefs.allPrefsMap) {
+        for (pref in prefs.getAll()) {
             content.text = "${content.text}key ${pref.key}, value=${pref.value};\n"
         }
 
 
-        content.text = "${content.text}\n\n\n*Shared Prefs view*\n\n"
+        content.text = "${content.text}\n\n\n[Shared Prefs view]\n\n"
         for (pref in getSharedPreferences(Keys.System.filename, Context.MODE_PRIVATE).all) {
             content.text = "${content.text}key \"${pref.key}\", value=\"${pref.value}\";\n"
         }
@@ -127,7 +130,7 @@ class PresentationActivity : AppCompatActivity() {
         content.text = "${content.text}\n\n\n"
     }
 
-    private fun Context.toast(message: Any) {
+    private fun Context.toast(message: Any?) {
         Toast.makeText(applicationContext, message.toString(), Toast.LENGTH_LONG).show()
     }
 
@@ -146,15 +149,14 @@ class PresentationActivity : AppCompatActivity() {
         }
     }
 
-    protected fun randomString(): String {
-        val SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz<>-@"
+    protected fun randomString(length: Int = 18): String {
+        val saltChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz<>-@"
         val salt = StringBuilder()
         val rnd = Random()
-        while (salt.length < 18) { // length of the random string.
-            val index = (rnd.nextFloat() * SALTCHARS.length) as Int
-            salt.append(SALTCHARS[index])
+        while (salt.length < length) {
+            val index = (rnd.nextFloat() * saltChars.length).toInt()
+            salt.append(saltChars[index])
         }
         return salt.toString()
-
     }
 }

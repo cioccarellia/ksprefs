@@ -23,7 +23,7 @@ allprojects {
 And the dependency to your module build.gradle file:
 ```gradle
 dependencies {
-    implementation 'com.github.AndreaCioccarelli:CryptoPrefs:1.3.2.0'
+    implementation 'com.github.AndreaCioccarelli:CryptoPrefs:1.3.2.1'
 }
 ```
 
@@ -84,12 +84,10 @@ Because of that, you should enqueue your modifications using `queue()` just like
 
 #### Preference lists
 ```kotlin
-val bundle: Bundle = prefs.allPrefsBundle
-val map: Map<String, String> = prefs.allPrefsMap
-val list: ArrayList<Pair<String, String>> = prefs.allPrefsList
+val list = prefs.getAll()
 ```
-You can get the preference list via a dedicated function set and perform batch operations on them.
-The default type provided by the android API is a `Map`, but here you can choose between a `Bundle` and a list of `Pair`s .
+You can grab the preference list via this function and perform batch operations on them.
+The default type provided by the android API is `Map<String, Any?>`, however with CryptoPrefs the type is `Map<String, String>`.
 
 #### Remove
 ```kotlin
