@@ -1,3 +1,5 @@
+@file:Suppress("MemberVisibilityCanBePrivate")
+
 package com.andreacioccarelli.cryptoprefs
 
 import android.content.Context
@@ -9,7 +11,7 @@ import android.content.Context
 
 public class CryptoPrefs(context: Context, fileName: String, key: String, shouldEncrypt: Boolean = true) {
 
-    private val preferences = CryptoWrapper(context, fileName to key, shouldEncrypt)
+    val preferences = CryptoWrapper(context, fileName to key, shouldEncrypt)
 
     /**
      * Returns the whole file content in a mutable list
@@ -40,17 +42,17 @@ public class CryptoPrefs(context: Context, fileName: String, key: String, should
      * @param default the default value, in case the key doesn't
      *                exists in the file
      * */
-    @Suppress("UNCHECKED_CAST", "IMPLICIT_CAST_TO_ANY")
-    public fun <T : Any> get(key: String, default: T) = when (default::class) {
-        String::class -> preferences.get(key, default)
-        Boolean::class -> preferences.get(key, default).toBoolean()
-        Int::class -> preferences.get(key, default).toInt()
-        Float::class -> preferences.get(key, default).toFloat()
-        Long::class -> preferences.get(key, default).toLong()
-        Double::class -> preferences.get(key, default).toDouble()
-        Short::class -> preferences.get(key, default).toShort()
-        Byte::class -> preferences.get(key, default).toByte()
-        else -> throw IllegalStateException("Cannot cast value found in key [$key] -> [${preferences.get(key, default)}] to [${default::class}]. Create your own extension function to parse it properly")
+    @Suppress("IMPLICIT_CAST_TO_ANY")
+    public inline fun <reified T : Any> get(key: String, default: T) = when (default::class) {
+        String::class ->    preferences.get(key, default)
+        Boolean::class ->   preferences.get(key, default).toBoolean()
+        Int::class ->       preferences.get(key, default).toInt()
+        Float::class ->     preferences.get(key, default).toFloat()
+        Long::class ->      preferences.get(key, default).toLong()
+        Double::class ->    preferences.get(key, default).toDouble()
+        Short::class ->     preferences.get(key, default).toShort()
+        Byte::class ->      preferences.get(key, default).toByte()
+        else -> throw IllegalStateException("Cannot cast value found in key {[$key] -> [${preferences.get(key, default)}]} to [${default::class}]. Create your own extension function to parse it properly")
     } as T
 
 

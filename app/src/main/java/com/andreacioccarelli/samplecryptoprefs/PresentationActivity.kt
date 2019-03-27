@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.WindowManager
 import android.widget.Toast
 import com.andreacioccarelli.cryptoprefs.CryptoPrefs
 import kotlinx.android.synthetic.main.activity_presentation.*
@@ -131,7 +132,9 @@ open class PresentationActivity : AppCompatActivity() {
     }
 
     private fun Context.toast(message: Any?) {
-        Toast.makeText(applicationContext, message.toString(), Toast.LENGTH_LONG).show()
+        try {
+            Toast.makeText(applicationContext, message.toString(), Toast.LENGTH_LONG).show()
+        } catch (e: WindowManager.BadTokenException) {}
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
