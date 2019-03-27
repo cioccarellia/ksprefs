@@ -62,15 +62,12 @@ open class PresentationActivity : AppCompatActivity() {
             prefs.put(key, jsonErrorLog)
             val jsonFromPrefs = JSONObject(prefs.get(key, ""))
 
-            toast(jsonFromPrefs.getString("details"))
-
             updateView()
         }
 
 
         button3.setOnClickListener {
             // Function that will return back the number of times the app has started
-            toast(prefs.get(Keys.startCount, 0))
             prefs.put("A", "B")
             updateView()
         }
@@ -102,7 +99,6 @@ open class PresentationActivity : AppCompatActivity() {
 
             prefs.remove("A")
             updateView()
-            toast(x)
         }
 
         button6.setOnClickListener {
@@ -129,12 +125,6 @@ open class PresentationActivity : AppCompatActivity() {
         }
 
         content.text = "${content.text}\n\n\n"
-    }
-
-    private fun Context.toast(message: Any?) {
-        try {
-            Toast.makeText(applicationContext, message.toString(), Toast.LENGTH_LONG).show()
-        } catch (e: WindowManager.BadTokenException) {}
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
