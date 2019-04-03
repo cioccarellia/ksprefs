@@ -8,15 +8,14 @@ import android.content.Context
  * Created by andrea on 2018/May.
  * Part of the package com.andreacioccarelli.cryptoprefs
  */
-
-public class CryptoPrefs(context: Context, fileName: String, key: String, shouldEncrypt: Boolean = true) {
+class CryptoPrefs(context: Context, fileName: String, key: String, shouldEncrypt: Boolean = true) {
 
     val preferences = CryptoWrapper(context, fileName to key, shouldEncrypt)
 
     /**
      * Returns the whole file content in a mutable list
      * */
-    public fun getAll(): Map<String, String> = preferences.getAll()
+    fun getAll(): Map<String, String> = preferences.getAll()
 
 
     /**
@@ -27,7 +26,7 @@ public class CryptoPrefs(context: Context, fileName: String, key: String, should
      * @param key the key of the item that is going to be stored
      * @param value the value that is going to be stored in the file
      * */
-    public fun put(key: String, value: Any) {
+    fun put(key: String, value: Any) {
         preferences.put(key, value)
     }
 
@@ -43,7 +42,7 @@ public class CryptoPrefs(context: Context, fileName: String, key: String, should
      *                exists in the file
      * */
     @Suppress("IMPLICIT_CAST_TO_ANY")
-    public inline fun <reified T : Any> get(key: String, default: T) = when (default::class) {
+    fun <T : Any> get(key: String, default: T) = when (default) {
         String::class ->    preferences.get(key, default)
         Boolean::class ->   preferences.get(key, default).toBoolean()
         Int::class ->       preferences.get(key, default).toInt()
@@ -52,7 +51,7 @@ public class CryptoPrefs(context: Context, fileName: String, key: String, should
         Double::class ->    preferences.get(key, default).toDouble()
         Short::class ->     preferences.get(key, default).toShort()
         Byte::class ->      preferences.get(key, default).toByte()
-        else -> throw IllegalStateException("Cannot cast value found in key {[$key] -> [${preferences.get(key, default)}]} to [${default::class}]. Create your own extension function to parse it properly")
+        else -> throw IllegalStateException("Cannot cast value found in key {[$key] -> [${preferences.get(key, default)}]} to [${default::class.java.simpleName}]. Create your own extension function to parse it properly")
     } as T
 
 
@@ -68,13 +67,13 @@ public class CryptoPrefs(context: Context, fileName: String, key: String, should
      *            temporary location
      * @param value the value that is going to be stored in the file
      * */
-    public fun queue(key: String, value: Any) = preferences.queue(key, value)
+    fun queue(key: String, value: Any) = preferences.queue(key, value)
 
 
     /**
      * Applies the queue modifications list to the file.
      * */
-    public fun apply() = preferences.apply()
+    fun apply() = preferences.apply()
 
 
     /**
@@ -82,11 +81,11 @@ public class CryptoPrefs(context: Context, fileName: String, key: String, should
      *
      * @param key The key of the entry that is going to be deleted
      * */
-    public fun remove(key: String) = preferences.remove(key)
+    fun remove(key: String) = preferences.remove(key)
 
 
     /**
      * Erases all the preferences that have been saved in the file
      * */
-    public fun erase() = preferences.erase()
+    fun erase() = preferences.erase()
 }
