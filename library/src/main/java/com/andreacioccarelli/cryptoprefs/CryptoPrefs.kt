@@ -41,8 +41,8 @@ class CryptoPrefs(context: Context, fileName: String, key: String, shouldEncrypt
      * @param default the default value, in case the key doesn't
      *                exists in the file
      * */
-    @Suppress("IMPLICIT_CAST_TO_ANY")
-    fun <T : Any> get(key: String, default: T) = when (default) {
+    @Suppress("IMPLICIT_CAST_TO_ANY", "UNCHECKED_CAST")
+    fun <T : Any> get(key: String, default: T) = when (default::class) {
         String::class ->    preferences.get(key, default)
         Boolean::class ->   preferences.get(key, default).toBoolean()
         Int::class ->       preferences.get(key, default).toInt()
@@ -59,7 +59,7 @@ class CryptoPrefs(context: Context, fileName: String, key: String, shouldEncrypt
      * Enqueues a modification that is kept on a volatile copy
      * of the file, also with every eventual new modification
      * enqueued with this function.
-     * Once apply is called the queue is asynchronously written
+     * Once apply is called the enqueue is asynchronously written
      * on the disk and the changes are available for in-file
      * reading and writing operations
      *
@@ -67,11 +67,11 @@ class CryptoPrefs(context: Context, fileName: String, key: String, shouldEncrypt
      *            temporary location
      * @param value the value that is going to be stored in the file
      * */
-    fun queue(key: String, value: Any) = preferences.queue(key, value)
+    fun enqueue(key: String, value: Any) = preferences.queue(key, value)
 
 
     /**
-     * Applies the queue modifications list to the file.
+     * Applies the enqueue modifications list to the file.
      * */
     fun apply() = preferences.apply()
 

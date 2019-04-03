@@ -9,8 +9,6 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.WindowManager
-import android.widget.Toast
 import com.andreacioccarelli.cryptoprefs.CryptoPrefs
 import kotlinx.android.synthetic.main.activity_presentation.*
 import kotlinx.android.synthetic.main.content_presentation.*
@@ -75,7 +73,7 @@ open class PresentationActivity : AppCompatActivity() {
         button4.setOnClickListener {
             // Example for enqueuing
             for (i in 1..100) {
-                prefs.queue("index[$i]", i)
+                prefs.enqueue("index[$i]", i)
             }
 
             // Calling apply() to commit changes

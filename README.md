@@ -23,7 +23,7 @@ allprojects {
 And the dependency to your module build.gradle file:
 ```gradle
 dependencies {
-    implementation 'com.github.AndreaCioccarelli:CryptoPrefs:1.3.2.3'
+    implementation 'com.github.AndreaCioccarelli:CryptoPrefs:1.3.2.4'
 }
 ```
 
@@ -71,14 +71,14 @@ val startCounter = prefs.get("start_count", 0) // Creates the field start_count 
 #### Batch operations
 ```kotlin
 for (i in 1..100_000) {
-    prefs.queue("$i", (i*i).toLong())
+    prefs.enqueue("$i", (i*i).toLong())
 }
 prefs.apply()
 ```
 Sometimes SharedPreferences are used to store a huge number of values and in those scenarios I/O operations can be CPU intensive and they may down your app, since every operation is executed on the main UI thread.
-Because of that, you should enqueue your modifications using `queue()` just like using `put()`, but actually apply them to the file with `apply()` when you are done.
+Because of that, you should enqueue your modifications using `enqueue()` just like using `put()`, but actually apply them to the file with `apply()` when you are done.
 
-**Warning #1:** calling `put()` automatically applies all the queued modifications.<br>
+**Warning #1:** calling `put()` automatically applies all the enqueued modifications.<br>
 **Warning #2:** `get()` fetches the values on the file, and not on the modification queue since they are not available yet.
 
 
