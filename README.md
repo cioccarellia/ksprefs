@@ -145,31 +145,31 @@ On the other side, you can extend this library to create your own methods and si
 For example, let's take a very common pattern
 ```kotlin
 preferences.put("startCount", preferences.get("startCount", 0) + 1);
-val count =  preferences.get("startCount", 0)
+val count = preferences.get("startCount", 0)
 ```
-The above code is used to increment a counter every time the user starts the app, but is something primitive and hard to read.
+The code shown above is used to increment a counter every time the user starts the app, but the syntax is unclear and hard to read.
 
 ```kotlin
 fun CryptoPrefs.incrementCounter(key: String, default: String): Int {
-    val count = preferences.get("startCount", 0)
-    preferences.put("startCount", times + 1)
+    val count = preferences.readCounter() + 1
+    preferences.put("startCount", count)
     return count
 }
 
-fun CryptoPrefs.readCounter(key: String, default: String) = preferences.get("startCount", 0)
+fun CryptoPrefs.readCounter() = preferences.get("startCount", 0)
 ```
-Like that you can simply call `preferences.incrementCounter()` and the work is done for you, you have the number returned and incremented easily with one line of code.
+Like that you can invoke `preferences.incrementCounter()` and the work is done for you, you have the number returned and incremented easily with one line of code.
 
 ## <a name="multi"></a> Multi-files and Multi-keys
 This library does not provide built-in support for multiple files, as it would have slightly impacted performances. 
-Instead, if you wish, you can have 2 instances and different filenames/keys for every file, that actually is the best solution for code style, logical division and performances.
+Instead, you can have 2 instances and different filenames/keys for every file, that actually is the best solution for logical division and performances.
 Please keep in mind that:
 - Saving a preference to one file won't make it available also on the other one
 - If you lose your encryption key, your preferences won't be readable again
-- If you change your key for every file, opening the wrong file with a key will result in a bunch of unreadable stuff
+- Opening a file with the wrong decryption key will result in a bunch of unreadable stuff
 
 ## <a name="plain"></a> Handling unencrypted files
-Even though this library is all about encryption, you still can operate with standard unencrypted preferences. Why?
+Even though this library is about encryption, you still can operate with standard unencrypted preferences. It is done for:
 - For the purpose of testing, for example if in your app you need to debug SharedPreferences and you want to see the effective data
 - To provide compatibility with files that have been stored in the past without decryption
 - To provide compatibility with files that have been created using android settings, that does not use encryption
@@ -179,7 +179,7 @@ To do so, you have to initialize the instance like this
 val prefs = CryptoPrefs(applicationContext, "CryptoFileName", "c29maWE=", false)
 ```
 
-**Warning:** Remember than encrypted files cannot be read without a key and that a plain text file read with a key will throw an exception with a clear message: use that if you that know what you're doing is right
+**Warning:** Remember than encrypted files cannot be read without a key and that a plain text file read with a key will throw an exception with a clear message: use that if you know what you're doing.
 
 
 ## SharedPreferences plain XML vs CryptoPrefs encrypted XML
@@ -197,12 +197,7 @@ val prefs = CryptoPrefs(applicationContext, "CryptoFileName", "c29maWE=", false)
 ```
 
 ## Sample project
-If you wish a complete and detailed PoC with code examples you can check out the :app module of this repository, you will find an android app that's about this library and its functions in depth.
-
-## Concept
-Android default SharedPreferences APIs allows you to dynamically store some configuration data on your application internal (and private) storage. 
-With the time, android had become more popular and so many softwares were developed. The result is that secure informations, critical/sensitive data (and billing details) are often stored there [without even a basic protection](https://medium.com/@andreacioccarelli/android-sharedpreferences-data-weakness-66a44f070e76).
-This library aims to terminate easy application hacking and security mechanisms bypass.
+If you need a complete and detailed PoC with code examples you can check out the :app module of this repository.
 
 ## License
 ```
