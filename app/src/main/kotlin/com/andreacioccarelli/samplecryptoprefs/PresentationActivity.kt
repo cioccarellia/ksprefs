@@ -21,7 +21,7 @@ import java.util.*
 
 open class PresentationActivity : AppCompatActivity() {
 
-    private lateinit var prefs: CryptoPrefs
+    private var prefs = CryptoPrefs(applicationContext, Keys.System.filename, Keys.System.key)
 
     @SuppressLint("LogConditional")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +29,6 @@ open class PresentationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_presentation)
         setSupportActionBar(toolbar)
 
-        prefs = CryptoPrefs(applicationContext, Keys.System.filename, Keys.System.key)
         prefs.put(Keys.startCount, prefs.get(Keys.startCount, 0) + 1)
 
         button.setOnClickListener {
@@ -65,18 +64,15 @@ open class PresentationActivity : AppCompatActivity() {
 
 
         button3.setOnClickListener {
-            // Function that will return back the number of times the app has started
             prefs.put("A", "B")
             updateView()
         }
 
         button4.setOnClickListener {
-            // Example for enqueuing
             for (i in 1..100) {
                 prefs.enqueue("index[$i]", i)
             }
 
-            // Calling apply() to commit changes
             prefs.apply()
 
 
@@ -89,7 +85,6 @@ open class PresentationActivity : AppCompatActivity() {
         }
 
         button5.setOnClickListener {
-            // Reading raw file to check the values are encrypted
             var x = ""
             for (pref in getSharedPreferences(Keys.System.filename, Context.MODE_PRIVATE).all) {
                 x += "${pref.key} ${pref.value}\n"
@@ -100,7 +95,6 @@ open class PresentationActivity : AppCompatActivity() {
         }
 
         button6.setOnClickListener {
-            // Clear all preferences
             prefs.erase()
             updateView()
         }

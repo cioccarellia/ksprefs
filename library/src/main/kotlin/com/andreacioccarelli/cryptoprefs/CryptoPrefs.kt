@@ -5,15 +5,15 @@ package com.andreacioccarelli.cryptoprefs
 import android.content.Context
 
 /**
- * Created by andrea on 2018/May.
- * Part of the package com.andreacioccarelli.cryptoprefs
+ * Designed and Developed by Andrea Cioccarelli
  */
+
 class CryptoPrefs(context: Context, fileName: String, key: String, shouldEncrypt: Boolean = true) {
 
     val preferences = CryptoWrapper(context, fileName to key, shouldEncrypt)
 
     /**
-     * Returns the whole file content in a mutable list
+     * Returns the whole file content in a map
      * */
     fun getAll(): Map<String, String> = preferences.getAll()
 

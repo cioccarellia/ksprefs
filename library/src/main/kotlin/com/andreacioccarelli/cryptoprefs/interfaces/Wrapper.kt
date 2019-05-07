@@ -1,8 +1,7 @@
 package com.andreacioccarelli.cryptoprefs.interfaces
 
 /**
- * Created by andrea on 2018/Jun.
- * Part of the package com.andreacioccarelli.cryptoprefs.interfaces
+ * Designed and Developed by Andrea Cioccarelli
  */
 interface Wrapper {
     /**

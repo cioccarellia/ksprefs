@@ -7,8 +7,7 @@ import com.andreacioccarelli.cryptoprefs.wrappers.PrefsEncrypter
 import com.andreacioccarelli.cryptoprefs.wrappers.PrefsWrapper
 
 /**
- * Created by andrea on 2018/May.
- * Part of the package com.andreacioccarelli.cryptoprefs
+ * Designed and Developed by Andrea Cioccarelli
  */
 
 public class CryptoWrapper(context: Context, auth: Pair<String, String>, shouldEncrypt: Boolean) {
@@ -21,8 +20,11 @@ public class CryptoWrapper(context: Context, auth: Pair<String, String>, shouldE
     fun getAll(): Map<String, String> {
         val result: MutableMap<String, String> = mutableMapOf()
 
-        reader.all.forEach {
-            result[crypto.decrypt(it.key.toString())] = crypto.decrypt(it.value.toString())
+        for (field in reader.all) {
+            val key = field.key.toString()
+            val value = field.value.toString()
+
+            result[crypto.decrypt(key)] = crypto.decrypt(value)
         }
 
         return result.toMap()
@@ -33,9 +35,8 @@ public class CryptoWrapper(context: Context, auth: Pair<String, String>, shouldE
         return crypto.decrypt(encryptedString!!)
     }
 
-
     fun put(key: String, value: Any) {
-        writer.putString(crypto.encrypt(key), crypto.encrypt(value.toString())).apply()
+        writer.putString(crypto.encrypt(key), crypto.encrypt(value.toString())).commit()
     }
 
     fun queue(key: String, value: Any) {
@@ -43,10 +44,10 @@ public class CryptoWrapper(context: Context, auth: Pair<String, String>, shouldE
     }
 
     fun remove(key: String) {
-        writer.remove(crypto.encrypt(key)).apply()
+        writer.remove(crypto.encrypt(key)).commit()
     }
 
-    fun apply() = writer.apply()
+    fun apply() = writer.commit()
 
-    fun erase() = writer.clear().apply()
+    fun erase() = writer.clear().commit()
 }

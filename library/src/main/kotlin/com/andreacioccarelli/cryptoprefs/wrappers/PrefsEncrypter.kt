@@ -17,8 +17,7 @@ import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
 
 /**
- * Created by andrea on 2018/May.
- * Part of the package com.andreacioccarelli.cryptoprefs.wrappers
+ * Designed and Developed by Andrea Cioccarelli
  */
 
 internal class PrefsEncrypter(auth: Pair<String, String>) : Wrapper {

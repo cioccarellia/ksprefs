@@ -11,8 +11,8 @@ android {
         minSdkVersion 15
         buildToolsVersion "28.0.3"
         targetSdkVersion 28
-        versionCode 15
-        versionName "1.3.2.4"
+        versionCode 16
+        versionName "1.3.2.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -21,6 +21,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
     }
 }
 
