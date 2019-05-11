@@ -75,11 +75,9 @@ open class PresentationActivity : AppCompatActivity() {
 
             prefs.apply()
 
-
             for (pref in prefs.getAll()) {
                 Log.d(this.javaClass.name, "${pref.key}: ${pref.value}")
             }
-
 
             updateView()
         }
@@ -110,7 +108,6 @@ open class PresentationActivity : AppCompatActivity() {
             content.text = "${content.text}key ${pref.key}, value=${pref.value};\n"
         }
 
-
         content.text = "${content.text}\n\n\n[Shared Prefs view]\n\n"
         for (pref in getSharedPreferences(Keys.System.filename, Context.MODE_PRIVATE).all) {
             content.text = "${content.text}key \"${pref.key}\", value=\"${pref.value}\";\n"
@@ -135,7 +132,7 @@ open class PresentationActivity : AppCompatActivity() {
     }
 
     protected fun randomString(length: Int = 18): String {
-        val saltChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz<>-@"
+        val saltChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz<>-@/"
         val salt = StringBuilder()
         val rnd = Random()
         while (salt.length < length) {

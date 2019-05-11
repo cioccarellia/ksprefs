@@ -10,7 +10,7 @@ import android.content.Context
 
 class CryptoPrefs(context: Context, fileName: String, key: String, shouldEncrypt: Boolean = true) {
 
-    val preferences = CryptoWrapper(context, fileName to key, shouldEncrypt)
+    internal val preferences = CryptoWrapper(context, fileName to key, shouldEncrypt)
 
     /**
      * Returns the whole file content in a map
