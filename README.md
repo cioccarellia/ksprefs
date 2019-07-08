@@ -55,9 +55,9 @@ If you need to store a custom type you can consider the idea of explicitly conve
 #### Typed values
 ```kotlin
 val name = prefs.get("crypto_name", "Andrea")               // (String)
-val age = prefs.get("crypto_age", 17)                       // (Int)
+val age = prefs.get("crypto_age", 18)                       // (Int)
 val pillsDouble = prefs.get("crypto_pills", 2.5)            // (Float)
-val isMajor = prefs.get("crypto_is_major", false)           // (Boolean)
+val isMajor = prefs.get("crypto_is_major", true)            // (Boolean)
 val roomNumber = prefs.get("crypto_room_number", 107.0F)    // (Float)
 val infinite = prefs.get("crypto_∞", 9223372036854775807)   // (Long)
 ```
