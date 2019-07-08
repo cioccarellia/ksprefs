@@ -42,7 +42,7 @@ You need to pass 3 parameters in order to create a CryptoPrefs instance:
 
 #### Put/Get values
 ```kotlin
-prefs.put("crypto_age", 17)
+prefs.put("crypto_age", 18)
 ```
 This method requires 2 parameters, `key` and `value`, that are used to store the preference.
 If an item with the matching key is found, its value will be overwritten. Otherwise, a new preference item is created.
