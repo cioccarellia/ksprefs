@@ -1,0 +1,66 @@
+/**
+ * Designed and developed by Andrea Cioccarelli (@cioccarellia)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ *
+ * You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ **/
+
+apply plugin: 'com.vanniktech.maven.publish'
+
+group = GROUP
+version = VERSION_NAME
+
+mavenPublish {
+    targets {
+        uploadArchives {
+            def (user, apiKey) = getUserAndApiKey()
+
+            def repositoryUrl = getBintrayRepositoryUrl()
+            if (repositoryUrl != null) {
+                releaseRepositoryUrl = repositoryUrl
+            }
+
+            repositoryUsername = user
+            repositoryPassword = apiKey
+            signing = false
+        }
+    }
+}
+
+private def getBintrayRepositoryUrl() {
+    def packageName = POM_ARTIFACT_ID
+    def hostingRepo = 'cryptoprefs'
+
+    if (packageName == null || packageName.isEmpty()) {
+        throw Exception("You must set POM_ARTIFACT_ID in each publishable module's gradle.properties file.")
+    }
+    def (user, _) = getUserAndApiKey()
+    if (user == null || user.isEmpty()) {
+        logger.warn('bintray.user not set in local.properties, using default publish repo URL.')
+        return null
+    }
+    return "https://api.bintray.com/maven/$user/$hostingRepo/$packageName/;publish=1"
+}
+
+private def getUserAndApiKey() {
+    def localPropertiesFile = project.rootProject.file('local.properties')
+    if (!localPropertiesFile.exists()) {
+        logger.warn("local.properties file doesn't exist, can't get bintray crednetials.")
+        return ["", ""]
+    }
+    Properties properties = new Properties()
+    properties.load(localPropertiesFile.newDataInputStream())
+    return [
+            properties.getProperty("bintray.user"),
+            properties.getProperty("bintray.apikey")
+    ]
+}

@@ -1,15 +1,14 @@
-package com.andreacioccarelli.samplecryptoprefs
+package com.cioccarellia.samplecryptoprefs
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import com.andreacioccarelli.cryptoprefs.CryptoPrefs
+import androidx.appcompat.app.AppCompatActivity
+import com.cioccarellia.cryptoprefs.CryptoPrefs
 import kotlinx.android.synthetic.main.activity_presentation.*
 import kotlinx.android.synthetic.main.content_presentation.*
 import org.json.JSONObject
@@ -21,25 +20,31 @@ import java.util.*
 
 open class PresentationActivity : AppCompatActivity() {
 
-    private var prefs = CryptoPrefs(applicationContext, Keys.System.filename, Keys.System.key)
+    private val namespace = "pref-file"
+    private lateinit var prefs: CryptoPrefs
 
     @SuppressLint("LogConditional")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        prefs = CryptoPrefs(namespace, this)
+
         setContentView(R.layout.activity_presentation)
         setSupportActionBar(toolbar)
 
-        prefs.put(Keys.startCount, prefs.get(Keys.startCount, 0) + 1)
+        prefs.set("sc", prefs.get("sc", 0) + 1)
 
         button.setOnClickListener {
-            // Put some sample values to the preferences
-            for (i in 0..100) {
-                prefs.put(UUID.randomUUID().toString(), UUID.randomUUID().toString())
+            // set some sample values to the preferences
+            for (i in 0..10) {
+                prefs.set(UUID.randomUUID().toString(), UUID.randomUUID().toString())
             }
 
-            for (i in 0..100) {
+            for (i in 0..10) {
                 prefs.get(UUID.randomUUID().toString(), UUID.randomUUID().toString())
             }
+
+            prefs.auto()
 
             updateView()
         }
@@ -56,64 +61,41 @@ open class PresentationActivity : AppCompatActivity() {
                     "}"
 
             val key = "json_response"
-            prefs.put(key, jsonErrorLog)
+            prefs.set(key, jsonErrorLog)
+            prefs.auto()
+
             val jsonFromPrefs = JSONObject(prefs.get(key, ""))
 
             updateView()
         }
 
-
         button3.setOnClickListener {
-            prefs.put("A", "B")
+            prefs.set("A", "B")
             updateView()
         }
 
-        button4.setOnClickListener {
-            for (i in 1..100) {
-                prefs.enqueue("index[$i]", i)
-            }
+        button5.setOnClickListener { updateView() }
 
-            prefs.apply()
-
-            for (pref in prefs.getAll()) {
-                Log.d(this.javaClass.name, "${pref.key}: ${pref.value}")
-            }
-
-            updateView()
-        }
-
-        button5.setOnClickListener {
-            var x = ""
-            for (pref in getSharedPreferences(Keys.System.filename, Context.MODE_PRIVATE).all) {
-                x += "${pref.key} ${pref.value}\n"
-            }
-
-            prefs.remove("A")
-            updateView()
-        }
-
-        button6.setOnClickListener {
-            prefs.erase()
-            updateView()
-        }
+        button6.setOnClickListener { prefs.erase() }
 
         updateView()
     }
 
     @SuppressLint("SetTextI18n")
     private fun updateView() {
-        content.text = "[CryptoPrefs view]\n\n"
+        content.text = buildString {
+            append("[CryptoPrefs view]\n\n")
 
-        for (pref in prefs.getAll()) {
-            content.text = "${content.text}key ${pref.key}, value=${pref.value};\n"
+            val all = prefs.all.toList().map { "key=${it.first}, value=${it.second}" }
+            append(all)
+
+            append("\n\n\n[Shared Prefs view]\n\n")
+            for (pref in getSharedPreferences(namespace, Context.MODE_PRIVATE).all) {
+                append("${content.text}key \"${pref.key}\", value=\"${pref.value}\";\n")
+            }
+
+            append("\n\n\n")
         }
-
-        content.text = "${content.text}\n\n\n[Shared Prefs view]\n\n"
-        for (pref in getSharedPreferences(Keys.System.filename, Context.MODE_PRIVATE).all) {
-            content.text = "${content.text}key \"${pref.key}\", value=\"${pref.value}\";\n"
-        }
-
-        content.text = "${content.text}\n\n\n"
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
