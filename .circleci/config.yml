@@ -1,42 +1,41 @@
 version: 2
 jobs:
-  build:
-    working_directory: ~/code
-    docker:
-      - image: circleci/android:api-25-alpha
-    environment:
-      JVM_OPTS: -Xmx3200m
-    steps:
-      - checkout
-      - run:
-          name: "Chmod permissions"
-          command: sudo chmod +x ./gradlew
-      - run:
-          name: "Download Dependencies"
-          command: ./gradlew dependencyUpdates
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "library/build.gradle" }}
-      - run:
-          name: "Build Modules"
-          command: ./gradlew build
-      - run:
-          name: "Run Tests"
-          command: ./gradlew test
-      - run:
-          name: "Save test results"
-          command: |
-            mkdir -p ~/test-results/junit/
-            find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/test-results/junit/ \;
-          when: always
-      - store_test_results:
-          path: ~/test-results
-      - store_artifacts:
-          path: ~/test-results/junit
-      - run:
-          name: "Jacoco Test Report"
-          command: ./gradlew jacocoTestReport
-      - run:
-          name: "CodeCov"
-          command: bash <(curl -s https://codecov.io/bash)
+    build:
+        working_directory: ~/code
+        docker:
+            - image: circleci/android:api-25-alpha
+        environment:
+            JVM_OPTS: -Xmx3200m
+        steps:
+            - checkout
+            - run:
+                name: "Chmod permissions"
+                command: sudo chmod +x ./gradlew
+            - run:
+                name: "Download Dependencies"
+                command: ./gradlew dependencyUpdates
+            - save_cache:
+                paths:
+                  - ~/.gradle
+                key: jars-{{ checksum "library/build.gradle" }}
+            - run:
+                name: "Build Modules"
+                command: ./gradlew build
+            - run:
+                name: "Run Tests"
+                command: ./gradlew test
+            - run:
+                name: "Save test results"
+                command: |
+                    mkdir -p ~/test-results/junit/
+                    find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/test-results/junit/ \;
+                when: always
+            - store_test_results:
+                path: ~/test-results
+            - store_artifacts:
+                path: ~/test-results/junit
+            - run:
+                name: "Jacoco Test Report"
+                command: ./gradlew jacocoTestReport
+            - run:
+                name: "CodeCov"
