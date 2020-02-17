@@ -2,8 +2,10 @@ apply from: rootProject.file("versions_plugin_config.gradle")
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: "jacoco"
 
-group = 'com.github.AndreaCioccarelli'
+
+group = 'com.cioccarellia'
 
 android {
     compileSdkVersion 29
