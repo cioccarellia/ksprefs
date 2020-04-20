@@ -1,32 +1,33 @@
-apply from: rootProject.file("versions_plugin_config.gradle")
+apply from: rootProject.file("gradle/versions_plugin_config.gradle")
 
 buildscript {
-    apply from: rootProject.file("dependencies.gradle")
-    
-    ext.kotlin_version = '1.3.61'
+  apply from: rootProject.file("dependencies.gradle")
 
-    repositories {
-        google()
-        mavenCentral()
-        jcenter()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.0-rc03'
-        classpath deps.gradle.kotlin
-        classpath deps.gradle.versions
-        classpath deps.gradle.maven_publish
-    }
+  repositories {
+    google()
+    jcenter()
+  }
+  dependencies {
+    classpath 'com.android.tools.build:gradle:3.6.3'
+    classpath deps.gradle_plugins.bintray_release
+    classpath deps.gradle_plugins.kotlin
+    classpath deps.gradle_plugins.spotless
+    classpath deps.gradle_plugins.versions
+  }
 }
 
 allprojects {
-    repositories {
-        google()
-        mavenCentral()
-        jcenter()
-    }
+  repositories {
+    google()
+    jcenter()
+  }
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+subprojects {
+  tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+      jvmTarget = 1.8
+      freeCompilerArgs += ["-module-name", project.path.replace(':', '')]
+    }
+  }
 }

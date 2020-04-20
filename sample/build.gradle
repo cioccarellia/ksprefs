@@ -1,0 +1,11 @@
+ext.module_name = "librarytemplatesample"
+
+apply from: rootProject.file("gradle/android_application_config.gradle")
+
+dependencies {
+  implementation project(":library")
+
+  implementation deps.androidx.app_compat
+  implementation deps.androidx.constraint_layout
+  implementation deps.kotlin.stdlib8
+}
