@@ -13,36 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kscpreftest
+package com.cioccarellia.ksprefsample
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.afollestad.kscpref.Greeter
-import com.afollestad.kscpreftest.onClickDebounced
 
 class MainActivity : AppCompatActivity() {
     private val inputView by lazy { findViewById<TextView>(R.id.inputView) }
     private val buttonView by lazy { findViewById<Button>(R.id.buttonView) }
-    private var greeter: Greeter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        greeter = Greeter(this)
 
         buttonView.onClickDebounced {
-            AlertDialog.Builder(this)
-                .setMessage(greeter?.greet(inputView.text.toString()))
-                .show()
+            Log.d("OCD", "Log")
         }
     }
 
     override fun onDestroy() {
-        greeter?.dispose()
-        greeter = null
         super.onDestroy()
     }
 }

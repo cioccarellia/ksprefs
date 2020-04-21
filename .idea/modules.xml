@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ksc-pref.iml" filepath="$PROJECT_DIR$/ksc-pref.iml" group="ksc-pref" />
-      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" group="ksc-pref/library" />
-      <module fileurl="file://$PROJECT_DIR$/sample/sample.iml" filepath="$PROJECT_DIR$/sample/sample.iml" group="ksc-pref/sample" />
+      <module fileurl="file://$PROJECT_DIR$/kspref.iml" filepath="$PROJECT_DIR$/kspref.iml" group="kspref" />
+      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" group="kspref/library" />
+      <module fileurl="file://$PROJECT_DIR$/sample/sample.iml" filepath="$PROJECT_DIR$/sample/sample.iml" group="kspref/sample" />
     </modules>
   </component>
 </project>

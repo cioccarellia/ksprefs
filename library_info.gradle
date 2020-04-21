@@ -23,5 +23,5 @@ ext.library = [
     publish_version_code: 200,
 
     description: "(none)",
-    website: "https://github.com/cioccarellia/ksc-pref"
+    website: "https://github.com/cioccarellia/kspref"
 ]

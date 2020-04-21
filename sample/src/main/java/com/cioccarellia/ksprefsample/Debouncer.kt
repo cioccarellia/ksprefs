@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.afollestad.kscpreftest
+package com.cioccarellia.ksprefsample
 
 import android.view.View
 

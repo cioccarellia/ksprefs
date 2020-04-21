@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-ext.module_name = "kscpref"
+ext.module_name = "kspref"
 
 apply from: rootProject.file("gradle/android_library_config.gradle")
 
