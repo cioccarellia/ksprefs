@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.afollestad.kscpref
+package com.cioccarellia.kscpref
 
 import android.content.Context
 import androidx.annotation.VisibleForTesting
-import com.cioccarellia.kscpref.R
 
 class Greeter(
     @VisibleForTesting var context: Context?

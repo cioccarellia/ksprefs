@@ -6,25 +6,25 @@ apply from: rootProject.file("library_info.gradle")
 ext.module_package_id = "${library.publish_group}.${module_name}"
 
 android {
-  compileSdkVersion library.compile_sdk
-  buildToolsVersion versions.build_tools
+    compileSdkVersion library.compile_sdk
+    buildToolsVersion versions.build_tools
 
-  compileOptions {
-    sourceCompatibility 1.8
-    targetCompatibility 1.8
-  }
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
 
-  defaultConfig {
-    minSdkVersion library.min_sdk
-    targetSdkVersion library.compile_sdk
-    versionCode library.publish_version_code
-    versionName library.publish_version
-  }
+    defaultConfig {
+        minSdkVersion library.min_sdk
+        targetSdkVersion library.compile_sdk
+        versionCode library.publish_version_code
+        versionName library.publish_version
+    }
 
-  sourceSets {
-    main.res.srcDirs = [
-        "src/main/res",
-        "src/main/res-public"
-    ]
-  }
+    sourceSets {
+        main.res.srcDirs = [
+            "src/main/res",
+            "src/main/res-public"
+        ]
+    }
 }
