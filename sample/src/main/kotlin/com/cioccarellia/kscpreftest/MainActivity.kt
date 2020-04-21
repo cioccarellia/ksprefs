@@ -21,27 +21,28 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.afollestad.kscpref.Greeter
+import com.afollestad.kscpreftest.onClickDebounced
 
 class MainActivity : AppCompatActivity() {
-  private val inputView by lazy { findViewById<TextView>(R.id.inputView) }
-  private val buttonView by lazy { findViewById<Button>(R.id.buttonView) }
-  private var greeter: Greeter? = null
+    private val inputView by lazy { findViewById<TextView>(R.id.inputView) }
+    private val buttonView by lazy { findViewById<Button>(R.id.buttonView) }
+    private var greeter: Greeter? = null
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_main)
-    greeter = Greeter(this)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        greeter = Greeter(this)
 
-    buttonView.onClickDebounced {
-      AlertDialog.Builder(this)
-        .setMessage(greeter?.greet(inputView.text.toString()))
-        .show()
+        buttonView.onClickDebounced {
+            AlertDialog.Builder(this)
+                .setMessage(greeter?.greet(inputView.text.toString()))
+                .show()
+        }
     }
-  }
 
-  override fun onDestroy() {
-    greeter?.dispose()
-    greeter = null
-    super.onDestroy()
-  }
+    override fun onDestroy() {
+        greeter?.dispose()
+        greeter = null
+        super.onDestroy()
+    }
 }

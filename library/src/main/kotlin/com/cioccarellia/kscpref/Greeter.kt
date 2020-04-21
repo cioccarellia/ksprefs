@@ -1,5 +1,5 @@
 /**
- * Designed and developed by Aidan Follestad (@afollestad)
+ * Designed and developed by Andrea Cioccarelli (@cioccarellia)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,17 +19,16 @@ import android.content.Context
 import androidx.annotation.VisibleForTesting
 import com.cioccarellia.kscpref.R
 
-/** @author Aidan Follestad (@afollestad) */
 class Greeter(
-  @VisibleForTesting var context: Context?
+    @VisibleForTesting var context: Context?
 ) {
-  /** Greets someone with the given [name]. */
-  fun greet(name: String): String {
-    return context?.resources?.getString(R.string.hello_x, name).orEmpty()
-  }
+    /** Greets someone with the given [name]. */
+    fun greet(name: String): String {
+        return context?.resources?.getString(R.string.hello_x, name).orEmpty()
+    }
 
-  /** Releases the [context]. */
-  fun dispose() {
-    context = null
-  }
+    /** Releases the [context]. */
+    fun dispose() {
+        context = null
+    }
 }
