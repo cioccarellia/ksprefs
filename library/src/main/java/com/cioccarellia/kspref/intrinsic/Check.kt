@@ -13,18 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@file:Suppress("NOTHING_TO_INLINE")
 
-ext.module_name = "kspref"
+package com.cioccarellia.kspref.intrinsic
 
-apply from: rootProject.file("gradle/android_library_config.gradle")
+object Check {
+    fun key(
+      key: String
+    ) = !key.contains(" ") && key.isNotBlank()
 
-dependencies {
-    compileOnly deps.androidx.annotations
-    implementation deps.kotlin.stdlib8
-
-    testImplementation deps.kotlin.test.mockito
-    testImplementation deps.test.robolectric
-    testImplementation deps.test.junit
-    testImplementation deps.test.mockito_core
-    testImplementation deps.test.truth
+    fun <T> value(
+      value: T
+    ) = value != null
 }
+
+inline fun checkKey(key: String) = require(Check.key(key))
+inline fun <T> checkValue(value: T) = require(Check.value(value))

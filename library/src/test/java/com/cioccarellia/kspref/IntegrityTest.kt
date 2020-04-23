@@ -13,18 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.cioccarellia.kspref
 
-ext.module_name = "kspref"
+import android.content.Context
+import com.google.common.truth.Truth.assertThat
+import com.nhaarman.mockitokotlin2.mock
+import org.junit.Test
 
-apply from: rootProject.file("gradle/android_library_config.gradle")
+private val context = mock<Context> {}
 
-dependencies {
-    compileOnly deps.androidx.annotations
-    implementation deps.kotlin.stdlib8
+class IntegrityTest {
+    @Test
+    fun check() {
+        val prefs = KsPrefs(context)
 
-    testImplementation deps.kotlin.test.mockito
-    testImplementation deps.test.robolectric
-    testImplementation deps.test.junit
-    testImplementation deps.test.mockito_core
-    testImplementation deps.test.truth
+        assertThat(
+            prefs.push("X", "")
+        ).isEqualTo("Str")
+    }
 }

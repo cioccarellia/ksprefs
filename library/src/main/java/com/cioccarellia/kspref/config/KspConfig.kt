@@ -13,18 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.cioccarellia.kspref.config
 
-ext.module_name = "kspref"
+import android.content.Context
+import androidx.annotation.IntRange
 
-apply from: rootProject.file("gradle/android_library_config.gradle")
-
-dependencies {
-    compileOnly deps.androidx.annotations
-    implementation deps.kotlin.stdlib8
-
-    testImplementation deps.kotlin.test.mockito
-    testImplementation deps.test.robolectric
-    testImplementation deps.test.junit
-    testImplementation deps.test.mockito_core
-    testImplementation deps.test.truth
-}
+data class KspConfig(
+  @IntRange(from = 0x0000, to = 0x0010)
+  var mode: Int = Context.MODE_PRIVATE,
+  var autoSave: AutoSavePolicy = AutoSavePolicy.SAVE_ON_COMMAND,
+  var transformation: ByteTransformationStrategy = ByteTransformationStrategy.PLAIN_TEXT
+)

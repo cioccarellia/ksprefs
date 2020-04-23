@@ -13,18 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.cioccarellia.kspref.config
 
-ext.module_name = "kspref"
-
-apply from: rootProject.file("gradle/android_library_config.gradle")
-
-dependencies {
-    compileOnly deps.androidx.annotations
-    implementation deps.kotlin.stdlib8
-
-    testImplementation deps.kotlin.test.mockito
-    testImplementation deps.test.robolectric
-    testImplementation deps.test.junit
-    testImplementation deps.test.mockito_core
-    testImplementation deps.test.truth
+enum class ByteTransformationStrategy {
+    PLAIN_TEXT,
+    BASE64
 }

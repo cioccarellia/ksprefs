@@ -13,18 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.cioccarellia.kspref.transform
 
-ext.module_name = "kspref"
+import com.cioccarellia.kspref.const.Constants
+import java.math.BigDecimal
+import java.math.BigInteger
 
-apply from: rootProject.file("gradle/android_library_config.gradle")
-
-dependencies {
-    compileOnly deps.androidx.annotations
-    implementation deps.kotlin.stdlib8
-
-    testImplementation deps.kotlin.test.mockito
-    testImplementation deps.test.robolectric
-    testImplementation deps.test.junit
-    testImplementation deps.test.mockito_core
-    testImplementation deps.test.truth
+class BigDecimalConverter : TypeConverter<BigDecimal>() {
+    override fun transform(value: BigDecimal) = value.toString().toByteArray()
+    override fun reify(value: ByteArray) = value.toString(Constants.CHARSET).toBigDecimal()
 }
