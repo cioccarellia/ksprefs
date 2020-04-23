@@ -16,5 +16,5 @@
 package com.cioccarellia.kspref.engine
 
 inline class Transmission(
-  val payload: ByteArray
+    val payload: ByteArray
 )

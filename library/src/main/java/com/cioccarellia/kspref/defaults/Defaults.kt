@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.const
+package com.cioccarellia.kspref.defaults
 
 import android.content.Context
 
-object Constants {
-    const val DEFAULT_MODE = Context.MODE_PRIVATE
+object Defaults {
+    const val MODE = Context.MODE_PRIVATE
     val CHARSET = Charsets.UTF_8
 }

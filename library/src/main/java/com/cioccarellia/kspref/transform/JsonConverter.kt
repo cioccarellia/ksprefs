@@ -15,10 +15,10 @@
  */
 package com.cioccarellia.kspref.transform
 
-import com.cioccarellia.kspref.const.Constants
+import com.cioccarellia.kspref.defaults.Defaults
 import org.json.JSONObject
 
 class JsonConverter : TypeConverter<JSONObject>() {
-    override fun transform(value: JSONObject) = value.toString().toByteArray(Constants.CHARSET)
-    override fun reify(value: ByteArray) = JSONObject(value.toString(Constants.CHARSET))
+    override fun transform(value: JSONObject) = value.toString().toByteArray(Defaults.CHARSET)
+    override fun reify(value: ByteArray) = JSONObject(value.toString(Defaults.CHARSET))
 }

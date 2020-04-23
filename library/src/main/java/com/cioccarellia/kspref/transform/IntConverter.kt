@@ -15,9 +15,9 @@
  */
 package com.cioccarellia.kspref.transform
 
-import com.cioccarellia.kspref.const.Constants
+import com.cioccarellia.kspref.defaults.Defaults
 
 class IntConverter : TypeConverter<Int>() {
-    override fun transform(value: Int) = value.toString().toByteArray(Constants.CHARSET)
-    override fun reify(value: ByteArray) = value.toString(Constants.CHARSET).toInt()
+    override fun transform(value: Int) = value.toString().toByteArray(Defaults.CHARSET)
+    override fun reify(value: ByteArray) = value.toString(Defaults.CHARSET).toInt()
 }

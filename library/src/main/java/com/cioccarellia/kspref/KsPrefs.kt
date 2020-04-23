@@ -25,28 +25,28 @@ typealias Reader = SharedPreferences
 typealias Writer = SharedPreferences.Editor
 
 class KsPrefs(
-  context: Context,
-  namespace: String = Namespace.default(context),
-  config: KspConfig = KspConfig()
+    context: Context,
+    namespace: String = Namespace.default(context),
+    config: KspConfig.() -> Unit = {}
 ) {
-    init {
-        Companion.config = config
-    }
-
     companion object {
         lateinit var config: KspConfig
+    }
+
+    init {
+        Companion.config = KspConfig().apply(config)
     }
 
     @PublishedApi
     internal val dispatcher: KspDispatcher = KspDispatcher(context, namespace)
 
     inline fun <reified T> push(
-      key: String,
-      value: T
+        key: String,
+        value: T
     ) = dispatcher.push(key, value)
 
     inline fun <reified T> pull(
-      key: String,
-      default: T
+        key: String,
+        default: T
     ) = dispatcher.pull(key, default)
 }

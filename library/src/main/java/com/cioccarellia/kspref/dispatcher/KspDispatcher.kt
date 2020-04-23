@@ -16,8 +16,6 @@
 package com.cioccarellia.kspref.dispatcher
 
 import android.content.Context
-import com.cioccarellia.kspref.Reader
-import com.cioccarellia.kspref.const.Constants.DEFAULT_MODE
 import com.cioccarellia.kspref.intrinsic.checkKey
 import com.cioccarellia.kspref.intrinsic.checkValue
 import com.cioccarellia.kspref.transform.TypeConverter
@@ -28,17 +26,17 @@ class KspDispatcher(
 ) {
     @PublishedApi
     internal inline fun <reified T> pickConverter(
-      value: T
+        value: T
     ) = TypeConverter.pickAndTransform(value)
 
     @PublishedApi
     internal inline fun <reified T> pickReifier(
-      value: ByteArray
+        value: ByteArray
     ) = TypeConverter.pickAndReify<T>(value)
 
     inline fun <reified T> push(
-      key: String,
-      value: T
+        key: String,
+        value: T
     ) {
         // The function accepts nullable values,
         // but crashes if one of them is actually void
@@ -49,8 +47,8 @@ class KspDispatcher(
     }
 
     inline fun <reified T> pull(
-      key: String,
-      default: T
+        key: String,
+        default: T
     ): T {
         // The function accepts nullable values,
         // but crashes if one of them is actually void

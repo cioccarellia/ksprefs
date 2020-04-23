@@ -15,9 +15,9 @@
  */
 package com.cioccarellia.kspref.transform
 
-import com.cioccarellia.kspref.const.Constants
+import com.cioccarellia.kspref.defaults.Defaults
 
 class FloatConverter() : TypeConverter<Float>() {
-    override fun transform(value: Float) = value.toString().toByteArray(Constants.CHARSET)
-    override fun reify(value: ByteArray) = value.toString(Constants.CHARSET).toFloat()
+    override fun transform(value: Float) = value.toString().toByteArray(Defaults.CHARSET)
+    override fun reify(value: ByteArray) = value.toString(Defaults.CHARSET).toFloat()
 }

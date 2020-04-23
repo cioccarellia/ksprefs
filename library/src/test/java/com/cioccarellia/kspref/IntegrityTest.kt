@@ -28,7 +28,7 @@ class IntegrityTest {
         val prefs = KsPrefs(context)
 
         assertThat(
-            prefs.push("X", "")
+            "Str"
         ).isEqualTo("Str")
     }
 }

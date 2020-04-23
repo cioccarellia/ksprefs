@@ -1,5 +1,7 @@
 apply plugin: "kotlin-android"
+
 apply from: rootProject.file("dependencies.gradle")
+apply from: rootProject.file("gradle/jacoco_plugin_config.gradle")
 apply from: rootProject.file("gradle/spotless_plugin_config.gradle")
 
 apply from: rootProject.file("library_info.gradle")

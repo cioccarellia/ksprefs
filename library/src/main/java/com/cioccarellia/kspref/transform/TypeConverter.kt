@@ -15,9 +15,9 @@
  */
 package com.cioccarellia.kspref.transform
 
-import java.math.BigInteger
 import org.json.JSONObject
 import java.math.BigDecimal
+import java.math.BigInteger
 
 abstract class TypeConverter<I> {
     abstract fun transform(value: I): ByteArray

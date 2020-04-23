@@ -19,8 +19,10 @@ import android.content.Context
 import androidx.annotation.IntRange
 
 data class KspConfig(
-  @IntRange(from = 0x0000, to = 0x0010)
-  var mode: Int = Context.MODE_PRIVATE,
-  var autoSave: AutoSavePolicy = AutoSavePolicy.SAVE_ON_COMMAND,
-  var transformation: ByteTransformationStrategy = ByteTransformationStrategy.PLAIN_TEXT
+    @IntRange(from = 0x0000, to = 0x0010)
+    var mode: Int = Context.MODE_PRIVATE,
+    var autoSave: AutoSavePolicy = AutoSavePolicy.SAVE_ON_COMMAND,
+    var transformation: ByteTransformationStrategy = ByteTransformationStrategy.PLAIN_TEXT
 )
+
+fun defaultConfig() = {}

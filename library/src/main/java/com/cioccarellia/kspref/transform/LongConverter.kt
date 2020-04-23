@@ -15,9 +15,9 @@
  */
 package com.cioccarellia.kspref.transform
 
-import com.cioccarellia.kspref.const.Constants
+import com.cioccarellia.kspref.defaults.Defaults
 
 class LongConverter : TypeConverter<Long>() {
-    override fun transform(value: Long) = value.toString().toByteArray(Constants.CHARSET)
-    override fun reify(value: ByteArray) = value.toString(Constants.CHARSET).toLong()
+    override fun transform(value: Long) = value.toString().toByteArray(Defaults.CHARSET)
+    override fun reify(value: ByteArray) = value.toString(Defaults.CHARSET).toLong()
 }
