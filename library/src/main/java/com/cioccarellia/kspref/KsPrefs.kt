@@ -16,19 +16,19 @@
 package com.cioccarellia.kspref
 
 import android.content.Context
-import android.content.SharedPreferences
 import com.cioccarellia.kspref.config.KspConfig
 import com.cioccarellia.kspref.dispatcher.KspDispatcher
+import com.cioccarellia.kspref.extensions.toKey
 import com.cioccarellia.kspref.namespace.Namespace
-
-typealias Reader = SharedPreferences
-typealias Writer = SharedPreferences.Editor
 
 class KsPrefs(
     context: Context,
     namespace: String = Namespace.default(context),
     config: KspConfig.() -> Unit = {}
 ) {
+    @PublishedApi
+    internal val dispatcher: KspDispatcher = KspDispatcher(context, namespace)
+
     companion object {
         lateinit var config: KspConfig
     }
@@ -37,8 +37,7 @@ class KsPrefs(
         Companion.config = KspConfig().apply(config)
     }
 
-    @PublishedApi
-    internal val dispatcher: KspDispatcher = KspDispatcher(context, namespace)
+    fun expose() = dispatcher.expose()
 
     inline fun <reified T> push(
         key: String,
@@ -49,4 +48,8 @@ class KsPrefs(
         key: String,
         default: T
     ) = dispatcher.pull(key, default)
+
+    fun delete(
+        key: String
+    ) = dispatcher.delete(key)
 }

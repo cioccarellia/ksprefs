@@ -13,9 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.engine
+package com.cioccarellia.kspref.extensions
 
-class DefaultSpEngine : Engine() {
-    override fun apply(incoming: Transmission) = Transmission(incoming.payload)
-    override fun revert(outgoing: Transmission) = Transmission(outgoing.payload)
-}
+import com.cioccarellia.kspref.defaults.Defaults
+
+fun ByteArray.string() = this.toString(Defaults.CHARSET)

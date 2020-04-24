@@ -13,12 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.engine
+package com.cioccarellia.kspref.extensions
 
-import com.cioccarellia.kspref.extensions.string
+import android.content.SharedPreferences
+import com.cioccarellia.kspref.defaults.Defaults
 
-inline class Transmission(
-    val payload: ByteArray
-) {
-    override fun toString() = payload.string()
-}
+typealias Reader = SharedPreferences
+
+fun Reader.read(
+    key: String,
+    default: ByteArray
+): ByteArray = getString(key, default.string())?.toByteArray(Defaults.CHARSET) ?: "".toByteArray()

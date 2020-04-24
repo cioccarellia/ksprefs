@@ -16,6 +16,6 @@
 package com.cioccarellia.kspref.config
 
 enum class AutoSavePolicy {
-    SAVE_ON_OPERATION,
-    SAVE_ON_COMMAND
+    AUTO,
+    MANUAL
 }

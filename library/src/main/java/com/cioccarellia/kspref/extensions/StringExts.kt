@@ -13,12 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.engine
+package com.cioccarellia.kspref.extensions
 
-import com.cioccarellia.kspref.extensions.string
+import com.cioccarellia.kspref.defaults.Defaults
 
-inline class Transmission(
-    val payload: ByteArray
-) {
-    override fun toString() = payload.string()
-}
+internal fun String.byteArray() = this.toByteArray(Defaults.CHARSET)

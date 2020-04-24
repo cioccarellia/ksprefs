@@ -13,15 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.engine
+package com.cioccarellia.kspref.extensions
 
+import android.content.SharedPreferences
 import com.cioccarellia.kspref.KsPrefs
-import com.cioccarellia.kspref.engine.model.PlainTextEngine
+import com.cioccarellia.kspref.config.AutoSavePolicy
+import com.cioccarellia.kspref.config.CommitStrategy
 
-object EnginePicker {
-    fun select(): Engine {
-        val transformation = KsPrefs.config.transformation
+typealias Writer = SharedPreferences.Editor
 
-        return PlainTextEngine()
+fun Writer.write(
+    key: String,
+    value: ByteArray
+): SharedPreferences.Editor = putString(key, value.string())
+
+fun Writer.delete(
+    key: String
+): SharedPreferences.Editor = delete(key)
+
+fun Writer.finalize() {
+    if (KsPrefs.config.autoSave == AutoSavePolicy.AUTO) {
+        when (KsPrefs.config.commitStrategy) {
+            CommitStrategy.ASYNC_APPLY -> apply()
+            CommitStrategy.SYNC_COMMIT -> commit()
+        }
     }
 }

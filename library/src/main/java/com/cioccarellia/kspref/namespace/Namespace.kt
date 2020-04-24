@@ -18,5 +18,5 @@ package com.cioccarellia.kspref.namespace
 import android.content.Context
 
 object Namespace {
-    inline fun default(context: Context) = "default-${context.packageName}"
+    fun default(context: Context) = "default-${context.packageName}"
 }

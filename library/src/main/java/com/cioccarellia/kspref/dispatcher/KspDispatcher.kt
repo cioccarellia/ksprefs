@@ -16,25 +16,34 @@
 package com.cioccarellia.kspref.dispatcher
 
 import android.content.Context
+import com.cioccarellia.kspref.enclosure.KspEnclosure
 import com.cioccarellia.kspref.intrinsic.checkKey
 import com.cioccarellia.kspref.intrinsic.checkValue
 import com.cioccarellia.kspref.transform.TypeConverter
 
-class KspDispatcher(
+@PublishedApi
+internal class KspDispatcher(
     context: Context,
     namespace: String
 ) {
     @PublishedApi
-    internal inline fun <reified T> pickConverter(
+    internal val enclosure = KspEnclosure(context, namespace)
+
+    internal fun expose() = enclosure.handle
+
+    @PublishedApi
+    internal inline fun <reified T> convert(
         value: T
     ) = TypeConverter.pickAndTransform(value)
 
     @PublishedApi
-    internal inline fun <reified T> pickReifier(
+    internal inline fun <reified T> reify(
         value: ByteArray
     ) = TypeConverter.pickAndReify<T>(value)
 
-    inline fun <reified T> push(
+
+    @PublishedApi
+    internal inline fun <reified T> push(
         key: String,
         value: T
     ) {
@@ -43,10 +52,15 @@ class KspDispatcher(
         checkKey(key)
         checkValue(value)
 
-        val bytes = pickConverter(value)
+        // Bytes for the given input value
+        val pureBytes = convert(value)
+
+        // Writes the converted bytes to the shared pre
+        enclosure.write(key, pureBytes)
     }
 
-    inline fun <reified T> pull(
+    @PublishedApi
+    internal inline fun <reified T> pull(
         key: String,
         default: T
     ): T {
@@ -55,7 +69,21 @@ class KspDispatcher(
         checkKey(key)
         checkValue(default)
 
-        val converter = pickReifier<T>(ByteArray(1))
-        return default
+        // Bytes for the given input default value
+        // plugged into a type converter
+        val pureBytes = convert(default)
+
+        // Reads and passes bytes through an engine
+        // which applies the required transformation
+        // to it
+        val returnedBytes = enclosure.read(key, pureBytes)
+
+        // Reifies and returns the read data as an object
+        // plugging it through a converter
+        return reify(returnedBytes)
     }
+
+    internal fun delete(
+        key: String
+    ) = enclosure.delete(key)
 }

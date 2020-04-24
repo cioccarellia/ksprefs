@@ -13,12 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.engine
+package com.cioccarellia.kspref.config
 
-import com.cioccarellia.kspref.extensions.string
-
-inline class Transmission(
-    val payload: ByteArray
-) {
-    override fun toString() = payload.string()
+enum class CommitStrategy {
+    /**
+     * Atomically performs the operation, slower
+     * */
+    SYNC_COMMIT,
+    /**
+     * Safe to ignore return value, faster.
+     * Updates the global SharedPreference in-memory values
+     * */
+    ASYNC_APPLY
 }

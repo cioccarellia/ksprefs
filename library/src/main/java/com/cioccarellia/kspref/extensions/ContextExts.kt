@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.engine
+package com.cioccarellia.kspref.extensions
 
-import com.cioccarellia.kspref.extensions.string
+import android.content.Context
+import com.cioccarellia.kspref.KsPrefs
 
-inline class Transmission(
-    val payload: ByteArray
-) {
-    override fun toString() = payload.string()
-}
+internal fun Context.getPrefs(
+    namespace: String
+) = getSharedPreferences(namespace, KsPrefs.config.mode)
