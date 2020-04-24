@@ -18,6 +18,8 @@ package com.cioccarellia.kspref.extensions
 import android.content.Context
 import com.cioccarellia.kspref.KsPrefs
 
-internal fun Context.getPrefs(
-    namespace: String
-) = getSharedPreferences(namespace, KsPrefs.config.mode)
+internal fun Context.getPrefs(namespace: String): Reader = try {
+    getSharedPreferences("ksp_$namespace", KsPrefs.config.mode)!!
+} catch (knpe: KotlinNullPointerException) {
+    throw IllegalStateException("Could not get SharedPreferences instance")
+}

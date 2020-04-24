@@ -18,10 +18,11 @@ package com.cioccarellia.kspref.config
 import android.content.Context
 import androidx.annotation.IntRange
 
+
 data class KspConfig(
     @IntRange(from = 0x0000, to = 0x0010)
     var mode: Int = Context.MODE_PRIVATE,
-    var autoSave: AutoSavePolicy = AutoSavePolicy.MANUAL,
+    var autoSave: AutoSavePolicy = AutoSavePolicy.AUTO,
     var commitStrategy: CommitStrategy = CommitStrategy.ASYNC_APPLY,
     var transformation: ByteTransformationStrategy = ByteTransformationStrategy.PLAIN_TEXT
 )

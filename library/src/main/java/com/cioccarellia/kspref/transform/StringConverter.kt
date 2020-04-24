@@ -17,7 +17,8 @@ package com.cioccarellia.kspref.transform
 
 import com.cioccarellia.kspref.defaults.Defaults
 
-class StringConverter : TypeConverter<String>() {
+@PublishedApi
+internal class StringConverter : TypeConverter<String>() {
     override fun transform(value: String) = value.toByteArray()
     override fun reify(value: ByteArray) = value.toString(Defaults.CHARSET)
 }

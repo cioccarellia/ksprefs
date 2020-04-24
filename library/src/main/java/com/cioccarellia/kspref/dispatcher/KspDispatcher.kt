@@ -16,18 +16,21 @@
 package com.cioccarellia.kspref.dispatcher
 
 import android.content.Context
+import com.cioccarellia.kspref.config.CommitStrategy
 import com.cioccarellia.kspref.enclosure.KspEnclosure
+import com.cioccarellia.kspref.extensions.Reader
+import com.cioccarellia.kspref.extensions.emptyByteArray
 import com.cioccarellia.kspref.intrinsic.checkKey
 import com.cioccarellia.kspref.intrinsic.checkValue
 import com.cioccarellia.kspref.transform.TypeConverter
 
 @PublishedApi
 internal class KspDispatcher(
-    context: Context,
-    namespace: String
+    namespace: String,
+    handle: Reader
 ) {
     @PublishedApi
-    internal val enclosure = KspEnclosure(context, namespace)
+    internal val enclosure = KspEnclosure(namespace, handle)
 
     internal fun expose() = enclosure.handle
 
@@ -40,7 +43,6 @@ internal class KspDispatcher(
     internal inline fun <reified T> reify(
         value: ByteArray
     ) = TypeConverter.pickAndReify<T>(value)
-
 
     @PublishedApi
     internal inline fun <reified T> push(
@@ -83,7 +85,28 @@ internal class KspDispatcher(
         return reify(returnedBytes)
     }
 
-    internal fun delete(
+    private inline fun <reified T> pull(
         key: String
-    ) = enclosure.delete(key)
+    ): T {
+        // The function accepts nullable values,
+        // but crashes if one of them is actually void
+        checkKey(key)
+
+        val pureBytes = emptyByteArray()
+
+        // Reads and passes bytes through an engine
+        // which applies the required transformation
+        // to it
+        val returnedBytes = enclosure.read(key, pureBytes)
+
+        // Reifies and returns the read data as an object
+        // plugging it through a converter
+        return reify(returnedBytes)
+    }
+
+    internal fun save(
+        commitStrategy: CommitStrategy
+    ) = enclosure.save(commitStrategy)
+
+    internal fun delete(key: String) = enclosure.delete(key)
 }

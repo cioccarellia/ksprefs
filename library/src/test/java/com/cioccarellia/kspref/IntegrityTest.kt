@@ -16,19 +16,23 @@
 package com.cioccarellia.kspref
 
 import android.content.Context
+import android.content.SharedPreferences
 import com.google.common.truth.Truth.assertThat
 import com.nhaarman.mockitokotlin2.mock
 import org.junit.Test
 
 private val context = mock<Context> {}
+private val sharedPrefs = mock<SharedPreferences> {}
 
 class IntegrityTest {
     @Test
     fun check() {
-        val prefs = KsPrefs(context)
+        val prefs = KsPrefs(context, "S")
+
+        prefs.push("some_value", "A")
 
         assertThat(
-            "Str"
-        ).isEqualTo("Str")
+            prefs.pull("some_value", "B")
+        ).isEqualTo("A")
     }
 }

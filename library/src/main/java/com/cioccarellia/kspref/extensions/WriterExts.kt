@@ -16,26 +16,35 @@
 package com.cioccarellia.kspref.extensions
 
 import android.content.SharedPreferences
+import android.util.Log
 import com.cioccarellia.kspref.KsPrefs
 import com.cioccarellia.kspref.config.AutoSavePolicy
 import com.cioccarellia.kspref.config.CommitStrategy
 
 typealias Writer = SharedPreferences.Editor
 
-fun Writer.write(
+internal fun Writer.write(
     key: String,
     value: ByteArray
-): SharedPreferences.Editor = putString(key, value.string())
+): Writer = putString(key, value.string())
 
-fun Writer.delete(
+internal fun Writer.delete(
     key: String
-): SharedPreferences.Editor = delete(key)
+): Writer = this.remove(key)
 
-fun Writer.finalize() {
+internal fun Writer.finalize() {
     if (KsPrefs.config.autoSave == AutoSavePolicy.AUTO) {
-        when (KsPrefs.config.commitStrategy) {
-            CommitStrategy.ASYNC_APPLY -> apply()
-            CommitStrategy.SYNC_COMMIT -> commit()
-        }
+        forceFinalization()
     }
+}
+
+internal fun Writer.forceFinalization(
+    commitStrategy: CommitStrategy = KsPrefs.config.commitStrategy
+) {
+    val x = when (commitStrategy) {
+        CommitStrategy.ASYNC_APPLY -> apply()
+        CommitStrategy.SYNC_COMMIT -> commit()
+    }
+
+    Log.w("KSP", x.toString())
 }

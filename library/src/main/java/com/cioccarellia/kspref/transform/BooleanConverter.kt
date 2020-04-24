@@ -17,7 +17,8 @@ package com.cioccarellia.kspref.transform
 
 import com.cioccarellia.kspref.defaults.Defaults
 
-class BooleanConverter() : TypeConverter<Boolean>() {
+@PublishedApi
+internal class BooleanConverter() : TypeConverter<Boolean>() {
     override fun transform(value: Boolean) = value.toString().toByteArray(Defaults.CHARSET)
     override fun reify(value: ByteArray) = value.toString(Defaults.CHARSET).toBoolean()
 }

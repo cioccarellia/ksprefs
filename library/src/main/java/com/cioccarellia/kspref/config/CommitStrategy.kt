@@ -17,12 +17,13 @@ package com.cioccarellia.kspref.config
 
 enum class CommitStrategy {
     /**
-     * Atomically performs the operation, slower
+     * Atomically performs the operation, slower.
+     * Safe for multi threaded applications.
      * */
     SYNC_COMMIT,
     /**
      * Safe to ignore return value, faster.
-     * Updates the global SharedPreference in-memory values
+     * Updates the global SharedPreference in-memory values.
      * */
     ASYNC_APPLY
 }

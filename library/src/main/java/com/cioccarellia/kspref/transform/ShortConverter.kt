@@ -17,7 +17,8 @@ package com.cioccarellia.kspref.transform
 
 import com.cioccarellia.kspref.defaults.Defaults
 
-class ShortConverter : TypeConverter<Short>() {
+@PublishedApi
+internal class ShortConverter : TypeConverter<Short>() {
     override fun transform(value: Short) = value.toString().toByteArray(Defaults.CHARSET)
     override fun reify(value: ByteArray) = value.toString(Defaults.CHARSET).toShort()
 }

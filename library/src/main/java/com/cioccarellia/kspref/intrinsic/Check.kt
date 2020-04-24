@@ -17,7 +17,8 @@
 
 package com.cioccarellia.kspref.intrinsic
 
-object Check {
+@PublishedApi
+internal object Check {
     fun key(
       key: String
     ) = !key.contains(" ") && key.isNotBlank()

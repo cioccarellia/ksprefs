@@ -13,8 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@file:Suppress("NOTHING_TO_INLINE")
+
 package com.cioccarellia.kspref.extensions
 
 import com.cioccarellia.kspref.defaults.Defaults
 
-fun ByteArray.string() = this.toString(Defaults.CHARSET)
+internal fun ByteArray.string() = this.toString(Defaults.CHARSET)
+
+@PublishedApi
+internal inline fun emptyByteArray() = ByteArray(0)

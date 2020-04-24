@@ -18,7 +18,8 @@ package com.cioccarellia.kspref.transform
 import com.cioccarellia.kspref.defaults.Defaults
 import java.math.BigInteger
 
-class BigIntConverter : TypeConverter<BigInteger>() {
+@PublishedApi
+internal class BigIntConverter : TypeConverter<BigInteger>() {
     override fun transform(value: BigInteger) = value.toByteArray()!!
     override fun reify(value: ByteArray) = value.toString(Defaults.CHARSET).toBigInteger()
 }

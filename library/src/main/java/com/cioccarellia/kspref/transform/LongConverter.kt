@@ -17,7 +17,8 @@ package com.cioccarellia.kspref.transform
 
 import com.cioccarellia.kspref.defaults.Defaults
 
-class LongConverter : TypeConverter<Long>() {
+@PublishedApi
+internal class LongConverter : TypeConverter<Long>() {
     override fun transform(value: Long) = value.toString().toByteArray(Defaults.CHARSET)
     override fun reify(value: ByteArray) = value.toString(Defaults.CHARSET).toLong()
 }

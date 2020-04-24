@@ -16,19 +16,16 @@
 package com.cioccarellia.kspref
 
 import android.content.Context
+import com.cioccarellia.kspref.config.CommitStrategy
 import com.cioccarellia.kspref.config.KspConfig
 import com.cioccarellia.kspref.dispatcher.KspDispatcher
-import com.cioccarellia.kspref.extensions.toKey
-import com.cioccarellia.kspref.namespace.Namespace
+import com.cioccarellia.kspref.extensions.getPrefs
 
 class KsPrefs(
-    context: Context,
-    namespace: String = Namespace.default(context),
+    appContext: Context,
+    namespace: String, // = Namespace.default(context),
     config: KspConfig.() -> Unit = {}
 ) {
-    @PublishedApi
-    internal val dispatcher: KspDispatcher = KspDispatcher(context, namespace)
-
     companion object {
         lateinit var config: KspConfig
     }
@@ -36,6 +33,11 @@ class KsPrefs(
     init {
         Companion.config = KspConfig().apply(config)
     }
+
+    @PublishedApi
+    internal val dispatcher = KspDispatcher(
+        namespace, appContext.getPrefs(namespace)
+    )
 
     fun expose() = dispatcher.expose()
 
@@ -48,6 +50,10 @@ class KsPrefs(
         key: String,
         default: T
     ) = dispatcher.pull(key, default)
+
+    fun save(
+        commitStrategy: CommitStrategy = config.commitStrategy
+    ) = dispatcher.save(commitStrategy)
 
     fun delete(
         key: String

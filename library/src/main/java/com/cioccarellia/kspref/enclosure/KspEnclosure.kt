@@ -17,26 +17,23 @@
 
 package com.cioccarellia.kspref.enclosure
 
-import android.content.Context
+import com.cioccarellia.kspref.config.CommitStrategy
 import com.cioccarellia.kspref.engine.Engine
 import com.cioccarellia.kspref.engine.EnginePicker
 import com.cioccarellia.kspref.engine.Transmission
 import com.cioccarellia.kspref.extensions.*
-import com.cioccarellia.kspref.extensions.getPrefs
 
 @PublishedApi
 internal class KspEnclosure(
-    context: Context,
     private val namespace: String,
+    internal val handle: Reader,
     private val engine: Engine = EnginePicker.select()
 ) {
-    internal val handle by lazy(LazyThreadSafetyMode.NONE) { context.getPrefs(namespace) }
-
-    private inline fun computeAndApply(
+    private inline fun engineApply(
         value: ByteArray
     ): ByteArray = engine.apply(Transmission(value)).payload
 
-    private inline fun computeAndRevert(
+    private inline fun engineRevert(
         value: ByteArray
     ): ByteArray = engine.revert(Transmission(value)).payload
 
@@ -44,17 +41,21 @@ internal class KspEnclosure(
     internal fun read(
         key: String,
         default: ByteArray
-    ) = computeAndRevert(
-        handle.read(key, computeAndApply(default))
-    )
+    ) = engineRevert(handle.read(key, engineApply(default)))
 
     @PublishedApi
     internal fun write(
         key: String,
         value: ByteArray
     ) = handle.edit()
-        .write(key, computeAndApply(value))
+        .write(key, engineApply(value))
         .finalize()
+
+    internal fun save(
+        commitStrategy: CommitStrategy
+    ) = handle.edit().forceFinalization(
+        commitStrategy = commitStrategy
+    )
 
     internal fun delete(
         key: String

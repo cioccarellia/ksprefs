@@ -18,7 +18,8 @@ package com.cioccarellia.kspref.transform
 import com.cioccarellia.kspref.defaults.Defaults
 import java.math.BigDecimal
 
-class BigDecimalConverter : TypeConverter<BigDecimal>() {
+@PublishedApi
+internal class BigDecimalConverter : TypeConverter<BigDecimal>() {
     override fun transform(value: BigDecimal) = value.toString().toByteArray()
     override fun reify(value: ByteArray) = value.toString(Defaults.CHARSET).toBigDecimal()
 }

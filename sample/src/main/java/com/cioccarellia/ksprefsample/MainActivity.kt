@@ -16,25 +16,44 @@
 package com.cioccarellia.ksprefsample
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.cioccarellia.kspref.KsPrefs
+import com.cioccarellia.kspref.config.AutoSavePolicy
 
 class MainActivity : AppCompatActivity() {
     private val inputView by lazy { findViewById<TextView>(R.id.inputView) }
     private val buttonView by lazy { findViewById<Button>(R.id.buttonView) }
 
+    private val KEY = "trg"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val prefs = KsPrefs(this, packageName) {
+            autoSave = AutoSavePolicy.MANUAL
+        }
+
+        val dfu = prefs.pull(KEY, "default")
+        toast(dfu)
+
         buttonView.onClickDebounced {
-            Log.d("OCD", "Log")
+            val before = prefs.pull(KEY, "default1")
+
+            prefs.push(KEY, inputView.text.toString())
+            prefs.save()
+            prefs.expose().edit().apply()
+
+            val after = prefs.pull(KEY, "default1")
+
+
+            toast("Before: $before")
+            toast("After: $after")
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
+    fun toast(str: String) = Toast.makeText(this, str, Toast.LENGTH_SHORT).show()
 }

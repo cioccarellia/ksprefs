@@ -17,6 +17,7 @@ package com.cioccarellia.kspref.namespace
 
 import android.content.Context
 
-object Namespace {
+@PublishedApi
+internal object Namespace {
     fun default(context: Context) = "default-${context.packageName}"
 }

@@ -19,7 +19,8 @@ import org.json.JSONObject
 import java.math.BigDecimal
 import java.math.BigInteger
 
-abstract class TypeConverter<I> {
+@PublishedApi
+internal abstract class TypeConverter<I> {
     abstract fun transform(value: I): ByteArray
     abstract fun reify(value: ByteArray): I
 
@@ -70,5 +71,6 @@ abstract class TypeConverter<I> {
             JSONObject::class -> JsonConverter().reify(value)
             else -> StringConverter().reify(value)
         } as T
+
     }
 }

@@ -20,7 +20,8 @@ import com.cioccarellia.kspref.defaults.Defaults
 
 typealias Reader = SharedPreferences
 
-fun Reader.read(
+internal fun Reader.read(
     key: String,
     default: ByteArray
-): ByteArray = getString(key, default.string())?.toByteArray(Defaults.CHARSET) ?: "".toByteArray()
+): ByteArray = getString(key, default.string())
+    ?.toByteArray(Defaults.CHARSET) ?: "".toByteArray()
