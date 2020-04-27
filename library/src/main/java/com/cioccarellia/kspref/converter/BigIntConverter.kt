@@ -13,12 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.transform
+package com.cioccarellia.kspref.converter
 
 import com.cioccarellia.kspref.defaults.Defaults
+import com.cioccarellia.kspref.extensions.string
+import java.math.BigInteger
 
 @PublishedApi
-internal class LongConverter : TypeConverter<Long>() {
-    override fun transform(value: Long) = value.toString().toByteArray(Defaults.CHARSET)
-    override fun reify(value: ByteArray) = value.toString(Defaults.CHARSET).toLong()
+internal class BigIntConverter : TypeConverter<BigInteger>() {
+    override fun transform(value: BigInteger) = value.toByteArray()!!
+    override fun reify(value: ByteArray) = value.string().toBigInteger()
 }

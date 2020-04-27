@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.transform
+package com.cioccarellia.kspref.converter
 
 import com.cioccarellia.kspref.defaults.Defaults
-import org.json.JSONObject
+import com.cioccarellia.kspref.extensions.byteArray
+import com.cioccarellia.kspref.extensions.string
 
 @PublishedApi
-internal class JsonConverter : TypeConverter<JSONObject>() {
-    override fun transform(value: JSONObject) = value.toString().toByteArray(Defaults.CHARSET)
-    override fun reify(value: ByteArray) = JSONObject(value.toString(Defaults.CHARSET))
+internal class FloatConverter() : TypeConverter<Float>() {
+    override fun transform(value: Float) = value.toString().byteArray()
+    override fun reify(value: ByteArray) = value.string().toFloat()
 }

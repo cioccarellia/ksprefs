@@ -15,14 +15,16 @@
  */
 package com.cioccarellia.kspref.config
 
-import android.content.Context
 import androidx.annotation.IntRange
+import com.cioccarellia.kspref.defaults.Defaults
+import java.nio.charset.Charset
 
-
-data class KspConfig(
+data class KspConfig internal constructor(
     @IntRange(from = 0x0000, to = 0x0010)
-    var mode: Int = Context.MODE_PRIVATE,
-    var autoSave: AutoSavePolicy = AutoSavePolicy.AUTO,
-    var commitStrategy: CommitStrategy = CommitStrategy.ASYNC_APPLY,
-    var transformation: ByteTransformationStrategy = ByteTransformationStrategy.PLAIN_TEXT
+    var mode: Int = Defaults.MODE,
+    var charset: Charset = Defaults.CHARSET,
+
+    var autoSave: AutoSavePolicy = Defaults.AUTO_SAVE_POLICY,
+    var commitStrategy: CommitStrategy = Defaults.COMMIT_STRATEGY,
+    var transformation: ByteTransformationStrategy = Defaults.TRANSFORMATION
 )

@@ -15,6 +15,15 @@
  */
 package com.cioccarellia.kspref.extensions
 
+import androidx.annotation.CheckResult
+import com.cioccarellia.kspref.KsPrefs
 import com.cioccarellia.kspref.defaults.Defaults
 
-internal fun String.byteArray() = this.toByteArray(Defaults.CHARSET)
+@CheckResult
+internal fun String.byteArray() = this.toByteArray(
+    charset = try {
+        KsPrefs.config.charset
+    } catch (configNotInitialized: KotlinNullPointerException) {
+        Defaults.CHARSET
+    }
+)

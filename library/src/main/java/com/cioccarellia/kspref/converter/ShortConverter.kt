@@ -13,12 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.transform
+package com.cioccarellia.kspref.converter
 
 import com.cioccarellia.kspref.defaults.Defaults
+import com.cioccarellia.kspref.extensions.byteArray
+import com.cioccarellia.kspref.extensions.string
 
 @PublishedApi
-internal class BooleanConverter() : TypeConverter<Boolean>() {
-    override fun transform(value: Boolean) = value.toString().toByteArray(Defaults.CHARSET)
-    override fun reify(value: ByteArray) = value.toString(Defaults.CHARSET).toBoolean()
+internal class ShortConverter : TypeConverter<Short>() {
+    override fun transform(value: Short) = value.toString().byteArray()
+    override fun reify(value: ByteArray) = value.string().toShort()
 }

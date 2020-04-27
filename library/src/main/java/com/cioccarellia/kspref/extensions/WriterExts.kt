@@ -17,6 +17,7 @@ package com.cioccarellia.kspref.extensions
 
 import android.content.SharedPreferences
 import android.util.Log
+import androidx.annotation.CheckResult
 import com.cioccarellia.kspref.KsPrefs
 import com.cioccarellia.kspref.config.AutoSavePolicy
 import com.cioccarellia.kspref.config.CommitStrategy

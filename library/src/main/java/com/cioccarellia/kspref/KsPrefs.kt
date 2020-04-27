@@ -20,18 +20,19 @@ import com.cioccarellia.kspref.config.CommitStrategy
 import com.cioccarellia.kspref.config.KspConfig
 import com.cioccarellia.kspref.dispatcher.KspDispatcher
 import com.cioccarellia.kspref.extensions.getPrefs
+import com.cioccarellia.kspref.namespace.Namespace
 
 class KsPrefs(
     appContext: Context,
-    namespace: String, // = Namespace.default(context),
+    namespace: String = Namespace.default(appContext),
     config: KspConfig.() -> Unit = {}
 ) {
     companion object {
-        lateinit var config: KspConfig
+        val config: KspConfig by lazy { KspConfig() }
     }
 
     init {
-        Companion.config = KspConfig().apply(config)
+        Companion.config.run(config)
     }
 
     @PublishedApi

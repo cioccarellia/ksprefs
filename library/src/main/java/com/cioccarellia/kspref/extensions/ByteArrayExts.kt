@@ -17,9 +17,18 @@
 
 package com.cioccarellia.kspref.extensions
 
+import androidx.annotation.CheckResult
+import com.cioccarellia.kspref.KsPrefs
 import com.cioccarellia.kspref.defaults.Defaults
 
-internal fun ByteArray.string() = this.toString(Defaults.CHARSET)
+@CheckResult
+internal fun ByteArray.string() = this.toString(
+    charset = try {
+        KsPrefs.config.charset
+    } catch (configNotInitialized: KotlinNullPointerException) {
+        Defaults.CHARSET
+    }
+)
 
 @PublishedApi
 internal inline fun emptyByteArray() = ByteArray(0)

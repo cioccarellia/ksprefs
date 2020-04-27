@@ -13,13 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.transform
+package com.cioccarellia.kspref.converter
 
 import com.cioccarellia.kspref.defaults.Defaults
-import java.math.BigDecimal
+import com.cioccarellia.kspref.extensions.byteArray
+import com.cioccarellia.kspref.extensions.string
+import org.json.JSONObject
 
 @PublishedApi
-internal class BigDecimalConverter : TypeConverter<BigDecimal>() {
-    override fun transform(value: BigDecimal) = value.toString().toByteArray()
-    override fun reify(value: ByteArray) = value.toString(Defaults.CHARSET).toBigDecimal()
+internal class JsonConverter : TypeConverter<JSONObject>() {
+    override fun transform(value: JSONObject) = value.toString().byteArray()
+    override fun reify(value: ByteArray) = JSONObject(value.string())
 }

@@ -15,14 +15,13 @@
  */
 package com.cioccarellia.kspref.dispatcher
 
-import android.content.Context
 import com.cioccarellia.kspref.config.CommitStrategy
 import com.cioccarellia.kspref.enclosure.KspEnclosure
 import com.cioccarellia.kspref.extensions.Reader
 import com.cioccarellia.kspref.extensions.emptyByteArray
 import com.cioccarellia.kspref.intrinsic.checkKey
 import com.cioccarellia.kspref.intrinsic.checkValue
-import com.cioccarellia.kspref.transform.TypeConverter
+import com.cioccarellia.kspref.converter.TypeConverter
 
 @PublishedApi
 internal class KspDispatcher(
@@ -85,6 +84,7 @@ internal class KspDispatcher(
         return reify(returnedBytes)
     }
 
+    /** no-def val */
     private inline fun <reified T> pull(
         key: String
     ): T {

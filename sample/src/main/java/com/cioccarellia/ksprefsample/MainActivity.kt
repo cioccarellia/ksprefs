@@ -16,6 +16,7 @@
 package com.cioccarellia.ksprefsample
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -37,6 +38,8 @@ class MainActivity : AppCompatActivity() {
             autoSave = AutoSavePolicy.MANUAL
         }
 
+        log(KsPrefs.config.autoSave.toString())
+
         val dfu = prefs.pull(KEY, "default")
         toast(dfu)
 
@@ -55,5 +58,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun log(str: String) = Log.d("KSP", str)
     fun toast(str: String) = Toast.makeText(this, str, Toast.LENGTH_SHORT).show()
 }

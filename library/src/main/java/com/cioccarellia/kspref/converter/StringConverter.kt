@@ -13,12 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.transform
+package com.cioccarellia.kspref.converter
 
 import com.cioccarellia.kspref.defaults.Defaults
+import com.cioccarellia.kspref.extensions.byteArray
+import com.cioccarellia.kspref.extensions.string
 
 @PublishedApi
-internal class FloatConverter() : TypeConverter<Float>() {
-    override fun transform(value: Float) = value.toString().toByteArray(Defaults.CHARSET)
-    override fun reify(value: ByteArray) = value.toString(Defaults.CHARSET).toFloat()
+internal class StringConverter : TypeConverter<String>() {
+    override fun transform(value: String) = value.byteArray()
+    override fun reify(value: ByteArray) = value.string()
 }

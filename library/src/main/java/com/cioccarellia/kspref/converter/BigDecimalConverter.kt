@@ -13,12 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.transform
+package com.cioccarellia.kspref.converter
 
-import com.cioccarellia.kspref.defaults.Defaults
+import com.cioccarellia.kspref.extensions.byteArray
+import com.cioccarellia.kspref.extensions.string
+import java.math.BigDecimal
 
 @PublishedApi
-internal class IntConverter : TypeConverter<Int>() {
-    override fun transform(value: Int) = value.toString().toByteArray(Defaults.CHARSET)
-    override fun reify(value: ByteArray) = value.toString(Defaults.CHARSET).toInt()
+internal class BigDecimalConverter : TypeConverter<BigDecimal>() {
+    override fun transform(value: BigDecimal) = value.toString().byteArray()
+    override fun reify(value: ByteArray) = value.string().toBigDecimal()
 }

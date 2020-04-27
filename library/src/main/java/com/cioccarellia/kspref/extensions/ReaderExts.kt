@@ -16,12 +16,13 @@
 package com.cioccarellia.kspref.extensions
 
 import android.content.SharedPreferences
-import com.cioccarellia.kspref.defaults.Defaults
+import androidx.annotation.CheckResult
 
 typealias Reader = SharedPreferences
 
+@CheckResult
 internal fun Reader.read(
     key: String,
     default: ByteArray
 ): ByteArray = getString(key, default.string())
-    ?.toByteArray(Defaults.CHARSET) ?: "".toByteArray()
+    ?.byteArray() ?: "".byteArray()

@@ -16,8 +16,15 @@
 package com.cioccarellia.kspref.defaults
 
 import android.content.Context
+import com.cioccarellia.kspref.config.AutoSavePolicy
+import com.cioccarellia.kspref.config.ByteTransformationStrategy
+import com.cioccarellia.kspref.config.CommitStrategy
 
 object Defaults {
     const val MODE = Context.MODE_PRIVATE
     val CHARSET = Charsets.UTF_8
+
+    val AUTO_SAVE_POLICY = AutoSavePolicy.AUTO
+    val COMMIT_STRATEGY = CommitStrategy.ASYNC_APPLY
+    val TRANSFORMATION = ByteTransformationStrategy.PLAIN_TEXT
 }
