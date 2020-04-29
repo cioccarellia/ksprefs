@@ -37,7 +37,7 @@ object Defaults {
     val COMMIT_STRATEGY = CommitStrategy.ASYNC_APPLY
 
     /** Encryption */
-    val TRANSFORMATION = ByteTransformationStrategy.BASE64
+    val TRANSFORMATION = ByteTransformationStrategy.PLAIN_TEXT
     val BLOCK_CIPHER_ENCRYPTION_MODE = BlockCipherEncryptionMode.ECB
     val KEY_SIZE_TRIM_OPTION = KeySizeTrimmingOption.TRIM_128
 }

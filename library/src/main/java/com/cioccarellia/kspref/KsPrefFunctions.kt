@@ -21,6 +21,6 @@ import kotlin.random.asKotlinRandom
 
 fun KsPrefs.Companion.randomIV(): ByteArray = SecureRandom().asKotlinRandom().nextBytes(
     emptyByteArray(
-        byteCount = KsPrefs.config.encryption.keySize.byteCount()
+        byteCount = config.encryption.keySize.byteCount()
     )
 )

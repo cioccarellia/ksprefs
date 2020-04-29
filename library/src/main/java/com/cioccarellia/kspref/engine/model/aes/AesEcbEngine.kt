@@ -20,13 +20,14 @@ import android.util.Base64
 import com.cioccarellia.kspref.engine.CryptoEngine
 import com.cioccarellia.kspref.engine.Engine
 import com.cioccarellia.kspref.engine.Transmission
+import com.cioccarellia.kspref.internal.SymmetricKey
 import java.security.MessageDigest
 import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
 
 @SuppressLint("GetInstance")
 class AesEcbEngine(
-    val key: ByteArray,
+    val key: SymmetricKey,
     val keyByteCount: Int,
     val base64Flags: Int
 ) : Engine(), CryptoEngine {
@@ -44,7 +45,7 @@ class AesEcbEngine(
     private val digest by lazy { MessageDigest.getInstance("SHA-256") }
 
     override fun keySpec(): SecretKeySpec = runSafely {
-        val _key = digest.digest(key).copyOf(keyByteCount)
+        val _key = digest.digest(key.bytes).copyOf(keyByteCount)
         SecretKeySpec(_key, algorithm)
     }
 

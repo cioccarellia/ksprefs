@@ -15,11 +15,11 @@
  */
 package com.cioccarellia.kspref.converter
 
-import com.cioccarellia.kspref.extensions.byteArray
+import com.cioccarellia.kspref.extensions.bytes
 import com.cioccarellia.kspref.extensions.string
 
 @PublishedApi
 internal class LongConverter : TypeConverter<Long>() {
-    override fun transform(value: Long) = value.toString().byteArray()
+    override fun transform(value: Long) = value.toString().bytes()
     override fun reify(value: ByteArray) = value.string().toLong()
 }

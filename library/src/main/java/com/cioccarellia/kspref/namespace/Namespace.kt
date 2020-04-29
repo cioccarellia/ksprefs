@@ -16,18 +16,17 @@
 package com.cioccarellia.kspref.namespace
 
 import android.content.Context
-import java.lang.RuntimeException
 
 @PublishedApi
 internal object Namespace {
     fun default(context: Context) = try {
-        "default-${context.packageName}"
+        "default-${context.packageName!!}"
     } catch (nullPackage: RuntimeException) {
         "default-kspref-app"
     }
 
     fun exact(context: Context) = try {
-        context.packageName
+        context.packageName!!
     } catch (nullPackage: RuntimeException) {
         "kspref"
     }

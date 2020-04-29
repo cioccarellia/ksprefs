@@ -20,7 +20,16 @@ import com.cioccarellia.kspref.KsPrefs
 import com.cioccarellia.kspref.defaults.Defaults
 
 @CheckResult
-internal fun String.byteArray() = this.toByteArray(
+internal fun String.bytes() = this.toByteArray(
+    charset = try {
+        KsPrefs.config.charset
+    } catch (configNotInitialized: KotlinNullPointerException) {
+        Defaults.CHARSET
+    }
+)
+
+@CheckResult
+internal fun String?.unsafeBytes() = this?.toByteArray(
     charset = try {
         KsPrefs.config.charset
     } catch (configNotInitialized: KotlinNullPointerException) {

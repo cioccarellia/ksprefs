@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="SCOPE_TYPE" value="4" />
+  </component>
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="cioccarellia" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="error" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+    <option name="LOGCAT_FORMAT_STRING" value="%3$s %4$c/%5$s: %6$s" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d65a557c-4e5c-4ce5-8db7-e0f9eb609c3f" name="Default Changelist" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="6376ce23" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="kspref" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin Object" />
+        <option value="Kotlin Enum" />
+        <option value="Class" />
+        <option value="Kotlin Interface" />
+        <option value="Kotlin File" />
+        <option value="Kotlin Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="2.0-ksc" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1ap8ykTVQ83dX2CXcmtSok6Af49" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="android.project.structure.last.selected" value="SDK Location" />
+    <property name="android.project.structure.proportion" value="0.15" />
+    <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="kotlin" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/library/src/main/java/com/cioccarellia/kspref/extensions" />
+    <property name="project.structure.last.edited" value="Suggestions" />
+    <property name="project.structure.proportion" value="0.17" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+  </component>
+  <component name="PsdUISettings">
+    <option name="MODULE_TAB" value="Properties" />
+    <option name="LAST_EDITED_SIGNING_CONFIG" value="debug" />
+    <option name="LAST_EDITED_BUILD_TYPE" value="debug" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/library/src/main/java/com/cioccarellia/kspref/observer" />
+      <recent name="$PROJECT_DIR$/library/src/main/java/com/cioccarellia/kspref/internal/transactions" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.cioccarellia.kspref" />
+    </key>
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="com.cioccarellia.kspref.engine.model.aes" />
+      <recent name="com.cioccarellia.kspref.config.crypto" />
+      <recent name="com.cioccarellia.kspref.engine.model" />
+      <recent name="com.cioccarellia.kspref.engine" />
+      <recent name="com.cioccarellia.kspref.model" />
+    </key>
+    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="com.cioccarellia.kspref.engine.model.aes" />
+      <recent name="com.cioccarellia.kspref.engine.model" />
+      <recent name="com.cioccarellia.kspref.transform" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/library/src/main/java/com/cioccarellia/kspref/extensions" />
+      <recent name="$PROJECT_DIR$/library/src/main/java/com/cioccarellia/kspref/transform" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="drone x" />
+      <command value="?" />
+      <command value="open library" />
+    </option>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Android App.sample">
+    <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
+      <option name="TEST_OBJECT" value="class" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="com.cioccarellia.kspref.extensions in library" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
+      <module name="library" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.cioccarellia.kspref.extensions.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.cioccarellia.kspref.extensions" />
+      <option name="TEST_OBJECT" value="package" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="sample" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="sample" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Hybrid>
+      <Java />
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Sample Java Methods" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Apply spotless" type="GradleRunConfiguration" factoryName="Gradle">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="spotlessApply" />
+          </list>
+        </option>
+        <option name="vmOptions" value="" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="Run All Tests" type="GradleRunConfiguration" factoryName="Gradle">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/library" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="test" />
+          </list>
+        </option>
+        <option name="vmOptions" value="" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="IntegrityTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="library" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.cioccarellia.kspref.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.cioccarellia.kspref" />
+      <option name="MAIN_CLASS_NAME" value="com.cioccarellia.kspref.IntegrityTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="IntegrityTest.check" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="library" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.cioccarellia.kspref.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.cioccarellia.kspref" />
+      <option name="MAIN_CLASS_NAME" value="com.cioccarellia.kspref.IntegrityTest" />
+      <option name="METHOD_NAME" value="check" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="IntegrityTest.check" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="library" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.cioccarellia.kspref.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.cioccarellia.kspref" />
+      <option name="MAIN_CLASS_NAME" value="com.cioccarellia.kspref.IntegrityTest" />
+      <option name="METHOD_NAME" value="check" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Android App.sample" />
+      <item itemvalue="Android JUnit.com.cioccarellia.kspref.extensions in library" />
+      <item itemvalue="Gradle.Apply spotless" />
+      <item itemvalue="Gradle.Run All Tests" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Android JUnit.com.cioccarellia.kspref.extensions in library" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d65a557c-4e5c-4ce5-8db7-e0f9eb609c3f" name="Default Changelist" comment="" />
+      <created>1587421430325</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1587421430325</updated>
+    </task>
+    <task id="LOCAL-00001" summary="KSC Setup">
+      <created>1587422093805</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1587422093805</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Cleanup">
+      <created>1587476802721</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1587476802722</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Added idea config">
+      <created>1587476931662</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1587476931662</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Updated copyright">
+      <created>1587483588873</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1587483588873</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Updated kt indent, refactoring">
+      <created>1587506030717</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1587506030717</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Updated project name, initialized">
+      <created>1587508907379</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1587508907379</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Created KsPref and dispatcher, created default conversion engine, sketched chassis, initialized config, added type converters, checks &amp; namespace">
+      <created>1587602265405</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1587602265405</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Added SDK license copy, added jacoco plugin, refactored consts to defaults, changed config class to parameterized lambda">
+      <created>1587654007273</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1587654007274</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Updated dependencies, removed chassis and created enclosure, added extensions to manage internal functioning and added autosave and commit strategy implementations, created first engine picker implementation, finalized &amp; optimized concern chain, refactoring">
+      <created>1587689204389</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1587689204389</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Improvements for code structure &amp; visibility, added extra type- and null-checks">
+      <created>1587747842977</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1587747842977</updated>
+    </task>
+    <task id="LOCAL-00011" summary="A lot of integrity cleanup and redundancy removal, aligned extension functions from ByteArrayExts.kt and StringExts.kt around all the project, added exception checking for context-related tasks in compound classes and components, usability improvements">
+      <created>1588029975178</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1588029975178</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Working AES engine implementation &amp; Base64 engine, keys are now considered as target objects and transformed into the engine, new preferred annotation, derivative and integral to define scrambled and pure data, separed encryption config in KspEncryptionConfig.kt object, changes for default encoding, increased library reactivity and internal code reuse, bug fixes">
+      <created>1588119101508</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1588119101509</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Added CryptoEngine interface to properly define cryptographic engines, divided AES into CBC and ECB engines, created parameterized initializers for KspEncryptionConfig, created KsPref extensions for library consumer, removed untouched trimming option, switched to ECB as default encryption cipher block mode since it does not require an iv to work">
+      <created>1588182678754</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1588182678755</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="1">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+            </State>
+          </value>
+        </entry>
+        <entry key="2">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+            </State>
+          </value>
+        </entry>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="OPEN_TABS">
+      <set>
+        <option value="1" />
+        <option value="2" />
+      </set>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="KSC Setup" />
+    <MESSAGE value="Cleanup" />
+    <MESSAGE value="Added idea config" />
+    <MESSAGE value="Updated copyright" />
+    <MESSAGE value="Updated kt indent, refactoring" />
+    <MESSAGE value="Updated project name, initialized" />
+    <MESSAGE value="Created KsPref and dispatcher, created default conversion engine, sketched chassis, initialized config, added type converters, checks &amp; namespace" />
+    <MESSAGE value="Added SDK license copy, added jacoco plugin, refactored consts to defaults, changed config class to parameterized lambda" />
+    <MESSAGE value="Updated dependencies, removed chassis and created enclosure, added extensions to manage internal functioning and added autosave and commit strategy implementations, created first engine picker implementation, finalized &amp; optimized concern chain, refactoring" />
+    <MESSAGE value="Improvements for code structure &amp; visibility, added extra type- and null-checks" />
+    <MESSAGE value="A lot of integrity cleanup and redundancy removal, aligned extension functions from ByteArrayExts.kt and StringExts.kt around all the project, added exception checking for context-related tasks in compound classes and components, usability improvements" />
+    <MESSAGE value="Working AES engine implementation &amp; Base64 engine, keys are now considered as target objects and transformed into the engine, new preferred annotation, derivative and integral to define scrambled and pure data, separed encryption config in KspEncryptionConfig.kt object, changes for default encoding, increased library reactivity and internal code reuse, bug fixes" />
+    <MESSAGE value="Added CryptoEngine interface to properly define cryptographic engines, divided AES into CBC and ECB engines, created parameterized initializers for KspEncryptionConfig, created KsPref extensions for library consumer, removed untouched trimming option, switched to ECB as default encryption cipher block mode since it does not require an iv to work" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added CryptoEngine interface to properly define cryptographic engines, divided AES into CBC and ECB engines, created parameterized initializers for KspEncryptionConfig, created KsPref extensions for library consumer, removed untouched trimming option, switched to ECB as default encryption cipher block mode since it does not require an iv to work" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
+</project>

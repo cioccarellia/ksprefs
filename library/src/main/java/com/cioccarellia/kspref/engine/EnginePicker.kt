@@ -19,13 +19,14 @@ import android.util.Base64
 import com.cioccarellia.kspref.KsPrefs
 import com.cioccarellia.kspref.config.crypto.BlockCipherEncryptionMode
 import com.cioccarellia.kspref.config.crypto.ByteTransformationStrategy
-import com.cioccarellia.kspref.engine.model.Base64Engine
-import com.cioccarellia.kspref.engine.model.PlainTextEngine
 import com.cioccarellia.kspref.engine.model.aes.AesCbcEngine
 import com.cioccarellia.kspref.engine.model.aes.AesEcbEngine
+import com.cioccarellia.kspref.engine.model.base64.Base64Engine
+import com.cioccarellia.kspref.engine.model.plaintext.PlainTextEngine
 import com.cioccarellia.kspref.exception.KsPrefEngineException
 import com.cioccarellia.kspref.exception.KsPrefUnsetConfigException
-import com.cioccarellia.kspref.extensions.byteArray
+import com.cioccarellia.kspref.extensions.unsafeBytes
+import com.cioccarellia.kspref.internal.SymmetricKey
 
 object EnginePicker {
     private inline val config
@@ -45,9 +46,10 @@ object EnginePicker {
 
             // We assume the key is set by the user
             // since the transformation strategy is AES
-            val key = (cryptoConfig.key
-                ?: throw KsPrefEngineException("Encryption key is unset in encryption configuration"))
-                .byteArray()
+            val key = SymmetricKey(
+                cryptoConfig.key.unsafeBytes()
+                    ?: throw KsPrefEngineException("Encryption key is unset in encryption configuration")
+            )
 
             when (cryptoConfig.blockCipherMode) {
                 BlockCipherEncryptionMode.CBC -> {

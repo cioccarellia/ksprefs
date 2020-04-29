@@ -39,7 +39,7 @@ internal class KspEnclosure(
 
     private inline fun engineApply(
         value: String
-    ): String = engine.apply(Transmission(value.byteArray())).payload.string()
+    ): String = engine.apply(Transmission(value.bytes())).payload.string()
 
     private inline fun engineRevert(
         value: ByteArray
@@ -47,7 +47,7 @@ internal class KspEnclosure(
 
     private inline fun engineRevert(
         value: String
-    ): String = engine.revert(Transmission(value.byteArray())).payload.string()
+    ): String = engine.revert(Transmission(value.bytes())).payload.string()
 
     @PublishedApi
     internal fun read(

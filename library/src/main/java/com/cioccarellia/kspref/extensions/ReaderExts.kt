@@ -25,4 +25,4 @@ internal fun Reader.read(
     key: String,
     default: ByteArray
 ): ByteArray = getString(key, default.string())
-    ?.byteArray() ?: "".byteArray()
+    ?.bytes() ?: "".bytes()

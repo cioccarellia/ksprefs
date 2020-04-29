@@ -15,12 +15,12 @@
  */
 package com.cioccarellia.kspref.converter
 
-import com.cioccarellia.kspref.extensions.byteArray
+import com.cioccarellia.kspref.extensions.bytes
 import com.cioccarellia.kspref.extensions.string
 import java.math.BigDecimal
 
 @PublishedApi
 internal class BigDecimalConverter : TypeConverter<BigDecimal>() {
-    override fun transform(value: BigDecimal) = value.toString().byteArray()
+    override fun transform(value: BigDecimal) = value.toString().bytes()
     override fun reify(value: ByteArray) = value.string().toBigDecimal()
 }

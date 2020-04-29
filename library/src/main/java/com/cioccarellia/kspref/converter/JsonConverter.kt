@@ -15,12 +15,12 @@
  */
 package com.cioccarellia.kspref.converter
 
-import com.cioccarellia.kspref.extensions.byteArray
+import com.cioccarellia.kspref.extensions.bytes
 import com.cioccarellia.kspref.extensions.string
 import org.json.JSONObject
 
 @PublishedApi
 internal class JsonConverter : TypeConverter<JSONObject>() {
-    override fun transform(value: JSONObject) = value.toString().byteArray()
+    override fun transform(value: JSONObject) = value.toString().bytes()
     override fun reify(value: ByteArray) = JSONObject(value.string())
 }

@@ -62,4 +62,31 @@ data class KspEncryptionConfig internal constructor(
         keySize = Defaults.KEY_SIZE_TRIM_OPTION
         blockCipherMode = BlockCipherEncryptionMode.ECB
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as KspEncryptionConfig
+
+        if (transformation != other.transformation) return false
+        if (key != other.key) return false
+        if (iv != null) {
+            if (other.iv == null) return false
+            if (!(iv as ByteArray).contentEquals(other.iv as ByteArray)) return false
+        } else if (other.iv != null) return false
+        if (keySize != other.keySize) return false
+        if (blockCipherMode != other.blockCipherMode) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = transformation.hashCode()
+        result = 31 * result + (key?.hashCode() ?: 0)
+        result = 31 * result + (iv?.contentHashCode() ?: 0)
+        result = 31 * result + keySize.hashCode()
+        result = 31 * result + blockCipherMode.hashCode()
+        return result
+    }
 }
