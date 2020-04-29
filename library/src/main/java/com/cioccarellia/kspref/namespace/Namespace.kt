@@ -25,4 +25,10 @@ internal object Namespace {
     } catch (nullPackage: RuntimeException) {
         "default-kspref-app"
     }
+
+    fun exact(context: Context) = try {
+        context.packageName
+    } catch (nullPackage: RuntimeException) {
+        "kspref"
+    }
 }

@@ -13,9 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.config
+package com.cioccarellia.kspref.config.crypto
 
-enum class ByteTransformationStrategy {
-    PLAIN_TEXT,
-    BASE64
-}
+import com.cioccarellia.kspref.defaults.Defaults
+
+data class KspEncryptionConfig internal constructor(
+    var key: String? = null,
+    val blockCipherMode: BlockCipherEncryptionMode = Defaults.BLOCK_CIPHER_ENCRYPTION_MODE,
+    val keySize: KeySizeTrimmingOption = Defaults.KEY_SIZE_OPTION,
+    var transformation: ByteTransformationStrategy = Defaults.TRANSFORMATION
+)

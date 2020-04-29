@@ -31,7 +31,7 @@ internal class KspDispatcher(
     @PublishedApi
     internal val enclosure = KspEnclosure(namespace, handle)
 
-    internal fun expose() = enclosure.handle
+    internal fun expose() = enclosure.sharedReader
 
     @PublishedApi
     internal inline fun <reified T> convert(
@@ -85,7 +85,7 @@ internal class KspDispatcher(
     }
 
     /** no-def val */
-    private inline fun <reified T> pull(
+    inline fun <reified T> pull(
         key: String
     ): T {
         // The function accepts nullable values,
@@ -108,5 +108,5 @@ internal class KspDispatcher(
         commitStrategy: CommitStrategy
     ) = enclosure.save(commitStrategy)
 
-    internal fun delete(key: String) = enclosure.delete(key)
+    internal fun remove(key: String) = enclosure.remove(key)
 }

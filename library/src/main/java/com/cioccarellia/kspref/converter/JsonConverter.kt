@@ -15,7 +15,6 @@
  */
 package com.cioccarellia.kspref.converter
 
-import com.cioccarellia.kspref.defaults.Defaults
 import com.cioccarellia.kspref.extensions.byteArray
 import com.cioccarellia.kspref.extensions.string
 import org.json.JSONObject

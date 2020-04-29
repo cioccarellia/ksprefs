@@ -17,49 +17,74 @@
 
 package com.cioccarellia.kspref.enclosure
 
+import android.annotation.SuppressLint
 import com.cioccarellia.kspref.config.CommitStrategy
 import com.cioccarellia.kspref.engine.Engine
 import com.cioccarellia.kspref.engine.EnginePicker
 import com.cioccarellia.kspref.engine.Transmission
 import com.cioccarellia.kspref.extensions.*
 
+@Suppress("MemberVisibilityCanBePrivate")
+@SuppressLint("CommitPrefEdits")
 @PublishedApi
 internal class KspEnclosure(
     private val namespace: String,
-    internal val handle: Reader,
+    internal var sharedReader: Reader,
+    internal var sharedWriter: Writer = sharedReader.edit(),
     private val engine: Engine = EnginePicker.select()
 ) {
     private inline fun engineApply(
         value: ByteArray
     ): ByteArray = engine.apply(Transmission(value)).payload
 
+    private inline fun engineApply(
+        value: String
+    ): String = engine.apply(Transmission(value.byteArray())).payload.string()
+
     private inline fun engineRevert(
         value: ByteArray
     ): ByteArray = engine.revert(Transmission(value)).payload
+
+    private inline fun engineRevert(
+        value: String
+    ): String = engine.revert(Transmission(value.byteArray())).payload.string()
 
     @PublishedApi
     internal fun read(
         key: String,
         default: ByteArray
-    ) = engineRevert(handle.read(key, engineApply(default)))
+    ) = engineRevert(
+        sharedReader.read(
+            engineApply(key),
+            engineApply(default)
+        )
+    )
 
     @PublishedApi
     internal fun write(
         key: String,
         value: ByteArray
-    ) = handle.edit()
-        .write(key, engineApply(value))
-        .finalize()
+    ) = with(sharedWriter) {
+        write(
+            engineApply(key),
+            engineApply(value)
+        )
+        finalize()
+    }
 
     internal fun save(
         commitStrategy: CommitStrategy
-    ) = handle.edit().forceFinalization(
-        commitStrategy = commitStrategy
-    )
+    ) = with(sharedWriter) {
+        forceFinalization(
+            commitStrategy = commitStrategy
+        )
+    }
 
-    internal fun delete(
+    internal fun remove(
         key: String
-    ) = handle.edit()
-        .delete(key)
+    ) = sharedReader.edit()
+        .delete(
+            engineApply(key)
+        )
         .finalize()
 }

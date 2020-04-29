@@ -15,13 +15,17 @@
  */
 package com.cioccarellia.kspref.converter
 
+import com.cioccarellia.kspref.annotations.Derivative
+import com.cioccarellia.kspref.annotations.Integral
 import org.json.JSONObject
 import java.math.BigDecimal
 import java.math.BigInteger
 
 @PublishedApi
 internal abstract class TypeConverter<I> {
+    @Derivative
     abstract fun transform(value: I): ByteArray
+    @Integral
     abstract fun reify(value: ByteArray): I
 
     companion object {

@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.converter
+package com.cioccarellia.kspref.config.crypto
 
-import com.cioccarellia.kspref.extensions.byteArray
-import com.cioccarellia.kspref.extensions.string
+import com.cioccarellia.kspref.annotations.PreferredForEncryption
 
-@PublishedApi
-internal class LongConverter : TypeConverter<Long>() {
-    override fun transform(value: Long) = value.toString().byteArray()
-    override fun reify(value: ByteArray) = value.string().toLong()
+enum class ByteTransformationStrategy {
+    PLAIN_TEXT,
+    BASE64,
+    @PreferredForEncryption
+    AES
 }

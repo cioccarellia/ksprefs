@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.converter
+package com.cioccarellia.kspref.extensions
 
-import com.cioccarellia.kspref.extensions.byteArray
-import com.cioccarellia.kspref.extensions.string
+import com.cioccarellia.kspref.exception.KsPrefEngineException
+import javax.crypto.SecretKey
 
-@PublishedApi
-internal class LongConverter : TypeConverter<Long>() {
-    override fun transform(value: Long) = value.toString().byteArray()
-    override fun reify(value: ByteArray) = value.string().toLong()
+fun <T> Result<T>.getOrThrowException(
+    operation: String = ""
+): T = getOrElse { exception ->
+    throw KsPrefEngineException.convertFrom(exception, operation)
 }

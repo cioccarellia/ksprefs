@@ -16,6 +16,8 @@
 package com.cioccarellia.kspref.config
 
 import androidx.annotation.IntRange
+import com.cioccarellia.kspref.config.crypto.ByteTransformationStrategy
+import com.cioccarellia.kspref.config.crypto.KspEncryptionConfig
 import com.cioccarellia.kspref.defaults.Defaults
 import java.nio.charset.Charset
 
@@ -26,5 +28,6 @@ data class KspConfig internal constructor(
 
     var autoSave: AutoSavePolicy = Defaults.AUTO_SAVE_POLICY,
     var commitStrategy: CommitStrategy = Defaults.COMMIT_STRATEGY,
-    var transformation: ByteTransformationStrategy = Defaults.TRANSFORMATION
+
+    var encryption: KspEncryptionConfig = KspEncryptionConfig()
 )

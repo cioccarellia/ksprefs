@@ -56,7 +56,7 @@ class KsPrefs(
         commitStrategy: CommitStrategy = config.commitStrategy
     ) = dispatcher.save(commitStrategy)
 
-    fun delete(
+    fun remove(
         key: String
-    ) = dispatcher.delete(key)
+    ) = dispatcher.remove(key)
 }

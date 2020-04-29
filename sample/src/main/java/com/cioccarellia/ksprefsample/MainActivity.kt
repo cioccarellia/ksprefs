@@ -23,6 +23,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.cioccarellia.kspref.KsPrefs
 import com.cioccarellia.kspref.config.AutoSavePolicy
+import com.cioccarellia.kspref.config.crypto.ByteTransformationStrategy
 
 class MainActivity : AppCompatActivity() {
     private val inputView by lazy { findViewById<TextView>(R.id.inputView) }
@@ -34,8 +35,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val prefs = KsPrefs(this, packageName) {
-            autoSave = AutoSavePolicy.MANUAL
+        val prefs = KsPrefs(this) {
+            autoSave = AutoSavePolicy.AUTO
+
+            encryption.run {
+                key = "jhvtyuvlllllllll"
+                transformation = ByteTransformationStrategy.AES
+            }
         }
 
         log(KsPrefs.config.autoSave.toString())
@@ -47,17 +53,16 @@ class MainActivity : AppCompatActivity() {
             val before = prefs.pull(KEY, "default1")
 
             prefs.push(KEY, inputView.text.toString())
-            prefs.save()
-            prefs.expose().edit().apply()
+
+            //prefs.save()
 
             val after = prefs.pull(KEY, "default1")
 
 
-            toast("Before: $before")
-            toast("After: $after")
+            toast("Before: $before\nAfter: $after")
         }
     }
 
-    fun log(str: String) = Log.d("KSP", str)
+    fun log(str: String) = Log.d("KsPref", str)
     fun toast(str: String) = Toast.makeText(this, str, Toast.LENGTH_SHORT).show()
 }

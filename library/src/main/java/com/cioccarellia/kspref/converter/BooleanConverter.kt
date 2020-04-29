@@ -15,12 +15,11 @@
  */
 package com.cioccarellia.kspref.converter
 
-import com.cioccarellia.kspref.defaults.Defaults
 import com.cioccarellia.kspref.extensions.byteArray
 import com.cioccarellia.kspref.extensions.string
 
 @PublishedApi
-internal class BooleanConverter() : TypeConverter<Boolean>() {
+internal class BooleanConverter : TypeConverter<Boolean>() {
     override fun transform(value: Boolean) = value.toString().byteArray()
     override fun reify(value: ByteArray) = value.string().toBoolean()
 }

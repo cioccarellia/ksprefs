@@ -15,13 +15,28 @@
  */
 package com.cioccarellia.kspref.engine
 
+import android.util.Base64
 import com.cioccarellia.kspref.KsPrefs
+import com.cioccarellia.kspref.config.crypto.ByteTransformationStrategy
+import com.cioccarellia.kspref.engine.model.AesEngine
+import com.cioccarellia.kspref.engine.model.Base64Engine
 import com.cioccarellia.kspref.engine.model.PlainTextEngine
+import com.cioccarellia.kspref.exception.KsPrefEngineException
+import com.cioccarellia.kspref.extensions.byteArray
 
 object EnginePicker {
-    fun select(): Engine {
-        val transformation = KsPrefs.config.transformation
-
-        return PlainTextEngine()
+    fun select(): Engine = when (KsPrefs.config.encryption.transformation) {
+        ByteTransformationStrategy.PLAIN_TEXT -> PlainTextEngine()
+        ByteTransformationStrategy.BASE64 -> Base64Engine(
+            Base64.DEFAULT
+        )
+        ByteTransformationStrategy.AES -> try {
+            AesEngine(
+                KsPrefs.config.encryption.key!!.byteArray(),
+                KsPrefs.config.encryption.keySize
+            )
+        } catch (knpe: KotlinNullPointerException) {
+            throw KsPrefEngineException("KsPref encryptionConfig key is not initialized", knpe)
+        }
     }
 }

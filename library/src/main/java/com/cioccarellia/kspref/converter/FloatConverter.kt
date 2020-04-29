@@ -15,12 +15,11 @@
  */
 package com.cioccarellia.kspref.converter
 
-import com.cioccarellia.kspref.defaults.Defaults
 import com.cioccarellia.kspref.extensions.byteArray
 import com.cioccarellia.kspref.extensions.string
 
 @PublishedApi
-internal class FloatConverter() : TypeConverter<Float>() {
+internal class FloatConverter : TypeConverter<Float>() {
     override fun transform(value: Float) = value.toString().byteArray()
     override fun reify(value: ByteArray) = value.string().toFloat()
 }

@@ -17,7 +17,6 @@ package com.cioccarellia.kspref.extensions
 
 import android.content.SharedPreferences
 import android.util.Log
-import androidx.annotation.CheckResult
 import com.cioccarellia.kspref.KsPrefs
 import com.cioccarellia.kspref.config.AutoSavePolicy
 import com.cioccarellia.kspref.config.CommitStrategy
@@ -33,10 +32,12 @@ internal fun Writer.delete(
     key: String
 ): Writer = this.remove(key)
 
-internal fun Writer.finalize() {
+internal fun Writer.finalize(): Writer {
     if (KsPrefs.config.autoSave == AutoSavePolicy.AUTO) {
         forceFinalization()
     }
+
+    return this
 }
 
 internal fun Writer.forceFinalization(

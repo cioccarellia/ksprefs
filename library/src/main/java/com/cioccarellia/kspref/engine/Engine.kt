@@ -15,7 +15,12 @@
  */
 package com.cioccarellia.kspref.engine
 
+import com.cioccarellia.kspref.annotations.Derivative
+import com.cioccarellia.kspref.annotations.Integral
+
 abstract class Engine {
+    @Derivative
     abstract fun apply(incoming: Transmission): Transmission
+    @Integral
     abstract fun revert(outgoing: Transmission): Transmission
 }
