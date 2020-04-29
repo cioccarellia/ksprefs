@@ -17,9 +17,9 @@ package com.cioccarellia.kspref.defaults
 
 import android.content.Context
 import com.cioccarellia.kspref.config.AutoSavePolicy
-import com.cioccarellia.kspref.config.crypto.ByteTransformationStrategy
 import com.cioccarellia.kspref.config.CommitStrategy
 import com.cioccarellia.kspref.config.crypto.BlockCipherEncryptionMode
+import com.cioccarellia.kspref.config.crypto.ByteTransformationStrategy
 import com.cioccarellia.kspref.config.crypto.KeySizeTrimmingOption
 
 object Defaults {
@@ -37,7 +37,7 @@ object Defaults {
     val COMMIT_STRATEGY = CommitStrategy.ASYNC_APPLY
 
     /** Encryption */
-    val TRANSFORMATION = ByteTransformationStrategy.PLAIN_TEXT
-    val BLOCK_CIPHER_ENCRYPTION_MODE = BlockCipherEncryptionMode.CBC
-    val KEY_SIZE_OPTION = KeySizeTrimmingOption.TRIM_128
+    val TRANSFORMATION = ByteTransformationStrategy.BASE64
+    val BLOCK_CIPHER_ENCRYPTION_MODE = BlockCipherEncryptionMode.ECB
+    val KEY_SIZE_TRIM_OPTION = KeySizeTrimmingOption.TRIM_128
 }

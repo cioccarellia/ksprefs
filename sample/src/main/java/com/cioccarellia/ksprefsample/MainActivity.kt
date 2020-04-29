@@ -23,25 +23,20 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.cioccarellia.kspref.KsPrefs
 import com.cioccarellia.kspref.config.AutoSavePolicy
-import com.cioccarellia.kspref.config.crypto.ByteTransformationStrategy
 
 class MainActivity : AppCompatActivity() {
     private val inputView by lazy { findViewById<TextView>(R.id.inputView) }
     private val buttonView by lazy { findViewById<Button>(R.id.buttonView) }
 
-    private val KEY = "trg"
+    private val KEY = "trg_"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val prefs = KsPrefs(this) {
+        val prefs = KsPrefs(applicationContext) {
             autoSave = AutoSavePolicy.AUTO
-
-            encryption.run {
-                key = "jhvtyuvlllllllll"
-                transformation = ByteTransformationStrategy.AES
-            }
+            encryption.initBase64()
         }
 
         log(KsPrefs.config.autoSave.toString())

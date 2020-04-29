@@ -31,4 +31,6 @@ internal fun ByteArray.string() = this.toString(
 )
 
 @PublishedApi
-internal inline fun emptyByteArray() = ByteArray(0)
+internal inline fun emptyByteArray(
+    byteCount: Int = 0
+) = ByteArray(byteCount)

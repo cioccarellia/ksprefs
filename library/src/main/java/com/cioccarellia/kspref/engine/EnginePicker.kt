@@ -17,26 +17,60 @@ package com.cioccarellia.kspref.engine
 
 import android.util.Base64
 import com.cioccarellia.kspref.KsPrefs
+import com.cioccarellia.kspref.config.crypto.BlockCipherEncryptionMode
 import com.cioccarellia.kspref.config.crypto.ByteTransformationStrategy
-import com.cioccarellia.kspref.engine.model.AesEngine
 import com.cioccarellia.kspref.engine.model.Base64Engine
 import com.cioccarellia.kspref.engine.model.PlainTextEngine
+import com.cioccarellia.kspref.engine.model.aes.AesCbcEngine
+import com.cioccarellia.kspref.engine.model.aes.AesEcbEngine
 import com.cioccarellia.kspref.exception.KsPrefEngineException
+import com.cioccarellia.kspref.exception.KsPrefUnsetConfigException
 import com.cioccarellia.kspref.extensions.byteArray
 
 object EnginePicker {
-    fun select(): Engine = when (KsPrefs.config.encryption.transformation) {
+    private inline val config
+        get() = KsPrefs.config
+
+    private inline val cryptoConfig
+        get() = KsPrefs.config.encryption
+
+    fun select(): Engine = when (cryptoConfig.transformation) {
         ByteTransformationStrategy.PLAIN_TEXT -> PlainTextEngine()
         ByteTransformationStrategy.BASE64 -> Base64Engine(
-            Base64.DEFAULT
+            Base64.NO_PADDING or Base64.NO_WRAP
         )
-        ByteTransformationStrategy.AES -> try {
-            AesEngine(
-                KsPrefs.config.encryption.key!!.byteArray(),
-                KsPrefs.config.encryption.keySize
-            )
-        } catch (knpe: KotlinNullPointerException) {
-            throw KsPrefEngineException("KsPref encryptionConfig key is not initialized", knpe)
+        ByteTransformationStrategy.AES -> {
+            val base64EncryptionFlags = Base64.NO_PADDING or Base64.NO_WRAP
+            val keyByteCount = cryptoConfig.keySize.byteCount()
+
+            // We assume the key is set by the user
+            // since the transformation strategy is AES
+            val key = (cryptoConfig.key
+                ?: throw KsPrefEngineException("Encryption key is unset in encryption configuration"))
+                .byteArray()
+
+            when (cryptoConfig.blockCipherMode) {
+                BlockCipherEncryptionMode.CBC -> {
+                    // We assume the IV is set by the user
+                    // since the CBC encryption mode requires an IV
+                    val iv = cryptoConfig.iv
+                        ?: throw KsPrefUnsetConfigException("IV is unset in encryption configuration")
+
+                    AesCbcEngine(
+                        key,
+                        keyByteCount = keyByteCount,
+                        base64Flags = base64EncryptionFlags,
+                        iv = iv
+                    )
+                }
+                BlockCipherEncryptionMode.ECB -> {
+                    AesEcbEngine(
+                        key,
+                        keyByteCount = keyByteCount,
+                        base64Flags = base64EncryptionFlags
+                    )
+                }
+            }
         }
     }
 }

@@ -18,8 +18,48 @@ package com.cioccarellia.kspref.config.crypto
 import com.cioccarellia.kspref.defaults.Defaults
 
 data class KspEncryptionConfig internal constructor(
+    var transformation: ByteTransformationStrategy = Defaults.TRANSFORMATION,
     var key: String? = null,
-    val blockCipherMode: BlockCipherEncryptionMode = Defaults.BLOCK_CIPHER_ENCRYPTION_MODE,
-    val keySize: KeySizeTrimmingOption = Defaults.KEY_SIZE_OPTION,
-    var transformation: ByteTransformationStrategy = Defaults.TRANSFORMATION
-)
+    var iv: ByteArray? = null,
+    var keySize: KeySizeTrimmingOption = Defaults.KEY_SIZE_TRIM_OPTION,
+    var blockCipherMode: BlockCipherEncryptionMode = Defaults.BLOCK_CIPHER_ENCRYPTION_MODE
+) {
+    fun initPlainText() {
+        this.key = null
+        this.iv = null
+
+        transformation = ByteTransformationStrategy.PLAIN_TEXT
+    }
+
+    fun initBase64() {
+        this.key = null
+        this.iv = null
+
+        transformation = ByteTransformationStrategy.BASE64
+    }
+
+    fun initAesCbc(
+        key: String,
+        iv: ByteArray
+    ) {
+        this.key = key
+        this.iv = iv
+
+        transformation = ByteTransformationStrategy.AES
+
+        keySize = Defaults.KEY_SIZE_TRIM_OPTION
+        blockCipherMode = BlockCipherEncryptionMode.CBC
+    }
+
+    fun initAesEcb(
+        key: String
+    ) {
+        this.key = key
+        this.iv = null
+
+        transformation = ByteTransformationStrategy.AES
+
+        keySize = Defaults.KEY_SIZE_TRIM_OPTION
+        blockCipherMode = BlockCipherEncryptionMode.ECB
+    }
+}

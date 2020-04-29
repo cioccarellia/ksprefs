@@ -13,20 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.config.crypto
+package com.cioccarellia.kspref.exception
 
-import com.cioccarellia.kspref.annotations.PreferredForEncryption
-
-enum class KeySizeTrimmingOption {
-    @PreferredForEncryption
-    TRIM_128,
-    TRIM_192,
-    TRIM_256;
-
-    fun byteCount(): Int = when (this) {
-        KeySizeTrimmingOption.TRIM_128 -> 16
-        KeySizeTrimmingOption.TRIM_192 -> 24
-        KeySizeTrimmingOption.TRIM_256 -> 32
-    }
-}
-
+class KsPrefUnsetConfigException(
+    message: String
+) : KotlinNullPointerException(message)
