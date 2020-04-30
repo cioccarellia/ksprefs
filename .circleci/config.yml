@@ -12,11 +12,6 @@ jobs:
           name: "Chmod permissions"
           command: sudo chmod +x ./gradlew
       - run:
-          name: "Copy SDK License"
-          command:
-            - yes | sdkmanager --licenses || exit 0
-            - yes | sdkmanager --update || exit 0
-      - run:
           name: "Download Dependencies"
           command: ./gradlew dependencyUpdates
       - save_cache:
