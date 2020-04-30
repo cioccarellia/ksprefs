@@ -24,6 +24,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.cioccarellia.kspref.KsPrefs
 import com.cioccarellia.kspref.config.AutoSavePolicy
 import com.cioccarellia.kspref.observe
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
     private val inputView by lazy { findViewById<TextView>(R.id.inputView) }
@@ -38,20 +43,23 @@ class MainActivity : AppCompatActivity() {
             encryption.initPlainText()
         }
 
-        var n by prefs.observe("number", 10) { newValue ->
-            toast("Int: $newValue")
-        }
-
-        var long by prefs.observe("long", 100L) { newValue ->
-            toast("Long: $newValue")
+        var value by prefs.observe("randomString", "HEY") { oldValue, newValue ->
+            toast("Previous: -> '$oldValue'\nNew -> '$newValue'")
         }
 
         buttonView.onClickDebounced {
-            prefs.push("long", inputView.text.toString().toLong())
-            prefs.push("number", inputView.text.toString().toInt() + 100)
+            value = "likguyt"
+
+            if (Random.nextBoolean()) {
+                CoroutineScope(Dispatchers.Main).launch {
+                    delay(5_000)
+                    prefs.push("randomString", "reset!!! TITI HAHA")
+                }
+            }
         }
     }
 
-    fun log(str: String) = Log.d("KsPref", str)
-    fun toast(str: String) = Toast.makeText(this, str, Toast.LENGTH_SHORT).show()
+    private fun log(str: String) = Log.d("KsPref", str)
+    private fun toast(str: String) =
+        Toast.makeText(this, str, Toast.LENGTH_SHORT).show().also { log(str) }
 }

@@ -13,16 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.cioccarellia.kspref.delegate.observer
 
-ext.module_name = "sample"
+import android.content.SharedPreferences
+import kotlin.reflect.KClass
 
-apply from: rootProject.file("gradle/android_application_config.gradle")
-
-dependencies {
-    implementation project(":library")
-
-    implementation deps.kotlin.coroutines.android
-    implementation deps.androidx.app_compat
-    implementation deps.androidx.constraint_layout
-    implementation deps.kotlin.stdlib8
-}
+data class ObservedPref(
+    val observer: (Any, Any) -> Unit,
+    val valueType: KClass<*>,
+    val listener: SharedPreferences.OnSharedPreferenceChangeListener
+)

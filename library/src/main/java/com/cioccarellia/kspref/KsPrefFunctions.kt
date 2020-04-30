@@ -15,8 +15,8 @@
  */
 package com.cioccarellia.kspref
 
-import com.cioccarellia.kspref.delegate.KsPrefObserver
-import com.cioccarellia.kspref.delegate.KsPrefReference
+import com.cioccarellia.kspref.delegate.observer.DelegatePrefObserver
+import com.cioccarellia.kspref.delegate.reference.DelegatePrefReference
 import com.cioccarellia.kspref.extensions.emptyByteArray
 import java.security.SecureRandom
 import kotlin.random.asKotlinRandom
@@ -30,10 +30,14 @@ fun KsPrefs.Companion.randomIV(): ByteArray = SecureRandom().asKotlinRandom().ne
 fun <T : Any> KsPrefs.ref(
     key: String,
     initialization: () -> T
-) = KsPrefReference(this, key, initialization())
+) = DelegatePrefReference(
+    this, key, initialization()
+)
 
 fun <T : Any> KsPrefs.observe(
     key: String,
     value: T,
-    observer: (newValue: T) -> Unit
-) = KsPrefObserver(this, value, key, observer)
+    observer: (oldValue: T, newValue: T) -> Unit
+) = DelegatePrefObserver(
+    this, key, value, observer
+)

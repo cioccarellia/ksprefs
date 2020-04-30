@@ -16,9 +16,9 @@
 package com.cioccarellia.kspref
 
 import android.content.Context
-import android.content.SharedPreferences
 import com.cioccarellia.kspref.config.CommitStrategy
 import com.cioccarellia.kspref.config.KspConfig
+import com.cioccarellia.kspref.delegate.observer.ObservedPrefsStorage
 import com.cioccarellia.kspref.dispatcher.KspDispatcher
 import com.cioccarellia.kspref.extensions.getPrefs
 import com.cioccarellia.kspref.namespace.Namespace
@@ -41,13 +41,8 @@ class KsPrefs(
         namespace, appContext.getPrefs(namespace)
     )
 
-    internal val refs: MutableList<SharedPreferences.OnSharedPreferenceChangeListener> =
-        mutableListOf()
-
     fun destroy() {
-        refs.forEach {
-            expose().unregisterOnSharedPreferenceChangeListener(it)
-        }
+        ObservedPrefsStorage.detach(this)
     }
 
     fun expose() = dispatcher.expose()

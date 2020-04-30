@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.delegate
+package com.cioccarellia.kspref.delegate.reference
 
 import com.cioccarellia.kspref.KsPrefs
 import kotlin.reflect.KProperty
 
 
-class KsPrefReference<T : Any>(
+class DelegatePrefReference<T : Any>(
     private val prefs: KsPrefs,
     private val key: String,
     private val initialization: T
