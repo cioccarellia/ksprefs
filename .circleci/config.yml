@@ -22,8 +22,5 @@ jobs:
           name: "Build Modules"
           command: ./gradlew build
       - run:
-          name: "Jacoco Test Report"
-          command: ./gradlew jacocoTestReport
-      - run:
           name: "CodeCov"
           command: bash <(curl -s https://codecov.io/bash)
