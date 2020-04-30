@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         val prefs = KsPrefs(applicationContext) {
             autoSave = AutoSavePolicy.AUTO
-            encryption.initBase64()
+            encryption.initPlainText()
         }
 
         log(KsPrefs.config.autoSave.toString())

@@ -23,30 +23,18 @@ import java.math.BigInteger
 
 @PublishedApi
 internal abstract class TypeConverter<I> {
+
     @Derivative
     abstract fun transform(value: I): ByteArray
+
     @Integral
     abstract fun reify(value: ByteArray): I
 
     companion object {
         @PublishedApi
-        internal inline fun <reified T> pick(): TypeConverter<*> = when (T::class) {
-            String::class -> StringConverter()
-            Boolean::class -> BooleanConverter()
-            Int::class -> IntConverter()
-            Long::class -> LongConverter()
-            Float::class -> FloatConverter()
-            Short::class -> ShortConverter()
-            BigInteger::class -> BigIntConverter()
-            BigDecimalConverter::class -> BigDecimalConverter()
-            JSONObject::class -> JsonConverter()
-            else -> StringConverter()
-        }
-
-        @PublishedApi
-        internal inline fun <reified T> pickAndTransform(
+        internal fun <T : Any> pickAndTransform(
             value: T
-        ): ByteArray = when (T::class) {
+        ): ByteArray = when (value::class) {
             String::class -> StringConverter().transform(value as String)
             Boolean::class -> BooleanConverter().transform(value as Boolean)
             Int::class -> IntConverter().transform(value as Int)
@@ -60,10 +48,10 @@ internal abstract class TypeConverter<I> {
         }
 
         @PublishedApi
-        @Suppress("IMPLICIT_CAST_TO_ANY")
-        internal inline fun <reified T> pickAndReify(
+        @Suppress("IMPLICIT_CAST_TO_ANY", "UNCHECKED_CAST")
+        internal fun <T : Any> pickAndReify(
             value: ByteArray
-        ): T = when (T::class) {
+        ): T = when (value::class) {
             String::class -> StringConverter().reify(value)
             Boolean::class -> BooleanConverter().reify(value)
             Int::class -> IntConverter().reify(value)
@@ -75,6 +63,5 @@ internal abstract class TypeConverter<I> {
             JSONObject::class -> JsonConverter().reify(value)
             else -> StringConverter().reify(value)
         } as T
-
     }
 }

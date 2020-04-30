@@ -16,7 +16,6 @@
 package com.cioccarellia.kspref.extensions
 
 import android.content.SharedPreferences
-import android.util.Log
 import com.cioccarellia.kspref.KsPrefs
 import com.cioccarellia.kspref.config.AutoSavePolicy
 import com.cioccarellia.kspref.config.CommitStrategy
@@ -42,11 +41,11 @@ internal fun Writer.finalize(): Writer {
 
 internal fun Writer.forceFinalization(
     commitStrategy: CommitStrategy = KsPrefs.config.commitStrategy
-) {
-    val x = when (commitStrategy) {
+): Writer {
+    when (commitStrategy) {
         CommitStrategy.ASYNC_APPLY -> apply()
         CommitStrategy.SYNC_COMMIT -> commit()
     }
 
-    Log.w("KSP", x.toString())
+    return this
 }

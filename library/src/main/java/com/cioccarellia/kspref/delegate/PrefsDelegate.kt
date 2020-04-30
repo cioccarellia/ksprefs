@@ -13,30 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@file:Suppress("NOTHING_TO_INLINE")
+package com.cioccarellia.kspref.delegate
 
-package com.cioccarellia.kspref.intrinsic
+import com.cioccarellia.kspref.KsPrefs
+import kotlin.reflect.KProperty
 
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.contract
+fun <T : Any> KsPrefs.kspref(
+    key: String,
+    initialization: () -> T
+) = KsPrefDelegate(this, key, initialization())
 
-@PublishedApi
-internal object Check {
-    fun key(
-      key: String
-    ) = !key.contains(" ") && key.isNotBlank()
-
-    fun <T> value(
-      value: T
-    ) = value != null
-}
-
-inline fun checkKey(key: String) = require(Check.key(key))
-
-@OptIn(ExperimentalContracts::class)
-inline fun <T> checkValue(value: T) {
-    contract {
-        returns() implies (value != null)
+class KsPrefDelegate<T : Any>(
+    private val prefs: KsPrefs,
+    private val key: String,
+    private val initialization: T
+) {
+    operator fun getValue(thisRef: Any?, property: KProperty<*>): T {
+        return prefs.pull(key, initialization)
     }
-    require(Check.value(value))
+
+    operator fun setValue(thisRef: Any?, property: KProperty<*>, value: String) {
+        return prefs.push(key, value)
+    }
 }

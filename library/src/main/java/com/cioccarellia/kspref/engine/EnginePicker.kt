@@ -24,7 +24,7 @@ import com.cioccarellia.kspref.engine.model.aes.AesEcbEngine
 import com.cioccarellia.kspref.engine.model.base64.Base64Engine
 import com.cioccarellia.kspref.engine.model.plaintext.PlainTextEngine
 import com.cioccarellia.kspref.exception.KsPrefEngineException
-import com.cioccarellia.kspref.exception.KsPrefUnsetConfigException
+import com.cioccarellia.kspref.exception.KsPrefInvalidConfigException
 import com.cioccarellia.kspref.extensions.unsafeBytes
 import com.cioccarellia.kspref.internal.SymmetricKey
 
@@ -56,7 +56,7 @@ object EnginePicker {
                     // We assume the IV is set by the user
                     // since the CBC encryption mode requires an IV
                     val iv = cryptoConfig.iv
-                        ?: throw KsPrefUnsetConfigException("IV is unset in encryption configuration")
+                        ?: throw KsPrefInvalidConfigException("IV is unset in encryption configuration")
 
                     AesCbcEngine(
                         key,

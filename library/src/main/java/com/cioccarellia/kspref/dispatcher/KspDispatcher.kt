@@ -16,42 +16,33 @@
 package com.cioccarellia.kspref.dispatcher
 
 import com.cioccarellia.kspref.config.CommitStrategy
+import com.cioccarellia.kspref.converter.TypeConverter
 import com.cioccarellia.kspref.enclosure.KspEnclosure
 import com.cioccarellia.kspref.extensions.Reader
 import com.cioccarellia.kspref.extensions.emptyByteArray
 import com.cioccarellia.kspref.intrinsic.checkKey
-import com.cioccarellia.kspref.intrinsic.checkValue
-import com.cioccarellia.kspref.converter.TypeConverter
 
-@PublishedApi
 internal class KspDispatcher(
     namespace: String,
     handle: Reader
 ) {
-    @PublishedApi
-    internal val enclosure = KspEnclosure(namespace, handle)
+    private val enclosure = KspEnclosure(namespace, handle)
 
     internal fun expose() = enclosure.sharedReader
 
-    @PublishedApi
-    internal inline fun <reified T> convert(
+    private fun <T : Any> convert(
         value: T
     ) = TypeConverter.pickAndTransform(value)
 
-    @PublishedApi
-    internal inline fun <reified T> reify(
+    private fun <T : Any> reify(
         value: ByteArray
     ) = TypeConverter.pickAndReify<T>(value)
 
-    @PublishedApi
-    internal inline fun <reified T> push(
+    internal fun <T : Any> push(
         key: String,
         value: T
     ) {
-        // The function accepts nullable values,
-        // but crashes if one of them is actually void
         checkKey(key)
-        checkValue(value)
 
         // Bytes for the given input value
         val pureBytes = convert(value)
@@ -60,15 +51,11 @@ internal class KspDispatcher(
         enclosure.write(key, pureBytes)
     }
 
-    @PublishedApi
-    internal inline fun <reified T> pull(
+    internal fun <T : Any> pull(
         key: String,
         default: T
     ): T {
-        // The function accepts nullable values,
-        // but crashes if one of them is actually void
         checkKey(key)
-        checkValue(default)
 
         // Bytes for the given input default value
         // plugged into a type converter
@@ -85,7 +72,7 @@ internal class KspDispatcher(
     }
 
     /** no-def val */
-    inline fun <reified T> pull(
+    internal fun <T : Any> pull(
         key: String
     ): T {
         // The function accepts nullable values,

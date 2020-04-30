@@ -49,6 +49,7 @@ subprojects {
 
             freeCompilerArgs += ["-module-name", project.path.replace(':', '')]
             freeCompilerArgs += ["-Xinline-classes"]
+            freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn"]
         }
     }
 }

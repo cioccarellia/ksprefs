@@ -42,15 +42,17 @@ class KsPrefs(
 
     fun expose() = dispatcher.expose()
 
-    inline fun <reified T> push(
+    fun <T : Any> push(
         key: String,
         value: T
-    ) = dispatcher.push(key, value)
+    ) {
+        dispatcher.push(key, value)
+    }
 
-    inline fun <reified T> pull(
+    fun <T : Any> pull(
         key: String,
-        default: T
-    ) = dispatcher.pull(key, default)
+        default: T? = null
+    ) = if (default != null) dispatcher.pull(key, default) else dispatcher.pull(key)
 
     fun save(
         commitStrategy: CommitStrategy = config.commitStrategy

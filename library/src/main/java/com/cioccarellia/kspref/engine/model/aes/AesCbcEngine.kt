@@ -68,8 +68,6 @@ class AesCbcEngine(
         cipherText: ByteArray
     ): ByteArray = runSafely {
         val iv = IvParameterSpec(iv)
-        val keySpec = SecretKeySpec(key.bytes, algorithm)
-
         val cipher = Cipher.getInstance(cipherTransform)
 
         with(cipher) {
