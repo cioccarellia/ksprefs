@@ -21,6 +21,7 @@ import com.cioccarellia.kspref.enclosure.KspEnclosure
 import com.cioccarellia.kspref.extensions.Reader
 import com.cioccarellia.kspref.extensions.emptyByteArray
 import com.cioccarellia.kspref.intrinsic.checkKey
+import kotlin.reflect.KClass
 
 internal class KspDispatcher(
     namespace: String,
@@ -35,8 +36,9 @@ internal class KspDispatcher(
     ) = TypeConverter.pickAndTransform(value)
 
     private fun <T : Any> reify(
-        value: ByteArray
-    ) = TypeConverter.pickAndReify<T>(value)
+        value: ByteArray,
+        kclass: KClass<T>
+    ) = TypeConverter.pickAndReify(value, kclass)
 
     internal fun <T : Any> push(
         key: String,
@@ -68,18 +70,18 @@ internal class KspDispatcher(
 
         // Reifies and returns the read data as an object
         // plugging it through a converter
-        return reify(returnedBytes)
+        return reify(returnedBytes, default::class)
     }
 
-    /** no-def val */
     internal fun <T : Any> pull(
-        key: String
+        key: String,
+        kclass: KClass<T>
     ): T {
-        // The function accepts nullable values,
-        // but crashes if one of them is actually void
         checkKey(key)
 
-        val pureBytes = emptyByteArray()
+        val pureBytes = convert(
+            emptyByteArray()
+        )
 
         // Reads and passes bytes through an engine
         // which applies the required transformation
@@ -88,7 +90,7 @@ internal class KspDispatcher(
 
         // Reifies and returns the read data as an object
         // plugging it through a converter
-        return reify(returnedBytes)
+        return reify(returnedBytes, kclass)
     }
 
     internal fun save(

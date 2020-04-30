@@ -18,12 +18,8 @@ package com.cioccarellia.kspref.delegate
 import com.cioccarellia.kspref.KsPrefs
 import kotlin.reflect.KProperty
 
-fun <T : Any> KsPrefs.kspref(
-    key: String,
-    initialization: () -> T
-) = KsPrefDelegate(this, key, initialization())
 
-class KsPrefDelegate<T : Any>(
+class KsPrefReference<T : Any>(
     private val prefs: KsPrefs,
     private val key: String,
     private val initialization: T
@@ -32,7 +28,7 @@ class KsPrefDelegate<T : Any>(
         return prefs.pull(key, initialization)
     }
 
-    operator fun setValue(thisRef: Any?, property: KProperty<*>, value: String) {
+    operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
         return prefs.push(key, value)
     }
 }

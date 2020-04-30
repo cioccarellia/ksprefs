@@ -23,38 +23,32 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.cioccarellia.kspref.KsPrefs
 import com.cioccarellia.kspref.config.AutoSavePolicy
+import com.cioccarellia.kspref.observe
 
 class MainActivity : AppCompatActivity() {
     private val inputView by lazy { findViewById<TextView>(R.id.inputView) }
     private val buttonView by lazy { findViewById<Button>(R.id.buttonView) }
 
-    private val KEY = "trg_"
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val prefs = KsPrefs(applicationContext) {
+        val prefs = KsPrefs(baseContext) {
             autoSave = AutoSavePolicy.AUTO
             encryption.initPlainText()
         }
 
-        log(KsPrefs.config.autoSave.toString())
+        var n by prefs.observe("number", 10) { newValue ->
+            toast("Int: $newValue")
+        }
 
-        val dfu = prefs.pull(KEY, "default")
-        toast(dfu)
+        var long by prefs.observe("long", 100L) { newValue ->
+            toast("Long: $newValue")
+        }
 
         buttonView.onClickDebounced {
-            val before = prefs.pull(KEY, "default1")
-
-            prefs.push(KEY, inputView.text.toString())
-
-            //prefs.save()
-
-            val after = prefs.pull(KEY, "default1")
-
-
-            toast("Before: $before\nAfter: $after")
+            prefs.push("long", inputView.text.toString().toLong())
+            prefs.push("number", inputView.text.toString().toInt() + 100)
         }
     }
 

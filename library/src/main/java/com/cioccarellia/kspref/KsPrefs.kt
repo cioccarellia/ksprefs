@@ -16,6 +16,7 @@
 package com.cioccarellia.kspref
 
 import android.content.Context
+import android.content.SharedPreferences
 import com.cioccarellia.kspref.config.CommitStrategy
 import com.cioccarellia.kspref.config.KspConfig
 import com.cioccarellia.kspref.dispatcher.KspDispatcher
@@ -40,6 +41,15 @@ class KsPrefs(
         namespace, appContext.getPrefs(namespace)
     )
 
+    internal val refs: MutableList<SharedPreferences.OnSharedPreferenceChangeListener> =
+        mutableListOf()
+
+    fun destroy() {
+        refs.forEach {
+            expose().unregisterOnSharedPreferenceChangeListener(it)
+        }
+    }
+
     fun expose() = dispatcher.expose()
 
     fun <T : Any> push(
@@ -51,8 +61,8 @@ class KsPrefs(
 
     fun <T : Any> pull(
         key: String,
-        default: T? = null
-    ) = if (default != null) dispatcher.pull(key, default) else dispatcher.pull(key)
+        default: T
+    ) = dispatcher.pull(key, default)
 
     fun save(
         commitStrategy: CommitStrategy = config.commitStrategy

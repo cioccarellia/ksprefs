@@ -20,6 +20,7 @@ import com.cioccarellia.kspref.annotations.Integral
 import org.json.JSONObject
 import java.math.BigDecimal
 import java.math.BigInteger
+import kotlin.reflect.KClass
 
 @PublishedApi
 internal abstract class TypeConverter<I> {
@@ -50,8 +51,9 @@ internal abstract class TypeConverter<I> {
         @PublishedApi
         @Suppress("IMPLICIT_CAST_TO_ANY", "UNCHECKED_CAST")
         internal fun <T : Any> pickAndReify(
-            value: ByteArray
-        ): T = when (value::class) {
+            value: ByteArray,
+            kclass: KClass<T>
+        ): T = when (kclass) {
             String::class -> StringConverter().reify(value)
             Boolean::class -> BooleanConverter().reify(value)
             Int::class -> IntConverter().reify(value)
