@@ -1,45 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-  <androidx.appcompat.widget.AppCompatEditText
-      android:id="@+id/inputView"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginBottom="@dimen/content_inset_double"
-      android:layout_marginEnd="@dimen/content_inset"
-      android:layout_marginStart="@dimen/content_inset"
-      android:hint="@string/your_name"
-      android:imeOptions="actionDone"
-      android:inputType="text|textPersonName"
-      android:lines="1"
-      android:textColor="#000"
-      android:textSize="@dimen/body_text_size"
-      app:layout_constraintBottom_toTopOf="@+id/middle_y"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/numbersActivity"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="8dp"
+        android:layout_marginTop="116dp"
+        android:text="Numbers"
+        style="@style/Widget.MaterialComponents.Button"
+        app:layout_constraintEnd_toStartOf="@+id/middle_x"
+        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent=".30" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/jsonActivity"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="8dp"
+        android:layout_marginTop="116dp"
+        android:text="JSON"
+        style="@style/Widget.MaterialComponents.Button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.519"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@+id/middle_x"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent=".30" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/ambiguosCharActivity"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="8dp"
+        android:text="Ambig"
+        style="@style/Widget.MaterialComponents.Button"
+        app:layout_constraintEnd_toStartOf="@+id/middle_x"
+        app:layout_constraintHorizontal_bias="0.514"
       app:layout_constraintHorizontal_chainStyle="packed"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      />
-  <androidx.constraintlayout.widget.Guideline
-      android:id="@+id/middle_y"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal"
-      app:layout_constraintGuide_percent="0.5"
-      />
-  <androidx.appcompat.widget.AppCompatButton
-      android:id="@+id/buttonView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/numbersActivity"
+        app:layout_constraintWidth_percent=".30" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/batchActivity"
       android:layout_width="0dp"
       android:layout_height="@dimen/button_height"
-      android:layout_marginTop="@dimen/content_inset_quarter"
-      android:text="@string/go_text"
+        android:layout_margin="8dp"
+        android:text="Batch"
+        style="@style/Widget.MaterialComponents.Button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.519"
       app:layout_constraintHorizontal_chainStyle="packed"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toRightOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/middle_y"
-      app:layout_constraintWidth_percent="0.5"
-      />
+        app:layout_constraintStart_toStartOf="@+id/middle_x"
+        app:layout_constraintTop_toBottomOf="@+id/jsonActivity"
+        app:layout_constraintWidth_percent=".30" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/middle_x"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

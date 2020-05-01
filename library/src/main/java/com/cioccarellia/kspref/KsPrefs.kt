@@ -29,7 +29,7 @@ class KsPrefs(
     config: KspConfig.() -> Unit = {}
 ) {
     companion object {
-        val config: KspConfig by lazy { KspConfig() }
+        internal val config: KspConfig by lazy { KspConfig() }
     }
 
     init {
@@ -58,6 +58,11 @@ class KsPrefs(
         key: String,
         default: T
     ) = dispatcher.pull(key, default)
+
+
+    inline fun <reified T : Any> pull(
+        key: String
+    ) = dispatcher.pull(key, T::class)
 
     fun save(
         commitStrategy: CommitStrategy = config.commitStrategy

@@ -23,6 +23,7 @@ import com.cioccarellia.kspref.extensions.emptyByteArray
 import com.cioccarellia.kspref.intrinsic.checkKey
 import kotlin.reflect.KClass
 
+@PublishedApi
 internal class KspDispatcher(
     namespace: String,
     handle: Reader
@@ -73,6 +74,7 @@ internal class KspDispatcher(
         return reify(returnedBytes, default::class)
     }
 
+    @PublishedApi
     internal fun <T : Any> pull(
         key: String,
         kclass: KClass<T>

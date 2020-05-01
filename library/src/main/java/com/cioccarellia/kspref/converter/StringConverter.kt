@@ -19,7 +19,7 @@ import com.cioccarellia.kspref.extensions.bytes
 import com.cioccarellia.kspref.extensions.string
 
 @PublishedApi
-internal class StringConverter : TypeConverter<String>() {
+internal open class StringConverter : TypeConverter<String>() {
     override fun transform(value: String) = value.bytes()
     override fun reify(value: ByteArray) = value.string()
 }

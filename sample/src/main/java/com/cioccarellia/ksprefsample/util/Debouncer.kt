@@ -13,14 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.converter
+package com.cioccarellia.ksprefsample.util
 
-import com.cioccarellia.kspref.extensions.bytes
-import com.cioccarellia.kspref.extensions.string
-import java.math.BigInteger
+import android.view.View
 
-@PublishedApi
-internal class BigIntConverter : TypeConverter<BigInteger>() {
-    override fun transform(value: BigInteger) = value.toString().bytes()
-    override fun reify(value: ByteArray) = value.string().toBigInteger()
+internal object Debouncer {
+    @Volatile
+    private var enabled: Boolean = true
+    private val enableAgain = Runnable { enabled = true }
+
+    fun canPerform(view: View): Boolean {
+        if (enabled) {
+            enabled = false
+            view.post(enableAgain)
+            return true
+        }
+        return false
+    }
+}
+
+internal fun <T : View> T.onClickDebounced(click: (view: T) -> Unit) {
+    setOnClickListener {
+        if (Debouncer.canPerform(it)) {
+            @Suppress("UNCHECKED_CAST")
+            click(it as T)
+        }
+    }
 }

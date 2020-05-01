@@ -77,9 +77,6 @@
   <component name="ProjectType">
     <option name="id" value="Android" />
   </component>
-  <component name="RenderSettings">
-    <option name="quality" value="0.5" />
-  </component>
   <component name="masterDetails">
     <states>
       <state key="ProjectJDKs.UI">

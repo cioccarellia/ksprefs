@@ -13,14 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.converter
+package com.cioccarellia.ksprefsample
 
-import com.cioccarellia.kspref.extensions.bytes
-import com.cioccarellia.kspref.extensions.string
-import java.math.BigInteger
+import android.app.Application
+import android.content.Context
+import com.cioccarellia.kspref.KsPrefs
 
-@PublishedApi
-internal class BigIntConverter : TypeConverter<BigInteger>() {
-    override fun transform(value: BigInteger) = value.toString().bytes()
-    override fun reify(value: ByteArray) = value.string().toBigInteger()
+class App : Application() {
+    companion object {
+        lateinit var appContext: Context
+        val prefs by lazy {
+            KsPrefs(appContext)
+        }
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        appContext = this
+    }
 }

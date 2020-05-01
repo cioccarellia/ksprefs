@@ -13,14 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.converter
+package com.cioccarellia.ksprefsample.activities.ambiguous
 
-import com.cioccarellia.kspref.extensions.bytes
-import com.cioccarellia.kspref.extensions.string
-import java.math.BigInteger
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.cioccarellia.ksprefsample.R
 
-@PublishedApi
-internal class BigIntConverter : TypeConverter<BigInteger>() {
-    override fun transform(value: BigInteger) = value.toString().bytes()
-    override fun reify(value: ByteArray) = value.string().toBigInteger()
+class AmbiguousActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_ambiguous)
+    }
 }

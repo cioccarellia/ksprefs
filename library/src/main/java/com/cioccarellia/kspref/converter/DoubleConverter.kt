@@ -17,10 +17,9 @@ package com.cioccarellia.kspref.converter
 
 import com.cioccarellia.kspref.extensions.bytes
 import com.cioccarellia.kspref.extensions.string
-import java.math.BigInteger
 
 @PublishedApi
-internal class BigIntConverter : TypeConverter<BigInteger>() {
-    override fun transform(value: BigInteger) = value.toString().bytes()
-    override fun reify(value: ByteArray) = value.string().toBigInteger()
+internal class DoubleConverter : TypeConverter<Double>() {
+    override fun transform(value: Double) = value.toString().bytes()
+    override fun reify(value: ByteArray) = value.string().toDouble()
 }

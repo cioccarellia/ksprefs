@@ -23,29 +23,40 @@ import java.math.BigInteger
 import kotlin.reflect.KClass
 
 @PublishedApi
-internal abstract class TypeConverter<I> {
+internal abstract class TypeConverter<T> {
 
     @Derivative
-    abstract fun transform(value: I): ByteArray
+    abstract fun transform(value: T): ByteArray
 
     @Integral
-    abstract fun reify(value: ByteArray): I
+    abstract fun reify(value: ByteArray): T
 
     companion object {
         @PublishedApi
         internal fun <T : Any> pickAndTransform(
             value: T
         ): ByteArray = when (value::class) {
+            // Strings
             String::class -> StringConverter().transform(value as String)
+            CharSequence::class -> CharSequenceConverter().transform(value as CharSequence)
+
+            // Bit fields
             Boolean::class -> BooleanConverter().transform(value as Boolean)
+            ByteArray::class -> ByteArrayConverter().transform(value as ByteArray)
+            Byte::class -> ByteConverter().transform(value as Byte)
+
+            // Numbers
             Int::class -> IntConverter().transform(value as Int)
             Long::class -> LongConverter().transform(value as Long)
-            Float::class -> FloatConverter().transform(value as Float)
             Short::class -> ShortConverter().transform(value as Short)
+            Float::class -> FloatConverter().transform(value as Float)
+            Double::class -> DoubleConverter().transform(value as Double)
             BigInteger::class -> BigIntConverter().transform(value as BigInteger)
             BigDecimalConverter::class -> BigDecimalConverter().transform(value as BigDecimal)
+
+            // Custom types
             JSONObject::class -> JsonConverter().transform(value as JSONObject)
-            else -> StringConverter().transform(value.toString())
+            else -> UnknownTypeConverter().transform(value.toString())
         }
 
         @PublishedApi
@@ -54,16 +65,27 @@ internal abstract class TypeConverter<I> {
             value: ByteArray,
             kclass: KClass<T>
         ): T = when (kclass) {
+            // Strings
             String::class -> StringConverter().reify(value)
+            CharSequence::class -> CharSequenceConverter().reify(value)
+
+            // Bit fields
             Boolean::class -> BooleanConverter().reify(value)
+            ByteArray::class -> ByteArrayConverter().reify(value)
+            Byte::class -> ByteConverter().reify(value)
+
+            // Numbers
             Int::class -> IntConverter().reify(value)
             Long::class -> LongConverter().reify(value)
-            Float::class -> FloatConverter().reify(value)
             Short::class -> ShortConverter().reify(value)
+            Float::class -> FloatConverter().reify(value)
+            Double::class -> DoubleConverter().reify(value)
             BigInteger::class -> BigIntConverter().reify(value)
             BigDecimalConverter::class -> BigDecimalConverter().reify(value)
+
+            // Custom types
             JSONObject::class -> JsonConverter().reify(value)
-            else -> StringConverter().reify(value)
+            else -> UnknownTypeConverter().reify(value)
         } as T
     }
 }
