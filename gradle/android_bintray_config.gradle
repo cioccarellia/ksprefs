@@ -1,0 +1,50 @@
+apply plugin: "com.novoda.bintray-release"
+apply from: rootProject.file("library_info.gradle")
+
+private def getBintrayCredentialArray() {
+    def localPropertiesFile = project.rootProject.file('local.properties')
+    if (!localPropertiesFile.exists()) {
+        logger.warn("local.properties file doesn't exist, can't get bintray crednetials.")
+        return ["", "", ""]
+    }
+
+    Properties properties = new Properties()
+    properties.load(localPropertiesFile.newDataInputStream())
+
+    return [
+            properties.getProperty("bintray.user"),     // User
+            properties.getProperty("bintray.user"),     // Org
+            properties.getProperty("bintray.apikey")    // Api Key
+    ]
+}
+
+task checkBintrayConfig {
+    doLast {
+        for (credential in getBintrayCredentialArray()) {
+            if (credential.isEmpty()) {
+                throw new IllegalArgumentException("You must provide an API key and a username to deploy to bintray")
+            }
+        }
+    }
+}
+
+afterEvaluate {
+    bintrayUpload.dependsOn checkBintrayConfig
+}
+
+if (module_name == null || module_name.isEmpty()) {
+    throw new Exception("module_must must be defined for each module.")
+}
+
+publish {
+    bintrayUser = getBintrayCredentialArray()[0]
+    userOrg = getBintrayCredentialArray()[1]
+    bintrayKey = getBintrayCredentialArray()[2]
+
+    groupId = library.publish_group
+    artifactId = "ksprefs"
+    publishVersion = library.publish_version
+    desc = library.description
+    website = library.website
+    dryRun = false
+}

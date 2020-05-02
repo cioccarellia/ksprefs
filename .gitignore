@@ -69,8 +69,6 @@ fastlane/readme.md
 
 # Extra
 .gradle
-.idea
 build
 .git
-local.properties
 app/release/output.json

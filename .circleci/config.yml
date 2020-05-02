@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/code
     docker:
-      - image: circleci/android:api-25-alpha
+      - image: circleci/android:api-28
     environment:
       JVM_OPTS: -Xmx3200m
     steps:
@@ -17,13 +17,13 @@ jobs:
       - save_cache:
           paths:
             - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "library/build.gradle" }}
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "library/build.gradle" }}-{{ checksum  "sample/build.gradle" }}
       - run:
           name: "Build Modules"
           command: ./gradlew build
       - run:
-          name: "Jacoco Test Report"
-          command: ./gradlew jacocoTestReport
+          name: "Run Gradle check"
+          command: ./gradlew check
       - run:
-          name: "CodeCov"
-          command: bash <(curl -s https://codecov.io/bash)
+          name: "Run Tests"
+          command: ./gradlew test
