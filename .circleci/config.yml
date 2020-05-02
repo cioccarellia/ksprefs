@@ -17,7 +17,7 @@ jobs:
       - save_cache:
           paths:
             - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "library/build.gradle" }}
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "library/build.gradle" }}-{{ checksum  "sample/build.gradle" }}
       - run:
           name: "Build Modules"
           command: ./gradlew build
@@ -25,8 +25,5 @@ jobs:
           name: "Run Gradle check"
           command: ./gradlew check
       - run:
-          name: "Run Tests & store report"
-          command: ./gradlew test codeCoverageReport
-      - run:
-          name: "CodeCov"
-          command: bash <(curl -s https://codecov.io/bash)
+          name: "Run Tests"
+          command: ./gradlew test
