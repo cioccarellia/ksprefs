@@ -15,6 +15,6 @@
  */
 package com.cioccarellia.kspref.exception
 
-class KsPrefInvalidConfigException(
+internal class KsPrefInvalidConfigException(
     message: String
 ) : KotlinNullPointerException(message)

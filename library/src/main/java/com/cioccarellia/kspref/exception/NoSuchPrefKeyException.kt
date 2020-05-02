@@ -13,27 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.ksprefsample
+package com.cioccarellia.kspref.exception
 
-import android.app.Application
-import android.content.Context
-import com.cioccarellia.kspref.KsPrefs
-
-class App : Application() {
-    companion object {
-        lateinit var appContext: Context
-        val prefs by lazy {
-            KsPrefs(appContext)
-        }
-    }
-
-    override fun onCreate() {
-        super.onCreate()
-        appContext = this
-    }
-
-    override fun onTerminate() {
-        super.onTerminate()
-        prefs.destroy()
-    }
-}
+internal class NoSuchPrefKeyException(
+    message: String
+) : KotlinNullPointerException(message)

@@ -18,7 +18,6 @@ package com.cioccarellia.kspref.exception
 import android.util.Log
 import com.cioccarellia.kspref.KsPrefs
 import com.cioccarellia.kspref.defaults.Defaults
-import com.cioccarellia.kspref.extensions.string
 import java.io.UnsupportedEncodingException
 import java.security.InvalidKeyException
 import java.security.NoSuchAlgorithmException
@@ -27,9 +26,8 @@ import java.security.spec.InvalidParameterSpecException
 import javax.crypto.BadPaddingException
 import javax.crypto.IllegalBlockSizeException
 import javax.crypto.NoSuchPaddingException
-import javax.crypto.SecretKey
 
-class KsPrefEngineException(
+internal class KsPrefEngineException(
     message: String = "",
     throwable: Throwable? = null
 ) : RuntimeException(message.trim(), throwable) {

@@ -16,6 +16,8 @@
 package com.cioccarellia.kspref
 
 import android.content.Context
+import android.content.SharedPreferences
+import androidx.annotation.CheckResult
 import com.cioccarellia.kspref.config.CommitStrategy
 import com.cioccarellia.kspref.config.KspConfig
 import com.cioccarellia.kspref.delegate.observer.ObservedPrefsStorage
@@ -30,7 +32,7 @@ class KsPrefs(
 ) {
     companion object {
         /**
-         *
+         * Config object used to retrieve behaviour and strategies
          * */
         internal val config: KspConfig by lazy { KspConfig() }
     }
@@ -44,12 +46,30 @@ class KsPrefs(
         namespace, appContext.getPrefs(namespace)
     )
 
+    /**
+     * KsPrefs will register a SharedPreferences listener
+     * if you use observers within your codebase.
+     * It is always a good practise to clear those up
+     * when your app terminates, to avoid creating memory leaks.
+     * */
     fun destroy() {
         ObservedPrefsStorage.detach(this)
     }
 
-    fun expose() = dispatcher.expose()
+    /**
+     * Exposes the internal [Shared Preferences][SharedPreferences]
+     * object, used to perform
+     *
+     * @return A reference to the internal [Shared Preferences][SharedPreferences] object
+     * */
+    fun expose(): SharedPreferences = dispatcher.expose()
 
+    /**
+     * Puts a value into the [Shared Preferences][SharedPreferences] storage.
+     *
+     * @param key       The key of the target field
+     * @param value     The value to be converted and stored
+     * */
     fun <T : Any> push(
         key: String,
         value: T
@@ -57,20 +77,44 @@ class KsPrefs(
         dispatcher.push(key, value)
     }
 
+    /**
+     * Gets a value from the [Shared Preferences][SharedPreferences] storage.
+     *
+     * @param key       The key of the target field
+     * @param default   The default value, in case the key matches nothing
+     *
+     * @return          The value KsPref got back for the matching key, or [default]
+     * */
+    @CheckResult
     fun <T : Any> pull(
         key: String,
         default: T
     ) = dispatcher.pull(key, default)
 
-
+    /**
+     * Gets a value from the [Shared Preferences][SharedPreferences] storage.
+     *
+     * @throws NoSuchPrefKeyException if the key finds nothing
+     *
+     * @param key   The key of the target field
+     *
+     * @return      The value KsPref got back for the matching key, or an exception
+     * */
+    @CheckResult
     inline fun <reified T : Any> pull(
         key: String
     ) = dispatcher.pull(key, T::class)
 
+    /**
+     * Forces a commit() or an apply() to happen
+     * */
     fun save(
         commitStrategy: CommitStrategy = config.commitStrategy
     ) = dispatcher.save(commitStrategy)
 
+    /**
+     * Removes a preference from the storage
+     * */
     fun remove(
         key: String
     ) = dispatcher.remove(key)
