@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 apply from: rootProject.file("gradle/versions_plugin_config.gradle")
 apply from: rootProject.file("gradle/jacoco_plugin_config.gradle")
 

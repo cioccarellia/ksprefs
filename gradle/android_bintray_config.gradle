@@ -1,10 +1,5 @@
-def BINTRAY_ORG = System.env.BINTRAY_ORG ?: ""
-def BINTRAY_USER = System.env.BINTRAY_USER ?: ""
-def BINTRAY_API_KEY = System.env.BINTRAY_API_KEY ?: ""
-
 apply plugin: "com.novoda.bintray-release"
 apply from: rootProject.file("library_info.gradle")
-
 
 private def getBintrayCredentialArray() {
     def localPropertiesFile = project.rootProject.file('local.properties')
@@ -47,7 +42,7 @@ publish {
     bintrayKey = getBintrayCredentialArray()[2]
 
     groupId = library.publish_group
-    artifactId = module_name
+    artifactId = "ksprefs"
     publishVersion = library.publish_version
     desc = library.description
     website = library.website
