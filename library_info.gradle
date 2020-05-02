@@ -23,5 +23,5 @@ ext.library = [
     publish_version_code: 200,
 
     description: "Kotlin SharedPreferences, Simplified",
-    website: "https://github.com/cioccarellia/kspref"
+    website: "https://github.com/cioccarellia/ksprefs"
 ]
