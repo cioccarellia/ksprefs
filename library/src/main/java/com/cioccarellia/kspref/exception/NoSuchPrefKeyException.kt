@@ -16,5 +16,5 @@
 package com.cioccarellia.kspref.exception
 
 internal class NoSuchPrefKeyException(
-    message: String
-) : KotlinNullPointerException(message)
+    key: String
+) : KotlinNullPointerException("SharedPreferences does not cointain a value for the matching key='$key'")

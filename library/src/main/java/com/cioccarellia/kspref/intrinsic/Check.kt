@@ -17,6 +17,7 @@
 
 package com.cioccarellia.kspref.intrinsic
 
+import com.cioccarellia.kspref.KsPrefs
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
 
@@ -24,7 +25,7 @@ import kotlin.contracts.contract
 internal object Check {
     fun key(
       key: String
-    ) = !key.contains(" ") && key.isNotBlank()
+    ) = key.isNotBlank() && KsPrefs.config.keyRegex?.matches(key) ?: true
 
     fun <T> value(
       value: T

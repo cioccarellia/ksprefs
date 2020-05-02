@@ -32,7 +32,7 @@ class AesCbcEngine(
     val iv: ByteArray
 ) : Engine(), CryptoEngine {
     override val algorithm = "AES"
-    override val cipherTransform = "AES/CBC/PKCS5Padding"
+    override val transformation = "AES/CBC/PKCS5Padding"
 
     override fun apply(incoming: Transmission) = Transmission(
         encrypt(incoming.payload)
@@ -44,7 +44,7 @@ class AesCbcEngine(
 
     private val digest by lazy { MessageDigest.getInstance("SHA-256") }
 
-    override fun keySpec(): SecretKeySpec = runSafely {
+    fun keySpec(): SecretKeySpec = runSafely {
         val _key = digest.digest(key.bytes).copyOf(keyByteCount)
         SecretKeySpec(_key, algorithm)
     }
@@ -53,7 +53,7 @@ class AesCbcEngine(
         input: ByteArray
     ): ByteArray = runSafely {
         val iv = IvParameterSpec(iv)
-        val cipher = Cipher.getInstance(cipherTransform)
+        val cipher = Cipher.getInstance(transformation)
 
         with(cipher) {
             init(Cipher.ENCRYPT_MODE, keySpec(), iv)
@@ -68,7 +68,7 @@ class AesCbcEngine(
         cipherText: ByteArray
     ): ByteArray = runSafely {
         val iv = IvParameterSpec(iv)
-        val cipher = Cipher.getInstance(cipherTransform)
+        val cipher = Cipher.getInstance(transformation)
 
         with(cipher) {
             init(Cipher.DECRYPT_MODE, keySpec(), iv)

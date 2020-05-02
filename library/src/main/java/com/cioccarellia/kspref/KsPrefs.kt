@@ -42,19 +42,7 @@ class KsPrefs(
     }
 
     @PublishedApi
-    internal val dispatcher = KspDispatcher(
-        namespace, appContext.getPrefs(namespace)
-    )
-
-    /**
-     * KsPrefs will register a SharedPreferences listener
-     * if you use observers within your codebase.
-     * It is always a good practise to clear those up
-     * when your app terminates, to avoid creating memory leaks.
-     * */
-    fun destroy() {
-        ObservedPrefsStorage.detach(this)
-    }
+    internal val dispatcher = KspDispatcher(namespace, appContext.getPrefs(namespace))
 
     /**
      * Exposes the internal [Shared Preferences][SharedPreferences]
@@ -92,13 +80,13 @@ class KsPrefs(
     ) = dispatcher.pull(key, default)
 
     /**
-     * Gets a value from the [Shared Preferences][SharedPreferences] storage.
+     * Unsafely gets a value from the [Shared Preferences][SharedPreferences] storage.
      *
      * @throws NoSuchPrefKeyException if the key finds nothing
      *
-     * @param key   The key of the target field
+     * @param key The key of the target field
      *
-     * @return      The value KsPref got back for the matching key, or an exception
+     * @return The value KsPref got back for the matching key, or an exception
      * */
     @CheckResult
     inline fun <reified T : Any> pull(
@@ -118,4 +106,14 @@ class KsPrefs(
     fun remove(
         key: String
     ) = dispatcher.remove(key)
+
+    /**
+     * KsPrefs will register a SharedPreferences listener
+     * if you use observers within your codebase.
+     * It is always a good practise to clear those up
+     * when your app terminates, to avoid creating memory leaks.
+     * */
+    fun destroy() {
+        ObservedPrefsStorage.detach(this)
+    }
 }

@@ -15,10 +15,19 @@
  */
 package com.cioccarellia.kspref.internal
 
+import com.cioccarellia.kspref.config.crypto.KeySizeTrimmingOption
+import com.cioccarellia.kspref.exception.InvalidKsPrefKeySize
 import com.cioccarellia.kspref.extensions.string
 
 inline class SymmetricKey(
     val bytes: ByteArray
 ) {
+    fun requireEquals(keySizeOptions: KeySizeTrimmingOption) {
+        if (keySizeOptions.byteCount() != bytes.size) throw InvalidKsPrefKeySize(
+            keySizeOptions,
+            bytes.size * 8
+        )
+    }
+
     override fun toString() = bytes.string()
 }

@@ -20,6 +20,7 @@ import com.cioccarellia.kspref.defaults.Defaults
 data class KspEncryptionConfig internal constructor(
     var transformation: ByteTransformationStrategy = Defaults.TRANSFORMATION,
     var key: String? = null,
+    var alias: String? = null,
     var iv: ByteArray? = null,
     var keySize: KeySizeTrimmingOption = Defaults.KEY_SIZE_TRIM_OPTION,
     var blockCipherMode: BlockCipherEncryptionMode = Defaults.BLOCK_CIPHER_ENCRYPTION_MODE
@@ -27,6 +28,7 @@ data class KspEncryptionConfig internal constructor(
     fun initPlainText() {
         this.key = null
         this.iv = null
+        this.alias = null
 
         transformation = ByteTransformationStrategy.PLAIN_TEXT
     }
@@ -34,6 +36,7 @@ data class KspEncryptionConfig internal constructor(
     fun initBase64() {
         this.key = null
         this.iv = null
+        this.alias = null
 
         transformation = ByteTransformationStrategy.BASE64
     }
@@ -44,6 +47,7 @@ data class KspEncryptionConfig internal constructor(
     ) {
         this.key = key
         this.iv = iv
+        this.alias = null
 
         transformation = ByteTransformationStrategy.AES
 
@@ -56,11 +60,25 @@ data class KspEncryptionConfig internal constructor(
     ) {
         this.key = key
         this.iv = null
+        this.alias = null
 
         transformation = ByteTransformationStrategy.AES
 
         keySize = Defaults.KEY_SIZE_TRIM_OPTION
         blockCipherMode = BlockCipherEncryptionMode.ECB
+    }
+
+
+    fun initKeystore(
+        alias: String
+    ) {
+        this.key = null
+        this.iv = null
+        this.alias = alias
+
+        transformation = ByteTransformationStrategy.KEYSTORE
+
+        keySize = KeySizeTrimmingOption.TRIM_128
     }
 
     override fun equals(other: Any?): Boolean {

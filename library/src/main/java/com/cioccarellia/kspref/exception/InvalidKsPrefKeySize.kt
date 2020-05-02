@@ -13,25 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.extensions
+package com.cioccarellia.kspref.exception
 
-import android.content.SharedPreferences
-import androidx.annotation.CheckResult
-import com.cioccarellia.kspref.exception.NoSuchPrefKeyException
+import com.cioccarellia.kspref.config.crypto.KeySizeTrimmingOption
 
-typealias Reader = SharedPreferences
-
-@CheckResult
-internal fun Reader.read(
-    key: String,
-    default: ByteArray
-): ByteArray = getString(key, default.string())?.bytes() ?: "".bytes()
-
-@CheckResult
-internal fun Reader.readUnsafe(
-    key: String
-): ByteArray = try {
-    getString(key, null)!!.bytes()
-} catch (knpe: KotlinNullPointerException) {
-    throw NoSuchPrefKeyException(key)
-}
+internal class InvalidKsPrefKeySize(
+    size: KeySizeTrimmingOption,
+    keyBytes: Int
+) : KotlinNullPointerException("Expected size: $size, actual size: $keyBytes")

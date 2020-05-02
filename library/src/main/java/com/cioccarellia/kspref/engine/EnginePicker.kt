@@ -15,6 +15,7 @@
  */
 package com.cioccarellia.kspref.engine
 
+import android.os.Build
 import android.util.Base64
 import com.cioccarellia.kspref.KsPrefs
 import com.cioccarellia.kspref.config.crypto.BlockCipherEncryptionMode
@@ -22,6 +23,7 @@ import com.cioccarellia.kspref.config.crypto.ByteTransformationStrategy
 import com.cioccarellia.kspref.engine.model.aes.AesCbcEngine
 import com.cioccarellia.kspref.engine.model.aes.AesEcbEngine
 import com.cioccarellia.kspref.engine.model.base64.Base64Engine
+import com.cioccarellia.kspref.engine.model.keystore.KeystoreEngine
 import com.cioccarellia.kspref.engine.model.plaintext.PlainTextEngine
 import com.cioccarellia.kspref.exception.KsPrefEngineException
 import com.cioccarellia.kspref.exception.KsPrefInvalidConfigException
@@ -35,6 +37,12 @@ object EnginePicker {
     private inline val cryptoConfig
         get() = KsPrefs.config.encryption
 
+    private inline val key
+        get() = SymmetricKey(
+            cryptoConfig.key.unsafeBytes()
+                ?: throw KsPrefEngineException("Encryption key is unset in encryption configuration")
+        )
+
     fun select(): Engine = when (cryptoConfig.transformation) {
         ByteTransformationStrategy.PLAIN_TEXT -> PlainTextEngine()
         ByteTransformationStrategy.BASE64 -> Base64Engine(
@@ -42,14 +50,9 @@ object EnginePicker {
         )
         ByteTransformationStrategy.AES -> {
             val base64EncryptionFlags = Base64.NO_PADDING or Base64.NO_WRAP
-            val keyByteCount = cryptoConfig.keySize.byteCount()
+            val keyByteCount = cryptoConfig.keySize
 
-            // We assume the key is set by the user
-            // since the transformation strategy is AES
-            val key = SymmetricKey(
-                cryptoConfig.key.unsafeBytes()
-                    ?: throw KsPrefEngineException("Encryption key is unset in encryption configuration")
-            )
+            key.requireEquals(keyByteCount)
 
             when (cryptoConfig.blockCipherMode) {
                 BlockCipherEncryptionMode.CBC -> {
@@ -60,7 +63,7 @@ object EnginePicker {
 
                     AesCbcEngine(
                         key,
-                        keyByteCount = keyByteCount,
+                        keyByteCount = keyByteCount.byteCount(),
                         base64Flags = base64EncryptionFlags,
                         iv = iv
                     )
@@ -68,10 +71,20 @@ object EnginePicker {
                 BlockCipherEncryptionMode.ECB -> {
                     AesEcbEngine(
                         key,
-                        keyByteCount = keyByteCount,
+                        keyByteCount = keyByteCount.byteCount(),
                         base64Flags = base64EncryptionFlags
                     )
                 }
+            }
+        }
+        ByteTransformationStrategy.KEYSTORE -> {
+            val base64EncryptionFlags = Base64.NO_PADDING or Base64.NO_WRAP
+            val alias = cryptoConfig.alias!!
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                KeystoreEngine(alias, base64EncryptionFlags)
+            } else {
+                TODO("VERSION.SDK_INT < M")
             }
         }
     }

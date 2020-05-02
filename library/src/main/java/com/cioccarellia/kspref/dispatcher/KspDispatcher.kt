@@ -19,7 +19,6 @@ import com.cioccarellia.kspref.config.CommitStrategy
 import com.cioccarellia.kspref.converter.TypeConverter
 import com.cioccarellia.kspref.enclosure.KspEnclosure
 import com.cioccarellia.kspref.extensions.Reader
-import com.cioccarellia.kspref.extensions.emptyByteArray
 import com.cioccarellia.kspref.intrinsic.checkKey
 import kotlin.reflect.KClass
 
@@ -81,14 +80,8 @@ internal class KspDispatcher(
     ): T {
         checkKey(key)
 
-        val pureBytes = convert(
-            emptyByteArray()
-        )
-
-        // Reads and passes bytes through an engine
-        // which applies the required transformation
-        // to it
-        val returnedBytes = enclosure.read(key, pureBytes)
+        // Reads the value found for the exact key
+        val returnedBytes = enclosure.readUnsafe(key)
 
         // Reifies and returns the read data as an object
         // plugging it through a converter

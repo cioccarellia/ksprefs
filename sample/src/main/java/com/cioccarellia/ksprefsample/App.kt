@@ -23,7 +23,9 @@ class App : Application() {
     companion object {
         lateinit var appContext: Context
         val prefs by lazy {
-            KsPrefs(appContext)
+            KsPrefs(appContext) {
+                encryption.initKeystore("aaaaaaaaaaaaaaaa")
+            }
         }
     }
 

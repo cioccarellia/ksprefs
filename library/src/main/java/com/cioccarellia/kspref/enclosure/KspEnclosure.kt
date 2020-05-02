@@ -61,6 +61,15 @@ internal class KspEnclosure(
     )
 
     @PublishedApi
+    internal fun readUnsafe(
+        key: String
+    ) = engineRevert(
+        sharedReader.readUnsafe(
+            engineApply(key)
+        )
+    )
+
+    @PublishedApi
     internal fun write(
         key: String,
         value: ByteArray

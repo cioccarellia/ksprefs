@@ -19,8 +19,7 @@ import android.util.Log
 import com.cioccarellia.kspref.KsPrefs
 import com.cioccarellia.kspref.defaults.Defaults
 import java.io.UnsupportedEncodingException
-import java.security.InvalidKeyException
-import java.security.NoSuchAlgorithmException
+import java.security.*
 import java.security.spec.InvalidKeySpecException
 import java.security.spec.InvalidParameterSpecException
 import javax.crypto.BadPaddingException
@@ -75,6 +74,26 @@ internal class KsPrefEngineException(
                 is BadPaddingException -> KsPrefEngineException("Bad padding. $operation", throwable)
                 is UnsupportedEncodingException -> KsPrefEngineException(
                     "The charset encoding is unsupported ($charset). $operation",
+                    throwable
+                )
+                is UnrecoverableEntryException -> KsPrefEngineException(
+                    "The keystore entry cannot be recovered.",
+                    throwable
+                )
+                is KeyStoreException -> KsPrefEngineException(
+                    "Generic Android KeyStore exception.",
+                    throwable
+                )
+                is NoSuchProviderException -> KsPrefEngineException(
+                    "The required security provided cannot be found in the execution environment.",
+                    throwable
+                )
+                is InvalidAlgorithmParameterException -> KsPrefEngineException(
+                    "The algorithm parameters are invalid.",
+                    throwable
+                )
+                is SignatureException -> KsPrefEngineException(
+                    "Generic signature exception.",
                     throwable
                 )
                 else -> KsPrefEngineException(throwable = throwable)

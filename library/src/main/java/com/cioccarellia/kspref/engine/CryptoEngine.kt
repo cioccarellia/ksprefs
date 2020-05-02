@@ -18,13 +18,10 @@ package com.cioccarellia.kspref.engine
 import com.cioccarellia.kspref.annotations.Derivative
 import com.cioccarellia.kspref.annotations.Integral
 import com.cioccarellia.kspref.extensions.getOrThrowException
-import javax.crypto.spec.SecretKeySpec
 
 interface CryptoEngine {
     val algorithm: String
-    val cipherTransform: String
-
-    fun keySpec(): SecretKeySpec
+    val transformation: String
 
     @Derivative
     fun encrypt(

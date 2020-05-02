@@ -21,5 +21,6 @@ enum class ByteTransformationStrategy {
     PLAIN_TEXT,
     BASE64,
     @PreferredForEncryption
-    AES
+    AES,
+    KEYSTORE
 }
