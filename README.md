@@ -7,6 +7,7 @@
   <a tagret="_blank" href="https://codecov.io/gh/cioccarellia/kspref"><img src="https://codecov.io/gh/cioccarellia/kspref/branch/master/graph/badge.svg" alt="CodeCov"></a>
   <a><img src="https://img.shields.io/badge/kotlin-1.3.72-orange.svg" alt="Kotlin"></a>
   <a><img src="https://img.shields.io/badge/android-15-00e676.svg" alt="Android Min Sdk"></a>
+  <a><img src="https://img.shields.io/badge/compile-29-00e676.svg" alt="Android Compile Version"></a>
   <a href="https://github.com/cioccarellia/kspref/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="License"></a>
 </p>
 

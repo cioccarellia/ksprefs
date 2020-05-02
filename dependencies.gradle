@@ -62,5 +62,6 @@ ext.deps = [
         robolectric: "org.robolectric:robolectric:4.3.1",
         mockito_core: "org.mockito:mockito-core:3.2.4",
         truth: "com.google.truth:truth:1.0.1",
+        jacoco: "com.dicedmelon.gradle:jacoco-android:0.1.4"
     ]
 ]

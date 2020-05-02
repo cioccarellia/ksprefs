@@ -29,6 +29,9 @@ class KsPrefs(
     config: KspConfig.() -> Unit = {}
 ) {
     companion object {
+        /**
+         *
+         * */
         internal val config: KspConfig by lazy { KspConfig() }
     }
 
