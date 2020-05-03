@@ -23,6 +23,7 @@ data class KspEncryptionConfig internal constructor(
     var alias: String? = null,
     var iv: ByteArray? = null,
     var keySize: KeySizeTrimmingOption = Defaults.KEY_SIZE_TRIM_OPTION,
+    var keyTagSize: KeyTagSize = Defaults.KEY_TAG_SIZE,
     var blockCipherMode: BlockCipherEncryptionMode = Defaults.BLOCK_CIPHER_ENCRYPTION_MODE
 ) {
     fun initPlainText() {
@@ -77,7 +78,7 @@ data class KspEncryptionConfig internal constructor(
         this.alias = alias
 
         transformation = ByteTransformationStrategy.KEYSTORE
-
+        keyTagSize = KeyTagSize.SIZE_128
         keySize = KeySizeTrimmingOption.TRIM_128
     }
 

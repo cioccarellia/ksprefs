@@ -50,9 +50,9 @@ object EnginePicker {
         )
         ByteTransformationStrategy.AES -> {
             val base64EncryptionFlags = Base64.NO_PADDING or Base64.NO_WRAP
-            val keyByteCount = cryptoConfig.keySize
+            val symmetricKeySize = cryptoConfig.keySize
 
-            key.requireEquals(keyByteCount)
+            key.requireEquals(symmetricKeySize)
 
             when (cryptoConfig.blockCipherMode) {
                 BlockCipherEncryptionMode.CBC -> {
@@ -63,7 +63,7 @@ object EnginePicker {
 
                     AesCbcEngine(
                         key,
-                        keyByteCount = keyByteCount.byteCount(),
+                        keyByteCount = symmetricKeySize.byteCount(),
                         base64Flags = base64EncryptionFlags,
                         iv = iv
                     )
@@ -71,7 +71,7 @@ object EnginePicker {
                 BlockCipherEncryptionMode.ECB -> {
                     AesEcbEngine(
                         key,
-                        keyByteCount = keyByteCount.byteCount(),
+                        keyByteCount = symmetricKeySize.byteCount(),
                         base64Flags = base64EncryptionFlags
                     )
                 }
@@ -80,9 +80,10 @@ object EnginePicker {
         ByteTransformationStrategy.KEYSTORE -> {
             val base64EncryptionFlags = Base64.NO_PADDING or Base64.NO_WRAP
             val alias = cryptoConfig.alias!!
+            val keyTagBitCount = cryptoConfig.keySize.bitCount()
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                KeystoreEngine(alias, base64EncryptionFlags)
+                KeystoreEngine(alias, base64EncryptionFlags, keyTagBitCount)
             } else {
                 TODO("VERSION.SDK_INT < M")
             }

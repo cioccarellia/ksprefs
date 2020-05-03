@@ -32,22 +32,52 @@ import javax.crypto.spec.GCMParameterSpec
 @RequiresApi(Build.VERSION_CODES.M)
 class KeystoreEngine(
     private val alias: String,
-    private val base64Flags: Int
+    private val base64Flags: Int,
+    private val keyTagLengthInBits: Int
 ) : Engine(), CryptoEngine {
 
     override val algorithm = "AES/GCM/NoPadding"
     override val transformation = "AndroidKeyStore"
 
-    private val keyStore = KeyStore.getInstance(transformation)
-
     private lateinit var iv: ByteArray
 
-    init {
-        keyStore.load(null)
-    }
+    private val encryptionCipher: Cipher
+        get() {
+            val cipher = Cipher.getInstance(algorithm)
+
+            with(cipher) {
+                init(Cipher.ENCRYPT_MODE, generateKey)
+                this@KeystoreEngine.iv = iv
+            }
+
+            return cipher
+        }
+
+    private val decryptionCipher: Cipher
+        get() {
+            val cipher = Cipher.getInstance(algorithm)
+
+            val safeIv = if (::iv.isInitialized) {
+                iv
+            } else {
+                ::encryptionCipher.get()
+                iv
+            }
+
+            // Authentication tag
+            val algorithmSpec = GCMParameterSpec(keyTagLengthInBits, safeIv)
+
+            with(cipher) {
+                init(Cipher.DECRYPT_MODE, decryptionKey(), algorithmSpec)
+            }
+
+            return cipher
+        }
 
     override fun apply(incoming: Transmission) = Transmission(
-        Base64.encode(encrypt(incoming.payload), base64Flags)
+        Base64.encode(
+            encrypt(incoming.payload), base64Flags
+        )
     )
 
     override fun revert(outgoing: Transmission) = Transmission(
@@ -56,10 +86,10 @@ class KeystoreEngine(
         )
     )
 
-    private fun encryptionKey(): SecretKey {
+    private val generateKey by lazy {
         val keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, transformation)
-
         val keyProps = KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
+
         keyGenerator.init(
             KeyGenParameterSpec.Builder(alias, keyProps).run {
                 setBlockModes(KeyProperties.BLOCK_MODE_GCM)
@@ -68,24 +98,21 @@ class KeystoreEngine(
             }
         )
 
-        return keyGenerator.generateKey()
+        keyGenerator.generateKey()
     }
 
     override fun encrypt(input: ByteArray): ByteArray {
-        val cipher = Cipher.getInstance(algorithm)
-        cipher.init(Cipher.ENCRYPT_MODE, encryptionKey())
-        iv = cipher.iv
-        return cipher.doFinal(input)
+        return encryptionCipher.doFinal(input)
     }
 
     private fun decryptionKey(): SecretKey {
+        val keyStore = KeyStore.getInstance(transformation)
+        keyStore.load(null)
+
         return (keyStore!!.getEntry(alias, null) as KeyStore.SecretKeyEntry).secretKey
     }
 
     override fun decrypt(cipherText: ByteArray): ByteArray {
-        val cipher = Cipher.getInstance(algorithm)
-        val spec = GCMParameterSpec(128, iv)
-        cipher.init(Cipher.DECRYPT_MODE, decryptionKey(), spec)
-        return cipher.doFinal(cipherText)
+        return decryptionCipher.doFinal(cipherText)
     }
 }

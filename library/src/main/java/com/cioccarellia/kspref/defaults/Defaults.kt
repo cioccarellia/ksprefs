@@ -21,6 +21,7 @@ import com.cioccarellia.kspref.config.CommitStrategy
 import com.cioccarellia.kspref.config.crypto.BlockCipherEncryptionMode
 import com.cioccarellia.kspref.config.crypto.ByteTransformationStrategy
 import com.cioccarellia.kspref.config.crypto.KeySizeTrimmingOption
+import com.cioccarellia.kspref.config.crypto.KeyTagSize
 
 object Defaults {
     /** Library glabal */
@@ -40,4 +41,5 @@ object Defaults {
     val TRANSFORMATION = ByteTransformationStrategy.PLAIN_TEXT
     val BLOCK_CIPHER_ENCRYPTION_MODE = BlockCipherEncryptionMode.ECB
     val KEY_SIZE_TRIM_OPTION = KeySizeTrimmingOption.TRIM_128
+    val KEY_TAG_SIZE = KeyTagSize.SIZE_128
 }

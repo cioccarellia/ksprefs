@@ -13,22 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.exception
+package com.cioccarellia.kspref.internal
 
-import com.cioccarellia.kspref.engine.EnginePicker
-import com.cioccarellia.kspref.engine.Transmission
-import com.cioccarellia.kspref.extensions.bytes
-
-internal class NoSuchPrefKeyException(
-    encryptedKey: String
-) : KotlinNullPointerException(
-    """
-    SharedPreferences does not contains a value for the matching key='$encryptedKey'. (Possible decryption: '${
-    EnginePicker.select().revert(
-        Transmission(
-            encryptedKey.bytes()
-        )
-    )
-    }'
-    """.trimIndent()
-)
+interface ByteSizeble {
+    fun bitCount(): Int
+    fun byteCount(): Int
+}

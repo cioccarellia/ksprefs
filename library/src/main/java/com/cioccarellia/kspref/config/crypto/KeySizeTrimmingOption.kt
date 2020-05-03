@@ -16,17 +16,20 @@
 package com.cioccarellia.kspref.config.crypto
 
 import com.cioccarellia.kspref.annotations.PreferredForEncryption
+import com.cioccarellia.kspref.internal.ByteSizeble
 
-enum class KeySizeTrimmingOption {
+enum class KeySizeTrimmingOption : ByteSizeble {
     @PreferredForEncryption
     TRIM_128,
     TRIM_192,
     TRIM_256;
 
-    fun byteCount(): Int = when (this) {
-        TRIM_128 -> 16
-        TRIM_192 -> 24
-        TRIM_256 -> 32
+    override fun bitCount(): Int = when (this) {
+        TRIM_128 -> 128
+        TRIM_192 -> 192
+        TRIM_256 -> 256
     }
+
+    override fun byteCount() = bitCount() / 8
 }
 

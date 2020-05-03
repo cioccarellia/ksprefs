@@ -13,22 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.exception
+package com.cioccarellia.kspref.config.crypto
 
-import com.cioccarellia.kspref.engine.EnginePicker
-import com.cioccarellia.kspref.engine.Transmission
-import com.cioccarellia.kspref.extensions.bytes
+import com.cioccarellia.kspref.internal.ByteSizeble
 
-internal class NoSuchPrefKeyException(
-    encryptedKey: String
-) : KotlinNullPointerException(
-    """
-    SharedPreferences does not contains a value for the matching key='$encryptedKey'. (Possible decryption: '${
-    EnginePicker.select().revert(
-        Transmission(
-            encryptedKey.bytes()
-        )
-    )
-    }'
-    """.trimIndent()
-)
+enum class KeyTagSize : ByteSizeble {
+    SIZE_96,
+    SIZE_104,
+    SIZE_112,
+    SIZE_120,
+    SIZE_128;
+
+    override fun bitCount() = when (this) {
+        SIZE_96 -> 96
+        SIZE_104 -> 104
+        SIZE_112 -> 112
+        SIZE_120 -> 120
+        SIZE_128 -> 128
+    }
+
+    override fun byteCount() = bitCount() / 8
+}
