@@ -35,3 +35,8 @@ internal fun Reader.readUnsafe(
 } catch (knpe: KotlinNullPointerException) {
     throw NoSuchPrefKeyException(key)
 }
+
+@CheckResult
+internal fun Reader.exists(
+    key: String
+): Boolean = getString(key, null) != null

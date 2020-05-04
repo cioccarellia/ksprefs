@@ -83,19 +83,27 @@ internal class KspEnclosure(
         finalize()
     }
 
+    internal fun exists(
+        key: String
+    ) = sharedReader.exists(key)
+
     internal fun save(
         commitStrategy: CommitStrategy
-    ) = with(sharedWriter) {
-        forceFinalization(
-            commitStrategy = commitStrategy
-        )
+    ) {
+        with(sharedWriter) {
+            forceFinalization(
+                commitStrategy = commitStrategy
+            )
+        }
     }
 
     internal fun remove(
         key: String
-    ) = sharedReader.edit()
-        .delete(
-            engineApply(key)
-        )
-        .finalize()
+    ) {
+        sharedReader.edit()
+            .delete(
+                engineApply(key)
+            )
+            .finalize()
+    }
 }

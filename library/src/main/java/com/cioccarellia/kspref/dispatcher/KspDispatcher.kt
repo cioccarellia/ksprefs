@@ -88,6 +88,11 @@ internal class KspDispatcher(
         return reify(returnedBytes, kclass)
     }
 
+
+    internal fun exists(
+        key: String
+    ) = enclosure.exists(key)
+
     internal fun save(
         commitStrategy: CommitStrategy
     ) = enclosure.save(commitStrategy)

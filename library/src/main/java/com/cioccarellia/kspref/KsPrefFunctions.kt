@@ -21,10 +21,10 @@ import com.cioccarellia.kspref.extensions.emptyByteArray
 import java.security.SecureRandom
 import kotlin.random.asKotlinRandom
 
-fun KsPrefs.Companion.randomIV(): ByteArray = SecureRandom().asKotlinRandom().nextBytes(
-    emptyByteArray(
-        byteCount = config.encryption.keySize.byteCount()
-    )
+fun KsPrefs.Companion.randomIV(
+    byteCount: Int
+): ByteArray = SecureRandom().asKotlinRandom().nextBytes(
+    emptyByteArray(byteCount)
 )
 
 fun <T : Any> KsPrefs.ref(

@@ -60,9 +60,7 @@ class KsPrefs(
     fun <T : Any> push(
         key: String,
         value: T
-    ) {
-        dispatcher.push(key, value)
-    }
+    ): Unit = dispatcher.push(key, value)
 
     /**
      * Gets a value from the [Shared Preferences][SharedPreferences] storage.
@@ -76,7 +74,7 @@ class KsPrefs(
     fun <T : Any> pull(
         key: String,
         default: T
-    ) = dispatcher.pull(key, default)
+    ): T = dispatcher.pull(key, default)
 
     /**
      * Unsafely gets a value from the [Shared Preferences][SharedPreferences] storage.
@@ -90,21 +88,34 @@ class KsPrefs(
     @CheckResult
     inline fun <reified T : Any> pull(
         key: String
-    ) = dispatcher.pull(key, T::class)
+    ): T = dispatcher.pull(key, T::class)
+
+
+    /**
+     * Checks if a value exists under the given key.
+     *
+     * @param key The key of the target field
+     *
+     * @return Whether the value exists inside the storage or not
+     * */
+    @CheckResult
+    fun exists(
+        key: String
+    ): Boolean = dispatcher.exists(key)
 
     /**
      * Forces a commit() or an apply() to happen
      * */
     fun save(
         commitStrategy: CommitStrategy = config.commitStrategy
-    ) = dispatcher.save(commitStrategy)
+    ): Unit = dispatcher.save(commitStrategy)
 
     /**
      * Removes a preference from the storage
      * */
     fun remove(
         key: String
-    ) = dispatcher.remove(key)
+    ): Unit = dispatcher.remove(key)
 
     /**
      * KsPrefs will register a SharedPreferences listener
