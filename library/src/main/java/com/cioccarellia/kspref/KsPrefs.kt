@@ -22,7 +22,6 @@ import com.cioccarellia.kspref.config.CommitStrategy
 import com.cioccarellia.kspref.config.KspConfig
 import com.cioccarellia.kspref.delegate.observer.ObservedPrefsStorage
 import com.cioccarellia.kspref.dispatcher.KspDispatcher
-import com.cioccarellia.kspref.extensions.getPrefs
 import com.cioccarellia.kspref.namespace.Namespace
 
 class KsPrefs(
@@ -42,7 +41,7 @@ class KsPrefs(
     }
 
     @PublishedApi
-    internal val dispatcher = KspDispatcher(namespace, appContext.getPrefs(namespace))
+    internal val dispatcher = KspDispatcher(namespace, appContext)
 
     /**
      * Exposes the internal [Shared Preferences][SharedPreferences]

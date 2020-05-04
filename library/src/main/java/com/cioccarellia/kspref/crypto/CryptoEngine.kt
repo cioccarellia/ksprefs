@@ -13,21 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.internal
+package com.cioccarellia.kspref.crypto
 
-import com.cioccarellia.kspref.config.crypto.KeySizeTrimmingOption
-import com.cioccarellia.kspref.exception.InvalidKsPrefKeySize
-import com.cioccarellia.kspref.extensions.string
+import com.cioccarellia.kspref.annotations.Derivative
+import com.cioccarellia.kspref.annotations.Integral
+import com.cioccarellia.kspref.exception.SafeRun
 
-inline class SymmetricKey(
-    val bytes: ByteArray
-) {
-    fun requireEquals(keySizeOptions: KeySizeTrimmingOption) {
-        if (keySizeOptions.byteCount() != bytes.size) throw InvalidKsPrefKeySize(
-            keySizeOptions,
-            bytes.size * 8
-        )
-    }
+interface CryptoEngine : SafeRun {
+    @Derivative
+    fun encrypt(
+        input: ByteArray
+    ): ByteArray
 
-    override fun toString() = bytes.string()
+    @Integral
+    fun decrypt(
+        cipherText: ByteArray
+    ): ByteArray
 }

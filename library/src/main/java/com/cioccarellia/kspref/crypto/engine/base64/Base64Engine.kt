@@ -13,24 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.config.crypto
+package com.cioccarellia.kspref.crypto.engine.base64
 
-import com.cioccarellia.kspref.internal.ByteSizeble
+import android.util.Base64
+import com.cioccarellia.kspref.crypto.Engine
+import com.cioccarellia.kspref.crypto.Transmission
 
-enum class KeyTagSize : ByteSizeble {
-    SIZE_96,
-    SIZE_104,
-    SIZE_112,
-    SIZE_120,
-    SIZE_128;
+class Base64Engine(
+    private val base64Flags: Int
+) : Engine() {
 
-    override fun bitCount() = when (this) {
-        SIZE_96 -> 96
-        SIZE_104 -> 104
-        SIZE_112 -> 112
-        SIZE_120 -> 120
-        SIZE_128 -> 128
-    }
+    override fun apply(incoming: Transmission) = Transmission(
+        Base64.encode(incoming.payload, base64Flags)
+    )
 
-    override fun byteCount() = bitCount() / 8
+    override fun revert(outgoing: Transmission) = Transmission(
+        Base64.decode(outgoing.payload, base64Flags)
+    )
 }

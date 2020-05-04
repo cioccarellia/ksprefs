@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.engine.model.aes
+package com.cioccarellia.kspref.crypto.engine.aes
 
 import android.annotation.SuppressLint
 import android.util.Base64
-import com.cioccarellia.kspref.engine.CryptoEngine
-import com.cioccarellia.kspref.engine.Engine
-import com.cioccarellia.kspref.engine.Transmission
-import com.cioccarellia.kspref.internal.SymmetricKey
+import com.cioccarellia.kspref.crypto.CryptoEngine
+import com.cioccarellia.kspref.crypto.Engine
+import com.cioccarellia.kspref.crypto.SymmetricKey
+import com.cioccarellia.kspref.crypto.Transmission
 import java.security.MessageDigest
 import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
@@ -31,8 +31,8 @@ class AesEcbEngine(
     val keyByteCount: Int,
     val base64Flags: Int
 ) : Engine(), CryptoEngine {
-    override val algorithm = "AES"
-    override val transformation = "AES/ECB/PKCS5Padding"
+    private val algorithm = "AES"
+    private val cipherTransformation = "AES/ECB/PKCS5Padding"
 
     override fun apply(incoming: Transmission) = Transmission(
         encrypt(incoming.payload)
@@ -44,13 +44,13 @@ class AesEcbEngine(
 
     private val digest by lazy { MessageDigest.getInstance("SHA-256") }
 
-    fun keySpec(): SecretKeySpec = runSafely {
+    private fun keySpec(): SecretKeySpec = runSafely {
         val _key = digest.digest(key.bytes).copyOf(keyByteCount)
         SecretKeySpec(_key, algorithm)
     }
 
     override fun encrypt(input: ByteArray): ByteArray = runSafely {
-        val cipher = Cipher.getInstance(transformation)
+        val cipher = Cipher.getInstance(cipherTransformation)
 
         with(cipher) {
             init(Cipher.ENCRYPT_MODE, keySpec())
@@ -62,7 +62,7 @@ class AesEcbEngine(
     }
 
     override fun decrypt(cipherText: ByteArray): ByteArray = runSafely {
-        val cipher = Cipher.getInstance(transformation)
+        val cipher = Cipher.getInstance(cipherTransformation)
 
         with(cipher) {
             init(Cipher.DECRYPT_MODE, keySpec())

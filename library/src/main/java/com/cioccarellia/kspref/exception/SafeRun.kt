@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.config.crypto
+package com.cioccarellia.kspref.exception
 
-import com.cioccarellia.kspref.annotations.PreferredForEncryption
+import com.cioccarellia.kspref.extensions.getOrThrowException
 
-enum class ByteTransformationStrategy {
-    PLAIN_TEXT,
-    BASE64,
-    @PreferredForEncryption
-    AES,
-    KEYSTORE
+interface SafeRun {
+    fun <T> runSafely(
+        operation: String = "",
+        block: () -> T
+    ): T = runCatching(block).getOrThrowException(operation)
 }

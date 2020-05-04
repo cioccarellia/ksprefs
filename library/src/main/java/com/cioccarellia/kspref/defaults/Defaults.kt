@@ -16,14 +16,14 @@
 package com.cioccarellia.kspref.defaults
 
 import android.content.Context
+import android.util.Base64
 import com.cioccarellia.kspref.config.AutoSavePolicy
 import com.cioccarellia.kspref.config.CommitStrategy
-import com.cioccarellia.kspref.config.crypto.BlockCipherEncryptionMode
-import com.cioccarellia.kspref.config.crypto.ByteTransformationStrategy
-import com.cioccarellia.kspref.config.crypto.KeySizeTrimmingOption
-import com.cioccarellia.kspref.config.crypto.KeyTagSize
+import com.cioccarellia.kspref.config.crypto.parameters.KeyTagSize
+import com.cioccarellia.kspref.config.crypto.parameters.KeyTrimmingOption
+import java.util.*
 
-object Defaults {
+internal object Defaults {
     /** Library glabal */
     const val TAG = "KsPref"
 
@@ -38,8 +38,15 @@ object Defaults {
     val COMMIT_STRATEGY = CommitStrategy.ASYNC_APPLY
 
     /** Encryption */
-    val TRANSFORMATION = ByteTransformationStrategy.PLAIN_TEXT
-    val BLOCK_CIPHER_ENCRYPTION_MODE = BlockCipherEncryptionMode.ECB
-    val KEY_SIZE_TRIM_OPTION = KeySizeTrimmingOption.TRIM_128
+    const val DEFAULT_BASE64_FLAGS = Base64.NO_CLOSE or Base64.NO_WRAP
+    val KEY_SIZE_TRIM_OPTION = KeyTrimmingOption.TRIM_128
     val KEY_TAG_SIZE = KeyTagSize.SIZE_128
+    val DEFAULT_RSA_KEY_DURATION: Pair<Date, Date> by lazy {
+        val start = Calendar.getInstance()
+        val end = Calendar.getInstance().apply {
+            add(Calendar.YEAR, 10)
+        }
+
+        start.time to end.time
+    }
 }

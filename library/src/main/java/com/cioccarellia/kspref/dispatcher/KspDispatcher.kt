@@ -15,19 +15,19 @@
  */
 package com.cioccarellia.kspref.dispatcher
 
+import android.content.Context
 import com.cioccarellia.kspref.config.CommitStrategy
 import com.cioccarellia.kspref.converter.TypeConverter
 import com.cioccarellia.kspref.enclosure.KspEnclosure
-import com.cioccarellia.kspref.extensions.Reader
 import com.cioccarellia.kspref.intrinsic.checkKey
 import kotlin.reflect.KClass
 
 @PublishedApi
 internal class KspDispatcher(
     namespace: String,
-    handle: Reader
+    context: Context
 ) {
-    private val enclosure = KspEnclosure(namespace, handle)
+    private val enclosure = KspEnclosure(namespace, context)
 
     internal fun expose() = enclosure.sharedReader
 

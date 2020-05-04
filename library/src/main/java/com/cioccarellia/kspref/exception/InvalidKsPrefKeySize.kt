@@ -15,9 +15,9 @@
  */
 package com.cioccarellia.kspref.exception
 
-import com.cioccarellia.kspref.config.crypto.KeySizeTrimmingOption
+import com.cioccarellia.kspref.config.crypto.parameters.KeyTrimmingOption
 
 internal class InvalidKsPrefKeySize(
-    size: KeySizeTrimmingOption,
-    keyBytes: Int
-) : KotlinNullPointerException("Expected size: $size, actual size: $keyBytes")
+    size: KeyTrimmingOption,
+    keyBitCount: Int
+) : KotlinNullPointerException("Expected size: $size, actual size: $keyBitCount")

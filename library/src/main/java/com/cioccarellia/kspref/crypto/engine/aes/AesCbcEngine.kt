@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.engine.model.aes
+package com.cioccarellia.kspref.crypto.engine.aes
 
 import android.util.Base64
-import com.cioccarellia.kspref.engine.CryptoEngine
-import com.cioccarellia.kspref.engine.Engine
-import com.cioccarellia.kspref.engine.Transmission
-import com.cioccarellia.kspref.internal.SymmetricKey
+import com.cioccarellia.kspref.crypto.CryptoEngine
+import com.cioccarellia.kspref.crypto.Engine
+import com.cioccarellia.kspref.crypto.SymmetricKey
+import com.cioccarellia.kspref.crypto.Transmission
 import java.security.MessageDigest
 import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
@@ -31,8 +31,8 @@ class AesCbcEngine(
     val base64Flags: Int,
     val iv: ByteArray
 ) : Engine(), CryptoEngine {
-    override val algorithm = "AES"
-    override val transformation = "AES/CBC/PKCS5Padding"
+    val algorithm = "AES"
+    val cipherTransformation = "AES/CBC/PKCS5Padding"
 
     override fun apply(incoming: Transmission) = Transmission(
         encrypt(incoming.payload)
@@ -53,7 +53,7 @@ class AesCbcEngine(
         input: ByteArray
     ): ByteArray = runSafely {
         val iv = IvParameterSpec(iv)
-        val cipher = Cipher.getInstance(transformation)
+        val cipher = Cipher.getInstance(cipherTransformation)
 
         with(cipher) {
             init(Cipher.ENCRYPT_MODE, keySpec(), iv)
@@ -68,7 +68,7 @@ class AesCbcEngine(
         cipherText: ByteArray
     ): ByteArray = runSafely {
         val iv = IvParameterSpec(iv)
-        val cipher = Cipher.getInstance(transformation)
+        val cipher = Cipher.getInstance(cipherTransformation)
 
         with(cipher) {
             init(Cipher.DECRYPT_MODE, keySpec(), iv)

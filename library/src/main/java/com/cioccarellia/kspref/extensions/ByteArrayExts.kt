@@ -19,7 +19,11 @@ package com.cioccarellia.kspref.extensions
 
 import androidx.annotation.CheckResult
 import com.cioccarellia.kspref.KsPrefs
+import com.cioccarellia.kspref.crypto.SymmetricKey
 import com.cioccarellia.kspref.defaults.Defaults
+
+@CheckResult
+internal fun ByteArray.toSymmetricKey() = SymmetricKey(this)
 
 @CheckResult
 internal fun ByteArray.string() = this.toString(
@@ -29,6 +33,9 @@ internal fun ByteArray.string() = this.toString(
         Defaults.CHARSET
     }
 )
+
+@CheckResult
+internal fun ByteArray.bitCount() = size * 8
 
 @PublishedApi
 internal inline fun emptyByteArray(

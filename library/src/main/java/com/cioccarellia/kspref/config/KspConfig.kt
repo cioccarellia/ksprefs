@@ -16,7 +16,7 @@
 package com.cioccarellia.kspref.config
 
 import androidx.annotation.IntRange
-import com.cioccarellia.kspref.config.crypto.KspEncryptionConfig
+import com.cioccarellia.kspref.config.crypto.EncryptionType
 import com.cioccarellia.kspref.defaults.Defaults
 import java.nio.charset.Charset
 
@@ -29,5 +29,5 @@ data class KspConfig internal constructor(
     var commitStrategy: CommitStrategy = Defaults.COMMIT_STRATEGY,
 
     var keyRegex: Regex? = null,
-    var encryption: KspEncryptionConfig = KspEncryptionConfig()
+    var encryption: EncryptionType = EncryptionType.PlainText()
 )

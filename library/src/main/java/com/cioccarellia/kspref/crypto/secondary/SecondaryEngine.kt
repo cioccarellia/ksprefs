@@ -13,28 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.engine
+package com.cioccarellia.kspref.crypto.secondary
 
-import com.cioccarellia.kspref.annotations.Derivative
-import com.cioccarellia.kspref.annotations.Integral
-import com.cioccarellia.kspref.extensions.getOrThrowException
+import com.cioccarellia.kspref.crypto.CryptoEngine
+import javax.crypto.Cipher
 
-interface CryptoEngine {
-    val algorithm: String
-    val transformation: String
-
-    @Derivative
-    fun encrypt(
-        input: ByteArray
-    ): ByteArray
-
-    @Integral
-    fun decrypt(
-        cipherText: ByteArray
-    ): ByteArray
-
-    fun <T> runSafely(
-        operation: String = "",
-        block: () -> T
-    ): T = runCatching(block).getOrThrowException(operation)
+abstract class SecondaryEngine : CryptoEngine {
+    abstract fun computeCipher(mode: Int): Cipher
 }

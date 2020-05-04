@@ -18,10 +18,11 @@
 package com.cioccarellia.kspref.enclosure
 
 import android.annotation.SuppressLint
+import android.content.Context
 import com.cioccarellia.kspref.config.CommitStrategy
-import com.cioccarellia.kspref.engine.Engine
-import com.cioccarellia.kspref.engine.EnginePicker
-import com.cioccarellia.kspref.engine.Transmission
+import com.cioccarellia.kspref.crypto.Engine
+import com.cioccarellia.kspref.crypto.EnginePicker
+import com.cioccarellia.kspref.crypto.Transmission
 import com.cioccarellia.kspref.extensions.*
 
 @Suppress("MemberVisibilityCanBePrivate")
@@ -29,9 +30,10 @@ import com.cioccarellia.kspref.extensions.*
 @PublishedApi
 internal class KspEnclosure(
     private val namespace: String,
-    internal var sharedReader: Reader,
+    context: Context,
+    internal var sharedReader: Reader = context.getPrefs(namespace),
     internal var sharedWriter: Writer = sharedReader.edit(),
-    private val engine: Engine = EnginePicker.select()
+    private val engine: Engine = EnginePicker.select(context)
 ) {
     private inline fun engineApply(
         value: ByteArray
