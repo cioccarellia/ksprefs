@@ -34,9 +34,9 @@ object EnginePicker {
         is EncryptionType.PlainText -> PlainTextEngine()
         is EncryptionType.Base64 -> Base64Engine(config.flags)
         is EncryptionType.AesEcb -> {
-            val key = config.key.toSymmetricKey().also {
-                it.requireEquals(config.keyTrim)
-            }
+            val key = EncryptionKeyChecker.approve(
+                config.key.toSymmetricKey(), config.keySize
+            )
 
             AesEcbEngine(
                 key,
@@ -45,9 +45,9 @@ object EnginePicker {
             )
         }
         is EncryptionType.AesCbc -> {
-            val key = config.key.toSymmetricKey().also {
-                it.requireEquals(config.keyTrim)
-            }
+            val key = EncryptionKeyChecker.approve(
+                config.key.toSymmetricKey(), config.keySize
+            )
 
             AesCbcEngine(
                 key,

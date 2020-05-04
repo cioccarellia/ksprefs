@@ -13,17 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.config
+package com.cioccarellia.kspref.config.model
 
-enum class CommitStrategy {
-    /**
-     * Atomically performs the operation, slower.
-     * Safe for multi threaded applications.
-     * */
-    SYNC_COMMIT,
-    /**
-     * Safe to ignore return value, faster.
-     * Updates the global SharedPreference in-memory values.
-     * */
-    ASYNC_APPLY
+enum class KeySizeMismatchFallbackStrategy {
+    TRIM,
+    CRASH,
+    NOTHING
 }

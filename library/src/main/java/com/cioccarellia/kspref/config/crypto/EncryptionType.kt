@@ -60,8 +60,8 @@
  */
 package com.cioccarellia.kspref.config.crypto
 
-import com.cioccarellia.kspref.config.crypto.parameters.KeyTagSize
-import com.cioccarellia.kspref.config.crypto.parameters.KeyTrimmingOption
+import com.cioccarellia.kspref.config.model.KeySizeCheck
+import com.cioccarellia.kspref.config.model.KeyTagSize
 import com.cioccarellia.kspref.defaults.Defaults
 
 sealed class EncryptionType {
@@ -73,14 +73,14 @@ sealed class EncryptionType {
 
     class AesEcb(
         val key: String,
-        val keyTrim: KeyTrimmingOption = Defaults.KEY_SIZE_TRIM_OPTION,
+        val keySize: KeySizeCheck = Defaults.KEY_SIZE_CHECK_OPTION,
         val base64Flags: Int = Defaults.DEFAULT_BASE64_FLAGS
     ) : EncryptionType()
 
     class AesCbc(
         val key: String,
         val iv: ByteArray,
-        val keyTrim: KeyTrimmingOption = Defaults.KEY_SIZE_TRIM_OPTION,
+        val keySize: KeySizeCheck = Defaults.KEY_SIZE_CHECK_OPTION,
         val base64Flags: Int = Defaults.DEFAULT_BASE64_FLAGS
     ) : EncryptionType()
 

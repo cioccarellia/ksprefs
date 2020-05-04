@@ -19,7 +19,7 @@ package com.cioccarellia.kspref.enclosure
 
 import android.annotation.SuppressLint
 import android.content.Context
-import com.cioccarellia.kspref.config.CommitStrategy
+import com.cioccarellia.kspref.config.model.CommitStrategy
 import com.cioccarellia.kspref.crypto.Engine
 import com.cioccarellia.kspref.crypto.EnginePicker
 import com.cioccarellia.kspref.crypto.Transmission

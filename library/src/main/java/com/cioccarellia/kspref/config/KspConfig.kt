@@ -17,6 +17,9 @@ package com.cioccarellia.kspref.config
 
 import androidx.annotation.IntRange
 import com.cioccarellia.kspref.config.crypto.EncryptionType
+import com.cioccarellia.kspref.config.model.AutoSavePolicy
+import com.cioccarellia.kspref.config.model.CommitStrategy
+import com.cioccarellia.kspref.config.model.KeySizeMismatchFallbackStrategy
 import com.cioccarellia.kspref.defaults.Defaults
 import java.nio.charset.Charset
 
@@ -29,5 +32,6 @@ data class KspConfig internal constructor(
     var commitStrategy: CommitStrategy = Defaults.COMMIT_STRATEGY,
 
     var keyRegex: Regex? = null,
-    var encryption: EncryptionType = EncryptionType.PlainText()
+    var encryption: EncryptionType = EncryptionType.PlainText(),
+    var keySizeMismatch: KeySizeMismatchFallbackStrategy = Defaults.KEY_SIZE_MISMATCH_STRATEGY
 )

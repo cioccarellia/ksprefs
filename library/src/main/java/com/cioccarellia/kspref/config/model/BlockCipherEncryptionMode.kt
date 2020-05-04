@@ -28,22 +28,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.config.crypto.parameters
+package com.cioccarellia.kspref.config.model
 
 import com.cioccarellia.kspref.annotations.PreferredForEncryption
-import com.cioccarellia.kspref.internal.ByteSizeable
 
-enum class KeyTrimmingOption : ByteSizeable {
+enum class BlockCipherEncryptionMode {
     @PreferredForEncryption
-    TRIM_128,
-    TRIM_192,
-    TRIM_256;
-
-    override fun bitCount(): Int = when (this) {
-        TRIM_128 -> 128
-        TRIM_192 -> 192
-        TRIM_256 -> 256
-    }
-
-    override fun byteCount() = bitCount() / 8
+    CBC,
+    ECB
 }

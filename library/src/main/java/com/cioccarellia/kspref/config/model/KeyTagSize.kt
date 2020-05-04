@@ -28,7 +28,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.config.crypto.parameters
+package com.cioccarellia.kspref.config.model
 
 import com.cioccarellia.kspref.internal.ByteSizeable
 

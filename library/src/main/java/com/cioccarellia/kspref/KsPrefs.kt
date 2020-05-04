@@ -18,8 +18,8 @@ package com.cioccarellia.kspref
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.annotation.CheckResult
-import com.cioccarellia.kspref.config.CommitStrategy
 import com.cioccarellia.kspref.config.KspConfig
+import com.cioccarellia.kspref.config.model.CommitStrategy
 import com.cioccarellia.kspref.delegate.observer.ObservedPrefsStorage
 import com.cioccarellia.kspref.dispatcher.KspDispatcher
 import com.cioccarellia.kspref.namespace.Namespace

@@ -17,8 +17,8 @@ package com.cioccarellia.kspref.extensions
 
 import android.content.SharedPreferences
 import com.cioccarellia.kspref.KsPrefs
-import com.cioccarellia.kspref.config.AutoSavePolicy
-import com.cioccarellia.kspref.config.CommitStrategy
+import com.cioccarellia.kspref.config.model.AutoSavePolicy
+import com.cioccarellia.kspref.config.model.CommitStrategy
 
 typealias Writer = SharedPreferences.Editor
 

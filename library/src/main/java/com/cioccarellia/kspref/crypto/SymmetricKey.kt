@@ -15,9 +15,7 @@
  */
 package com.cioccarellia.kspref.crypto
 
-import com.cioccarellia.kspref.config.crypto.parameters.KeyTrimmingOption
-import com.cioccarellia.kspref.exception.InvalidKsPrefKeySize
-import com.cioccarellia.kspref.extensions.bitCount
+import com.cioccarellia.kspref.config.model.KeySizeCheck
 import com.cioccarellia.kspref.extensions.string
 import com.cioccarellia.kspref.internal.ByteSizeable
 
@@ -27,16 +25,18 @@ inline class SymmetricKey(
 
     fun string() = toString()
 
-    fun requireEquals(keySizeOptions: KeyTrimmingOption) {
-        if (keySizeOptions.byteCount() != bytes.size)
-            throw InvalidKsPrefKeySize(
-                keySizeOptions, keyBitCount = bytes.bitCount()
-            )
-    }
-
     override fun toString() = bytes.string()
 
     override fun byteCount() = bytes.size
 
     override fun bitCount() = byteCount() * 8
+
+    fun matches(keySizeOptions: KeySizeCheck) = bytes.size == keySizeOptions.byteCount()
+
+    fun trim(keySizeOptions: KeySizeCheck): SymmetricKey =
+        SymmetricKey(
+            bytes.sliceArray(
+                0 until keySizeOptions.byteCount()
+            )
+        )
 }

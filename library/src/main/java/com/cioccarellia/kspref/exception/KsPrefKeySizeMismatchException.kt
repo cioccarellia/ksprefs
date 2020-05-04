@@ -15,9 +15,7 @@
  */
 package com.cioccarellia.kspref.exception
 
-import com.cioccarellia.kspref.config.model.KeySizeCheck
-
-internal class InvalidKsPrefKeySize(
-    size: KeySizeCheck,
-    keyBitCount: Int
-) : KotlinNullPointerException("Expected size: $size, actual size: $keyBitCount")
+internal class KsPrefKeySizeMismatchException(
+    expected: Int,
+    actual: Int
+) : KotlinNullPointerException("Expected key size: $expected, Actual: $actual")

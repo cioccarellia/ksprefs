@@ -25,8 +25,8 @@ class App : Application() {
         lateinit var appContext: Context
         val prefs by lazy {
             KsPrefs(appContext) {
-                encryption = EncryptionType.KeyStore(
-                    "heyey"
+                encryption = EncryptionType.AesEcb(
+                    "aaaa    aaaaaaaaaaaaaaaaaaaaaaaa"
                 )
             }
         }

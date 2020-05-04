@@ -17,10 +17,7 @@ package com.cioccarellia.kspref.defaults
 
 import android.content.Context
 import android.util.Base64
-import com.cioccarellia.kspref.config.AutoSavePolicy
-import com.cioccarellia.kspref.config.CommitStrategy
-import com.cioccarellia.kspref.config.crypto.parameters.KeyTagSize
-import com.cioccarellia.kspref.config.crypto.parameters.KeyTrimmingOption
+import com.cioccarellia.kspref.config.model.*
 import java.util.*
 
 internal object Defaults {
@@ -37,10 +34,15 @@ internal object Defaults {
     val AUTO_SAVE_POLICY = AutoSavePolicy.AUTO
     val COMMIT_STRATEGY = CommitStrategy.ASYNC_APPLY
 
-    /** Encryption */
+    /** Base64 */
     const val DEFAULT_BASE64_FLAGS = Base64.NO_CLOSE or Base64.NO_WRAP
-    val KEY_SIZE_TRIM_OPTION = KeyTrimmingOption.TRIM_128
+
+    val KEY_SIZE_CHECK_OPTION = KeySizeCheck.TRIM_128
+
     val KEY_TAG_SIZE = KeyTagSize.SIZE_128
+
+    val KEY_SIZE_MISMATCH_STRATEGY = KeySizeMismatchFallbackStrategy.CRASH
+
     val DEFAULT_RSA_KEY_DURATION: Pair<Date, Date> by lazy {
         val start = Calendar.getInstance()
         val end = Calendar.getInstance().apply {
