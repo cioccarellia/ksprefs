@@ -60,7 +60,22 @@ class KsPrefs(
     fun <T : Any> push(
         key: String,
         value: T
-    ): Unit = dispatcher.push(key, value)
+    ): Unit = dispatcher.push(
+        key, value, config.commitStrategy
+    )
+
+
+    /**
+     * Puts a value into the [Shared Preferences][SharedPreferences] storage.
+     *
+     * @param key       The key of the target field
+     * @param value     The value to be converted and stored
+     * */
+    fun <T : Any> queue(
+        key: String,
+        value: T
+    ): Unit = dispatcher.push(key, value, CommitStrategy.NONE)
+
 
     /**
      * Gets a value from the [Shared Preferences][SharedPreferences] storage.
@@ -75,6 +90,7 @@ class KsPrefs(
         key: String,
         default: T
     ): T = dispatcher.pull(key, default)
+
 
     /**
      * Unsafely gets a value from the [Shared Preferences][SharedPreferences] storage.

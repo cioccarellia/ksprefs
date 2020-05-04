@@ -24,20 +24,19 @@ import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
 
 @TargetApi(Build.VERSION_CODES.M)
-class AesSecurityKey(
-    private val secretKey: SecretKey
+class AesGcmSecondaryEngine(
+    private val secretKey: SecretKey,
+    private val keyTagSizeInBits: Int
 ) : SecondaryEngine() {
 
     override fun computeCipher(
         @IntRange(from = 1, to = 4) mode: Int
     ): Cipher = runSafely {
         val cipher = Cipher.getInstance(AES_MODE_FOR_POST_API_23)
+        val spec = GCMParameterSpec(keyTagSizeInBits, AES_MODE_FOR_POST_API_23.toByteArray(), 0, 12)
+
         cipher.apply {
-            init(
-                mode,
-                secretKey,
-                GCMParameterSpec(128, AES_MODE_FOR_POST_API_23.toByteArray(), 0, 12)
-            )
+            init(mode, secretKey, spec)
         }
     }
 

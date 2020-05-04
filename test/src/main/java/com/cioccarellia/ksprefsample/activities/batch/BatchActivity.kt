@@ -16,13 +16,38 @@
 package com.cioccarellia.ksprefsample.activities.batch
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.cioccarellia.ksprefsample.App.Companion.prefs
 import com.cioccarellia.ksprefsample.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class BatchActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_batch)
+
+        val millisBefore = System.currentTimeMillis()
+
+        CoroutineScope(Dispatchers.Main).launch {
+
+            withContext(Dispatchers.Default) {
+                for (i in 0..1_000) {
+                    prefs.queue("key-$i", i)
+                }
+            }
+
+            val millisAfter = System.currentTimeMillis()
+
+            Toast.makeText(
+                this@BatchActivity,
+                "Done, taken ${millisAfter - millisBefore}ms",
+                Toast.LENGTH_LONG
+            ).show()
+        }
     }
 }

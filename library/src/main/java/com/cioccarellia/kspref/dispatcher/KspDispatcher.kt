@@ -42,7 +42,8 @@ internal class KspDispatcher(
 
     internal fun <T : Any> push(
         key: String,
-        value: T
+        value: T,
+        strategy: CommitStrategy
     ) {
         checkKey(key)
 
@@ -50,7 +51,7 @@ internal class KspDispatcher(
         val pureBytes = convert(value)
 
         // Writes the converted bytes to the shared pre
-        enclosure.write(key, pureBytes)
+        enclosure.write(key, pureBytes, strategy)
     }
 
     internal fun <T : Any> pull(
@@ -87,7 +88,6 @@ internal class KspDispatcher(
         // plugging it through a converter
         return reify(returnedBytes, kclass)
     }
-
 
     internal fun exists(
         key: String

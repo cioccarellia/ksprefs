@@ -25,7 +25,7 @@ import java.security.KeyStore
 class AndroidKeystoreEngine(
     private val context: Context,
     private val alias: String,
-    private val keyTagLengthInBits: Int
+    private val keyTagSizeInBits: Int
 ) : Engine(), CryptoEngine {
 
     private val KEYSTORE_TYPE = "AndroidKeyStore"
@@ -36,7 +36,7 @@ class AndroidKeystoreEngine(
         }
 
     private val subEngine
-        get() = SecondaryEnginePicker.select(alias, context, keyStore)
+        get() = SecondaryEnginePicker.select(alias, context, keyStore, keyTagSizeInBits)
 
     override fun apply(incoming: Transmission) = Transmission(
         encrypt(incoming.payload)

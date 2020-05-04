@@ -32,23 +32,29 @@ import javax.security.auth.x500.X500Principal
 
 
 object SecondaryEnginePicker : SafeRun {
+
     private const val ANDROID_KEY_STORE = "AndroidKeyStore"
 
     fun select(
         alias: String,
         context: Context,
-        keyStore: KeyStore
-    ): SecondaryEngine = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        aesKeyValueEngine(alias, keyStore)
-    } else {
-        rsaKeyValueEngine(alias, context, keyStore)
+        keyStore: KeyStore,
+        keyTagSizeInBits: Int
+    ): SecondaryEngine = when {
+        Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> {
+            aesKeyValueEngine(alias, keyStore, keyTagSizeInBits)
+        }
+        else -> {
+            rsaKeyValueEngine(alias, context, keyStore)
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.M)
     private fun aesKeyValueEngine(
         alias: String,
-        keyStore: KeyStore
-    ): AesSecurityKey = runSafely {
+        keyStore: KeyStore,
+        keyTagSizeInBits: Int
+    ): AesGcmSecondaryEngine = runSafely {
         val secretKey = if (keyStore.containsAlias(alias)) {
             // KeyStore already contains an entry for this alias
             val entry = keyStore.fetchEntry<KeyStore.SecretKeyEntry>(alias)
@@ -72,15 +78,16 @@ object SecondaryEnginePicker : SafeRun {
             keyGenerator.generateKey()
         }
 
-        AesSecurityKey(secretKey)
+        AesGcmSecondaryEngine(secretKey, keyTagSizeInBits)
     }
 
     @Suppress("DEPRECATION")
+    @TargetApi(Build.VERSION_CODES.KITKAT)
     private fun rsaKeyValueEngine(
         alias: String,
         context: Context,
         keyStore: KeyStore
-    ): RsaSecurityKey = runSafely {
+    ): RsaKeyPairSecondaryEngine = runSafely {
         val keyPair = if (keyStore.containsAlias(alias)) {
             // KeyStore already contains an entry for this alias
             val entry = keyStore.fetchEntry<KeyStore.PrivateKeyEntry>(alias)
@@ -102,7 +109,7 @@ object SecondaryEnginePicker : SafeRun {
             }
         }
 
-        RsaSecurityKey(keyPair)
+        RsaKeyPairSecondaryEngine(keyPair)
     }
 
     @Suppress("UNCHECKED_CAST")

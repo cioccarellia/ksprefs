@@ -19,15 +19,16 @@ import android.util.Base64
 import java.security.KeyPair
 import javax.crypto.Cipher
 
-class RsaSecurityKey(
+class RsaKeyPairSecondaryEngine(
     private val keyPair: KeyPair
 ) : SecondaryEngine() {
 
     override fun computeCipher(mode: Int): Cipher = runSafely {
         val cipher: Cipher = Cipher.getInstance(RSA_MODE)
+        val key = if (mode == Cipher.DECRYPT_MODE) keyPair.public else keyPair.private
 
         cipher.apply {
-            init(mode, if (mode == Cipher.DECRYPT_MODE) keyPair.public else keyPair.private)
+            init(mode, key)
         }
     }
 

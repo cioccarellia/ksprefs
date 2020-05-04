@@ -25,5 +25,13 @@ enum class CommitStrategy {
      * Safe to ignore return value, faster.
      * Updates the global SharedPreference in-memory values.
      * */
-    ASYNC_APPLY
+    ASYNC_APPLY,
+
+    /**
+     * Nothing is done when this option is chosen.
+     * This should not be your configuration default, but
+     * a parameter you can pass to push to avoid writing the change
+     * back to the storage and to keep it stashed in memory.
+     * */
+    NONE
 }

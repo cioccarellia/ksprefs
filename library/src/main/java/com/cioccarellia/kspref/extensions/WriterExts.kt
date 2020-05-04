@@ -31,20 +31,24 @@ internal fun Writer.delete(
     key: String
 ): Writer = this.remove(key)
 
-internal fun Writer.finalize(): Writer {
+internal fun Writer.finalize(
+    commitStrategy: CommitStrategy
+): Writer {
     if (KsPrefs.config.autoSave == AutoSavePolicy.AUTO) {
-        forceFinalization()
+        forceFinalization(commitStrategy)
     }
 
     return this
 }
 
 internal fun Writer.forceFinalization(
-    commitStrategy: CommitStrategy = KsPrefs.config.commitStrategy
+    commitStrategy: CommitStrategy
 ): Writer {
     when (commitStrategy) {
         CommitStrategy.ASYNC_APPLY -> apply()
         CommitStrategy.SYNC_COMMIT -> commit()
+        CommitStrategy.NONE -> {
+        }
     }
 
     return this

@@ -19,14 +19,18 @@ import android.app.Application
 import android.content.Context
 import com.cioccarellia.kspref.KsPrefs
 import com.cioccarellia.kspref.config.crypto.EncryptionType
+import com.cioccarellia.kspref.config.model.KeyTagSize
 
 class App : Application() {
+
     companion object {
         lateinit var appContext: Context
+
         val prefs by lazy {
             KsPrefs(appContext) {
-                encryption = EncryptionType.AesEcb(
-                    "aaaa    aaaaaaaaaaaaaaaaaaaaaaaa"
+                encryption = EncryptionType.KeyStore(
+                    "aaaaaaaaaaaaaaaa",
+                    keyTagSize = KeyTagSize.SIZE_96
                 )
             }
         }

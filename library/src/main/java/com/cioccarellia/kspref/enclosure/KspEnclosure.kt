@@ -19,6 +19,7 @@ package com.cioccarellia.kspref.enclosure
 
 import android.annotation.SuppressLint
 import android.content.Context
+import com.cioccarellia.kspref.KsPrefs
 import com.cioccarellia.kspref.config.model.CommitStrategy
 import com.cioccarellia.kspref.crypto.Engine
 import com.cioccarellia.kspref.crypto.EnginePicker
@@ -74,13 +75,16 @@ internal class KspEnclosure(
     @PublishedApi
     internal fun write(
         key: String,
-        value: ByteArray
+        value: ByteArray,
+        strategy: CommitStrategy
     ) = with(sharedWriter) {
         write(
             engineApply(key),
             engineApply(value)
         )
-        finalize()
+        finalize(
+            strategy
+        )
     }
 
     internal fun exists(
@@ -104,6 +108,6 @@ internal class KspEnclosure(
             .delete(
                 engineApply(key)
             )
-            .finalize()
+            .finalize(KsPrefs.config.commitStrategy)
     }
 }

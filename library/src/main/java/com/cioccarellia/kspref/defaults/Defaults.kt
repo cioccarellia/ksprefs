@@ -21,7 +21,7 @@ import com.cioccarellia.kspref.config.model.*
 import java.util.*
 
 internal object Defaults {
-    /** Library glabal */
+    /** Library global */
     const val TAG = "KsPref"
 
     /** SharedPreferences */

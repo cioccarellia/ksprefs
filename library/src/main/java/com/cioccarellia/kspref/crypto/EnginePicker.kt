@@ -62,7 +62,7 @@ object EnginePicker {
             AndroidKeystoreEngine(
                 context,
                 alias,
-                keyTagLengthInBits = config.keyTagSize.bitCount()
+                keyTagSizeInBits = config.keyTagSize.bitCount()
             )
         }
     }
