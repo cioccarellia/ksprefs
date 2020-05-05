@@ -11,6 +11,7 @@
   <a href="https://github.com/cioccarellia/ksprefs/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="License"></a>
 </p>
 
+# :warning: v2.0.0 under development
 
 ### TLDR
 - :zap: Fast SharedPreferences wrapper
