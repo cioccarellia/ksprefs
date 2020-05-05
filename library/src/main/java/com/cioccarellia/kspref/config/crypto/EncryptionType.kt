@@ -45,6 +45,7 @@
  */
 package com.cioccarellia.kspref.config.crypto
 
+import androidx.annotation.IntRange
 import com.cioccarellia.kspref.config.model.KeySizeCheck
 import com.cioccarellia.kspref.config.model.KeyTagSize
 import com.cioccarellia.kspref.defaults.Defaults
@@ -53,12 +54,14 @@ sealed class EncryptionType {
     class PlainText : EncryptionType()
 
     class Base64(
+        @IntRange(from = 0x0, to = 0x1F)
         val flags: Int = Defaults.DEFAULT_BASE64_FLAGS
     ) : EncryptionType()
 
     class AesEcb(
         val key: String,
         val keySize: KeySizeCheck,
+        @IntRange(from = 0x0, to = 0x1F)
         val base64Flags: Int = Defaults.DEFAULT_BASE64_FLAGS
     ) : EncryptionType()
 
@@ -66,8 +69,15 @@ sealed class EncryptionType {
         val key: String,
         val keySize: KeySizeCheck,
         val iv: ByteArray,
+        @IntRange(from = 0x0, to = 0x1F)
         val base64Flags: Int = Defaults.DEFAULT_BASE64_FLAGS
-    ) : EncryptionType()
+    ) : EncryptionType() {
+        init {
+            require(iv.size == 16) {
+                "IV length for AES Cbc must be 16 bytes (128 bit array)"
+            }
+        }
+    }
 
     class KeyStore(
         val alias: String,

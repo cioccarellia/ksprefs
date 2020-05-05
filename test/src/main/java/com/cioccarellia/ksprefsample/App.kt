@@ -30,8 +30,8 @@ class App : Application() {
         val prefs by lazy {
             KsPrefs(appContext) {
                 encryptionType = EncryptionType.AesCbc(
-                    "aaaaaaaaaaaaaaaa",
-                    keySize = KeySizeCheck.TRIM_128,
+                    "aaaaaaaaaaaaaaa++aaaaaaaaaaaaaaa",
+                    keySize = KeySizeCheck.TRIM_256,
                     iv = KsPrefs.randomIV(16)
                 )
             }
