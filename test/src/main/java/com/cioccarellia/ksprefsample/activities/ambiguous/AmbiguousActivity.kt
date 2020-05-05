@@ -69,5 +69,6 @@ class AmbiguousActivity : AppCompatActivity() {
         }
 
         Toast.makeText(this, "Test passed", Toast.LENGTH_LONG).show()
+        finish()
     }
 }

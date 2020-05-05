@@ -58,14 +58,14 @@ sealed class EncryptionType {
 
     class AesEcb(
         val key: String,
-        val keySize: KeySizeCheck = Defaults.KEY_SIZE_CHECK_OPTION,
+        val keySize: KeySizeCheck,
         val base64Flags: Int = Defaults.DEFAULT_BASE64_FLAGS
     ) : EncryptionType()
 
     class AesCbc(
         val key: String,
+        val keySize: KeySizeCheck,
         val iv: ByteArray,
-        val keySize: KeySizeCheck = Defaults.KEY_SIZE_CHECK_OPTION,
         val base64Flags: Int = Defaults.DEFAULT_BASE64_FLAGS
     ) : EncryptionType()
 

@@ -50,5 +50,7 @@ class JsonActivity : AppCompatActivity() {
                 .getString("description"),
             Toast.LENGTH_LONG
         ).show()
+
+        finish()
     }
 }

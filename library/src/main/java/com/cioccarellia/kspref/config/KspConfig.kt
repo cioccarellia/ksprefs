@@ -32,6 +32,6 @@ data class KspConfig internal constructor(
     var commitStrategy: CommitStrategy = Defaults.COMMIT_STRATEGY,
 
     var keyRegex: Regex? = null,
-    var encryption: EncryptionType = EncryptionType.PlainText(),
+    var encryptionType: EncryptionType = EncryptionType.PlainText(),
     var keySizeMismatch: KeySizeMismatchFallbackStrategy = Defaults.KEY_SIZE_MISMATCH_STRATEGY
 )

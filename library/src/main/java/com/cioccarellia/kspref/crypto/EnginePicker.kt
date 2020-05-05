@@ -26,7 +26,7 @@ import com.cioccarellia.kspref.crypto.engine.plaintext.PlainTextEngine
 import com.cioccarellia.kspref.extensions.toSymmetricKey
 
 object EnginePicker {
-    private val config = KsPrefs.config.encryption
+    private val config = KsPrefs.config.encryptionType
 
     fun select(
         context: Context

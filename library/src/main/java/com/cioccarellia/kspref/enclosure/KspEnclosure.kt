@@ -87,10 +87,12 @@ internal class KspEnclosure(
         )
     }
 
+    @PublishedApi
     internal fun exists(
         key: String
     ) = sharedReader.exists(key)
 
+    @PublishedApi
     internal fun save(
         commitStrategy: CommitStrategy
     ) {
@@ -101,6 +103,7 @@ internal class KspEnclosure(
         }
     }
 
+    @PublishedApi
     internal fun remove(
         key: String
     ) {

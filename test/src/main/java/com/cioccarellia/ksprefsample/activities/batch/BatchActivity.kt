@@ -24,6 +24,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.system.measureTimeMillis
 
 class BatchActivity : AppCompatActivity() {
 
@@ -31,23 +32,22 @@ class BatchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_batch)
 
-        val millisBefore = System.currentTimeMillis()
-
         CoroutineScope(Dispatchers.Main).launch {
-
-            withContext(Dispatchers.Default) {
-                for (i in 0..1_000) {
-                    prefs.queue("key-$i", i)
+            val millis = measureTimeMillis {
+                withContext(Dispatchers.Default) {
+                    for (i in 0..10_000) {
+                        prefs.queue("key-$i", i)
+                    }
                 }
             }
 
-            val millisAfter = System.currentTimeMillis()
-
             Toast.makeText(
                 this@BatchActivity,
-                "Done, taken ${millisAfter - millisBefore}ms",
+                "Done, taken ${millis}ms",
                 Toast.LENGTH_LONG
             ).show()
+
+            finish()
         }
     }
 }

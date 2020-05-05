@@ -20,10 +20,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.cioccarellia.ksprefsample.App
 import com.cioccarellia.ksprefsample.R
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import java.math.BigInteger
 
 class NumbersActivity : AppCompatActivity() {
@@ -44,21 +40,17 @@ class NumbersActivity : AppCompatActivity() {
             BigInteger(8 * 8 * 8 * 2, java.util.Random(System.currentTimeMillis()))
         )
 
-        CoroutineScope(Dispatchers.Main).launch {
-            delay(3000)
+        log.text = buildString {
+            val int = App.prefs.pull<Int>("int")
+            val long = App.prefs.pull<Long>("long")
+            val short = App.prefs.pull<Short>("short")
+            val float = App.prefs.pull<Float>("float")
+            val double = App.prefs.pull<Double>("double")
+            val bigint = App.prefs.pull<BigInteger>("bigint")
 
-            log.text = buildString {
-                val int = App.prefs.pull<Int>("int")
-                val long = App.prefs.pull<Long>("long")
-                val short = App.prefs.pull<Short>("short")
-                val float = App.prefs.pull<Float>("float")
-                val double = App.prefs.pull<Double>("double")
-                val bigint = App.prefs.pull<BigInteger>("bigint")
-
-                listOf(int, long, short, float, double, bigint).forEach {
-                    append("${it::class.simpleName} -> $it")
-                    appendln()
-                }
+            listOf(int, long, short, float, double, bigint).forEach {
+                append("${it::class.simpleName} -> $it")
+                appendln()
             }
         }
     }

@@ -19,7 +19,8 @@ import android.app.Application
 import android.content.Context
 import com.cioccarellia.kspref.KsPrefs
 import com.cioccarellia.kspref.config.crypto.EncryptionType
-import com.cioccarellia.kspref.config.model.KeyTagSize
+import com.cioccarellia.kspref.config.model.KeySizeCheck
+import com.cioccarellia.kspref.randomIV
 
 class App : Application() {
 
@@ -28,9 +29,10 @@ class App : Application() {
 
         val prefs by lazy {
             KsPrefs(appContext) {
-                encryption = EncryptionType.KeyStore(
+                encryptionType = EncryptionType.AesCbc(
                     "aaaaaaaaaaaaaaaa",
-                    keyTagSize = KeyTagSize.SIZE_96
+                    keySize = KeySizeCheck.TRIM_128,
+                    iv = KsPrefs.randomIV(16)
                 )
             }
         }
