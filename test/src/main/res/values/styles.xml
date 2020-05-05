@@ -8,7 +8,6 @@
         <item name="colorAccent">@color/colorAccent</item>
 
         <item name="isLightTheme">false</item>
-        <item name="android:windowLightStatusBar">false</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

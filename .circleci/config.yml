@@ -17,7 +17,7 @@ jobs:
       - save_cache:
           paths:
             - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "library/build.gradle" }}-{{ checksum  "sample/build.gradle" }}
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "library/build.gradle" }}-{{ checksum  "test/build.gradle" }}
       - run:
           name: "Build Modules"
           command: ./gradlew build
