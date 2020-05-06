@@ -17,7 +17,7 @@ package com.cioccarellia.kspref.internal
 
 import com.cioccarellia.kspref.extensions.getOrThrowException
 
-interface SafeRun {
+internal interface SafeRun {
     fun <T> runSafely(
         operation: String = "",
         block: () -> T

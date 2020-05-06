@@ -27,7 +27,7 @@ internal class KspDispatcher(
     namespace: String,
     context: Context
 ) {
-    private val enclosure = KspEnclosure(namespace, context)
+    internal val enclosure = KspEnclosure(namespace, context)
 
     internal fun expose() = enclosure.sharedReader
 
@@ -40,6 +40,7 @@ internal class KspDispatcher(
         kclass: KClass<T>
     ) = TypeConverter.pickAndReify(value, kclass)
 
+    @PublishedApi
     internal fun <T : Any> push(
         key: String,
         value: T,
@@ -54,6 +55,7 @@ internal class KspDispatcher(
         enclosure.write(key, pureBytes, strategy)
     }
 
+    @PublishedApi
     internal fun <T : Any> pull(
         key: String,
         default: T
@@ -89,13 +91,16 @@ internal class KspDispatcher(
         return reify(returnedBytes, kclass)
     }
 
+    @PublishedApi
     internal fun exists(
         key: String
     ) = enclosure.exists(key)
 
+    @PublishedApi
     internal fun save(
         commitStrategy: CommitStrategy
     ) = enclosure.save(commitStrategy)
 
+    @PublishedApi
     internal fun remove(key: String) = enclosure.remove(key)
 }

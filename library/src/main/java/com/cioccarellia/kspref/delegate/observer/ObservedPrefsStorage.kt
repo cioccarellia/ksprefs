@@ -19,13 +19,17 @@ import android.content.SharedPreferences
 import com.cioccarellia.kspref.KsPrefs
 import kotlin.reflect.KClass
 
-object ObservedPrefsStorage {
+internal object ObservedPrefsStorage {
     private lateinit var actualListener: SharedPreferences.OnSharedPreferenceChangeListener
     private val observedPrefs: MutableMap<String, ObservedPref> = mutableMapOf()
 
+    @Suppress("UNCHECKED_CAST")
     private fun <T : Any> listener(
         ref: DelegatePrefObserver<in T>
-    ) = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+    ) = SharedPreferences.OnSharedPreferenceChangeListener { _, keyDerivative ->
+        // We decipher the given key
+        val key = ref.prefs.engine.integrate(keyDerivative)
+
         // We get the observer data by the tracked preference key,
         // and if the key is tracked we proceed
         val observedPref = observedPrefs[key] ?: return@OnSharedPreferenceChangeListener
@@ -37,6 +41,8 @@ object ObservedPrefsStorage {
         val newValue = ref.prefs.dispatcher.pull(
             key, kclass = observedPref.valueType as KClass<T>
         )
+
+        //if (oldValue == newValue) return@OnSharedPreferenceChangeListener
 
         // We update the in-class value
         ref.value = newValue
@@ -50,7 +56,7 @@ object ObservedPrefsStorage {
     }
 
     @Suppress("UNCHECKED_CAST")
-    internal fun <T : Any> DelegatePrefObserver<T>.attachWith(kclass: KClass<out T>) {
+    internal fun <T : Any> DelegatePrefObserver<T>.attach(kclass: KClass<out T>) {
         if (!ObservedPrefsStorage::actualListener.isInitialized) {
             prefs.expose().registerOnSharedPreferenceChangeListener(
                 listener(

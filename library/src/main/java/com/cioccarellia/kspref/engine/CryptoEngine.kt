@@ -19,7 +19,7 @@ import com.cioccarellia.kspref.annotations.Derivative
 import com.cioccarellia.kspref.annotations.Integral
 import com.cioccarellia.kspref.internal.SafeRun
 
-interface CryptoEngine : SafeRun {
+internal interface CryptoEngine : SafeRun {
     @Derivative
     fun encrypt(
         input: ByteArray

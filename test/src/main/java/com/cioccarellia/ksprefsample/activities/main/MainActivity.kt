@@ -24,42 +24,40 @@ import androidx.appcompat.app.AppCompatActivity
 import com.cioccarellia.ksprefsample.R
 import com.cioccarellia.ksprefsample.activities.ambiguous.AmbiguousActivity
 import com.cioccarellia.ksprefsample.activities.batch.BatchActivity
+import com.cioccarellia.ksprefsample.activities.dynamic.DynamicActivity
 import com.cioccarellia.ksprefsample.activities.json.JsonActivity
 import com.cioccarellia.ksprefsample.activities.numbers.NumbersActivity
+import com.cioccarellia.ksprefsample.activities.observer.ObserverActivity
 import com.cioccarellia.ksprefsample.util.onClickDebounced
 
 class MainActivity : AppCompatActivity() {
+
     private val numbers by lazy { findViewById<Button>(R.id.numbersActivity) }
     private val json by lazy { findViewById<Button>(R.id.jsonActivity) }
     private val ambiguous by lazy { findViewById<Button>(R.id.ambiguosCharActivity) }
     private val batch by lazy { findViewById<Button>(R.id.batchActivity) }
+    private val observer by lazy { findViewById<Button>(R.id.observerActivity) }
+    private val dynamic by lazy { findViewById<Button>(R.id.dynamicActivity) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        numbers.onClickDebounced {
-            startActivity(
-                Intent(this, NumbersActivity::class.java)
-            )
-        }
+        val destinations = listOf(
+            numbers to NumbersActivity::class.java,
+            json to JsonActivity::class.java,
+            ambiguous to AmbiguousActivity::class.java,
+            batch to BatchActivity::class.java,
+            observer to ObserverActivity::class.java,
+            dynamic to DynamicActivity::class.java
+        )
 
-        json.onClickDebounced {
-            startActivity(
-                Intent(this, JsonActivity::class.java)
-            )
-        }
-
-        ambiguous.onClickDebounced {
-            startActivity(
-                Intent(this, AmbiguousActivity::class.java)
-            )
-        }
-
-        batch.onClickDebounced {
-            startActivity(
-                Intent(this, BatchActivity::class.java)
-            )
+        destinations.forEach { destination ->
+            destination.first.onClickDebounced {
+                startActivity(
+                    Intent(this, destination.second)
+                )
+            }
         }
     }
 

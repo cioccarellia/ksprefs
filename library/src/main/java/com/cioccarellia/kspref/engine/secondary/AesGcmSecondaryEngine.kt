@@ -24,7 +24,7 @@ import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
 
 @TargetApi(Build.VERSION_CODES.M)
-class AesGcmSecondaryEngine(
+internal class AesGcmSecondaryEngine(
     private val secretKey: SecretKey,
     private val keyTagSizeInBits: Int
 ) : SecondaryEngine() {

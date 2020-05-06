@@ -18,7 +18,7 @@ package com.cioccarellia.kspref.delegate.observer
 import android.content.SharedPreferences
 import kotlin.reflect.KClass
 
-data class ObservedPref(
+internal data class ObservedPref(
     val observer: (Any, Any) -> Unit,
     val valueType: KClass<*>,
     val listener: SharedPreferences.OnSharedPreferenceChangeListener

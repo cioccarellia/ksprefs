@@ -30,6 +30,7 @@ import com.cioccarellia.kspref.dispatcher.KspDispatcher
 import com.cioccarellia.kspref.engine.Engine
 import com.cioccarellia.kspref.exception.NoSuchKeyException
 import com.cioccarellia.kspref.namespace.Namespace
+import kotlin.reflect.KClass
 
 class KsPrefs(
     appContext: Context,
@@ -38,7 +39,8 @@ class KsPrefs(
 ) : LifecycleObserver {
 
     /**
-     * Lifecycle aware constructor
+     * Creates a lifecycle-aware KsPref instance, so that you don't
+     * have to manually call [destroy] when you app is closing.
      * */
     constructor(
         appContext: Context,
@@ -47,7 +49,9 @@ class KsPrefs(
         config: KspConfig.() -> Unit = {}
     ) : this(appContext, namespace, config) {
         this.lifecycle = lifecycle
-        this.lifecycle!!.addObserver(this)
+        this.lifecycle?.run {
+            addObserver(this@KsPrefs)
+        }
     }
 
     companion object {
@@ -66,6 +70,9 @@ class KsPrefs(
 
     @PublishedApi
     internal val dispatcher = KspDispatcher(namespace, appContext)
+
+    internal val engine: Engine
+        get() = dispatcher.enclosure.engine
 
     private var lifecycle: Lifecycle? = null
 
@@ -162,7 +169,7 @@ class KsPrefs(
 
 
     /**
-     * This function pulls a value from the [Shared Preferences][SharedPreferences] object.
+     * This function (unsafely) pulls a value from the [Shared Preferences][SharedPreferences] object.
      *
      * The [key] is converted from String to ByteArray
      * Then, [key] is passed through the picked [engine][Engine].
@@ -175,6 +182,10 @@ class KsPrefs(
      *
      * This function must be inlined, and can not be used from java.
      *
+     * This function is unsafe because if the key isn't found, an exception is
+     * raised, to enforce its never null return type.
+     *
+     *
      * @param[T] The type value' will be converted to.
      * @param[key] The key for the target field.
      *
@@ -185,6 +196,37 @@ class KsPrefs(
     inline fun <reified T : Any> pull(
         key: String
     ): T = dispatcher.pull(key, T::class)
+
+
+    /**
+     * This function (unsafely) pulls a value from the [Shared Preferences][SharedPreferences] object.
+     *
+     * The [key] is converted from String to ByteArray
+     * Then, [key] is passed through the picked [engine][Engine].
+     * [key] is derived once, becoming [key]', and it's used to pull up
+     * the value which may be found inside the shared preferences file.
+     * If the result gives back a non-empty ByteArray, it is chosen as value'.
+     * Otherwise, [NoSuchKeyException] is thrown.
+     * [key]' is integrated once, value' is integrated [n][KspConfig.engineIterations]
+     * times, converted, and then returned.
+     *
+     * This function is its inline counterpart [pull] for non type-reifiable contexts.
+     *
+     * This function is unsafe because if the key isn't found, an exception is
+     * raised, to enforce its never null return type.
+     *
+     *
+     * @param[key] The key for the target field.
+     * @param[kclass] The type value' will be converted to.
+     *
+     * @return The value KsPref got back for the matching key.
+     * @throws NoSuchKeyException If no value is found for the given [key].
+     * */
+    @CheckResult
+    fun <T : Any> pull(
+        key: String,
+        kclass: KClass<T>
+    ): T = dispatcher.pull(key, kclass)
 
 
     /**
@@ -243,6 +285,8 @@ class KsPrefs(
      * This is the case if you use prefs observers within your codebase.
      * It is always a good practise to clear those up when your app
      * terminates, to avoid creating memory leaks.
+     *
+     * This method auto-calls for lifecycle aware instances.
      * */
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun destroy() {

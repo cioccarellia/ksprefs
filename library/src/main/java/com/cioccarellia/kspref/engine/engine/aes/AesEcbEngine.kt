@@ -26,7 +26,7 @@ import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
 
 @SuppressLint("GetInstance")
-class AesEcbEngine(
+internal class AesEcbEngine(
     val key: SymmetricKey,
     val keyByteCount: Int,
     val base64Flags: Int
@@ -34,11 +34,11 @@ class AesEcbEngine(
     private val algorithm = "AES"
     private val cipherTransformation = "AES/ECB/PKCS5Padding"
 
-    override fun apply(incoming: Transmission) = Transmission(
+    override fun derive(incoming: Transmission) = Transmission(
         encrypt(incoming.payload)
     )
 
-    override fun revert(outgoing: Transmission) = Transmission(
+    override fun integrate(outgoing: Transmission) = Transmission(
         decrypt(outgoing.payload)
     )
 

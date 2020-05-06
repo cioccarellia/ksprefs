@@ -17,7 +17,7 @@ package com.cioccarellia.kspref.extensions
 
 import com.cioccarellia.kspref.exception.EngineException
 
-fun <T> Result<T>.getOrThrowException(
+internal fun <T> Result<T>.getOrThrowException(
     operation: String = ""
 ): T = getOrElse { exception ->
     throw EngineException.convertFrom(exception, operation)

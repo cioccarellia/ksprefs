@@ -16,7 +16,7 @@
 package com.cioccarellia.kspref.delegate.observer
 
 import com.cioccarellia.kspref.KsPrefs
-import com.cioccarellia.kspref.delegate.observer.ObservedPrefsStorage.attachWith
+import com.cioccarellia.kspref.delegate.observer.ObservedPrefsStorage.attach
 import kotlin.reflect.KProperty
 
 class DelegatePrefObserver<T : Any>(
@@ -26,13 +26,19 @@ class DelegatePrefObserver<T : Any>(
     internal val observer: (T, T) -> Unit
 ) {
     init {
-        attachWith(value::class)
+        attach(value::class)
     }
 
-    operator fun getValue(thisRef: Any?, property: KProperty<*>): T = value
+    operator fun getValue(
+        thisRef: Any?,
+        property: KProperty<*>
+    ): T = prefs.pull(key, default = value)
 
-    operator fun setValue(thisRef: Any?, property: KProperty<*>, newValue: T) {
+    operator fun setValue(
+        thisRef: Any?,
+        property: KProperty<*>,
+        newValue: T
+    ) = prefs.push(key, newValue).also {
         value = newValue
-        prefs.push(key, newValue)
     }
 }

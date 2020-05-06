@@ -20,7 +20,6 @@ import android.content.Context
 import com.cioccarellia.kspref.KsPrefs
 import com.cioccarellia.kspref.config.EncryptionType
 import com.cioccarellia.kspref.config.model.KeySizeCheck
-import com.cioccarellia.kspref.randomIV
 
 class App : Application() {
 
@@ -29,10 +28,9 @@ class App : Application() {
 
         val prefs by lazy {
             KsPrefs(appContext) {
-                encryptionType = EncryptionType.AesCbc(
+                encryptionType = EncryptionType.AesEcb(
                     "aaaaaaaaaaaaaaa++aaaaaaaaaaaaaaa",
-                    keySize = KeySizeCheck.TRIM_256,
-                    iv = KsPrefs.randomIV(16)
+                    keySize = KeySizeCheck.TRIM_256
                 )
             }
         }

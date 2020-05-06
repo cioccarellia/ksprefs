@@ -17,7 +17,7 @@ package com.cioccarellia.kspref.engine
 
 import com.cioccarellia.kspref.extensions.string
 
-inline class Transmission(
+internal inline class Transmission(
     val payload: ByteArray
 ) {
     override fun toString() = payload.string()

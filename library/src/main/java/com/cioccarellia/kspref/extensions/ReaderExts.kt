@@ -19,7 +19,7 @@ import android.content.SharedPreferences
 import androidx.annotation.CheckResult
 import com.cioccarellia.kspref.exception.NoSuchKeyException
 
-typealias Reader = SharedPreferences
+internal typealias Reader = SharedPreferences
 
 @CheckResult
 internal fun Reader.read(

@@ -18,6 +18,6 @@ package com.cioccarellia.kspref.engine.secondary
 import com.cioccarellia.kspref.engine.CryptoEngine
 import javax.crypto.Cipher
 
-abstract class SecondaryEngine : CryptoEngine {
+internal abstract class SecondaryEngine : CryptoEngine {
     abstract fun computeCipher(mode: Int): Cipher
 }

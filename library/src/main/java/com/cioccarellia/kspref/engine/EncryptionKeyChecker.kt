@@ -20,7 +20,7 @@ import com.cioccarellia.kspref.config.model.KeySizeCheck
 import com.cioccarellia.kspref.config.model.KeySizeMismatchFallbackStrategy
 import com.cioccarellia.kspref.exception.KeySizeMismatchException
 
-object EncryptionKeyChecker {
+internal object EncryptionKeyChecker {
     fun approve(
         key: SymmetricKey,
         keyCheckSize: KeySizeCheck

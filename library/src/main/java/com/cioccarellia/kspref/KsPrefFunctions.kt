@@ -15,29 +15,44 @@
  */
 package com.cioccarellia.kspref
 
+import com.cioccarellia.kspref.delegate.dynamic.DelegateDynamicKsPref
+import com.cioccarellia.kspref.delegate.dynamic.DelegateDynamicUnsafePref
 import com.cioccarellia.kspref.delegate.observer.DelegatePrefObserver
-import com.cioccarellia.kspref.delegate.reference.DelegatePrefReference
 import com.cioccarellia.kspref.extensions.emptyByteArray
 import java.security.SecureRandom
 import kotlin.random.asKotlinRandom
 
+/**
+ * Returns a randomly-generated IV
+ * */
 fun KsPrefs.Companion.randomIV(
-    byteCount: Int
-): ByteArray = SecureRandom().asKotlinRandom().nextBytes(
+    byteCount: Int = 16,
+    seed: ByteArray
+): ByteArray = SecureRandom(seed).asKotlinRandom().nextBytes(
     emptyByteArray(byteCount)
 )
 
-fun <T : Any> KsPrefs.ref(
+/**
+ * Used to initialize a dynamic property.
+ * */
+fun <T : Any> KsPrefs.dynamic(
     key: String,
     initialization: () -> T
-) = DelegatePrefReference(
-    this, key, initialization()
-)
+) = DelegateDynamicKsPref(this, key, initialization())
 
+/**
+ * Used to initialize an unsafe dynamic property.
+ * */
+inline fun <reified T : Any> KsPrefs.dynamic(
+    key: String
+) = DelegateDynamicUnsafePref(this, key, T::class)
+
+
+/**
+ * Used to initialize an observable property.
+ * */
 fun <T : Any> KsPrefs.observe(
     key: String,
     value: T,
     observer: (oldValue: T, newValue: T) -> Unit
-) = DelegatePrefObserver(
-    this, key, value, observer
-)
+) = DelegatePrefObserver(this, key, pull(key, value), observer)

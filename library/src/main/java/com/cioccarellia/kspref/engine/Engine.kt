@@ -17,11 +17,26 @@ package com.cioccarellia.kspref.engine
 
 import com.cioccarellia.kspref.annotations.Derivative
 import com.cioccarellia.kspref.annotations.Integral
+import com.cioccarellia.kspref.extensions.bytes
 import com.cioccarellia.kspref.internal.SafeRun
 
-abstract class Engine : SafeRun {
+@PublishedApi
+internal abstract class Engine : SafeRun {
     @Derivative
-    abstract fun apply(incoming: Transmission): Transmission
+    abstract fun derive(incoming: Transmission): Transmission
+
     @Integral
-    abstract fun revert(outgoing: Transmission): Transmission
+    abstract fun integrate(outgoing: Transmission): Transmission
+
+    fun derive(incoming: String) = derive(
+        Transmission(
+            incoming.bytes()
+        )
+    ).toString()
+
+    fun integrate(incoming: String) = integrate(
+        Transmission(
+            incoming.bytes()
+        )
+    ).toString()
 }

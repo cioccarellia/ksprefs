@@ -22,7 +22,7 @@ import com.cioccarellia.kspref.engine.Transmission
 import com.cioccarellia.kspref.engine.secondary.SecondaryEnginePicker
 import java.security.KeyStore
 
-class AndroidKeystoreEngine(
+internal class AndroidKeystoreEngine(
     private val context: Context,
     private val alias: String,
     private val keyTagSizeInBits: Int
@@ -38,11 +38,11 @@ class AndroidKeystoreEngine(
     private val subEngine
         get() = SecondaryEnginePicker.select(alias, context, keyStore, keyTagSizeInBits)
 
-    override fun apply(incoming: Transmission) = Transmission(
+    override fun derive(incoming: Transmission) = Transmission(
         encrypt(incoming.payload)
     )
 
-    override fun revert(outgoing: Transmission) = Transmission(
+    override fun integrate(outgoing: Transmission) = Transmission(
         decrypt(outgoing.payload)
     )
 

@@ -19,15 +19,15 @@ import android.util.Base64
 import com.cioccarellia.kspref.engine.Engine
 import com.cioccarellia.kspref.engine.Transmission
 
-class Base64Engine(
+internal class Base64Engine(
     private val base64Flags: Int
 ) : Engine() {
 
-    override fun apply(incoming: Transmission) = Transmission(
+    override fun derive(incoming: Transmission) = Transmission(
         Base64.encode(incoming.payload, base64Flags)
     )
 
-    override fun revert(outgoing: Transmission) = Transmission(
+    override fun integrate(outgoing: Transmission) = Transmission(
         Base64.decode(outgoing.payload, base64Flags)
     )
 }

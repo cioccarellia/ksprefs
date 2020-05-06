@@ -32,10 +32,10 @@ internal object Check {
     ) = value != null
 }
 
-inline fun checkKey(key: String) = require(Check.key(key))
+internal inline fun checkKey(key: String) = require(Check.key(key))
 
 @OptIn(ExperimentalContracts::class)
-inline fun <T> checkValue(value: T) {
+internal inline fun <T> checkValue(value: T) {
     contract {
         returns() implies (value != null)
     }

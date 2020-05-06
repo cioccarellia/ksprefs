@@ -15,7 +15,7 @@
  */
 package com.cioccarellia.kspref.internal
 
-interface ByteSizeable {
+internal interface ByteSizeable {
     fun byteCount(): Int
     fun bitCount(): Int
 }

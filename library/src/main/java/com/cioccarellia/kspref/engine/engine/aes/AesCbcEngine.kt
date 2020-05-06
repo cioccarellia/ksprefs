@@ -25,7 +25,7 @@ import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
 
-class AesCbcEngine(
+internal class AesCbcEngine(
     val key: SymmetricKey,
     val keyByteCount: Int,
     val base64Flags: Int,
@@ -34,11 +34,11 @@ class AesCbcEngine(
     val algorithm = "AES"
     val cipherTransformation = "AES/CBC/PKCS5Padding"
 
-    override fun apply(incoming: Transmission) = Transmission(
+    override fun derive(incoming: Transmission) = Transmission(
         encrypt(incoming.payload)
     )
 
-    override fun revert(outgoing: Transmission) = Transmission(
+    override fun integrate(outgoing: Transmission) = Transmission(
         decrypt(outgoing.payload)
     )
 

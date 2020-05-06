@@ -25,7 +25,7 @@ import com.cioccarellia.kspref.engine.engine.keystore.AndroidKeystoreEngine
 import com.cioccarellia.kspref.engine.engine.plaintext.PlainTextEngine
 import com.cioccarellia.kspref.extensions.toSymmetricKey
 
-object EnginePicker {
+internal object EnginePicker {
     private val config = KsPrefs.config.encryptionType
 
     fun select(

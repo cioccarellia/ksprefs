@@ -5,6 +5,20 @@
     android:layout_height="match_parent">
 
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/dynamicActivity"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="8dp"
+        android:text="DYNAMIC"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.519"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@+id/middle_x"
+        app:layout_constraintTop_toBottomOf="@+id/batchActivity"
+        app:layout_constraintWidth_percent=".30" />
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/numbersActivity"
         android:layout_width="0dp"
         android:layout_height="@dimen/button_height"
@@ -46,6 +60,20 @@
       app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/numbersActivity"
+        app:layout_constraintWidth_percent=".30" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/observerActivity"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="8dp"
+        android:text="Observer"
+        app:layout_constraintEnd_toStartOf="@+id/middle_x"
+        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ambiguosCharActivity"
         app:layout_constraintWidth_percent=".30" />
 
     <androidx.appcompat.widget.AppCompatButton

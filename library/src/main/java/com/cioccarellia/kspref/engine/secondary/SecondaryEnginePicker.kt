@@ -30,8 +30,7 @@ import java.security.KeyStore
 import javax.crypto.KeyGenerator
 import javax.security.auth.x500.X500Principal
 
-
-object SecondaryEnginePicker : SafeRun {
+internal object SecondaryEnginePicker : SafeRun {
 
     private const val ANDROID_KEY_STORE = "AndroidKeyStore"
 

@@ -34,12 +34,15 @@ internal class KspEnclosure(
     context: Context,
     internal var sharedReader: Reader = context.getPrefs(namespace),
     internal var sharedWriter: Writer = sharedReader.edit(),
-    private val engine: Engine = EnginePicker.select(context)
+    internal val engine: Engine = EnginePicker.select(context)
 ) {
+    /**
+     * Value derivation
+     * */
     private inline fun deriveVal(
         value: ByteArray
     ): ByteArray = if (KsPrefs.config.engineIterations == 1) {
-        engine.apply(
+        engine.derive(
             Transmission(value)
         ).payload
     } else {
@@ -47,17 +50,20 @@ internal class KspEnclosure(
         var bytes = value
 
         do {
-            bytes = engine.apply(Transmission(bytes)).payload
+            bytes = engine.derive(Transmission(bytes)).payload
             iterationsLeft--
         } while (iterationsLeft > 0)
 
         bytes
     }
 
+    /**
+     * Value integration
+     * */
     private inline fun integrateVal(
         value: ByteArray
     ): ByteArray = if (KsPrefs.config.engineIterations == 1) {
-        engine.revert(
+        engine.integrate(
             Transmission(value)
         ).payload
     } else {
@@ -65,21 +71,26 @@ internal class KspEnclosure(
         var bytes = value
 
         do {
-            bytes = engine.revert(Transmission(bytes)).payload
+            bytes = engine.integrate(Transmission(bytes)).payload
             iterationsLeft--
         } while (iterationsLeft > 0)
 
         bytes
     }
 
-
+    /**
+     * Key derivation
+     * */
     private inline fun deriveKey(
         value: String
-    ): String = engine.apply(Transmission(value.bytes())).payload.string()
+    ): String = engine.derive(Transmission(value.bytes())).payload.string()
 
+    /**
+     * Key integration
+     * */
     private inline fun integrateKey(
         value: String
-    ): String = engine.revert(Transmission(value.bytes())).payload.string()
+    ): String = engine.integrate(Transmission(value.bytes())).payload.string()
 
     @PublishedApi
     internal fun read(

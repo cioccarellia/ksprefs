@@ -20,7 +20,7 @@ import com.cioccarellia.kspref.KsPrefs
 import com.cioccarellia.kspref.config.model.AutoSavePolicy
 import com.cioccarellia.kspref.config.model.CommitStrategy
 
-typealias Writer = SharedPreferences.Editor
+internal typealias Writer = SharedPreferences.Editor
 
 internal fun Writer.write(
     key: String,

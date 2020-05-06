@@ -36,7 +36,7 @@ class BatchActivity : AppCompatActivity() {
             val millis = measureTimeMillis {
                 withContext(Dispatchers.Default) {
                     for (i in 0..10_000) {
-                        prefs.queue("key-$i", i)
+                        prefs.queue("queued-$i", i)
                     }
                 }
             }

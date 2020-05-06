@@ -19,7 +19,7 @@ import android.util.Base64
 import java.security.KeyPair
 import javax.crypto.Cipher
 
-class RsaKeyPairSecondaryEngine(
+internal class RsaKeyPairSecondaryEngine(
     private val keyPair: KeyPair
 ) : SecondaryEngine() {
 

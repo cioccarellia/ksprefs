@@ -13,19 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.delegate.reference
+package com.cioccarellia.kspref.delegate.dynamic
 
 import com.cioccarellia.kspref.KsPrefs
+import kotlin.reflect.KClass
 import kotlin.reflect.KProperty
 
-
-class DelegatePrefReference<T : Any>(
+/**
+ * Provides a dynamic delegated property unsafe getter and setter.
+ * */
+open class DelegateDynamicUnsafePref<T : Any>(
     private val prefs: KsPrefs,
     private val key: String,
-    private val initialization: T
+    private val kclass: KClass<T>
 ) {
     operator fun getValue(thisRef: Any?, property: KProperty<*>): T {
-        return prefs.pull(key, initialization)
+        return prefs.pull(key, kclass = kclass)
     }
 
     operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
