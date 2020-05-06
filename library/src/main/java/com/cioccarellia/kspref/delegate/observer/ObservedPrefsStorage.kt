@@ -16,61 +16,75 @@
 package com.cioccarellia.kspref.delegate.observer
 
 import android.content.SharedPreferences
+import android.util.Log
 import com.cioccarellia.kspref.KsPrefs
+import com.cioccarellia.kspref.defaults.Defaults
 import kotlin.reflect.KClass
 
 internal object ObservedPrefsStorage {
     private lateinit var actualListener: SharedPreferences.OnSharedPreferenceChangeListener
-    private val observedPrefs: MutableMap<String, ObservedPref> = mutableMapOf()
+    private val observedPrefs: MutableMap<String, ObservedPref<*>> = mutableMapOf()
 
+    // FIXME clean up this
     @Suppress("UNCHECKED_CAST")
-    private fun <T : Any> listener(
-        ref: DelegatePrefObserver<in T>
-    ) = SharedPreferences.OnSharedPreferenceChangeListener { _, keyDerivative ->
-        // We decipher the given key
-        val key = ref.prefs.engine.integrate(keyDerivative)
+    private fun <T : Any> listener() =
+        SharedPreferences.OnSharedPreferenceChangeListener { _, keyDerivative ->
+            if (observedPrefs.isEmpty()) return@OnSharedPreferenceChangeListener
 
-        // We get the observer data by the tracked preference key,
-        // and if the key is tracked we proceed
-        val observedPref = observedPrefs[key] ?: return@OnSharedPreferenceChangeListener
+            val _observedPref = observedPrefs.entries.take(1)[0].value
 
-        // We prefetch the old value
-        val oldValue = ref.value as T
+            // We decipher the given key
+            val key = _observedPref.prop.prefs.engine.integrate(keyDerivative)
 
-        // We fetch the latest SharedPrefs value
-        val newValue = ref.prefs.dispatcher.pull(
-            key, kclass = observedPref.valueType as KClass<T>
-        )
+            // We get the observer data by the tracked preference key,
+            // and if the key is tracked we proceed
+            val observedPref = observedPrefs[key] ?: return@OnSharedPreferenceChangeListener
 
-        //if (oldValue == newValue) return@OnSharedPreferenceChangeListener
+            val ref = observedPref.prop as DelegatePrefObserver<T>
 
-        // We update the in-class value
-        ref.value = newValue
+            // We prefetch the old value
+            val oldValue = ref.value as T
 
-        // We get the observer code which was created
-        // and we cast it to a T-parameterized lambda
-        val observer = observedPref.observer as (T, T) -> Unit
+            // We fetch the latest SharedPrefs value
+            val newValue = ref.prefs.dispatcher.pull(
+                key, kclass = observedPref.valueType as KClass<T>
+            )
 
-        // We invoke the actual code
-        observer(oldValue, newValue)
-    }
+            if (!KsPrefs.config.observeEqualUpdates && oldValue == newValue) return@OnSharedPreferenceChangeListener
+
+            // We update the in-class value
+            ref.value = newValue
+
+            // We get the observer code which was created
+            // and we cast it to a T-parameterized lambda
+            val observer = observedPref.observer as (T, T) -> Unit
+
+            // We invoke the actual code
+            observer(oldValue, newValue)
+        }
 
     @Suppress("UNCHECKED_CAST")
     internal fun <T : Any> DelegatePrefObserver<T>.attach(kclass: KClass<out T>) {
         if (!ObservedPrefsStorage::actualListener.isInitialized) {
             prefs.expose().registerOnSharedPreferenceChangeListener(
-                listener(
-                    this
-                ).also {
+                listener<T>().also {
                     actualListener = it
                 }
+            )
+        }
+
+        if (observedPrefs[key] != null) {
+            Log.w(
+                Defaults.TAG,
+                "A pref observer is already registered for '$key'. Disabling the previous one."
             )
         }
 
         observedPrefs[key] = ObservedPref(
             observer as (Any, Any) -> Unit,
             kclass,
-            actualListener
+            actualListener,
+            this
         )
     }
 

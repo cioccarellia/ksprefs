@@ -27,14 +27,19 @@ class ObserverActivity : AppCompatActivity() {
 
     private val log by lazy { findViewById<TextView>(R.id.log) }
 
-    private var observed by prefs.observe("test_observer", 1) { old, new ->
-        log.text = "Old: $old\nNew: $new"
+    private var observed1 by prefs.observe("test_observer1", 1) { old, new ->
+        log.text = log.text.toString() + "Old 1: $old\nNew 1: $new\n"
+    }
+
+    private var observed2 by prefs.observe("test_observer2", 2) { old, new ->
+        log.text = log.text.toString() + "Old 2: $old\nNew 2: $new\n"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_observer)
 
-        observed = Random.nextInt()
+        observed1 = Random.nextInt()
+        observed2 = Random.nextInt()
     }
 }
