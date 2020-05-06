@@ -28,4 +28,6 @@ dependencies {
     testImplementation deps.test.junit
     testImplementation deps.test.mockito_core
     testImplementation deps.test.truth
+
+    api deps.androidx.lifecycle.ext
 }

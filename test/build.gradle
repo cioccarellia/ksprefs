@@ -27,6 +27,8 @@ dependencies {
     implementation deps.androidx.app_compat
     implementation deps.androidx.constraint_layout
     implementation deps.kotlin.stdlib8
+
+    implementation deps.androidx.lifecycle.ext
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'

@@ -18,6 +18,9 @@ package com.cioccarellia.kspref
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.annotation.CheckResult
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
 import com.cioccarellia.kspref.config.EncryptionType
 import com.cioccarellia.kspref.config.KspConfig
 import com.cioccarellia.kspref.config.model.AutoSavePolicy
@@ -32,7 +35,21 @@ class KsPrefs(
     appContext: Context,
     namespace: String = Namespace.default(appContext),
     config: KspConfig.() -> Unit = {}
-) {
+) : LifecycleObserver {
+
+    /**
+     * Lifecycle aware constructor
+     * */
+    constructor(
+        appContext: Context,
+        lifecycle: Lifecycle,
+        namespace: String = Namespace.default(appContext),
+        config: KspConfig.() -> Unit = {}
+    ) : this(appContext, namespace, config) {
+        this.lifecycle = lifecycle
+        this.lifecycle!!.addObserver(this)
+    }
+
     companion object {
         /**
          * Global library-wide configuration object used
@@ -49,6 +66,8 @@ class KsPrefs(
 
     @PublishedApi
     internal val dispatcher = KspDispatcher(namespace, appContext)
+
+    private var lifecycle: Lifecycle? = null
 
     /**
      * Exposes the internal [Shared Preferences][SharedPreferences]
@@ -75,23 +94,25 @@ class KsPrefs(
      * and eventually saves it to the actual preference file.
      *
      * The [value] is first converted into its proper ByteArray representation.
-     * The [key] is just converted from String to ByteArray
+     * The [key] is just converted from String to ByteArray.
+     * [commitStrategy] is used to define the commit behaviour, and it can be parameterized.
      * Then, both [key] and [value] are passed through the picked [engine][Engine].
      * [key] is derived once, [value] is derived [n][KspConfig.engineIterations] times.
      * The new value is pushed into SharedPreferences and committed, if and according to
-     * the [commit strategy][CommitStrategy] and the [auto save policy][AutoSavePolicy].
+     * the [commitStrategy] and the [auto save policy][AutoSavePolicy].
      *
      *
-     * @param[key] The key for the target field
-     * @param[value] The value to be derived and stored
+     * @param[key] The key for the target field.
+     * @param[value] The value to be derived and stored.
+     * @param[commitStrategy] The strategy defining how to finalize this operation.
      * */
     fun <T : Any> push(
         key: String,
-        value: T
+        value: T,
+        commitStrategy: CommitStrategy = config.commitStrategy
     ): Unit = dispatcher.push(
-        key, value, config.commitStrategy
+        key, value, commitStrategy
     )
-
 
     /**
      * This function pushes a value in the [Shared Preferences][SharedPreferences] object,
@@ -106,8 +127,8 @@ class KsPrefs(
      * preferences XML file can be forced with [save]
      *
      *
-     * @param[key] The key for the target field
-     * @param[value] The value to be derived and stored
+     * @param[key] The key for the target field.
+     * @param[value] The value to be derived and stored.
      * */
     fun <T : Any> queue(
         key: String,
@@ -128,10 +149,10 @@ class KsPrefs(
      * times, converted, and then returned.
      *
      *
-     * @param[key] The key for the target field
-     * @param[default] The default value, in case the given key matches nothing
+     * @param[key] The key for the target field.
+     * @param[default] The default value, in case the given key matches nothing.
      *
-     * @return The value KsPref got back for the matching key, or [default]
+     * @return The value KsPref got back for the matching key, or [default].
      * */
     @CheckResult
     fun <T : Any> pull(
@@ -157,8 +178,8 @@ class KsPrefs(
      * @param[T] The type value' will be converted to.
      * @param[key] The key for the target field.
      *
-     * @return The value KsPref got back for the matching key
-     * @throws NoSuchKeyException If no value is found for the given [key]
+     * @return The value KsPref got back for the matching key.
+     * @throws NoSuchKeyException If no value is found for the given [key].
      * */
     @CheckResult
     inline fun <reified T : Any> pull(
@@ -175,9 +196,9 @@ class KsPrefs(
      * If it exists, true is returned.
      *
      *
-     * @param[key] The key for the target field
+     * @param[key] The key for the target field.
      *
-     * @return Whether the value exists inside the storage or not
+     * @return Whether the value exists inside the storage or not.
      * */
     @CheckResult
     fun exists(
@@ -196,7 +217,7 @@ class KsPrefs(
      * overriding the global [strategy][KspConfig.commitStrategy] for this one operation.
      *
      *
-     * @param[commitStrategy] Optional parameterization for the [commit strategy][KspConfig.commitStrategy]
+     * @param[commitStrategy] Optional parameterization for the [commit strategy][KspConfig.commitStrategy].
      * */
     fun save(
         commitStrategy: CommitStrategy = config.commitStrategy
@@ -209,19 +230,23 @@ class KsPrefs(
      * [key]' is used to natively remove the record from shared preferences.
      *
      *
-     * @param[key] The key for the target field
+     * @param[key] The key for the target field.
      * */
     fun remove(
         key: String
     ): Unit = dispatcher.remove(key)
 
     /**
-     * KsPrefs will register a SharedPreferences listener
-     * if you use prefs observers within your codebase.
-     * It is always a good practise to clear those up
-     * when your app terminates, to avoid creating memory leaks.
+     * Destroys any active reference or listener KsPref may be holding
+     * to [Shared Preferences][SharedPreferences].
+     *
+     * This is the case if you use prefs observers within your codebase.
+     * It is always a good practise to clear those up when your app
+     * terminates, to avoid creating memory leaks.
      * */
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun destroy() {
+        lifecycle?.removeObserver(this)
         ObservedPrefsStorage.detach(this)
     }
 }
