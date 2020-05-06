@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.crypto.engine.keystore
+package com.cioccarellia.kspref.engine.engine.keystore
 
 import android.content.Context
-import com.cioccarellia.kspref.crypto.CryptoEngine
-import com.cioccarellia.kspref.crypto.Engine
-import com.cioccarellia.kspref.crypto.Transmission
-import com.cioccarellia.kspref.crypto.secondary.SecondaryEnginePicker
+import com.cioccarellia.kspref.engine.CryptoEngine
+import com.cioccarellia.kspref.engine.Engine
+import com.cioccarellia.kspref.engine.Transmission
+import com.cioccarellia.kspref.engine.secondary.SecondaryEnginePicker
 import java.security.KeyStore
 
 class AndroidKeystoreEngine(

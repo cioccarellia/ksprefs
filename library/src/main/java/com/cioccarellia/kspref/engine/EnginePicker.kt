@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.crypto
+package com.cioccarellia.kspref.engine
 
 import android.content.Context
 import com.cioccarellia.kspref.KsPrefs
-import com.cioccarellia.kspref.config.crypto.EncryptionType
-import com.cioccarellia.kspref.crypto.engine.aes.AesCbcEngine
-import com.cioccarellia.kspref.crypto.engine.aes.AesEcbEngine
-import com.cioccarellia.kspref.crypto.engine.base64.Base64Engine
-import com.cioccarellia.kspref.crypto.engine.keystore.AndroidKeystoreEngine
-import com.cioccarellia.kspref.crypto.engine.plaintext.PlainTextEngine
+import com.cioccarellia.kspref.config.EncryptionType
+import com.cioccarellia.kspref.engine.engine.aes.AesCbcEngine
+import com.cioccarellia.kspref.engine.engine.aes.AesEcbEngine
+import com.cioccarellia.kspref.engine.engine.base64.Base64Engine
+import com.cioccarellia.kspref.engine.engine.keystore.AndroidKeystoreEngine
+import com.cioccarellia.kspref.engine.engine.plaintext.PlainTextEngine
 import com.cioccarellia.kspref.extensions.toSymmetricKey
 
 object EnginePicker {

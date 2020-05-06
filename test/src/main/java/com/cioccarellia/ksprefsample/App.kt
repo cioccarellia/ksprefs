@@ -18,7 +18,7 @@ package com.cioccarellia.ksprefsample
 import android.app.Application
 import android.content.Context
 import com.cioccarellia.kspref.KsPrefs
-import com.cioccarellia.kspref.config.crypto.EncryptionType
+import com.cioccarellia.kspref.config.EncryptionType
 import com.cioccarellia.kspref.config.model.KeySizeCheck
 import com.cioccarellia.kspref.randomIV
 

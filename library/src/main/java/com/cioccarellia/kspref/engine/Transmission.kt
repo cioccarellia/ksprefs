@@ -13,15 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.crypto
+package com.cioccarellia.kspref.engine
 
-import com.cioccarellia.kspref.annotations.Derivative
-import com.cioccarellia.kspref.annotations.Integral
-import com.cioccarellia.kspref.exception.SafeRun
+import com.cioccarellia.kspref.extensions.string
 
-abstract class Engine : SafeRun {
-    @Derivative
-    abstract fun apply(incoming: Transmission): Transmission
-    @Integral
-    abstract fun revert(outgoing: Transmission): Transmission
+inline class Transmission(
+    val payload: ByteArray
+) {
+    override fun toString() = payload.string()
 }

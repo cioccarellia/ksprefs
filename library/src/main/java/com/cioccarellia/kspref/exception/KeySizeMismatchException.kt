@@ -13,11 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.crypto.secondary
+package com.cioccarellia.kspref.exception
 
-import com.cioccarellia.kspref.crypto.CryptoEngine
-import javax.crypto.Cipher
-
-abstract class SecondaryEngine : CryptoEngine {
-    abstract fun computeCipher(mode: Int): Cipher
-}
+internal class KeySizeMismatchException(
+    expected: Int,
+    actual: Int
+) : KotlinNullPointerException("Expected key size: $expected, Actual: $actual")

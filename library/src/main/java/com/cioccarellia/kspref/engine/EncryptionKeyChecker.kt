@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.crypto
+package com.cioccarellia.kspref.engine
 
 import com.cioccarellia.kspref.KsPrefs
 import com.cioccarellia.kspref.config.model.KeySizeCheck
 import com.cioccarellia.kspref.config.model.KeySizeMismatchFallbackStrategy
-import com.cioccarellia.kspref.exception.KsPrefKeySizeMismatchException
+import com.cioccarellia.kspref.exception.KeySizeMismatchException
 
 object EncryptionKeyChecker {
     fun approve(
@@ -27,7 +27,7 @@ object EncryptionKeyChecker {
     ): SymmetricKey = if (!key.matches(keyCheckSize)) {
         when (KsPrefs.config.keySizeMismatch) {
             KeySizeMismatchFallbackStrategy.TRIM -> key.trim(keyCheckSize)
-            KeySizeMismatchFallbackStrategy.CRASH -> throw KsPrefKeySizeMismatchException(
+            KeySizeMismatchFallbackStrategy.CRASH -> throw KeySizeMismatchException(
                 expected = keyCheckSize.bitCount(),
                 actual = key.bitCount()
             )

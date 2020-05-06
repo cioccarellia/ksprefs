@@ -13,20 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.crypto
+package com.cioccarellia.kspref.engine
 
 import com.cioccarellia.kspref.annotations.Derivative
 import com.cioccarellia.kspref.annotations.Integral
-import com.cioccarellia.kspref.exception.SafeRun
+import com.cioccarellia.kspref.internal.SafeRun
 
-interface CryptoEngine : SafeRun {
+abstract class Engine : SafeRun {
     @Derivative
-    fun encrypt(
-        input: ByteArray
-    ): ByteArray
-
+    abstract fun apply(incoming: Transmission): Transmission
     @Integral
-    fun decrypt(
-        cipherText: ByteArray
-    ): ByteArray
+    abstract fun revert(outgoing: Transmission): Transmission
 }

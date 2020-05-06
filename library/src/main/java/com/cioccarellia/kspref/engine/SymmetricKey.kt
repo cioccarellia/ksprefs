@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.crypto
+package com.cioccarellia.kspref.engine
 
 import com.cioccarellia.kspref.config.model.KeySizeCheck
 import com.cioccarellia.kspref.extensions.string

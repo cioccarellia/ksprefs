@@ -21,9 +21,9 @@ import android.annotation.SuppressLint
 import android.content.Context
 import com.cioccarellia.kspref.KsPrefs
 import com.cioccarellia.kspref.config.model.CommitStrategy
-import com.cioccarellia.kspref.crypto.Engine
-import com.cioccarellia.kspref.crypto.EnginePicker
-import com.cioccarellia.kspref.crypto.Transmission
+import com.cioccarellia.kspref.engine.Engine
+import com.cioccarellia.kspref.engine.EnginePicker
+import com.cioccarellia.kspref.engine.Transmission
 import com.cioccarellia.kspref.extensions.*
 
 @Suppress("MemberVisibilityCanBePrivate")
@@ -36,19 +36,48 @@ internal class KspEnclosure(
     internal var sharedWriter: Writer = sharedReader.edit(),
     private val engine: Engine = EnginePicker.select(context)
 ) {
-    private inline fun engineApply(
+    private inline fun deriveVal(
         value: ByteArray
-    ): ByteArray = engine.apply(Transmission(value)).payload
+    ): ByteArray = if (KsPrefs.config.engineIterations == 1) {
+        engine.apply(
+            Transmission(value)
+        ).payload
+    } else {
+        var iterationsLeft = KsPrefs.config.engineIterations
+        var bytes = value
 
-    private inline fun engineApply(
+        do {
+            bytes = engine.apply(Transmission(bytes)).payload
+            iterationsLeft--
+        } while (iterationsLeft > 0)
+
+        bytes
+    }
+
+    private inline fun integrateVal(
+        value: ByteArray
+    ): ByteArray = if (KsPrefs.config.engineIterations == 1) {
+        engine.revert(
+            Transmission(value)
+        ).payload
+    } else {
+        var iterationsLeft = KsPrefs.config.engineIterations
+        var bytes = value
+
+        do {
+            bytes = engine.revert(Transmission(bytes)).payload
+            iterationsLeft--
+        } while (iterationsLeft > 0)
+
+        bytes
+    }
+
+
+    private inline fun deriveKey(
         value: String
     ): String = engine.apply(Transmission(value.bytes())).payload.string()
 
-    private inline fun engineRevert(
-        value: ByteArray
-    ): ByteArray = engine.revert(Transmission(value)).payload
-
-    private inline fun engineRevert(
+    private inline fun integrateKey(
         value: String
     ): String = engine.revert(Transmission(value.bytes())).payload.string()
 
@@ -56,19 +85,19 @@ internal class KspEnclosure(
     internal fun read(
         key: String,
         default: ByteArray
-    ) = engineRevert(
+    ) = integrateVal(
         sharedReader.read(
-            engineApply(key),
-            engineApply(default)
+            deriveKey(key),
+            deriveVal(default)
         )
     )
 
     @PublishedApi
     internal fun readUnsafe(
         key: String
-    ) = engineRevert(
+    ) = integrateVal(
         sharedReader.readUnsafe(
-            engineApply(key)
+            deriveKey(key)
         )
     )
 
@@ -79,8 +108,8 @@ internal class KspEnclosure(
         strategy: CommitStrategy
     ) = with(sharedWriter) {
         write(
-            engineApply(key),
-            engineApply(value)
+            deriveKey(key),
+            deriveVal(value)
         )
         finalize(
             strategy
@@ -109,7 +138,7 @@ internal class KspEnclosure(
     ) {
         sharedReader.edit()
             .delete(
-                engineApply(key)
+                deriveKey(key)
             )
             .finalize(KsPrefs.config.commitStrategy)
     }

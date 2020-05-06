@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.crypto.engine.aes
+package com.cioccarellia.kspref.engine.engine.aes
 
 import android.util.Base64
-import com.cioccarellia.kspref.crypto.CryptoEngine
-import com.cioccarellia.kspref.crypto.Engine
-import com.cioccarellia.kspref.crypto.SymmetricKey
-import com.cioccarellia.kspref.crypto.Transmission
+import com.cioccarellia.kspref.engine.CryptoEngine
+import com.cioccarellia.kspref.engine.Engine
+import com.cioccarellia.kspref.engine.SymmetricKey
+import com.cioccarellia.kspref.engine.Transmission
 import java.security.MessageDigest
 import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec

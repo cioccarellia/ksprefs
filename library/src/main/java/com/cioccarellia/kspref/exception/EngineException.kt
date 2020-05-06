@@ -26,7 +26,7 @@ import javax.crypto.BadPaddingException
 import javax.crypto.IllegalBlockSizeException
 import javax.crypto.NoSuchPaddingException
 
-internal class KsPrefEngineException(
+internal class EngineException(
     message: String = "",
     throwable: Throwable? = null
 ) : RuntimeException(message.trim(), throwable) {
@@ -39,64 +39,64 @@ internal class KsPrefEngineException(
         fun convertFrom(
             throwable: Throwable?,
             operation: String
-        ): KsPrefEngineException {
+        ): EngineException {
             val charset = KsPrefs.config.charset.name()
 
             return when (throwable) {
-                is NoSuchAlgorithmException -> KsPrefEngineException(
+                is NoSuchAlgorithmException -> EngineException(
                     "No algorithm found. $operation",
                     throwable
                 )
-                is NoSuchPaddingException -> KsPrefEngineException(
+                is NoSuchPaddingException -> EngineException(
                     "Padding mechanism required but not encountered in the system. $operation",
                     throwable
                 )
-                is InvalidKeySpecException -> KsPrefEngineException(
+                is InvalidKeySpecException -> EngineException(
                     "Invalid key specification. $operation",
                     throwable
                 )
-                is InvalidKeyException -> KsPrefEngineException(
+                is InvalidKeyException -> EngineException(
                     "Invalid key supplied. $operation",
                     throwable
                 )
-                is IllegalArgumentException -> KsPrefEngineException(
+                is IllegalArgumentException -> EngineException(
                     "Key is empty. $operation",
                     throwable
                 )
-                is InvalidParameterSpecException -> KsPrefEngineException(
+                is InvalidParameterSpecException -> EngineException(
                     "Key is empty. $operation",
                     throwable
                 )
-                is IllegalBlockSizeException -> KsPrefEngineException(
+                is IllegalBlockSizeException -> EngineException(
                     "Illegal block size. $operation",
                     throwable
                 )
-                is BadPaddingException -> KsPrefEngineException("Bad padding. $operation", throwable)
-                is UnsupportedEncodingException -> KsPrefEngineException(
+                is BadPaddingException -> EngineException("Bad padding. $operation", throwable)
+                is UnsupportedEncodingException -> EngineException(
                     "The charset encoding is unsupported ($charset). $operation",
                     throwable
                 )
-                is UnrecoverableEntryException -> KsPrefEngineException(
+                is UnrecoverableEntryException -> EngineException(
                     "The keystore entry cannot be recovered.",
                     throwable
                 )
-                is KeyStoreException -> KsPrefEngineException(
+                is KeyStoreException -> EngineException(
                     "Generic Android KeyStore exception.",
                     throwable
                 )
-                is NoSuchProviderException -> KsPrefEngineException(
+                is NoSuchProviderException -> EngineException(
                     "The required security provided cannot be found in the execution environment.",
                     throwable
                 )
-                is InvalidAlgorithmParameterException -> KsPrefEngineException(
+                is InvalidAlgorithmParameterException -> EngineException(
                     "The algorithm parameters are invalid.",
                     throwable
                 )
-                is SignatureException -> KsPrefEngineException(
+                is SignatureException -> EngineException(
                     "Generic signature exception.",
                     throwable
                 )
-                else -> KsPrefEngineException(throwable = throwable)
+                else -> EngineException(throwable = throwable)
             }
         }
     }

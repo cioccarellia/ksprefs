@@ -6,16 +6,19 @@
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ *     
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.exception
+package com.cioccarellia.kspref.engine.engine.plaintext
 
-internal class KsPrefKeySizeMismatchException(
-    expected: Int,
-    actual: Int
-) : KotlinNullPointerException("Expected key size: $expected, Actual: $actual")
+import com.cioccarellia.kspref.engine.Engine
+import com.cioccarellia.kspref.engine.Transmission
+
+class PlainTextEngine : Engine() {
+    override fun apply(incoming: Transmission) = Transmission(incoming.payload)
+    override fun revert(outgoing: Transmission) = Transmission(outgoing.payload)
+}

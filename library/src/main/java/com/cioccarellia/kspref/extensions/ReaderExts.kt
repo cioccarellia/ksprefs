@@ -17,7 +17,7 @@ package com.cioccarellia.kspref.extensions
 
 import android.content.SharedPreferences
 import androidx.annotation.CheckResult
-import com.cioccarellia.kspref.exception.NoSuchPrefKeyException
+import com.cioccarellia.kspref.exception.NoSuchKeyException
 
 typealias Reader = SharedPreferences
 
@@ -33,7 +33,7 @@ internal fun Reader.readUnsafe(
 ): ByteArray = try {
     getString(key, null)!!.bytes()
 } catch (knpe: KotlinNullPointerException) {
-    throw NoSuchPrefKeyException(key)
+    throw NoSuchKeyException(key)
 }
 
 @CheckResult

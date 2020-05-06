@@ -13,21 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.crypto.engine.base64
+package com.cioccarellia.kspref.engine.secondary
 
-import android.util.Base64
-import com.cioccarellia.kspref.crypto.Engine
-import com.cioccarellia.kspref.crypto.Transmission
+import com.cioccarellia.kspref.engine.CryptoEngine
+import javax.crypto.Cipher
 
-class Base64Engine(
-    private val base64Flags: Int
-) : Engine() {
-
-    override fun apply(incoming: Transmission) = Transmission(
-        Base64.encode(incoming.payload, base64Flags)
-    )
-
-    override fun revert(outgoing: Transmission) = Transmission(
-        Base64.decode(outgoing.payload, base64Flags)
-    )
+abstract class SecondaryEngine : CryptoEngine {
+    abstract fun computeCipher(mode: Int): Cipher
 }

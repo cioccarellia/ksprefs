@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.crypto.secondary
+package com.cioccarellia.kspref.engine.secondary
 
 import android.annotation.TargetApi
 import android.content.Context
@@ -22,7 +22,7 @@ import android.security.KeyPairGeneratorSpec
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import com.cioccarellia.kspref.defaults.Defaults
-import com.cioccarellia.kspref.exception.SafeRun
+import com.cioccarellia.kspref.internal.SafeRun
 import java.math.BigInteger
 import java.security.KeyPair
 import java.security.KeyPairGenerator

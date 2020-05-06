@@ -15,11 +15,10 @@
  */
 package com.cioccarellia.kspref.extensions
 
-import com.cioccarellia.kspref.exception.KsPrefEngineException
-import javax.crypto.SecretKey
+import com.cioccarellia.kspref.exception.EngineException
 
 fun <T> Result<T>.getOrThrowException(
     operation: String = ""
 ): T = getOrElse { exception ->
-    throw KsPrefEngineException.convertFrom(exception, operation)
+    throw EngineException.convertFrom(exception, operation)
 }

@@ -19,8 +19,8 @@ package com.cioccarellia.kspref.extensions
 
 import androidx.annotation.CheckResult
 import com.cioccarellia.kspref.KsPrefs
-import com.cioccarellia.kspref.crypto.SymmetricKey
 import com.cioccarellia.kspref.defaults.Defaults
+import com.cioccarellia.kspref.engine.SymmetricKey
 
 @CheckResult
 internal fun ByteArray.toSymmetricKey() = SymmetricKey(this)
