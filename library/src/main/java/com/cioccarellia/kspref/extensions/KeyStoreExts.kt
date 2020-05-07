@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.engine.secondary
+package com.cioccarellia.kspref.extensions
 
-import com.cioccarellia.kspref.engine.CryptoEngine
-import javax.crypto.Cipher
+import java.security.KeyStore
 
-internal abstract class SecondaryEngine : CryptoEngine {
-    abstract fun computeCipher(mode: Int): Cipher
-}
+@Suppress("UNCHECKED_CAST")
+internal fun <T : KeyStore.Entry> KeyStore.fetchEntry(
+    alias: String
+) = getEntry(alias, null) as T

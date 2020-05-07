@@ -66,6 +66,8 @@ sealed class EncryptionType {
 
     class KeyStore(
         val alias: String,
-        val keyTagSize: KeyTagSize = Defaults.KEY_TAG_SIZE
+        val keyTagSize: KeyTagSize = Defaults.KEY_TAG_SIZE,
+        @IntRange(from = 0x0, to = 0x1F)
+        val base64Flags: Int = Defaults.DEFAULT_BASE64_FLAGS
     ) : EncryptionType()
 }

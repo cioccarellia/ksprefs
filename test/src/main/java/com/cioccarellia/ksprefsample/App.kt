@@ -19,17 +19,23 @@ import android.app.Application
 import android.content.Context
 import com.cioccarellia.kspref.KsPrefs
 import com.cioccarellia.kspref.config.EncryptionType
+import com.cioccarellia.kspref.config.model.KeySizeCheck
 
 class App : Application() {
 
     companion object {
         lateinit var appContext: Context
 
+        val aes = EncryptionType.AesEcb(
+            "daaaaaaaaaaaaaaa", KeySizeCheck.TRIM_128
+        )
+        val keyStore = EncryptionType.KeyStore(
+            "alias0"
+        )
+
         val prefs by lazy {
             KsPrefs(appContext) {
-                encryptionType = EncryptionType.KeyStore(
-                    "A"
-                )
+                encryptionType = keyStore
             }
         }
     }
