@@ -17,7 +17,6 @@ package com.cioccarellia.kspref
 
 import com.cioccarellia.kspref.delegate.dynamic.DelegateDynamicKsPref
 import com.cioccarellia.kspref.delegate.dynamic.DelegateDynamicUnsafePref
-import com.cioccarellia.kspref.delegate.observer.DelegatePrefObserver
 import com.cioccarellia.kspref.extensions.emptyByteArray
 import java.security.SecureRandom
 import kotlin.random.asKotlinRandom
@@ -46,13 +45,3 @@ fun <T : Any> KsPrefs.dynamic(
 inline fun <reified T : Any> KsPrefs.dynamic(
     key: String
 ) = DelegateDynamicUnsafePref(this, key, T::class)
-
-
-/**
- * Used to initialize an observable property.
- * */
-fun <T : Any> KsPrefs.observe(
-    key: String,
-    value: T,
-    observer: (oldValue: T, newValue: T) -> Unit
-) = DelegatePrefObserver(this, key, pull(key, value), observer)

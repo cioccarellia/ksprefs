@@ -23,20 +23,18 @@ import com.cioccarellia.kspref.engine.secondary.SecondaryEnginePicker
 import java.security.KeyStore
 
 internal class AndroidKeystoreEngine(
-    private val context: Context,
-    private val alias: String,
-    private val keyTagSizeInBits: Int
+    context: Context,
+    alias: String,
+    keyTagSizeInBits: Int
 ) : Engine(), CryptoEngine {
 
     private val KEYSTORE_TYPE = "AndroidKeyStore"
 
-    private val keyStore: KeyStore
-        get() = KeyStore.getInstance(KEYSTORE_TYPE).also {
+    private val keyStore: KeyStore = KeyStore.getInstance(KEYSTORE_TYPE).also {
             it.load(null)
         }
 
-    private val subEngine
-        get() = SecondaryEnginePicker.select(alias, context, keyStore, keyTagSizeInBits)
+    private val subEngine = SecondaryEnginePicker.select(alias, context, keyStore, keyTagSizeInBits)
 
     override fun derive(incoming: Transmission) = Transmission(
         encrypt(incoming.payload)

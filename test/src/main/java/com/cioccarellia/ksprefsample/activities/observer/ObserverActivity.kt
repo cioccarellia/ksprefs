@@ -18,28 +18,14 @@ package com.cioccarellia.ksprefsample.activities.observer
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.cioccarellia.kspref.observe
-import com.cioccarellia.ksprefsample.App.Companion.prefs
 import com.cioccarellia.ksprefsample.R
-import kotlin.random.Random
 
 class ObserverActivity : AppCompatActivity() {
 
     private val log by lazy { findViewById<TextView>(R.id.log) }
 
-    private var observed1 by prefs.observe("test_observer1", 1) { old, new ->
-        log.text = log.text.toString() + "Old 1: $old\nNew 1: $new\n"
-    }
-
-    private var observed2 by prefs.observe("test_observer2", 2) { old, new ->
-        log.text = log.text.toString() + "Old 2: $old\nNew 2: $new\n"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_observer)
-
-        observed1 = Random.nextInt()
-        observed2 = Random.nextInt()
     }
 }

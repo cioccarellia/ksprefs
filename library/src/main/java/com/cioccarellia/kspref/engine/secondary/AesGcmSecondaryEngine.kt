@@ -18,7 +18,6 @@ package com.cioccarellia.kspref.engine.secondary
 import android.annotation.TargetApi
 import android.os.Build
 import android.util.Base64
-import androidx.annotation.IntRange
 import javax.crypto.Cipher
 import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
@@ -29,33 +28,60 @@ internal class AesGcmSecondaryEngine(
     private val keyTagSizeInBits: Int
 ) : SecondaryEngine() {
 
-    override fun computeCipher(
-        @IntRange(from = 1, to = 4) mode: Int
-    ): Cipher = runSafely {
-        val cipher = Cipher.getInstance(AES_MODE_FOR_POST_API_23)
-        val spec = GCMParameterSpec(keyTagSizeInBits, AES_MODE_FOR_POST_API_23.toByteArray(), 0, 12)
+    val _encryption: Cipher
+        get() {
+            val cipher = Cipher.getInstance(AES_MODE_FOR_POST_API_23)
+            cipher.apply {
+                init(
+                    Cipher.ENCRYPT_MODE,
+                    secretKey,
+                    GCMParameterSpec(
+                        keyTagSizeInBits,
+                        AES_MODE_FOR_POST_API_23.toByteArray(),
+                        0,
+                        12
+                    )
+                )
+            }
 
-        cipher.apply {
-            init(mode, secretKey, spec)
+            return cipher
         }
+
+    val _decryption: Cipher
+        get() {
+            val cipher = Cipher.getInstance(AES_MODE_FOR_POST_API_23)
+            cipher.apply {
+                init(
+                    Cipher.ENCRYPT_MODE,
+                    secretKey,
+                    GCMParameterSpec(
+                        keyTagSizeInBits,
+                        AES_MODE_FOR_POST_API_23.toByteArray(),
+                        0,
+                        12
+                    )
+                )
+            }
+
+            return cipher
+        }
+
+    override fun computeCipher(mode: Int): Cipher {
+        TODO("Not yet implemented")
     }
 
     override fun encrypt(
         input: ByteArray
     ): ByteArray = runSafely {
-        val cipher = computeCipher(Cipher.ENCRYPT_MODE)
-        val encrypted = cipher.doFinal(input)
-
+        val encrypted = _encryption.doFinal(input)
         Base64.encode(encrypted, Base64.URL_SAFE)
     }
 
     override fun decrypt(
         cipherText: ByteArray
     ): ByteArray = runSafely {
-        val cipher = computeCipher(Cipher.DECRYPT_MODE)
         val decoded = Base64.decode(cipherText, Base64.URL_SAFE)
-
-        cipher.doFinal(decoded)
+        _decryption.doFinal(decoded)
     }
 
     companion object {
