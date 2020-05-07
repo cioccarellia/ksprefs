@@ -16,12 +16,14 @@
 package com.cioccarellia.kspref.engine
 
 import android.content.Context
+import android.os.Build
 import com.cioccarellia.kspref.KsPrefs
 import com.cioccarellia.kspref.config.EncryptionType
 import com.cioccarellia.kspref.engine.engine.aes.AesCbcEngine
 import com.cioccarellia.kspref.engine.engine.aes.AesEcbEngine
 import com.cioccarellia.kspref.engine.engine.base64.Base64Engine
-import com.cioccarellia.kspref.engine.engine.keystore.AndroidKeystoreEngine
+import com.cioccarellia.kspref.engine.engine.keystore.AndroidKToMKeystoreEngine
+import com.cioccarellia.kspref.engine.engine.keystore.AndroidMKeystoreEngine
 import com.cioccarellia.kspref.engine.engine.plaintext.PlainTextEngine
 import com.cioccarellia.kspref.extensions.toSymmetricKey
 
@@ -59,11 +61,19 @@ internal object EnginePicker {
         is EncryptionType.KeyStore -> {
             val alias = config.alias
 
-            AndroidKeystoreEngine(
-                context,
-                alias,
-                keyTagSizeInBits = config.keyTagSize.bitCount()
-            )
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                AndroidMKeystoreEngine(
+                    alias,
+                    keyTagSizeInBits = config.keyTagSize.bitCount(),
+                    base64Flags = config.base64Flags
+                )
+            } else {
+                AndroidKToMKeystoreEngine(
+                    context,
+                    alias,
+                    base64Flags = config.base64Flags
+                )
+            }
         }
     }
 }

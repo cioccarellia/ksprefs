@@ -13,14 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.delegate.observer
+package com.cioccarellia.kspref.extensions
 
-import android.content.SharedPreferences
-import kotlin.reflect.KClass
+import java.security.KeyStore
 
-internal data class ObservedPref<T : Any>(
-    val observer: (Any, Any) -> Unit,
-    val valueType: KClass<*>,
-    val listener: SharedPreferences.OnSharedPreferenceChangeListener,
-    val prop: DelegatePrefObserver<T>
-)
+@Suppress("UNCHECKED_CAST")
+internal fun <T : KeyStore.Entry> KeyStore.fetchEntry(
+    alias: String
+) = getEntry(alias, null) as T

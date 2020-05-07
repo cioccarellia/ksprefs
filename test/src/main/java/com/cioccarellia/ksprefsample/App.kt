@@ -26,12 +26,16 @@ class App : Application() {
     companion object {
         lateinit var appContext: Context
 
+        val aes = EncryptionType.AesEcb(
+            "daaaaaaaaaaaaaaa", KeySizeCheck.TRIM_128
+        )
+        val keyStore = EncryptionType.KeyStore(
+            "alias0"
+        )
+
         val prefs by lazy {
             KsPrefs(appContext) {
-                encryptionType = EncryptionType.AesEcb(
-                    "aaaaaaaaaaaaaaa++aaaaaaaaaaaaaaa",
-                    keySize = KeySizeCheck.TRIM_256
-                )
+                encryptionType = keyStore
             }
         }
     }

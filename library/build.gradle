@@ -30,4 +30,5 @@ dependencies {
     testImplementation deps.test.truth
 
     api deps.androidx.lifecycle.ext
+    //api "androidx.security:security-crypto:1.0.0-rc01"
 }

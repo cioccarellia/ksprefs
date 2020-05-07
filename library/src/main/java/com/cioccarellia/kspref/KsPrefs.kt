@@ -25,7 +25,6 @@ import com.cioccarellia.kspref.config.EncryptionType
 import com.cioccarellia.kspref.config.KspConfig
 import com.cioccarellia.kspref.config.model.AutoSavePolicy
 import com.cioccarellia.kspref.config.model.CommitStrategy
-import com.cioccarellia.kspref.delegate.observer.ObservedPrefsStorage
 import com.cioccarellia.kspref.dispatcher.KspDispatcher
 import com.cioccarellia.kspref.engine.Engine
 import com.cioccarellia.kspref.exception.NoSuchKeyException
@@ -291,6 +290,5 @@ class KsPrefs(
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun destroy() {
         lifecycle?.removeObserver(this)
-        ObservedPrefsStorage.detach(this)
     }
 }
