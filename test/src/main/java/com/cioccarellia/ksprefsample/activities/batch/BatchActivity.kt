@@ -16,38 +16,110 @@
 package com.cioccarellia.ksprefsample.activities.batch
 
 import android.os.Bundle
+import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.cioccarellia.ksprefsample.App.Companion.prefs
 import com.cioccarellia.ksprefsample.R
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import kotlin.system.measureTimeMillis
 
 class BatchActivity : AppCompatActivity() {
+
+    private val n = 10_000
+
+    private val progressQueue by lazy { findViewById<ProgressBar>(R.id.queueProgress) }
+    private val progressPush by lazy { findViewById<ProgressBar>(R.id.pushProgress) }
+    private val progressDfu by lazy { findViewById<ProgressBar>(R.id.defaultProgress) }
+
+    private val queueTitle by lazy { findViewById<TextView>(R.id.queueTitle) }
+    private val pushTitle by lazy { findViewById<TextView>(R.id.pushTitle) }
+    private val defaultTitle by lazy { findViewById<TextView>(R.id.defaultTitle) }
+
+    private var job: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_batch)
 
-        CoroutineScope(Dispatchers.Main).launch {
-            val millis = measureTimeMillis {
-                withContext(Dispatchers.Default) {
-                    for (i in 0..10_000) {
-                        prefs.queue("queued-$i", i)
+        title = "KsPrefs ${n / 1000}K Batch"
+
+        progressQueue.max = n
+        progressPush.max = n
+        progressDfu.max = n
+
+        job = CoroutineScope(Dispatchers.Main).launch {
+            val pushTask = async {
+                val normalMillis = measureTimeMillis {
+                    withContext(Dispatchers.Default) {
+                        for (i in 0..n) {
+                            prefs.push("push-$i", i)
+                            withContext(Dispatchers.Main) {
+                                progressPush.progress++
+                                pushTitle.text = "push() -> $i"
+                            }
+                        }
                     }
                 }
+
+                Toast.makeText(
+                    this@BatchActivity,
+                    "Normal done, taken ${normalMillis}ms (${normalMillis / 1000}s), average ${normalMillis.toFloat() / n.toFloat()}ms/task",
+                    Toast.LENGTH_LONG
+                ).show()
             }
 
-            Toast.makeText(
-                this@BatchActivity,
-                "Done, taken ${millis}ms",
-                Toast.LENGTH_LONG
-            ).show()
+            val queueTask = async {
+                val queueMillis = measureTimeMillis {
+                    withContext(Dispatchers.Default) {
+                        for (i in 0..n) {
+                            prefs.queue("queued-$i", i)
+                            withContext(Dispatchers.Main) {
+                                progressQueue.progress++
+                                queueTitle.text = "queue() -> $i"
+                            }
+                        }
+
+                        prefs.save()
+                    }
+                }
+
+                Toast.makeText(
+                    this@BatchActivity,
+                    "Queue done, taken ${queueMillis}ms (${queueMillis / 1000}s), average ${queueMillis.toFloat() / n.toFloat()}ms/task",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+
+            val defaultTask = async {
+                val dfuMillis = measureTimeMillis {
+                    withContext(Dispatchers.Default) {
+                        for (i in 0..n) {
+                            prefs.expose().edit().putString("dfu-$i", i.toString()).apply()
+                            withContext(Dispatchers.Main) {
+                                progressDfu.progress++
+                                defaultTitle.text = "SharedPreferences.edit() -> $i"
+                            }
+                        }
+                    }
+                }
+
+                Toast.makeText(
+                    this@BatchActivity,
+                    "Default done, taken ${dfuMillis}ms (${dfuMillis / 1000}s), average ${dfuMillis.toFloat() / n.toFloat()}ms/task",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+
+            awaitAll(queueTask, pushTask, defaultTask)
 
             finish()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        job?.cancel()
     }
 }

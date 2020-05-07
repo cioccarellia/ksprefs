@@ -27,13 +27,18 @@ class DynamicActivity : AppCompatActivity() {
 
     private val log by lazy { findViewById<TextView>(R.id.log) }
 
-    private var dynamic by prefs.dynamic<Int>("just_one_dynamic_prop")
+    private var dynamic1 by prefs.dynamic<Int>("just_one_dynamic_prop_1")
+    private var dynamic2 by prefs.dynamic<Int>("just_one_dynamic_prop_2")
+    private var dynamic3 by prefs.dynamic<Int>("just_one_dynamic_prop_3")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dynamic)
 
-        dynamic = Random.nextInt()
-        log.text = dynamic.toString()
+        dynamic1 = Random.nextInt()
+        dynamic2 = Random.nextInt()
+        dynamic3 = Random.nextInt()
+
+        log.text = "Dynamic 1: $dynamic1\nDynamic 2: $dynamic2\nDynamic 3: $dynamic3"
     }
 }
