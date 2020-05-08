@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.engine.engine.keystore
+package com.cioccarellia.kspref.engine.model.keystore
 
 import android.os.Build
 import android.util.Base64
@@ -28,7 +28,7 @@ import javax.crypto.Cipher
 import javax.crypto.SecretKey
 
 @RequiresApi(Build.VERSION_CODES.M)
-internal class AndroidMKeystoreEngine(
+internal class AndroidMKeyStoreEngine(
     alias: String,
     private val keyTagSizeInBits: Int,
     private val base64Flags: Int

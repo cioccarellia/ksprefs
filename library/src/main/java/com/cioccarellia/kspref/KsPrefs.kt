@@ -41,7 +41,7 @@ class KsPrefs(
      * Creates a lifecycle-aware KsPref instance, so that you don't
      * have to manually call [destroy] when you app is closing.
      * */
-    constructor(
+    private constructor(
         appContext: Context,
         lifecycle: Lifecycle,
         namespace: String = Namespace.default(appContext),
@@ -278,17 +278,10 @@ class KsPrefs(
     ): Unit = dispatcher.remove(key)
 
     /**
-     * Destroys any active reference or listener KsPref may be holding
-     * to [Shared Preferences][SharedPreferences].
-     *
-     * This is the case if you use prefs observers within your codebase.
-     * It is always a good practise to clear those up when your app
-     * terminates, to avoid creating memory leaks.
-     *
      * This method auto-calls for lifecycle aware instances.
      * */
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    fun destroy() {
+    private fun destroy() {
         lifecycle?.removeObserver(this)
     }
 }

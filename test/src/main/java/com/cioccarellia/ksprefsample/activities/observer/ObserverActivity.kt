@@ -18,7 +18,9 @@ package com.cioccarellia.ksprefsample.activities.observer
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.cioccarellia.ksprefsample.App.Companion.prefs
 import com.cioccarellia.ksprefsample.R
+import kotlin.random.Random
 
 class ObserverActivity : AppCompatActivity() {
 
@@ -27,5 +29,11 @@ class ObserverActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_observer)
+
+        val v = Random.nextInt().toString()
+        prefs.push(v, v)
+        val u = prefs.pull<String>(key = v)
+
+        log.text = "V: $v\nU: $u"
     }
 }

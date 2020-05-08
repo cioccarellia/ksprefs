@@ -27,15 +27,17 @@ class App : Application() {
         lateinit var appContext: Context
 
         val aes = EncryptionType.AesEcb(
-            "daaaaaaaaaaaaaaa", KeySizeCheck.TRIM_128
+            "dadaaaaaaaaaaaaa",
+            KeySizeCheck.TRIM_128
         )
+
         val keyStore = EncryptionType.KeyStore(
-            "alias0"
+            "a1"
         )
 
         val prefs by lazy {
             KsPrefs(appContext) {
-                encryptionType = keyStore
+                encryptionType = aes
             }
         }
     }
@@ -43,10 +45,5 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         appContext = this
-    }
-
-    override fun onTerminate() {
-        super.onTerminate()
-        prefs.destroy()
     }
 }

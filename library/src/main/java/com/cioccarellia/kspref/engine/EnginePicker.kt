@@ -19,12 +19,12 @@ import android.content.Context
 import android.os.Build
 import com.cioccarellia.kspref.KsPrefs
 import com.cioccarellia.kspref.config.EncryptionType
-import com.cioccarellia.kspref.engine.engine.aes.AesCbcEngine
-import com.cioccarellia.kspref.engine.engine.aes.AesEcbEngine
-import com.cioccarellia.kspref.engine.engine.base64.Base64Engine
-import com.cioccarellia.kspref.engine.engine.keystore.AndroidKToMKeystoreEngine
-import com.cioccarellia.kspref.engine.engine.keystore.AndroidMKeystoreEngine
-import com.cioccarellia.kspref.engine.engine.plaintext.PlainTextEngine
+import com.cioccarellia.kspref.engine.model.aes.AesCbcEngine
+import com.cioccarellia.kspref.engine.model.aes.AesEcbEngine
+import com.cioccarellia.kspref.engine.model.base64.Base64Engine
+import com.cioccarellia.kspref.engine.model.keystore.AndroidKToMKeyStoreEngine
+import com.cioccarellia.kspref.engine.model.keystore.AndroidMKeyStoreEngine
+import com.cioccarellia.kspref.engine.model.plaintext.PlainTextEngine
 import com.cioccarellia.kspref.extensions.toSymmetricKey
 
 internal object EnginePicker {
@@ -62,13 +62,13 @@ internal object EnginePicker {
             val alias = config.alias
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                AndroidMKeystoreEngine(
+                AndroidMKeyStoreEngine(
                     alias,
                     keyTagSizeInBits = config.keyTagSize.bitCount(),
                     base64Flags = config.base64Flags
                 )
             } else {
-                AndroidKToMKeystoreEngine(
+                AndroidKToMKeyStoreEngine(
                     context,
                     alias,
                     base64Flags = config.base64Flags

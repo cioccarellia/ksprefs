@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.engine.engine.base64
+package com.cioccarellia.kspref.engine.model.base64
 
 import android.util.Base64
 import com.cioccarellia.kspref.engine.Engine

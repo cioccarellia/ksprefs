@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.kspref.engine.engine.keystore
+package com.cioccarellia.kspref.engine.model.keystore
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -27,7 +27,7 @@ import java.security.KeyPair
 import java.security.KeyStore
 import javax.crypto.Cipher
 
-internal class AndroidKToMKeystoreEngine(
+internal class AndroidKToMKeyStoreEngine(
     context: Context,
     alias: String,
     val base64Flags: Int
