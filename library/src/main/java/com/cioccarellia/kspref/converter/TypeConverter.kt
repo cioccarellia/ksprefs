@@ -20,6 +20,7 @@ import com.cioccarellia.kspref.annotations.Integral
 import org.json.JSONObject
 import java.math.BigDecimal
 import java.math.BigInteger
+import java.util.*
 import kotlin.reflect.KClass
 
 @PublishedApi
@@ -34,7 +35,8 @@ internal abstract class TypeConverter<T> {
     companion object {
         @PublishedApi
         internal fun <T : Any> pickAndTransform(
-            value: T
+            value: T,
+            kclass: KClass<out T>
         ): ByteArray = when (value::class) {
             // Strings
             String::class -> StringConverter().transform(value as String)
@@ -53,6 +55,10 @@ internal abstract class TypeConverter<T> {
             Double::class -> DoubleConverter().transform(value as Double)
             BigInteger::class -> BigIntConverter().transform(value as BigInteger)
             BigDecimalConverter::class -> BigDecimalConverter().transform(value as BigDecimal)
+
+            // Dates
+            Date::class -> DateConverter().transform(value as Date)
+            Calendar::class -> CalendarConverter().transform(value as Calendar)
 
             // Custom types
             JSONObject::class -> JsonConverter().transform(value as JSONObject)
@@ -82,6 +88,10 @@ internal abstract class TypeConverter<T> {
             Double::class -> DoubleConverter().reify(value)
             BigInteger::class -> BigIntConverter().reify(value)
             BigDecimalConverter::class -> BigDecimalConverter().reify(value)
+
+            // Dates
+            Date::class -> DateConverter().reify(value)
+            Calendar::class -> CalendarConverter().reify(value)
 
             // Custom types
             JSONObject::class -> JsonConverter().reify(value)

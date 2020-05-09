@@ -31,8 +31,8 @@ internal class AesCbcEngine(
     val base64Flags: Int,
     val iv: ByteArray
 ) : Engine(), CryptoEngine {
-    val algorithm = "AES"
-    val cipherTransformation = "AES/CBC/PKCS5Padding"
+    private val algorithm = "AES"
+    private val cipherTransformation = "AES/CBC/PKCS5Padding"
 
     override fun derive(incoming: Transmission) = Transmission(
         encrypt(incoming.payload)
@@ -44,9 +44,9 @@ internal class AesCbcEngine(
 
     private val digest by lazy { MessageDigest.getInstance("SHA-256") }
 
-    fun keySpec(): SecretKeySpec = runSafely {
-        val _key = digest.digest(key.bytes).copyOf(keyByteCount)
-        SecretKeySpec(_key, algorithm)
+    private fun keySpec(): SecretKeySpec = runSafely {
+        val trimmedKey = digest.digest(key.bytes).copyOf(keyByteCount)
+        SecretKeySpec(trimmedKey, algorithm)
     }
 
     override fun encrypt(

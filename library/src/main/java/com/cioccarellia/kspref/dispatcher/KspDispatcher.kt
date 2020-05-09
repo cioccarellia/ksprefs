@@ -33,7 +33,7 @@ internal class KspDispatcher(
 
     private fun <T : Any> convert(
         value: T
-    ) = TypeConverter.pickAndTransform(value)
+    ) = TypeConverter.pickAndTransform(value, value::class)
 
     private fun <T : Any> reify(
         value: ByteArray,
