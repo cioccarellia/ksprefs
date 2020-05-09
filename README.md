@@ -33,4 +33,5 @@ To read from SharedPreferences, you can use `pull(key, default)`.<br>
 To write to SharedPreferences, you can use `push(key, value)`.
 
 ## Introduction
+<img src="extras/scheme.png"><br>
 KsPrefs is a wrapper for SharedPreferences.
