@@ -33,5 +33,5 @@ To read from SharedPreferences, you can use `pull(key, default)`.<br>
 To write to SharedPreferences, you can use `push(key, value)`.
 
 ## Introduction
-<img src="extras/scheme.png"><br>
-KsPrefs is a wrapper for SharedPreferences.
+<img src="extras/light/png/scheme.png"><br>
+KsPrefs (<b>K</b>otlin <b>S</b>hared <b>Pref</b>erences) is a wrapper for the default Android SharedPreferences implementation.
