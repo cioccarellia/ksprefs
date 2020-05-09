@@ -27,7 +27,7 @@ import java.security.KeyPair
 import java.security.KeyStore
 import javax.crypto.Cipher
 
-internal class AndroidKToMKeyStoreEngine(
+internal class RsaKeyPairKeyStoreEngine(
     context: Context,
     alias: String,
     val base64Flags: Int

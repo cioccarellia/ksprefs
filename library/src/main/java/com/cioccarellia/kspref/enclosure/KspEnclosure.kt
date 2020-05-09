@@ -37,7 +37,7 @@ internal class KspEnclosure(
     internal val engine: Engine = EnginePicker.select(context)
 ) {
     /**
-     * Value derivation
+     * Value derivation, n times
      * */
     private inline fun deriveVal(
         value: ByteArray
@@ -58,7 +58,7 @@ internal class KspEnclosure(
     }
 
     /**
-     * Value integration
+     * Value integration, n times
      * */
     private inline fun integrateVal(
         value: ByteArray
@@ -79,14 +79,14 @@ internal class KspEnclosure(
     }
 
     /**
-     * Key derivation
+     * Key derivation, once
      * */
     private inline fun deriveKey(
         value: String
     ): String = engine.derive(Transmission(value.bytes())).payload.string()
 
     /**
-     * Key integration
+     * Key integration, once
      * */
     private inline fun integrateKey(
         value: String
@@ -146,11 +146,8 @@ internal class KspEnclosure(
     @PublishedApi
     internal fun remove(
         key: String
-    ) {
-        sharedReader.edit()
-            .delete(
-                deriveKey(key)
-            )
-            .finalize(KsPrefs.config.commitStrategy)
+    ) = with(sharedWriter) {
+        delete(deriveKey(key))
+        finalize(KsPrefs.config.commitStrategy)
     }
 }

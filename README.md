@@ -11,12 +11,19 @@
   <a href="https://github.com/cioccarellia/ksprefs/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="License"></a>
 </p>
 
-# :warning: v2.0.0 under development
-
 ### TLDR
+```gradle
+implementation 'com.cioccarellia.ksprefs:$version'
+```
+
 - :zap: Fast SharedPreferences wrapper
 - :rocket: Easy to pick up & use right away for any project
 - :gear: Configurable behaviour
-- :lock: Built-in transformations (PlainText, Base64, AES, Keystor)
+- :lock: Built-in transformations (PlainText, Base64, AES, Keystore)
 - :symbols: Extensive custom types support
 - :heart: Kotlin powered. Standard.
+
+### Getting Started
+```kotlin
+val prefs = KsPrefs(applicationContext)
+```
