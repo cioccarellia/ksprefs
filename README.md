@@ -12,10 +12,6 @@
 </p>
 
 ### TLDR
-```gradle
-implementation 'com.cioccarellia.ksprefs:$version'
-```
-
 - :zap: Fast SharedPreferences wrapper
 - :rocket: Easy to pick up & use right away for any project
 - :gear: Configurable behaviour
@@ -23,7 +19,13 @@ implementation 'com.cioccarellia.ksprefs:$version'
 - :symbols: Extensive custom types support
 - :heart: Kotlin powered. Standard.
 
-### Getting Started
+```gradle
+implementation 'com.cioccarellia.ksprefs:$version'
+```
+
 ```kotlin
 val prefs = KsPrefs(applicationContext)
 ```
+
+To read from SharedPreferences, you can use `pull(key, default)`.<br>
+To write to SharedPreferences, you can use `push(key, value)`.
