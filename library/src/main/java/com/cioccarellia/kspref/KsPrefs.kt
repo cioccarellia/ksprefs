@@ -275,7 +275,9 @@ class KsPrefs(
      * */
     fun remove(
         key: String
-    ): Unit = dispatcher.remove(key)
+    ) {
+        dispatcher.remove(key)
+    }
 
     /**
      * This method auto-calls for lifecycle aware instances.
