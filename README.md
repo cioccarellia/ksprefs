@@ -1,4 +1,6 @@
-<p align="center"><a href="https://github.com/cioccarellia/ksprefs" target="_blank"><img width="100" src="extras/ksprefs.png"></a></p>
+<p align="center">
+  <a href="https://github.com/cioccarellia/ksprefs" target="_blank"><img width="100" src="extras/ksprefs.png"></a>
+</p>
 <h1 align="center">KsPrefs</h1>
 <p align="center">Simplify SharedPreferences. 100% Kotlin.</p>
 <p align="center">
