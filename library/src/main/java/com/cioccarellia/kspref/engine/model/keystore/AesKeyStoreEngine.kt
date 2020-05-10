@@ -57,24 +57,27 @@ internal class AesKeyStoreEngine(
      * */
     private val secretKey: SecretKey = KeyStoreFetcher.keystore(keyStore, alias)
 
-    private val _encryption: Cipher
+    private val encryptionCipher: Cipher
         get() = Cipher.getInstance(fullAlgorithm).apply {
             initEncryptMKeystore(secretKey, keyTagSizeInBits)
         }
 
-    override fun encrypt(input: ByteArray): ByteArray = runSafely {
-        val encrypted = _encryption.doFinal(input)
-        Base64.encode(encrypted, base64Flags)
-    }
-
-    private val _decryption: Cipher
+    private val decryptionCipher: Cipher
         get() = Cipher.getInstance(fullAlgorithm).apply {
             initDecryptMKeystore(secretKey, keyTagSizeInBits)
         }
 
+    override fun encrypt(input: ByteArray): ByteArray = runSafely {
+        Base64.encode(
+            encryptionCipher.doFinal(input), base64Flags
+        )
+    }
+
     override fun decrypt(cipherText: ByteArray): ByteArray = runSafely {
-        _decryption.doFinal(
-            Base64.decode(cipherText, base64Flags)
+        decryptionCipher.doFinal(
+            Base64.decode(
+                cipherText, base64Flags
+            )
         )
     }
 }

@@ -73,12 +73,25 @@ class BatchActivity : AppCompatActivity() {
             val queueTask = async {
                 val queueMillis = measureTimeMillis {
                     withContext(Dispatchers.Default) {
+                        val t1 = System.currentTimeMillis()
+
                         for (i in 0..n) {
                             prefs.queue("queued-$i", i)
                             withContext(Dispatchers.Main) {
                                 progressQueue.progress++
                                 queueTitle.text = "queue() -> $i"
+
+                                if (i == 30) {
+                                    val t2 = System.currentTimeMillis()
+
+                                    Toast.makeText(
+                                        this@BatchActivity,
+                                        "30 tasks, taken ${t2 - t1}ms (${(t2 - t1) / 1000}s), average ${(t2 - t1).toFloat() / 30F}ms/task",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
                             }
+
                         }
 
                         prefs.save()

@@ -37,7 +37,7 @@ class App : Application() {
 
         val prefs by lazy {
             KsPrefs(appContext) {
-                encryptionType = aes
+                encryptionType = keyStore
             }
         }
     }

@@ -31,18 +31,36 @@
 package com.cioccarellia.kspref.config
 
 import androidx.annotation.IntRange
+import com.cioccarellia.kspref.annotations.PreferredForEncryption
 import com.cioccarellia.kspref.config.model.KeySizeCheck
 import com.cioccarellia.kspref.config.model.KeyTagSize
 import com.cioccarellia.kspref.defaults.Defaults
 
+/**
+ * Defines the encryption engine to be used while
+ * pushing data to/from the storage.
+ * */
 sealed class EncryptionType {
+    /**
+     * Default transformation, applies no transformation
+     * to yhe bytes transferred to/from the storage.
+     * */
     class PlainText : EncryptionType()
 
+    /**
+     * Applies a Base64 transformation to the bytes
+     * transferred to/from the storage.
+     * */
     class Base64(
         @IntRange(from = 0x0, to = 0x1F)
         val flags: Int = Defaults.DEFAULT_BASE64_FLAGS
     ) : EncryptionType()
 
+    /**
+     * Encrypts and Decrypts the bytes transferred to/from
+     * the storage with "AES/ECB/PKCS5Padding" as transformation.
+     * */
+    @PreferredForEncryption
     class AesEcb(
         val key: String,
         val keySize: KeySizeCheck,
@@ -50,6 +68,10 @@ sealed class EncryptionType {
         val base64Flags: Int = Defaults.DEFAULT_BASE64_FLAGS
     ) : EncryptionType()
 
+    /**
+     * Encrypts and Decrypts the bytes transferred to/from
+     * the storage with "AES/CBC/PKCS5Padding" as transformation.
+     * */
     class AesCbc(
         val key: String,
         val keySize: KeySizeCheck,
@@ -64,6 +86,9 @@ sealed class EncryptionType {
         }
     }
 
+    /**
+     * Encrypts and Decrypts the bytes using the default Android Keystore
+     * */
     class KeyStore(
         val alias: String,
         val keyTagSize: KeyTagSize = Defaults.KEY_TAG_SIZE,

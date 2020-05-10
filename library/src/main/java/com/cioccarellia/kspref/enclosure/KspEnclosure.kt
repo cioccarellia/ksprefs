@@ -33,66 +33,47 @@ internal class KspEnclosure(
     private val namespace: String,
     context: Context,
     internal var sharedReader: Reader = context.getPrefs(namespace),
-    internal var sharedWriter: Writer = sharedReader.edit(),
     internal val engine: Engine = EnginePicker.select(context)
 ) {
+    private val defaultCommitStrategy
+        get() = KsPrefs.config.commitStrategy
+
     /**
      * Value derivation, n times
      * */
     private inline fun deriveVal(
         value: ByteArray
-    ): ByteArray = if (KsPrefs.config.engineIterations == 1) {
-        engine.derive(
-            Transmission(value)
-        ).payload
-    } else {
-        var iterationsLeft = KsPrefs.config.engineIterations
-        var bytes = value
-
-        do {
-            bytes = engine.derive(Transmission(bytes)).payload
-            iterationsLeft--
-        } while (iterationsLeft > 0)
-
-        bytes
-    }
+    ): ByteArray = engine.derive(
+        Transmission(value)
+    ).payload
 
     /**
      * Value integration, n times
      * */
     private inline fun integrateVal(
         value: ByteArray
-    ): ByteArray = if (KsPrefs.config.engineIterations == 1) {
-        engine.integrate(
-            Transmission(value)
-        ).payload
-    } else {
-        var iterationsLeft = KsPrefs.config.engineIterations
-        var bytes = value
-
-        do {
-            bytes = engine.integrate(Transmission(bytes)).payload
-            iterationsLeft--
-        } while (iterationsLeft > 0)
-
-        bytes
-    }
+    ): ByteArray = engine.integrate(
+        Transmission(value)
+    ).payload
 
     /**
      * Key derivation, once
      * */
     private inline fun deriveKey(
         value: String
-    ): String = engine.derive(Transmission(value.bytes())).payload.string()
+    ): String = engine.derive(
+        Transmission(value.bytes())
+    ).payload.string()
 
     /**
      * Key integration, once
      * */
     private inline fun integrateKey(
         value: String
-    ): String = engine.integrate(Transmission(value.bytes())).payload.string()
+    ): String = engine.integrate(
+        Transmission(value.bytes())
+    ).payload.string()
 
-    @PublishedApi
     internal fun read(
         key: String,
         default: ByteArray
@@ -103,7 +84,6 @@ internal class KspEnclosure(
         )
     )
 
-    @PublishedApi
     internal fun readUnsafe(
         key: String
     ) = integrateVal(
@@ -112,12 +92,11 @@ internal class KspEnclosure(
         )
     )
 
-    @PublishedApi
     internal fun write(
         key: String,
         value: ByteArray,
         strategy: CommitStrategy
-    ) = with(sharedWriter) {
+    ) = with(sharedReader.edit()) {
         write(
             deriveKey(key),
             deriveVal(value)
@@ -127,27 +106,24 @@ internal class KspEnclosure(
         )
     }
 
-    @PublishedApi
     internal fun exists(
         key: String
     ) = sharedReader.exists(key)
 
-    @PublishedApi
     internal fun save(
         commitStrategy: CommitStrategy
     ) {
-        with(sharedWriter) {
+        with(sharedReader.edit()) {
             forceFinalization(
                 commitStrategy = commitStrategy
             )
         }
     }
 
-    @PublishedApi
     internal fun remove(
         key: String
-    ) = with(sharedWriter) {
+    ) = with(sharedReader.edit()) {
         delete(deriveKey(key))
-        finalize(KsPrefs.config.commitStrategy)
+        finalize(defaultCommitStrategy)
     }
 }

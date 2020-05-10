@@ -31,6 +31,9 @@ import com.cioccarellia.kspref.exception.NoSuchKeyException
 import com.cioccarellia.kspref.namespace.Namespace
 import kotlin.reflect.KClass
 
+/**
+ * KsPrefs main class
+ * */
 class KsPrefs(
     appContext: Context,
     namespace: String = Namespace.default(appContext),
@@ -71,7 +74,7 @@ class KsPrefs(
     internal val dispatcher = KspDispatcher(namespace, appContext)
 
     internal val engine: Engine
-        get() = dispatcher.enclosure.engine
+        get() = dispatcher.engine()
 
     private var lifecycle: Lifecycle? = null
 
@@ -103,7 +106,7 @@ class KsPrefs(
      * The [key] is just converted from String to ByteArray.
      * [commitStrategy] is used to define the commit behaviour, and it can be parameterized.
      * Then, both [key] and [value] are passed through the picked [engine][Engine].
-     * [key] is derived once, [value] is derived [n][KspConfig.engineIterations] times.
+     * Both [key] and [value] are derived once, becoming key' and value'.
      * The new value is pushed into SharedPreferences and committed, if and according to
      * the [commitStrategy] and the [auto save policy][AutoSavePolicy].
      *
@@ -127,7 +130,7 @@ class KsPrefs(
      * The [value] is first converted into its proper ByteArray representation.
      * The [key] is just converted from String to ByteArray
      * Then, both [key] and [value] are passed through the picked [engine][Engine].
-     * [key] is derived once, [value] is derived [n][KspConfig.engineIterations] times.
+     * Both [key] and [value] are derived once, becoming key' and value'.
      * The new value is pushed into SharedPreferences, but it isn't committed.
      * This saves up a lot of time for batch operations, since the actual saving to the
      * preferences XML file can be forced with [save]
@@ -148,11 +151,10 @@ class KsPrefs(
      * The [default] value is converted into its proper ByteArray representation.
      * The [key] is just converted from String to ByteArray
      * Then, both [key] and [default] are passed through the picked [engine][Engine].
-     * [key] is derived once, [default] is derived [n][KspConfig.engineIterations] times.
-     * [key]' and [default]' are used to pull up the value which may be found inside the shared preferences file.
-     * If the result gives back a non-empty ByteArray, it is chosen as value'. Otherwise, [default]' is used.
-     * [key]' is integrated once, value' (or [default]') is integrated [n][KspConfig.engineIterations]
-     * times, converted, and then returned.
+     * Both [key] and [default] are derived once, becoming key' and default'.
+     * key' and default' are used to pull up the value which may be found inside the shared preferences file.
+     * If the result gives back a non-empty ByteArray, it is chosen as value'. Otherwise, default' is used.
+     * Both key' and value' are integrated once, converted, and then returned.
      *
      *
      * @param[key] The key for the target field.
@@ -172,12 +174,11 @@ class KsPrefs(
      *
      * The [key] is converted from String to ByteArray
      * Then, [key] is passed through the picked [engine][Engine].
-     * [key] is derived once, becoming [key]', and it's used to pull up
+     * [key] is derived once, becoming key', and it's used to pull up
      * the value which may be found inside the shared preferences file.
      * If the result gives back a non-empty ByteArray, it is chosen as value'.
      * Otherwise, [NoSuchKeyException] is thrown.
-     * [key]' is integrated once, value' is integrated [n][KspConfig.engineIterations]
-     * times, converted, and then returned.
+     * Both key' and value' are integrated once, converted, and then returned.
      *
      * This function must be inlined, and can not be used from java.
      *
@@ -202,12 +203,11 @@ class KsPrefs(
      *
      * The [key] is converted from String to ByteArray
      * Then, [key] is passed through the picked [engine][Engine].
-     * [key] is derived once, becoming [key]', and it's used to pull up
+     * [key] is derived once, becoming key', and it's used to pull up
      * the value which may be found inside the shared preferences file.
      * If the result gives back a non-empty ByteArray, it is chosen as value'.
      * Otherwise, [NoSuchKeyException] is thrown.
-     * [key]' is integrated once, value' is integrated [n][KspConfig.engineIterations]
-     * times, converted, and then returned.
+     * Both key' and value' are integrated once, converted, and then returned.
      *
      * This function is its inline counterpart [pull] for non type-reifiable contexts.
      *
@@ -232,7 +232,7 @@ class KsPrefs(
      * Checks whether a value exists under a given [key].
      *
      * The [key] is converted from String to ByteArray, and derived once.
-     * [key]' is used to pull up the value from shared preferences.
+     * key' is used to pull up the value from shared preferences.
      * The value found for the given [key] is analyzed.
      * If it exists, true is returned.
      *
@@ -268,7 +268,7 @@ class KsPrefs(
      * Removes the entry matching the given [key] from [Shared Preferences][SharedPreferences].
      *
      * The [key] is converted from String to ByteArray, and derived once.
-     * [key]' is used to natively remove the record from shared preferences.
+     * key' is used to natively remove the record from shared preferences.
      *
      *
      * @param[key] The key for the target field.

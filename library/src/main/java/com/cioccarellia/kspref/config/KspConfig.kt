@@ -26,8 +26,6 @@ data class KspConfig internal constructor(
     @IntRange(from = 0x0000, to = 0x0010)
     var mode: Int = Defaults.MODE,
     var charset: Charset = Defaults.CHARSET,
-    @IntRange(from = 1, to = 10)
-    var engineIterations: Int = 6,
 
     var autoSave: AutoSavePolicy = Defaults.AUTO_SAVE_POLICY,
     var commitStrategy: CommitStrategy = Defaults.COMMIT_STRATEGY,

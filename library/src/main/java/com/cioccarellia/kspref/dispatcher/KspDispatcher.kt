@@ -27,9 +27,10 @@ internal class KspDispatcher(
     namespace: String,
     context: Context
 ) {
-    internal val enclosure = KspEnclosure(namespace, context)
+    private val enclosure = KspEnclosure(namespace, context)
 
     internal fun expose() = enclosure.sharedReader
+    internal fun engine() = enclosure.engine
 
     private fun <T : Any> convert(
         value: T

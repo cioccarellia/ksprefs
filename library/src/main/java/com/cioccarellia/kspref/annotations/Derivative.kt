@@ -18,4 +18,4 @@ package com.cioccarellia.kspref.annotations
 @Retention(AnnotationRetention.SOURCE)
 @Target(AnnotationTarget.FUNCTION)
 @MustBeDocumented
-annotation class Derivative
+internal annotation class Derivative

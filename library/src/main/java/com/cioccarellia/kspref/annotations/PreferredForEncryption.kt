@@ -17,4 +17,4 @@ package com.cioccarellia.kspref.annotations
 
 @Retention(AnnotationRetention.SOURCE)
 @MustBeDocumented
-annotation class PreferredForEncryption
+internal annotation class PreferredForEncryption
