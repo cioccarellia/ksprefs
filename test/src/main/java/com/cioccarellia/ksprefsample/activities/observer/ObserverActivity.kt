@@ -30,10 +30,12 @@ class ObserverActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_observer)
 
-        val v = Random.nextInt().toString()
-        prefs.push(v, v)
-        val u = prefs.pull<String>(key = v)
+        repeat(5) {
+            val v = Random.nextInt().toString()
+            prefs.push(v, v)
+            val u = prefs.pull<String>(key = v)
 
-        log.text = "V: $v\nU: $u"
+            log.text = "${log.text}V: $v\nU: $u\n"
+        }
     }
 }

@@ -21,8 +21,8 @@ import android.util.Base64
 import com.cioccarellia.kspref.engine.CryptoEngine
 import com.cioccarellia.kspref.engine.Engine
 import com.cioccarellia.kspref.engine.Transmission
-import com.cioccarellia.kspref.extensions.initDecryptKtoMKeyPair
-import com.cioccarellia.kspref.extensions.initEncryptKtoMKeyPair
+import com.cioccarellia.kspref.extensions.initDecryptKeyPair
+import com.cioccarellia.kspref.extensions.initEncryptKeyPair
 import java.security.KeyPair
 import java.security.KeyStore
 import javax.crypto.Cipher
@@ -45,12 +45,12 @@ internal class RsaKeyPairKeyStoreEngine(
 
     private val encryptionCipher: Cipher
         get() = Cipher.getInstance(fullAlgorithm).apply {
-            initEncryptKtoMKeyPair(keyPair.public)
+            initEncryptKeyPair(keyPair.public)
         }
 
     private val decryptionCipher: Cipher
         get() = Cipher.getInstance(fullAlgorithm).apply {
-            initDecryptKtoMKeyPair(keyPair.private)
+            initDecryptKeyPair(keyPair.private)
         }
 
     override fun derive(incoming: Transmission) = Transmission(

@@ -21,8 +21,8 @@ import androidx.annotation.RequiresApi
 import com.cioccarellia.kspref.engine.CryptoEngine
 import com.cioccarellia.kspref.engine.Engine
 import com.cioccarellia.kspref.engine.Transmission
-import com.cioccarellia.kspref.extensions.initDecryptMKeystore
-import com.cioccarellia.kspref.extensions.initEncryptMKeystore
+import com.cioccarellia.kspref.extensions.initDecryptAesGcmKeystore
+import com.cioccarellia.kspref.extensions.initEncryptAesGcmKeystore
 import java.security.KeyStore
 import javax.crypto.Cipher
 import javax.crypto.SecretKey
@@ -59,13 +59,12 @@ internal class AesKeyStoreEngine(
 
     private val encryptionCipher: Cipher
         get() = Cipher.getInstance(fullAlgorithm).apply {
-            initEncryptMKeystore(secretKey, keyTagSizeInBits)
+            initEncryptAesGcmKeystore(secretKey, keyTagSizeInBits)
         }
 
-    private val decryptionCipher: Cipher
-        get() = Cipher.getInstance(fullAlgorithm).apply {
-            initDecryptMKeystore(secretKey, keyTagSizeInBits)
-        }
+    private val decryptionCipher: Cipher = Cipher.getInstance(fullAlgorithm).apply {
+        initDecryptAesGcmKeystore(secretKey, keyTagSizeInBits)
+    }
 
     override fun encrypt(input: ByteArray): ByteArray = runSafely {
         Base64.encode(

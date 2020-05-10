@@ -21,7 +21,7 @@ import javax.crypto.Cipher
 import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
 
-internal fun Cipher.initDecryptMKeystore(
+internal fun Cipher.initDecryptAesGcmKeystore(
     secretKey: SecretKey,
     keyTagSizeInBits: Int
 ) {
@@ -32,7 +32,7 @@ internal fun Cipher.initDecryptMKeystore(
     )
 }
 
-internal fun Cipher.initEncryptMKeystore(
+internal fun Cipher.initEncryptAesGcmKeystore(
     secretKey: SecretKey,
     keyTagSizeInBits: Int
 ) {
@@ -43,13 +43,13 @@ internal fun Cipher.initEncryptMKeystore(
     )
 }
 
-internal fun Cipher.initDecryptKtoMKeyPair(
+internal fun Cipher.initDecryptKeyPair(
     public: PrivateKey
 ) {
     init(Cipher.DECRYPT_MODE, public)
 }
 
-internal fun Cipher.initEncryptKtoMKeyPair(
+internal fun Cipher.initEncryptKeyPair(
     private: PublicKey
 ) {
     init(Cipher.ENCRYPT_MODE, private)
