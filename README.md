@@ -22,7 +22,7 @@ implementation 'com.cioccarellia.ksprefs:$version'
 - :rocket: Easy to pick up & use right away for any project
 - :gear: Configurable behaviour
 - :lock: Built-in transformations (PlainText, Base64, AES, Keystore)
-- :symbols: Extensive custom types support
+- :symbols: Extensive type support
 - :heart: Kotlin powered. Standard.
 
 ```kotlin
@@ -33,5 +33,7 @@ To read from SharedPreferences, you can use `pull(key, default)`.<br>
 To write to SharedPreferences, you can use `push(key, value)`.
 
 ## Introduction
-<img src="extras/scheme.png"><br>
-KsPrefs is a wrapper for SharedPreferences.
+<img src="extras/light/png/scheme.png"><br>
+KsPrefs (<b>K</b>otlin <b>S</b>hared <b>Pref</b>erences) is a wrapper for the default Android SharedPreferences implementation.
+It works by providing control and extensibility to the default API, to create strongly-typed, null safe.
+KsPrefs
