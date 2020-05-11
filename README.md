@@ -71,8 +71,8 @@ class App : Application() {
 
 
 ### Config
-A really high percentage of KsPrefs behaviour is defined by the content of the configuration.<br>
-To configure KsPrefs, you pass in a lambda which edits the configurations
+A lot of times, KsPrefs takes one or another action by viewing at the content of the configuration.<br>
+To configure KsPrefs, you just pass in a lambda which edits the configuration deaults.
 
 ```kotlin
 val prefs = KsPrefs(applicationContext) {
@@ -81,10 +81,15 @@ val prefs = KsPrefs(applicationContext) {
 }
 ```
 
-| Field   | Description                                                                | Default Value        |
-|---------|----------------------------------------------------------------------------|----------------------|
-| mode    | Defines the SharedPreferences access mode                                  | Context.MODE_PRIVATE |
-| charset | Devines the charset used for string-to-byte and byte-to-string conversions | Charsets.UTF_8       |
+| Field | Type | Description | Default Value |
+|-----------------|----------------|--------------------------------------------------------------------------------------------|----------------------|
+| mode | Int | SharedPreferences access mode | Context.MODE_PRIVATE |
+| charset | Charset | Charset used for string-to-byte and byte-to-string conversions | Charsets.UTF_8 |
+| autoSave | AutoSavePolicy | Whether after a `push()` operation a commit is executed according to the `commitStrategy` | AutoSavePolicy.AUTO |
+| commitStrategy | CommitStrategy | Which strategy to use at the moment of writing the preferences onto the persistent storage | CommitStrategy.APPLY |
+| keyRegex | Regex? | Regex which, if non null, every key must match. | null |
+| encryptionType | EncryptionType | Byte transformation technique used to derive and integrate data upon storage operations | PlainText |
+| keySizeMismatch | KeySizeMFS | Action to be taken when the supplied encryption key does not match its expected size | CRASH |
 
 ### Read
 To retrieve values from the preference storage you can use `pull()`.<br>
@@ -95,13 +100,13 @@ A variant is defined *safe* is when you also supply the fallback (default) value
 val safePull = prefs.pull("username", "nobody")
 ```
 
-Even though the standard SharedPreferences API force you to provide a default value, KsPrefs lets you leave that blank, as supplying an actual instance of an object may get verbose if you know that the key is present inside the storage.
+Even though the standard Android SharedPreferences API forces you to provide a default value, KsPrefs lets you leave that blank, as supplying an actual instance of an object may get verbose, and pointless if you are sure the key is present inside the storage.
 
 ```kotlin
 val username = prefs.pull<String>("username")
 val usernameInferred: String = prefs.pull("username")
 ```
-*Node: The function you want to use most of the times allows you to specify the type parameter as a generic, and inlines the bytecode of the function, in order to allow the generic type to be reified.*
+*:pushpin: Other functions accept the type parameter as a class or as a generic. On the latter, the bytecode of the function is inlined, in order to allow the generic type to be reified.*
 
 ### Write
 To save values to the preverence storage you can use `push()`<br>
