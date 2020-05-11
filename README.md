@@ -18,10 +18,10 @@
 implementation 'com.cioccarellia.ksprefs:$version'
 ```
 
-- :zap: Fast and powerful SharedPreferences wrapper.
+- :zap: Powerful SharedPreferences wrapper.
 - :rocket: Easy to pick up & use right away for any project.
-- :gear: Configurable behaviour.
-- :lock: Built-in transformations (PlainText, Base64, AES CBC, AES ECB, Android Keystore).
+- :gear: Fully customizable behaviour.
+- :lock: Built-in cryptography (PlainText, Base64, AES CBC, AES ECB, Android Keystore + AES GCM).
 - :symbols: Extensive type support.
 - :heart: Kotlin powered.
 
@@ -29,16 +29,20 @@ implementation 'com.cioccarellia.ksprefs:$version'
 val prefs = KsPrefs(applicationContext)
 ```
 
-To read from SharedPreferences, you can use `pull(key, default)`.<br>
-To write to SharedPreferences, you can use `push(key, value)`.
+To read from SharedPreferences, use `pull(key, default)`.<br>
+To write to SharedPreferences, use `push(key, value)`.
 
 ## Introduction
-<img src="extras/light/png/scheme.png"><br>
+<img src="extras/light/png/scheme.png"><br><br>
 KsPrefs (<b>K</b>otlin <b>S</b>hared <b>Pref</b>erences) is a wrapper for the default Android SharedPreferences implementation.
-This library works by providing control and extensibility to the default API, to create a preference store with the following properties:
+KsPrefs goal is to bring Kotlin & cryptography advanced features and standards on any Android codebase. 
+As a secondary purpose, this is meant as a replacement for the default SharedPreference API which lacks extensibility, customizability, security & coinciseness.
+This library is different from its baseline because it creates and adds extra functionality, providing control and extensibility to the default API, to create a preference store with the following properties:
 - Strongly-typed
-- Null-safe
+- Null-safe & fail-safe reads
 - Encrypted
-- Extensible
-- Non-verbose
 - Optimized
+- Customizable
+- Non-verbose
+- Extensible
+- Open Source
