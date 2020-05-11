@@ -45,8 +45,8 @@ internal fun Writer.forceFinalization(
     commitStrategy: CommitStrategy
 ): Writer {
     when (commitStrategy) {
-        CommitStrategy.ASYNC_APPLY -> apply()
-        CommitStrategy.SYNC_COMMIT -> commit()
+        CommitStrategy.APPLY -> apply()
+        CommitStrategy.COMMIT -> commit()
         CommitStrategy.NONE -> {
         }
     }

@@ -76,11 +76,11 @@ internal class KspEnclosure(
 
     internal fun read(
         key: String,
-        default: ByteArray
+        fallback: ByteArray
     ) = integrateVal(
         sharedReader.read(
             deriveKey(key),
-            deriveVal(default)
+            deriveVal(fallback)
         )
     )
 

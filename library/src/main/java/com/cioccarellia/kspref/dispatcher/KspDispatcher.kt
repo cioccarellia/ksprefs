@@ -59,13 +59,13 @@ internal class KspDispatcher(
     @PublishedApi
     internal fun <T : Any> pull(
         key: String,
-        default: T
+        fallback: T
     ): T {
         checkKey(key)
 
-        // Bytes for the given input default value
+        // Bytes for the given input fallback value
         // plugged into a type converter
-        val pureBytes = convert(default)
+        val pureBytes = convert(fallback)
 
         // Reads and passes bytes through an engine
         // which applies the required transformation
@@ -74,7 +74,7 @@ internal class KspDispatcher(
 
         // Reifies and returns the read data as an object
         // plugging it through a converter
-        return reify(returnedBytes, default::class)
+        return reify(returnedBytes, fallback::class)
     }
 
     @PublishedApi

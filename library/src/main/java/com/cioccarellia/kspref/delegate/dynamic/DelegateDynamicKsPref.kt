@@ -27,7 +27,7 @@ class DelegateDynamicKsPref<T : Any>(
     private val value: T
 ) {
     operator fun getValue(thisRef: Any?, property: KProperty<*>): T {
-        return prefs.pull(key, default = value)
+        return prefs.pull(key, fallback = value)
     }
 
     operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {

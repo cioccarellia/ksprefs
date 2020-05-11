@@ -61,6 +61,8 @@ ext.deps = [
     test: [
         junit: "junit:junit:4.13",
         robolectric: "org.robolectric:robolectric:4.3.1",
+        androidx_test_core: "androidx.test:core:1.0.0",
+        androidx_test_runner_espresso: "androidx.test.espresso:espresso-core:3.2.0",
         mockito_core: "org.mockito:mockito-core:3.2.4",
         truth: "com.google.truth:truth:1.0.1"
     ]

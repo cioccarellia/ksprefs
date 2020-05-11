@@ -36,7 +36,7 @@ import kotlin.reflect.KClass
  * */
 class KsPrefs(
     appContext: Context,
-    namespace: String = Namespace.default(appContext),
+    val namespace: String = Namespace.default(appContext),
     config: KspConfig.() -> Unit = {}
 ) : LifecycleObserver {
 
@@ -148,25 +148,25 @@ class KsPrefs(
     /**
      * This function pulls a value from the [Shared Preferences][SharedPreferences] object.
      *
-     * The [default] value is converted into its proper ByteArray representation.
+     * The [fallback] value is converted into its proper ByteArray representation.
      * The [key] is just converted from String to ByteArray
-     * Then, both [key] and [default] are passed through the picked [engine][Engine].
-     * Both [key] and [default] are derived once, becoming key' and default'.
-     * key' and default' are used to pull up the value which may be found inside the shared preferences file.
-     * If the result gives back a non-empty ByteArray, it is chosen as value'. Otherwise, default' is used.
+     * Then, both [key] and [fallback] are passed through the picked [engine][Engine].
+     * Both [key] and [fallback] are derived once, becoming key' and fallback'.
+     * key' and fallback' are used to pull up the value which may be found inside the shared preferences file.
+     * If the result gives back a non-empty ByteArray, it is chosen as value'. Otherwise, fallback' is used.
      * Both key' and value' are integrated once, converted, and then returned.
      *
      *
      * @param[key] The key for the target field.
-     * @param[default] The default value, in case the given key matches nothing.
+     * @param[fallback] The fallback value, in case the given key matches nothing.
      *
-     * @return The value KsPref got back for the matching key, or [default].
+     * @return The value KsPref got back for the matching key, or [fallback].
      * */
     @CheckResult
     fun <T : Any> pull(
         key: String,
-        default: T
-    ): T = dispatcher.pull(key, default)
+        fallback: T
+    ): T = dispatcher.pull(key, fallback)
 
 
     /**
@@ -226,6 +226,36 @@ class KsPrefs(
         key: String,
         kclass: KClass<T>
     ): T = dispatcher.pull(key, kclass)
+
+
+    /**
+     * This function (unsafely) pulls a value from the [Shared Preferences][SharedPreferences] object.
+     *
+     * The [key] is converted from String to ByteArray
+     * Then, [key] is passed through the picked [engine][Engine].
+     * [key] is derived once, becoming key', and it's used to pull up
+     * the value which may be found inside the shared preferences file.
+     * If the result gives back a non-empty ByteArray, it is chosen as value'.
+     * Otherwise, [NoSuchKeyException] is thrown.
+     * Both key' and value' are integrated once, converted, and then returned.
+     *
+     * This function is its inline counterpart [pull] for non type-reifiable contexts.
+     *
+     * This function is unsafe because if the key isn't found, an exception is
+     * raised, to enforce its never null return type.
+     *
+     *
+     * @param[key] The key for the target field.
+     * @param[jclass] The type value' will be converted to.
+     *
+     * @return The value KsPref got back for the matching key.
+     * @throws NoSuchKeyException If no value is found for the given [key].
+     * */
+    @CheckResult
+    fun <T : Any> pull(
+        key: String,
+        jclass: Class<T>
+    ): T = dispatcher.pull(key, jclass.kotlin)
 
 
     /**
