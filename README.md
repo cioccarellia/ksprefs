@@ -4,7 +4,7 @@
 <h1 align="center">KsPrefs</h1>
 <p align="center">Simplify SharedPreferences. 100% Kotlin.</p>
 <p align="center">
-  <a tagret="_blank" href="https://bintray.com/cioccarellia/kurl/kurl/_latestVersion"><img src="https://api.bintray.com/packages/cioccarellia/maven/ksprefs/images/download.svg" alt="Download from Bintray"></a>
+  <a tagret="_blank" href="https://bintray.com/cioccarellia/maven/ksprefs/_latestVersion"><img src="https://api.bintray.com/packages/cioccarellia/maven/ksprefs/images/download.svg" alt="Download from Bintray"></a>
   <a tagret="_blank" href="https://app.circleci.com/pipelines/github/cioccarellia/ksprefs"><img src="https://circleci.com/gh/cioccarellia/ksprefs.svg?style=svg" alt="CircleCI"></a>
   <a tagret="_blank" href="https://app.codacy.com/manual/cioccarellia/ksprefs/dashboard"><img src="https://api.codacy.com/project/badge/Grade/23db3b5c2d8647af86b309dd75f7393d" alt="Codacy"></a>
   <a><img src="https://img.shields.io/badge/kotlin-1.3.72-orange.svg" alt="Kotlin"></a>
@@ -119,21 +119,22 @@ prefs.push("username", viewModel.username)
 ```
 
 ### Save, Auto Save Policies & Commit Strategies
+A pending transaction is a change which is registered in-memory but not on the XML preference file.<br>
 To commit any pending transaction to the persistent XML storage, you can use `save()`.<br>
-By default, `autoSave` is set to `AutoSavePolicy.AUTO`, and therefore changes are automatically synchronized with the underlying XML file, as with each `push()` call the value is directly committed and saved.<br>
-If `autoSave` is turned off, `push()` will save the change in-memory, but won't write it to the XML file until `save()` is called.
+By default, `autoSave` is set to `AutoSavePolicy.AUTO`, and therefore changes are automatically synchronized with the underlying XML file, as with each `push()` call the value is directly committed and saved. Therefore, no pending transaction is created.<br>
+However, if `autoSave` is turned off, `push()` will save the change in-memory, but won't write it to the XML file until `save()` is called. This way it will create a pending transaction which will be kept in-memory until a commit operation happens.<br>
 Here is a table representing when values are saved, depending on the policy in use.
-|  | AUTO | MANUAL |
+| `AutoSavePolicy` | AUTO | MANUAL |
 |---------|--------------------|--------------------|
 | push() | :white_check_mark: | :x: |
 | queue() | :x: | :x: |
 | save() | :white_check_mark: | :white_check_mark: |
 
-The commit strategy involves how to write changes to the persistent XML storage.<br>
+*:pushpin: The commit strategy involves how to write changes to the persistent XML storage.*<br><br>
 The best (and default) practise is to use `apply()`. `commit()` is also available, as well as none, for no-op (Does not write anything, used internally for `queue()`).<br>
-`save()` and `push()` use the config commit strategy to save their changes to the persistent XML storage
+`save()` and `push()` use the configuration commit strategy to decide how to save their changes to the persistent XML storage
 
-|  | APPLY | COMMIT | NONE |
+| `CommitStrategy` | APPLY | COMMIT | NONE |
 |--------|--------------------|--------------------|------|
 | in-memory | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | XML | :white_check_mark: | :white_check_mark: | :x: |
@@ -141,15 +142,21 @@ The best (and default) practise is to use `apply()`. `commit()` is also availabl
 | atomic | :x: | :white_check_mark: | :x: |
 
 ### Queuing
-To enqueue values to be written onto the preference storage you can use `queue()`. It follows the `push()` syntax.<br>
+To enqueue values to be written into the preference storage you can use `queue()`. It follows the `push()` syntax.<br>
 Not writing the changes to the file makes enqueuing a valid choice for batch computing or expensive and long-running operations.<br>
 `queue()` takes the key and the value, and saves the changes in-memory.<br>
-`queue()` does not actually write them to the storage. You can do so by calling `save()`.<br>
+`queue()` does not actually write them to the storage. You can do so by calling `save()`.
+<br><br>
+This touches a broader concept, which is storing scope. There are two storing scopes for SharedPreferences: 
+- in-memory (key-value pairs are kept in memory). This is fast to read to/write from, but does not persist application restarts.
+- XML (key-value pairs are kept on a file). Writng to a file is mildly expensive but it allows preferences to survive across application restarts.<br>
+Here is a table explaining how different methods inside KsPrefs touch and go through those storing scopes
 
-|  | in-memory | XML |
+| `StoringScope` | in-memory | XML |
 |---------|--------------------|---------------------------------|
 | push() | :white_check_mark: | :white_check_mark: (By default) |
 | queue() | :white_check_mark: | :x: |
+| save() | :white_check_mark: | :white_check_mark: |
 
 ```kotlin
 for ((index, pic) in picArray.withIndex()) {
@@ -158,3 +165,12 @@ for ((index, pic) in picArray.withIndex()) {
 
 prefs.save()
 ```
+
+### Dynamic Delegates
+It is really useful and fun to have dynamic properties whose value is a direct representation of what the underlying XML preferences file contains.
+
+```kotlin
+val accentColor by prefs.dynamic("accent_color", "#2106F3")
+```
+
+When you set a value for this property
