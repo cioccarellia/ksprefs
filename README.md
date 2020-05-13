@@ -166,7 +166,6 @@ Here is a table explaining how different methods inside KsPrefs touch and go thr
 
 *:pushpin: The `StoringScope` involves at which level changes are propagated.*<br>
 
-##### Analysis
 In the following snippet (Given that `autoSavePolicy` is set to `AUTO`), `n` in-memory and `x` XML write operations are performed. This, given  `tᴺ` and `tˣ` for how long those operations will take, takes `n×tᴺ + m×tˣ`. Given that, if using `push()`, `m=n`, then it resolves to `n×(tᴺ + tˣ)`
 
 ```kotlin
