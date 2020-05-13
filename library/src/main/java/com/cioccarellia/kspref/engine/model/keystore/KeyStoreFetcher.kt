@@ -31,7 +31,7 @@ import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import javax.security.auth.x500.X500Principal
 
-object KeyStoreFetcher {
+internal object KeyStoreFetcher {
 
     @RequiresApi(Build.VERSION_CODES.M)
     fun keystore(

@@ -45,16 +45,10 @@ internal class AesKeyStoreEngine(
         decrypt(outgoing.payload)
     )
 
-    /**
-     * Base keystore
-     * */
     private val keyStore: KeyStore = KeyStore.getInstance(ANDROID_KEYSTORE).also {
         it.load(null)
     }
 
-    /**
-     * Secret app key
-     * */
     private val secretKey: SecretKey = KeyStoreFetcher.keystore(keyStore, alias)
 
     private val encryptionCipher: Cipher
