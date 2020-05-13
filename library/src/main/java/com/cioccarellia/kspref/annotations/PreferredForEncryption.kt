@@ -15,6 +15,9 @@
  */
 package com.cioccarellia.kspref.annotations
 
+/**
+ * Annotates the best practise for encryption among other options
+ * */
 @Retention(AnnotationRetention.SOURCE)
 @MustBeDocumented
 internal annotation class PreferredForEncryption

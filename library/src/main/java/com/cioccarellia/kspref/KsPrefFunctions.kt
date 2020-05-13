@@ -20,6 +20,7 @@ import com.cioccarellia.kspref.delegate.dynamic.DelegateDynamicUnsafePref
 import com.cioccarellia.kspref.extensions.emptyByteArray
 import java.security.SecureRandom
 import kotlin.random.asKotlinRandom
+import kotlin.reflect.KClass
 
 /**
  * Returns a randomly-generated IV
@@ -39,9 +40,37 @@ fun <T : Any> KsPrefs.dynamic(
     initialization: () -> T
 ) = DelegateDynamicKsPref(this, key, initialization())
 
+
+/**
+ * Used to initialize a dynamic property.
+ * */
+fun <T : Any> KsPrefs.dynamic(
+    key: String,
+    fallback: T
+) = DelegateDynamicKsPref(this, key, fallback)
+
+
 /**
  * Used to initialize an unsafe dynamic property.
  * */
 inline fun <reified T : Any> KsPrefs.dynamic(
     key: String
 ) = DelegateDynamicUnsafePref(this, key, T::class)
+
+
+/**
+ * Used to initialize an unsafe dynamic property.
+ * */
+fun <T : Any> KsPrefs.dynamic(
+    key: String,
+    kclass: KClass<T>
+) = DelegateDynamicUnsafePref(this, key, kclass)
+
+
+/**
+ * Used to initialize an unsafe dynamic property.
+ * */
+fun <T : Any> KsPrefs.dynamic(
+    key: String,
+    jclass: Class<T>
+) = DelegateDynamicUnsafePref(this, key, jclass.kotlin)

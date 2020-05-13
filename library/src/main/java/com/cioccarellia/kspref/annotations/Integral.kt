@@ -15,6 +15,10 @@
  */
 package com.cioccarellia.kspref.annotations
 
+/**
+ * The annotated function decrypts/moves the data to a stage
+ * where it is deciphered
+ * */
 @Retention(AnnotationRetention.SOURCE)
 @Target(AnnotationTarget.FUNCTION)
 @MustBeDocumented
