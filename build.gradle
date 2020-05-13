@@ -28,6 +28,7 @@ buildscript {
         classpath deps.gradle_plugins.bintray_release
         classpath deps.gradle_plugins.kotlin
         classpath deps.gradle_plugins.versions
+        //classpath deps.gradle_plugins.serialization
     }
 }
 
