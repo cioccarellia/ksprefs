@@ -6,7 +6,7 @@
 <p align="center">
   <a tagret="_blank" href="https://bintray.com/cioccarellia/maven/ksprefs/_latestVersion"><img src="https://api.bintray.com/packages/cioccarellia/maven/ksprefs/images/download.svg" alt="Download from Bintray"></a>
   <a tagret="_blank" href="https://app.circleci.com/pipelines/github/cioccarellia/ksprefs"><img src="https://circleci.com/gh/cioccarellia/ksprefs.svg?style=svg" alt="CircleCI"></a>
-  <a tagret="_blank" href="https://app.codacy.com/manual/cioccarellia/ksprefs/dashboard"><img src="https://api.codacy.com/project/badge/Grade/23db3b5c2d8647af86b309dd75f7393d" alt="Codacy"></a>
+  <a tagret="_blank" href="https://app.codacy.com/manual/cioccarellia/ksprefs/dashboard"><img src="https://api.codacy.com/project/badge/Grade/f10cdbdbe7b84d0ea7a03b755c104e03" alt="Codacy"></a>
   <a><img src="https://img.shields.io/badge/kotlin-1.3.72-orange.svg" alt="Kotlin"></a>
   <a><img src="https://img.shields.io/badge/min-19-00e676.svg" alt="Android Min Sdk"></a>
   <a><img src="https://img.shields.io/badge/compile-29-00e676.svg" alt="Android Compile Version"></a>
@@ -120,9 +120,12 @@ prefs.push("username", viewModel.username)
 
 ### Save, Auto Save Policies & Commit Strategies
 A pending transaction is a change which is registered in-memory but not on the XML preference file.<br>
-To commit any pending transaction to the persistent XML storage, you can use `save()`.<br>
-By default, `autoSave` is set to `AutoSavePolicy.AUTO`, and therefore changes are automatically synchronized with the underlying XML file, as with each `push()` call the value is directly committed and saved. Therefore, no pending transaction is created.<br>
-However, if `autoSave` is turned off, `push()` will save the change in-memory, but won't write it to the XML file until `save()` is called. This way it will create a pending transaction which will be kept in-memory until a commit operation happens.<br>
+To commit any pending transaction to the persistent XML storage, you can use `save()`.
+
+By default, `autoSave` is set to `AutoSavePolicy.AUTO`, and therefore changes are automatically synchronized with the underlying XML file, as with each `push()` call the value is directly committed and saved. Therefore, no pending transaction is created.
+
+However, if `autoSave` is turned off (`AutoSavePolicy.MANUAL`), `push()` will save the change in-memory, but won't write it to the XML file until `save()` is called. This way it will create a pending transaction which will be kept in-memory until a commit operation happens.
+
 Here is a table representing when values are saved, depending on the policy in use.
 | `AutoSavePolicy` | AUTO | MANUAL |
 |---------|--------------------|--------------------|
@@ -130,8 +133,9 @@ Here is a table representing when values are saved, depending on the policy in u
 | queue() | :x: | :x: |
 | save() | :white_check_mark: | :white_check_mark: |
 
-*:pushpin: The commit strategy involves how to write changes to the persistent XML storage.*<br><br>
-The best (and default) practise is to use `apply()`. `commit()` is also available, as well as none, for no-op (Does not write anything, used internally for `queue()`).<br>
+*:pushpin: The `AutoSavePolicy` involves when to write changes to the persistent XML storage.*<br>
+
+The best (and default) practise is to use `APPLY`. Then, `COMMIT` is also available, as well as `NONE`, for no-op (Does not write anything, used internally for `queue()`).<br>
 `save()` and `push()` use the configuration commit strategy to decide how to save their changes to the persistent XML storage
 
 | `CommitStrategy` | APPLY | COMMIT | NONE |
@@ -140,6 +144,8 @@ The best (and default) practise is to use `apply()`. `commit()` is also availabl
 | XML | :white_check_mark: | :white_check_mark: | :x: |
 | async | :white_check_mark: | :x: | :x: |
 | atomic | :x: | :white_check_mark: | :x: |
+
+*:pushpin: The `CommitStrategy` involves how to write changes to the persistent XML storage.*<br>
 
 ### Queuing
 To enqueue values to be written into the preference storage you can use `queue()`. It follows the `push()` syntax.<br>
@@ -154,17 +160,35 @@ Here is a table explaining how different methods inside KsPrefs touch and go thr
 
 | `StoringScope` | in-memory | XML |
 |---------|--------------------|---------------------------------|
-| push() | :white_check_mark: | :white_check_mark: (By default) |
+| push()  | :white_check_mark: | :white_check_mark: (By default) |
 | queue() | :white_check_mark: | :x: |
-| save() | :white_check_mark: | :white_check_mark: |
+| save()  | :white_check_mark: | :white_check_mark: |
+
+*:pushpin: The `StoringScope` involves at which level changes are propagated.*<br>
+
+In the following snippet (Given that `autoSavePolicy` is set to `AUTO`), `n` in-memory and `x` XML write operations are performed. This, given  `tᴺ` and `tˣ` for how long those operations will take, takes `n×tᴺ + m×tˣ`. Given that, if using `push()`, `m=n`, then it resolves to `n×(tᴺ + tˣ)`
 
 ```kotlin
-for ((index, pic) in picArray.withIndex()) {
+for ((index, pic) in picsArray.toList().withIndex()) {
+    // Long-running computation
+    prefs.push("pic-$index", pic.url)
+}
+```
+
+Even though this isn't an important speedup, as n (and m) grow, the computation takes longer, also given that `tᴺ < tˣ`. Enqueuing values makes `m=1`, and the time/op chart follows a more gentle curve: `n×tᴺ + tˣ`.
+This improvements drammatically optimizes performances for a large amount of operations.
+
+```kotlin
+for ((index, pic) in picsArray.toList().withIndex()) {
+    // Long-running computation
     prefs.queue("pic-$index", pic.url)
 }
 
+// One save operation
 prefs.save()
 ```
+
+Please note, that if you set `autoSavePolicy` to `MANUAL`, `push()` will only change the in-memory values, and you will need to save them manually anyways.
 
 ### Dynamic Delegates
 It is really useful and fun to have dynamic properties whose value is a direct representation of what the underlying XML preferences file contains.
