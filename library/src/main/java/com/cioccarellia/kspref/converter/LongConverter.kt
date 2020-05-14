@@ -20,6 +20,6 @@ import com.cioccarellia.kspref.extensions.string
 
 @PublishedApi
 internal class LongConverter : TypeConverter<Long>() {
-    override fun transform(value: Long) = value.toString().bytes()
-    override fun reify(value: ByteArray) = value.string().toLong()
+    override fun derive(value: Long) = value.toString().bytes()
+    override fun integrate(value: ByteArray) = value.string().toLong()
 }

@@ -20,6 +20,6 @@ import com.cioccarellia.kspref.extensions.string
 
 @PublishedApi
 internal class BooleanConverter : TypeConverter<Boolean>() {
-    override fun transform(value: Boolean) = value.toString().bytes()
-    override fun reify(value: ByteArray) = value.string().toBoolean()
+    override fun derive(value: Boolean) = value.toString().bytes()
+    override fun integrate(value: ByteArray) = value.string().toBoolean()
 }

@@ -20,6 +20,6 @@ import com.cioccarellia.kspref.extensions.string
 
 @PublishedApi
 internal class ShortConverter : TypeConverter<Short>() {
-    override fun transform(value: Short) = value.toString().bytes()
-    override fun reify(value: ByteArray) = value.string().toShort()
+    override fun derive(value: Short) = value.toString().bytes()
+    override fun integrate(value: ByteArray) = value.string().toShort()
 }

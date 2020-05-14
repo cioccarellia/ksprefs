@@ -21,6 +21,6 @@ import java.util.*
 
 @PublishedApi
 internal class DateConverter : TypeConverter<Date>() {
-    override fun transform(value: Date) = value.time.toString().bytes()
-    override fun reify(value: ByteArray) = Date(value.string().toLong())
+    override fun derive(value: Date) = value.time.toString().bytes()
+    override fun integrate(value: ByteArray) = Date(value.string().toLong())
 }

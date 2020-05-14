@@ -27,6 +27,7 @@ dependencies {
     api deps.androidx.lifecycle.ext
 
     testImplementation deps.kotlin.test.mockito
+    testImplementation deps.kotlin.test.mockito
     testImplementation deps.test.robolectric
     testImplementation deps.test.junit
     testImplementation deps.test.mockito_core

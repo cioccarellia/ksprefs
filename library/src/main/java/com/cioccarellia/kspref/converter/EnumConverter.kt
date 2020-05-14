@@ -15,11 +15,22 @@
  */
 package com.cioccarellia.kspref.converter
 
-import com.cioccarellia.kspref.extensions.bytes
 import com.cioccarellia.kspref.extensions.string
+import kotlin.reflect.KClass
 
 @PublishedApi
-internal open class CharSequenceConverter : TypeConverter<CharSequence>() {
-    override fun derive(value: CharSequence) = value.toString().bytes()
-    override fun integrate(value: ByteArray) = value.string() as CharSequence
+internal open class EnumConverter(
+    private val kclass: KClass<Enum<*>>
+) : TypeConverter<Enum<*>>() {
+
+    override fun derive(value: Enum<*>) = kclass.java.enumConstants
+        ?.map { it.toString() }
+        ?.indexOf(value.toString())
+        .toString()
+        .toByteArray()
+
+    override fun integrate(value: ByteArray): Enum<*> {
+        val enumIndex = value.string().toInt()
+        return kclass.java.enumConstants!![enumIndex]
+    }
 }

@@ -18,6 +18,7 @@ package com.cioccarellia.ksprefsample.activities.numbers
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.cioccarellia.kspref.config.model.CommitStrategy
 import com.cioccarellia.ksprefsample.App
 import com.cioccarellia.ksprefsample.R
 import java.math.BigInteger
@@ -39,6 +40,7 @@ class NumbersActivity : AppCompatActivity() {
             "bigint",
             BigInteger(8 * 8 * 8 * 2, java.util.Random(System.currentTimeMillis()))
         )
+        App.prefs.push("enum", CommitStrategy.APPLY)
 
         log.text = buildString {
             val int = App.prefs.pull<Int>("int")
@@ -47,10 +49,10 @@ class NumbersActivity : AppCompatActivity() {
             val float = App.prefs.pull<Float>("float")
             val double = App.prefs.pull<Double>("double")
             val bigint = App.prefs.pull<BigInteger>("bigint")
+            val enum = App.prefs.pull<CommitStrategy>("enum")
 
-            listOf(int, long, short, float, double, bigint).forEach {
-                append("${it::class.simpleName} -> $it")
-                appendln()
+            listOf(int, long, short, float, double, bigint, enum).forEach {
+                appendln("${it::class.simpleName} -> $it")
             }
         }
     }

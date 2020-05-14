@@ -29,27 +29,22 @@ internal fun Writer.write(
 
 internal fun Writer.delete(
     key: String
-): Writer = this.remove(key)
+): Writer = remove(key)
 
 internal fun Writer.finalize(
     commitStrategy: CommitStrategy
-): Writer {
+) {
     if (KsPrefs.config.autoSave == AutoSavePolicy.AUTO) {
         forceFinalization(commitStrategy)
     }
-
-    return this
 }
 
+@Suppress("NON_EXHAUSTIVE_WHEN")
 internal fun Writer.forceFinalization(
     commitStrategy: CommitStrategy
-): Writer {
+) {
     when (commitStrategy) {
         CommitStrategy.APPLY -> apply()
         CommitStrategy.COMMIT -> commit()
-        CommitStrategy.NONE -> {
-        }
     }
-
-    return this
 }

@@ -20,6 +20,6 @@ import com.cioccarellia.kspref.extensions.string
 
 @PublishedApi
 internal open class StringConverter : TypeConverter<String>() {
-    override fun transform(value: String) = value.bytes()
-    override fun reify(value: ByteArray) = value.string()
+    override fun derive(value: String) = value.bytes()
+    override fun integrate(value: ByteArray) = value.string()
 }

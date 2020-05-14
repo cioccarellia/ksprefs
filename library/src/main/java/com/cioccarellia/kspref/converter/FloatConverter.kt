@@ -20,6 +20,6 @@ import com.cioccarellia.kspref.extensions.string
 
 @PublishedApi
 internal class FloatConverter : TypeConverter<Float>() {
-    override fun transform(value: Float) = value.toString().bytes()
-    override fun reify(value: ByteArray) = value.string().toFloat()
+    override fun derive(value: Float) = value.toString().bytes()
+    override fun integrate(value: ByteArray) = value.string().toFloat()
 }

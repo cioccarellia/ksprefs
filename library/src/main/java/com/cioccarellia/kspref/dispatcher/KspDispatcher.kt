@@ -32,7 +32,7 @@ internal class KspDispatcher(
     internal fun expose() = enclosure.sharedReader
     internal fun engine() = enclosure.engine
 
-    private fun <T : Any> convert(
+    private fun <T : Any> transform(
         value: T
     ) = TypeConverter.pickAndTransform(value, value::class)
 
@@ -50,7 +50,7 @@ internal class KspDispatcher(
         checkKey(key)
 
         // Bytes for the given input value
-        val pureBytes = convert(value)
+        val pureBytes = transform(value)
 
         // Writes the converted bytes to the shared pre
         enclosure.write(key, pureBytes, strategy)
@@ -65,7 +65,7 @@ internal class KspDispatcher(
 
         // Bytes for the given input fallback value
         // plugged into a type converter
-        val pureBytes = convert(fallback)
+        val pureBytes = transform(fallback)
 
         // Reads and passes bytes through an engine
         // which applies the required transformation

@@ -20,6 +20,6 @@ import com.cioccarellia.kspref.extensions.string
 
 @PublishedApi
 internal class IntConverter : TypeConverter<Int>() {
-    override fun transform(value: Int) = value.toString().bytes()
-    override fun reify(value: ByteArray) = value.string().toInt()
+    override fun derive(value: Int) = value.toString().bytes()
+    override fun integrate(value: ByteArray) = value.string().toInt()
 }

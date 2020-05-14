@@ -21,6 +21,6 @@ import java.math.BigDecimal
 
 @PublishedApi
 internal class BigDecimalConverter : TypeConverter<BigDecimal>() {
-    override fun transform(value: BigDecimal) = value.toString().bytes()
-    override fun reify(value: ByteArray) = value.string().toBigDecimal()
+    override fun derive(value: BigDecimal) = value.toString().bytes()
+    override fun integrate(value: ByteArray) = value.string().toBigDecimal()
 }

@@ -17,6 +17,6 @@ package com.cioccarellia.kspref.converter
 
 @PublishedApi
 internal class ByteConverter : TypeConverter<Byte>() {
-    override fun transform(value: Byte) = ByteArray(1) { value }
-    override fun reify(value: ByteArray) = value[0]
+    override fun derive(value: Byte) = ByteArray(1) { value }
+    override fun integrate(value: ByteArray) = value[0]
 }

@@ -28,7 +28,7 @@ internal fun Reader.read(
 ): ByteArray = getString(key, default.string())?.bytes() ?: "".bytes()
 
 @CheckResult
-internal fun Reader.readUnsafe(
+internal fun Reader.readOrThrow(
     key: String
 ): ByteArray = try {
     getString(key, null)!!.bytes()

@@ -21,6 +21,6 @@ import java.math.BigInteger
 
 @PublishedApi
 internal class BigIntConverter : TypeConverter<BigInteger>() {
-    override fun transform(value: BigInteger) = value.toString().bytes()
-    override fun reify(value: ByteArray) = value.string().toBigInteger()
+    override fun derive(value: BigInteger) = value.toString().bytes()
+    override fun integrate(value: ByteArray) = value.string().toBigInteger()
 }

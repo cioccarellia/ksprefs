@@ -20,6 +20,6 @@ import com.cioccarellia.kspref.extensions.string
 
 @PublishedApi
 internal class DoubleConverter : TypeConverter<Double>() {
-    override fun transform(value: Double) = value.toString().bytes()
-    override fun reify(value: ByteArray) = value.string().toDouble()
+    override fun derive(value: Double) = value.toString().bytes()
+    override fun integrate(value: ByteArray) = value.string().toDouble()
 }

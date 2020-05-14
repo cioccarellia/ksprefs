@@ -35,7 +35,7 @@ internal class KspEnclosure(
     internal var sharedReader: Reader = context.getPrefs(namespace),
     internal val engine: Engine = EnginePicker.select(context)
 ) {
-    private val defaultCommitStrategy
+    private inline val defaultCommitStrategy
         get() = KsPrefs.config.commitStrategy
 
     /**
@@ -78,18 +78,13 @@ internal class KspEnclosure(
         key: String,
         fallback: ByteArray
     ) = integrateVal(
-        sharedReader.read(
-            deriveKey(key),
-            deriveVal(fallback)
-        )
+        sharedReader.read(deriveKey(key), deriveVal(fallback))
     )
 
     internal fun readUnsafe(
         key: String
     ) = integrateVal(
-        sharedReader.readUnsafe(
-            deriveKey(key)
-        )
+        sharedReader.readOrThrow(deriveKey(key))
     )
 
     internal fun write(
@@ -97,13 +92,8 @@ internal class KspEnclosure(
         value: ByteArray,
         strategy: CommitStrategy
     ) = with(sharedReader.edit()) {
-        write(
-            deriveKey(key),
-            deriveVal(value)
-        )
-        finalize(
-            strategy
-        )
+        write(deriveKey(key), deriveVal(value))
+        finalize(strategy)
     }
 
     internal fun exists(
@@ -114,9 +104,7 @@ internal class KspEnclosure(
         commitStrategy: CommitStrategy
     ) {
         with(sharedReader.edit()) {
-            forceFinalization(
-                commitStrategy = commitStrategy
-            )
+            forceFinalization(commitStrategy = commitStrategy)
         }
     }
 

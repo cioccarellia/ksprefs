@@ -21,8 +21,8 @@ import java.util.*
 
 @PublishedApi
 internal class CalendarConverter : TypeConverter<Calendar>() {
-    override fun transform(value: Calendar) = value.time.time.toString().bytes()
-    override fun reify(value: ByteArray): Calendar = Calendar.getInstance().apply {
+    override fun derive(value: Calendar) = value.time.time.toString().bytes()
+    override fun integrate(value: ByteArray): Calendar = Calendar.getInstance().apply {
         time = Date(value.string().toLong())
     }
 }
