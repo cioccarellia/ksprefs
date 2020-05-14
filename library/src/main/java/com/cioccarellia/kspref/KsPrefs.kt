@@ -73,10 +73,10 @@ class KsPrefs(
     @PublishedApi
     internal val dispatcher = KspDispatcher(namespace, appContext)
 
+    private var lifecycle: Lifecycle? = null
+
     internal val engine: Engine
         get() = dispatcher.engine()
-
-    private var lifecycle: Lifecycle? = null
 
     /**
      * Exposes the internal [Shared Preferences][SharedPreferences]
