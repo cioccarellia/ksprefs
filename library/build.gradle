@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-ext.module_name = "kspref"
+ext.module_name = "ksprefs"
 
 apply from: rootProject.file("gradle/android_library_config.gradle")
 
@@ -22,9 +22,7 @@ dependencies {
     compileOnly deps.androidx.annotations
     implementation deps.kotlin.stdlib8
     implementation deps.kotlin.coroutines.android
-
-    //api deps.kotlin.serialization
-    api deps.androidx.lifecycle.ext
+    implementation deps.androidx.lifecycle.ext
 
     testImplementation deps.kotlin.test.mockito
     testImplementation deps.kotlin.test.mockito

@@ -26,5 +26,9 @@ android {
             "src/main/res",
             "src/main/res-public"
         ]
+
+        android.sourceSets.all {
+            java.srcDir("src/$name/kotlin")
+        }
     }
 }
