@@ -13,31 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.ksprefsample
+package com.cioccarellia.ksprefs.engine
 
-import android.app.Application
-import android.content.Context
-import com.cioccarellia.ksprefs.KsPrefs
-import com.cioccarellia.ksprefs.config.EncryptionType
 import com.cioccarellia.ksprefs.config.model.KeySize
+import com.cioccarellia.ksprefs.extensions.string
+import com.cioccarellia.ksprefs.internal.ByteSizeable
 
-class App : Application() {
+internal inline class SymmetricKey(
+    val bytes: ByteArray
+) : ByteSizeable {
 
-    companion object {
-        lateinit var appContext: Context
+    fun string() = toString()
 
-        private val aes = EncryptionType.AesGcm("dadaaaaaaaaaaaaa", KeySize.SIZE_128)
-        private val keyStore = EncryptionType.KeyStore("alias0")
+    override fun toString() = bytes.string()
 
-        val prefs by lazy {
-            KsPrefs(appContext) {
-                encryptionType = aes
-            }
-        }
-    }
+    override fun byteCount() = bytes.size
 
-    override fun onCreate() {
-        super.onCreate()
-        appContext = this
-    }
+    override fun bitCount() = byteCount() * 8
+
+    fun matches(keySizeOptions: KeySize) = bytes.size == keySizeOptions.byteCount()
+
+    fun trim(keySizeOptions: KeySize): SymmetricKey =
+        SymmetricKey(
+            bytes.sliceArray(
+                0 until keySizeOptions.byteCount()
+            )
+        )
 }

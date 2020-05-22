@@ -13,15 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.cioccarellia.ksprefs.engine
 
-ext.library = [
-    min_sdk: 19,
-    compile_sdk: 29,
+import com.cioccarellia.ksprefs.annotations.Derivative
+import com.cioccarellia.ksprefs.annotations.Integral
+import com.cioccarellia.ksprefs.internal.SafeRun
 
-    publish_group: "com.cioccarellia",
-    publish_version: "2.0.0-tx1",
-    publish_version_code: 205,
+internal interface CryptoEngine : SafeRun {
+    @Derivative
+    fun encrypt(
+        input: ByteArray
+    ): ByteArray
 
-    description: "Kotlin SharedPreferences, Simplified",
-    website: "https://github.com/cioccarellia/ksprefs"
-]
+    @Integral
+    fun decrypt(
+        cipherText: ByteArray
+    ): ByteArray
+}

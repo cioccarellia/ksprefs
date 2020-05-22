@@ -6,22 +6,19 @@
  * You may obtain a copy of the License at
  *
  *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ *     
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.cioccarellia.ksprefs.engine.model.plaintext
 
-ext.library = [
-    min_sdk: 19,
-    compile_sdk: 29,
+import com.cioccarellia.ksprefs.engine.Engine
+import com.cioccarellia.ksprefs.engine.Transmission
 
-    publish_group: "com.cioccarellia",
-    publish_version: "2.0.0-tx1",
-    publish_version_code: 205,
-
-    description: "Kotlin SharedPreferences, Simplified",
-    website: "https://github.com/cioccarellia/ksprefs"
-]
+internal class PlainTextEngine : Engine() {
+    override fun derive(incoming: Transmission) = Transmission(incoming.payload)
+    override fun integrate(outgoing: Transmission) = Transmission(outgoing.payload)
+}

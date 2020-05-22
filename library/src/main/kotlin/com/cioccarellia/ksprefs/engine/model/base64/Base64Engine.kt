@@ -13,15 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.cioccarellia.ksprefs.engine.model.base64
 
-ext.library = [
-    min_sdk: 19,
-    compile_sdk: 29,
+import android.util.Base64
+import com.cioccarellia.ksprefs.engine.Engine
+import com.cioccarellia.ksprefs.engine.Transmission
 
-    publish_group: "com.cioccarellia",
-    publish_version: "2.0.0-tx1",
-    publish_version_code: 205,
+internal class Base64Engine(
+    private val base64Flags: Int
+) : Engine() {
 
-    description: "Kotlin SharedPreferences, Simplified",
-    website: "https://github.com/cioccarellia/ksprefs"
-]
+    override fun derive(incoming: Transmission) = Transmission(
+        Base64.encode(incoming.payload, base64Flags)
+    )
+
+    override fun integrate(outgoing: Transmission) = Transmission(
+        Base64.decode(outgoing.payload, base64Flags)
+    )
+}

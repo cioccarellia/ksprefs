@@ -18,7 +18,7 @@ package com.cioccarellia.ksprefsample.activities.numbers
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.cioccarellia.kspref.config.model.CommitStrategy
+import com.cioccarellia.ksprefs.config.model.CommitStrategy
 import com.cioccarellia.ksprefsample.App
 import com.cioccarellia.ksprefsample.R
 import java.math.BigInteger

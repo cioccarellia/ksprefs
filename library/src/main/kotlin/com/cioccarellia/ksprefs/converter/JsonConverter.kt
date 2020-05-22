@@ -13,15 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.cioccarellia.ksprefs.converter
 
-ext.library = [
-    min_sdk: 19,
-    compile_sdk: 29,
+import com.cioccarellia.ksprefs.extensions.bytes
+import com.cioccarellia.ksprefs.extensions.string
+import org.json.JSONObject
 
-    publish_group: "com.cioccarellia",
-    publish_version: "2.0.0-tx1",
-    publish_version_code: 205,
-
-    description: "Kotlin SharedPreferences, Simplified",
-    website: "https://github.com/cioccarellia/ksprefs"
-]
+@PublishedApi
+internal class JsonConverter : TypeConverter<JSONObject>() {
+    override fun derive(value: JSONObject) = value.toString().bytes()
+    override fun integrate(value: ByteArray) = JSONObject(value.string())
+}

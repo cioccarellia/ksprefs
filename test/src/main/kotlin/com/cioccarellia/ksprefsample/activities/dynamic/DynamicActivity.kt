@@ -18,7 +18,7 @@ package com.cioccarellia.ksprefsample.activities.dynamic
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.cioccarellia.kspref.dynamic
+import com.cioccarellia.ksprefs.dynamic
 import com.cioccarellia.ksprefsample.App.Companion.prefs
 import com.cioccarellia.ksprefsample.R
 import kotlin.random.Random

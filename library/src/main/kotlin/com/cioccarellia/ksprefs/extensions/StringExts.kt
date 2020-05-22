@@ -13,31 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.ksprefsample
+package com.cioccarellia.ksprefs.extensions
 
-import android.app.Application
-import android.content.Context
+import androidx.annotation.CheckResult
 import com.cioccarellia.ksprefs.KsPrefs
-import com.cioccarellia.ksprefs.config.EncryptionType
-import com.cioccarellia.ksprefs.config.model.KeySize
+import com.cioccarellia.ksprefs.defaults.Defaults
+import com.cioccarellia.ksprefs.engine.SymmetricKey
 
-class App : Application() {
+@CheckResult
+internal fun String.toSymmetricKey() = SymmetricKey(this.bytes())
 
-    companion object {
-        lateinit var appContext: Context
-
-        private val aes = EncryptionType.AesGcm("dadaaaaaaaaaaaaa", KeySize.SIZE_128)
-        private val keyStore = EncryptionType.KeyStore("alias0")
-
-        val prefs by lazy {
-            KsPrefs(appContext) {
-                encryptionType = aes
-            }
-        }
+@CheckResult
+internal fun String.bytes() = this.toByteArray(
+    charset = try {
+        KsPrefs.config.charset
+    } catch (configNotInitialized: KotlinNullPointerException) {
+        Defaults.CHARSET
     }
+)
 
-    override fun onCreate() {
-        super.onCreate()
-        appContext = this
+@CheckResult
+internal fun String?.unsafeBytes() = this?.toByteArray(
+    charset = try {
+        KsPrefs.config.charset
+    } catch (configNotInitialized: KotlinNullPointerException) {
+        Defaults.CHARSET
     }
-}
+)

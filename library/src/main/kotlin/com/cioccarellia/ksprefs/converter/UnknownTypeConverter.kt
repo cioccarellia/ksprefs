@@ -13,15 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.cioccarellia.ksprefs.converter
 
-ext.library = [
-    min_sdk: 19,
-    compile_sdk: 29,
-
-    publish_group: "com.cioccarellia",
-    publish_version: "2.0.0-tx1",
-    publish_version_code: 205,
-
-    description: "Kotlin SharedPreferences, Simplified",
-    website: "https://github.com/cioccarellia/ksprefs"
-]
+@PublishedApi
+internal class UnknownTypeConverter : StringConverter()

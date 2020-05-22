@@ -13,15 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.cioccarellia.ksprefs.config.model
 
-ext.library = [
-    min_sdk: 19,
-    compile_sdk: 29,
+import com.cioccarellia.ksprefs.internal.ByteSizeable
 
-    publish_group: "com.cioccarellia",
-    publish_version: "2.0.0-tx1",
-    publish_version_code: 205,
+enum class KeyTagSize : ByteSizeable {
+    SIZE_96,
+    SIZE_104,
+    SIZE_112,
+    SIZE_120,
+    SIZE_128;
 
-    description: "Kotlin SharedPreferences, Simplified",
-    website: "https://github.com/cioccarellia/ksprefs"
-]
+    override fun bitCount() = when (this) {
+        SIZE_96 -> 96
+        SIZE_104 -> 104
+        SIZE_112 -> 112
+        SIZE_120 -> 120
+        SIZE_128 -> 128
+    }
+
+    override fun byteCount() = bitCount() / 8
+}

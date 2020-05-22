@@ -13,31 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.ksprefsample
+package com.cioccarellia.ksprefs.extensions
 
-import android.app.Application
 import android.content.Context
 import com.cioccarellia.ksprefs.KsPrefs
-import com.cioccarellia.ksprefs.config.EncryptionType
-import com.cioccarellia.ksprefs.config.model.KeySize
 
-class App : Application() {
-
-    companion object {
-        lateinit var appContext: Context
-
-        private val aes = EncryptionType.AesGcm("dadaaaaaaaaaaaaa", KeySize.SIZE_128)
-        private val keyStore = EncryptionType.KeyStore("alias0")
-
-        val prefs by lazy {
-            KsPrefs(appContext) {
-                encryptionType = aes
-            }
-        }
-    }
-
-    override fun onCreate() {
-        super.onCreate()
-        appContext = this
-    }
+internal fun Context.getPrefs(namespace: String): Reader = try {
+    getSharedPreferences("ksp_$namespace", KsPrefs.config.mode)!!
+} catch (knpe: KotlinNullPointerException) {
+    throw IllegalStateException("Could not get SharedPreferences instance")
 }

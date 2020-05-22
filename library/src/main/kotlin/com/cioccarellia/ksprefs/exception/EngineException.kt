@@ -13,15 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.cioccarellia.ksprefs.exception
 
-ext.library = [
-    min_sdk: 19,
-    compile_sdk: 29,
+import android.util.Log
+import com.cioccarellia.ksprefs.defaults.Defaults
 
-    publish_group: "com.cioccarellia",
-    publish_version: "2.0.0-tx1",
-    publish_version_code: 205,
+internal class EngineException(
+    message: String = "",
+    throwable: Throwable? = null
+) : RuntimeException(message.trim(), throwable) {
 
-    description: "Kotlin SharedPreferences, Simplified",
-    website: "https://github.com/cioccarellia/ksprefs"
-]
+    init {
+        Log.e(Defaults.TAG, "KsPrefs Engine Exception")
+    }
+
+    companion object {
+        fun convertFrom(
+            throwable: Throwable?,
+            operation: String
+        ) = EngineException(
+            operation,
+            throwable
+        )
+    }
+}

@@ -13,15 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.cioccarellia.ksprefs.config.model
 
-ext.library = [
-    min_sdk: 19,
-    compile_sdk: 29,
+enum class CommitStrategy {
+    /**
+     * Safe to ignore return value, faster.
+     * Updates the global SharedPreference in-memory values.
+     * Asynchronous.
+     * */
+    APPLY,
 
-    publish_group: "com.cioccarellia",
-    publish_version: "2.0.0-tx1",
-    publish_version_code: 205,
+    /**
+     * Atomically performs the operation, slower.
+     * Safe for multi threaded applications. Synchronous.
+     * */
+    COMMIT,
 
-    description: "Kotlin SharedPreferences, Simplified",
-    website: "https://github.com/cioccarellia/ksprefs"
-]
+    /**
+     * Nothing is done when this option is chosen.
+     * This should not be your configuration default, but
+     * a parameter you can pass to push to avoid writing the change
+     * back to the storage and to keep it stashed in memory.
+     * */
+    NONE
+}

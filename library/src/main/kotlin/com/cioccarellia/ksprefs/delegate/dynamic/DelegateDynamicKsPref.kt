@@ -13,31 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.ksprefsample
+package com.cioccarellia.ksprefs.delegate.dynamic
 
-import android.app.Application
-import android.content.Context
 import com.cioccarellia.ksprefs.KsPrefs
-import com.cioccarellia.ksprefs.config.EncryptionType
-import com.cioccarellia.ksprefs.config.model.KeySize
+import kotlin.reflect.KProperty
 
-class App : Application() {
-
-    companion object {
-        lateinit var appContext: Context
-
-        private val aes = EncryptionType.AesGcm("dadaaaaaaaaaaaaa", KeySize.SIZE_128)
-        private val keyStore = EncryptionType.KeyStore("alias0")
-
-        val prefs by lazy {
-            KsPrefs(appContext) {
-                encryptionType = aes
-            }
-        }
+/**
+ * Provides a dynamic delegate property getter and setter.
+ * */
+class DelegateDynamicKsPref<T : Any>(
+    private val prefs: KsPrefs,
+    private val key: String,
+    private val value: T
+) {
+    operator fun getValue(thisRef: Any?, property: KProperty<*>): T {
+        return prefs.pull(key, value)
     }
 
-    override fun onCreate() {
-        super.onCreate()
-        appContext = this
+    operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
+        return prefs.push(key, value)
     }
 }

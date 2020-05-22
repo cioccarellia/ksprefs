@@ -13,31 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.ksprefsample
+package com.cioccarellia.ksprefs.intrinsic
 
-import android.app.Application
-import android.content.Context
 import com.cioccarellia.ksprefs.KsPrefs
-import com.cioccarellia.ksprefs.config.EncryptionType
-import com.cioccarellia.ksprefs.config.model.KeySize
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.contract
 
-class App : Application() {
+@PublishedApi
+internal object Check {
+    fun key(
+      key: String
+    ) = key.isNotBlank() && KsPrefs.config.keyRegex?.matches(key) ?: true
 
-    companion object {
-        lateinit var appContext: Context
+    fun <T> value(
+      value: T
+    ) = value != null
+}
 
-        private val aes = EncryptionType.AesGcm("dadaaaaaaaaaaaaa", KeySize.SIZE_128)
-        private val keyStore = EncryptionType.KeyStore("alias0")
+internal fun checkKey(key: String) = require(Check.key(key))
 
-        val prefs by lazy {
-            KsPrefs(appContext) {
-                encryptionType = aes
-            }
-        }
+@OptIn(ExperimentalContracts::class)
+internal fun <T> checkValue(value: T) {
+    contract {
+        returns() implies (value != null)
     }
-
-    override fun onCreate() {
-        super.onCreate()
-        appContext = this
-    }
+    require(Check.value(value))
 }

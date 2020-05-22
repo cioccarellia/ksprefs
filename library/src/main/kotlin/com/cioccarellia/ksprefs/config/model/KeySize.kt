@@ -13,15 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.cioccarellia.ksprefs.config.model
 
-ext.library = [
-    min_sdk: 19,
-    compile_sdk: 29,
+import com.cioccarellia.ksprefs.annotations.PreferredForEncryption
+import com.cioccarellia.ksprefs.internal.ByteSizeable
 
-    publish_group: "com.cioccarellia",
-    publish_version: "2.0.0-tx1",
-    publish_version_code: 205,
+/**
+ * Defines how many bits the encryption key length
+ * should be.
+ * */
+enum class KeySize : ByteSizeable {
+    @PreferredForEncryption
+    SIZE_128,
+    SIZE_192,
+    SIZE_256;
 
-    description: "Kotlin SharedPreferences, Simplified",
-    website: "https://github.com/cioccarellia/ksprefs"
-]
+    override fun bitCount(): Int = when (this) {
+        SIZE_128 -> 128
+        SIZE_192 -> 192
+        SIZE_256 -> 256
+    }
+
+    override fun byteCount() = bitCount() / 8
+}
