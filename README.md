@@ -15,7 +15,7 @@
 
 ### TLDR
 ```gradle
-implementation 'com.cioccarellia.ksprefs:$version'
+implementation 'com.cioccarellia:ksprefs:$version'
 ```
 
 - :zap: Powerful SharedPreferences wrapper.
