@@ -31,11 +31,9 @@
 package com.cioccarellia.ksprefs.config
 
 import androidx.annotation.IntRange
-import com.cioccarellia.ksprefs.annotations.PreferredForEncryption
 import com.cioccarellia.ksprefs.config.model.KeySize
 import com.cioccarellia.ksprefs.config.model.KeyTagSize
 import com.cioccarellia.ksprefs.defaults.Defaults
-import com.cioccarellia.ksprefs.extensions.bytes
 
 /**
  * Defines the encryption engine to be used while
@@ -85,19 +83,6 @@ sealed class EncryptionType {
             }
         }
     }
-
-    /**
-     * Encrypts and Decrypts the bytes transferred to/from
-     * the storage in GCM mode and PKCS5Padding padding.
-     * */
-    @PreferredForEncryption
-    class AesGcm(
-        val key: String,
-        val keySize: KeySize,
-        val aadSrc: ByteArray = "aad".bytes(),
-        @IntRange(from = 0x0, to = 0x1F)
-        val base64Flags: Int = Defaults.DEFAULT_BASE64_FLAGS
-    ) : EncryptionType()
 
     /**
      * Encrypts and Decrypts the bytes using the default Android Keystore

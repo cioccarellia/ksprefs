@@ -21,7 +21,6 @@ import com.cioccarellia.ksprefs.KsPrefs
 import com.cioccarellia.ksprefs.config.EncryptionType
 import com.cioccarellia.ksprefs.engine.model.aes.AesCbcEngine
 import com.cioccarellia.ksprefs.engine.model.aes.AesEcbEngine
-import com.cioccarellia.ksprefs.engine.model.aes.AesGcmEngine
 import com.cioccarellia.ksprefs.engine.model.base64.Base64Engine
 import com.cioccarellia.ksprefs.engine.model.keystore.AesKeyStoreEngine
 import com.cioccarellia.ksprefs.engine.model.keystore.RsaKeyPairKeyStoreEngine
@@ -57,17 +56,6 @@ internal object EnginePicker {
                 keyByteCount = key.byteCount(),
                 base64Flags = config.base64Flags,
                 iv = config.iv
-            )
-        }
-        is EncryptionType.AesGcm -> {
-            val key = EncryptionKeyChecker.approve(
-                config.key.toSymmetricKey(), config.keySize
-            )
-
-            AesGcmEngine(
-                key,
-                keyByteCount = key.byteCount(),
-                base64Flags = config.base64Flags
             )
         }
         is EncryptionType.KeyStore -> {
