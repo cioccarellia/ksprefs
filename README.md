@@ -29,8 +29,8 @@ implementation 'com.cioccarellia:ksprefs:$version'
 val prefs = KsPrefs(applicationContext)
 ```
 
-To read from SharedPreferences, use `pull(key, default)`.<br>
-To write to SharedPreferences, use `push(key, value)`.
+To _read_ from SharedPreferences, use `pull(key, default)`.<br>
+To _write_ to SharedPreferences, use `push(key, value)`.
 
 ## Introduction
 <img src="extras/light/png/scheme.png"><br><br>
