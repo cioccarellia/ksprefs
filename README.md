@@ -197,4 +197,4 @@ It is really useful and fun to have dynamic properties whose value is a direct r
 val accentColor by prefs.dynamic("accent_color", "#2106F3")
 ```
 
-When you set a value for this property
+When you set a value for this property, it is also updated on the XML preference file, as it is a dynamic reference to the preference.
