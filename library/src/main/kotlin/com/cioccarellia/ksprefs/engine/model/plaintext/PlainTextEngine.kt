@@ -15,8 +15,8 @@
  */
 package com.cioccarellia.ksprefs.engine.model.plaintext
 
-import com.cioccarellia.ksprefs.engine.Engine
 import com.cioccarellia.ksprefs.engine.Transmission
+import com.cioccarellia.ksprefs.engine.base.Engine
 
 internal class PlainTextEngine : Engine() {
     override fun derive(incoming: Transmission) = Transmission(incoming.payload)

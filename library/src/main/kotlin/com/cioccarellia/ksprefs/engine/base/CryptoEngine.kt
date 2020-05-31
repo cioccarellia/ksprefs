@@ -13,30 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.ksprefs.engine
+package com.cioccarellia.ksprefs.engine.base
 
 import com.cioccarellia.ksprefs.annotations.Derivative
 import com.cioccarellia.ksprefs.annotations.Integral
-import com.cioccarellia.ksprefs.extensions.bytes
-import com.cioccarellia.ksprefs.internal.SafeRun
 
-@PublishedApi
-internal abstract class Engine : SafeRun {
+internal interface CryptoEngine {
+
+    val algorithm: String
+    val blockCipherMode: String
+    val paddingScheme: String
+
+    val cipherTransformation: String
+        get() = "$algorithm/$blockCipherMode/$paddingScheme"
+
     @Derivative
-    abstract fun derive(incoming: Transmission): Transmission
+    fun encrypt(
+        input: ByteArray
+    ): ByteArray
 
     @Integral
-    abstract fun integrate(outgoing: Transmission): Transmission
-
-    fun derive(incoming: String) = derive(
-        Transmission(
-            incoming.bytes()
-        )
-    ).toString()
-
-    fun integrate(incoming: String) = integrate(
-        Transmission(
-            incoming.bytes()
-        )
-    ).toString()
+    fun decrypt(
+        cipherText: ByteArray
+    ): ByteArray
 }

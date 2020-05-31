@@ -21,9 +21,9 @@ import android.annotation.SuppressLint
 import android.content.Context
 import com.cioccarellia.ksprefs.KsPrefs
 import com.cioccarellia.ksprefs.config.model.CommitStrategy
-import com.cioccarellia.ksprefs.engine.Engine
 import com.cioccarellia.ksprefs.engine.EnginePicker
 import com.cioccarellia.ksprefs.engine.Transmission
+import com.cioccarellia.ksprefs.engine.base.Engine
 import com.cioccarellia.ksprefs.extensions.*
 
 @Suppress("MemberVisibilityCanBePrivate")

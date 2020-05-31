@@ -18,11 +18,14 @@ package com.cioccarellia.ksprefs.engine.model.keystore
 import android.os.Build
 import android.util.Base64
 import androidx.annotation.RequiresApi
-import com.cioccarellia.ksprefs.engine.CryptoEngine
-import com.cioccarellia.ksprefs.engine.Engine
 import com.cioccarellia.ksprefs.engine.Transmission
+import com.cioccarellia.ksprefs.engine.base.CryptoEngine
+import com.cioccarellia.ksprefs.engine.base.Engine
+import com.cioccarellia.ksprefs.engine.base.KeystoreEngine
+import com.cioccarellia.ksprefs.engine.model.keystore.fetcher.KeyStoreFetcher
 import com.cioccarellia.ksprefs.extensions.initDecryptAesGcmKeystore
 import com.cioccarellia.ksprefs.extensions.initEncryptAesGcmKeystore
+import com.cioccarellia.ksprefs.internal.SafeRun
 import java.security.KeyStore
 import javax.crypto.Cipher
 import javax.crypto.SecretKey
@@ -32,10 +35,13 @@ internal class AesKeyStoreEngine(
     alias: String,
     private val keyTagSizeInBits: Int,
     private val base64Flags: Int
-) : Engine(), CryptoEngine {
+) : Engine(), CryptoEngine, KeystoreEngine, SafeRun {
 
-    private val ANDROID_KEYSTORE = "AndroidKeyStore"
-    private val fullAlgorithm = "AES/GCM/NoPadding"
+    override val keystoreInstance = "AndroidKeyStore"
+
+    override val algorithm = "AES"
+    override val blockCipherMode = "GCM"
+    override val paddingScheme = "NoPadding"
 
     override fun derive(incoming: Transmission) = Transmission(
         encrypt(incoming.payload)
@@ -45,18 +51,20 @@ internal class AesKeyStoreEngine(
         decrypt(outgoing.payload)
     )
 
-    private val keyStore: KeyStore = KeyStore.getInstance(ANDROID_KEYSTORE).also {
-        it.load(null)
-    }
+    private val keyStore: KeyStore = KeyStore
+        .getInstance(keystoreInstance)
+        .also {
+            it.load(null)
+        }
 
     private val secretKey: SecretKey = KeyStoreFetcher.keystore(keyStore, alias)
 
     private val encryptionCipher: Cipher
-        get() = Cipher.getInstance(fullAlgorithm).apply {
+        get() = Cipher.getInstance(cipherTransformation).apply {
             initEncryptAesGcmKeystore(secretKey, keyTagSizeInBits)
         }
 
-    private val decryptionCipher: Cipher = Cipher.getInstance(fullAlgorithm).apply {
+    private val decryptionCipher: Cipher = Cipher.getInstance(cipherTransformation).apply {
         initDecryptAesGcmKeystore(secretKey, keyTagSizeInBits)
     }
 

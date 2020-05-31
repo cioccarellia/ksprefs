@@ -19,6 +19,7 @@ import android.content.Context
 import android.os.Build
 import com.cioccarellia.ksprefs.KsPrefs
 import com.cioccarellia.ksprefs.config.EncryptionType
+import com.cioccarellia.ksprefs.engine.base.Engine
 import com.cioccarellia.ksprefs.engine.model.aes.AesCbcEngine
 import com.cioccarellia.ksprefs.engine.model.aes.AesEcbEngine
 import com.cioccarellia.ksprefs.engine.model.base64.Base64Engine

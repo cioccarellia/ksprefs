@@ -13,20 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.ksprefs.engine.model.base64
+package com.cioccarellia.ksprefs.engine.base
 
-import android.util.Base64
-import com.cioccarellia.ksprefs.engine.Transmission
-import com.cioccarellia.ksprefs.engine.base.Engine
-
-internal class Base64Engine(
-    private val base64Flags: Int
-) : Engine() {
-    override fun derive(incoming: Transmission) = Transmission(
-        Base64.encode(incoming.payload, base64Flags)
-    )
-
-    override fun integrate(outgoing: Transmission) = Transmission(
-        Base64.decode(outgoing.payload, base64Flags)
-    )
+internal interface KeystoreEngine {
+    val keystoreInstance: String
 }

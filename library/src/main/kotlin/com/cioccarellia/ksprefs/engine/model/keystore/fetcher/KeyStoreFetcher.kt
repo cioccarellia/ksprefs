@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.ksprefs.engine.model.keystore
+package com.cioccarellia.ksprefs.engine.model.keystore.fetcher
 
 import android.content.Context
 import android.os.Build

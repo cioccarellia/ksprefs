@@ -15,14 +15,16 @@
  */
 package com.cioccarellia.ksprefs.engine.model.keystore
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Base64
-import com.cioccarellia.ksprefs.engine.CryptoEngine
-import com.cioccarellia.ksprefs.engine.Engine
 import com.cioccarellia.ksprefs.engine.Transmission
+import com.cioccarellia.ksprefs.engine.base.CryptoEngine
+import com.cioccarellia.ksprefs.engine.base.Engine
+import com.cioccarellia.ksprefs.engine.base.KeystoreEngine
+import com.cioccarellia.ksprefs.engine.model.keystore.fetcher.KeyStoreFetcher
 import com.cioccarellia.ksprefs.extensions.initDecryptKeyPair
 import com.cioccarellia.ksprefs.extensions.initEncryptKeyPair
+import com.cioccarellia.ksprefs.internal.SafeRun
 import java.security.KeyPair
 import java.security.KeyStore
 import javax.crypto.Cipher
@@ -31,25 +33,27 @@ internal class RsaKeyPairKeyStoreEngine(
     context: Context,
     alias: String,
     val base64Flags: Int
-) : Engine(), CryptoEngine {
+) : Engine(), CryptoEngine, KeystoreEngine, SafeRun {
 
-    private val ANDROID_KEYSTORE = "AndroidKeyStore"
-    private val fullAlgorithm = "RSA/ECB/PKCS1Padding"
+    override val keystoreInstance = "AndroidKeyStore"
 
-    private val keyStore: KeyStore = KeyStore.getInstance(ANDROID_KEYSTORE).also {
+    override val algorithm = "AES"
+    override val blockCipherMode = "GCM"
+    override val paddingScheme = "NoPadding"
+
+    private val keyStore: KeyStore = KeyStore.getInstance(keystoreInstance).also {
         it.load(null)
     }
 
-    @SuppressLint("NewApi")
-    val keyPair: KeyPair = KeyStoreFetcher.keyPair(keyStore, alias, context)
+    private val keyPair: KeyPair = KeyStoreFetcher.keyPair(keyStore, alias, context)
 
     private val encryptionCipher: Cipher
-        get() = Cipher.getInstance(fullAlgorithm).apply {
+        get() = Cipher.getInstance(cipherTransformation).apply {
             initEncryptKeyPair(keyPair.public)
         }
 
     private val decryptionCipher: Cipher
-        get() = Cipher.getInstance(fullAlgorithm).apply {
+        get() = Cipher.getInstance(cipherTransformation).apply {
             initDecryptKeyPair(keyPair.private)
         }
 

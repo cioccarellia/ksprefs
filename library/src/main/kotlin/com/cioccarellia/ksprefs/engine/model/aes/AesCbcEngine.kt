@@ -16,10 +16,11 @@
 package com.cioccarellia.ksprefs.engine.model.aes
 
 import android.util.Base64
-import com.cioccarellia.ksprefs.engine.CryptoEngine
-import com.cioccarellia.ksprefs.engine.Engine
 import com.cioccarellia.ksprefs.engine.SymmetricKey
 import com.cioccarellia.ksprefs.engine.Transmission
+import com.cioccarellia.ksprefs.engine.base.CryptoEngine
+import com.cioccarellia.ksprefs.engine.base.Engine
+import com.cioccarellia.ksprefs.internal.SafeRun
 import java.security.MessageDigest
 import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
@@ -30,9 +31,11 @@ internal class AesCbcEngine(
     val keyByteCount: Int,
     val base64Flags: Int,
     val iv: ByteArray
-) : Engine(), CryptoEngine {
-    private val algorithm = "AES"
-    private val cipherTransformation = "AES/CBC/PKCS5Padding"
+) : Engine(), CryptoEngine, SafeRun {
+
+    override val algorithm = "AES"
+    override val blockCipherMode = "CBC"
+    override val paddingScheme = "PKCS5Padding"
 
     override fun derive(incoming: Transmission) = Transmission(
         encrypt(incoming.payload)
