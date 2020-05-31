@@ -29,8 +29,8 @@ implementation 'com.cioccarellia:ksprefs:$version'
 val prefs = KsPrefs(applicationContext)
 ```
 
-To read from SharedPreferences, use `pull(key, default)`.<br>
-To write to SharedPreferences, use `push(key, value)`.
+To _read_ from SharedPreferences, use `pull(key, default)`.<br>
+To _write_ to SharedPreferences, use `push(key, value)`.
 
 ## Introduction
 <img src="extras/light/png/scheme.png"><br><br>
@@ -197,4 +197,4 @@ It is really useful and fun to have dynamic properties whose value is a direct r
 val accentColor by prefs.dynamic("accent_color", "#2106F3")
 ```
 
-When you set a value for this property
+When you set a value for this property, it is also updated on the XML preference file, as it is a dynamic reference to the preference.
