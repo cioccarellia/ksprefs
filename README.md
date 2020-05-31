@@ -21,7 +21,7 @@ implementation 'com.cioccarellia:ksprefs:2.0.0-rc3'
 - :zap: Powerful SharedPreferences wrapper.
 - :rocket: Easy to pick up & use right away for any project.
 - :gear: Fully customizable behaviour.
-- :lock: Built-in cryptography (PlainText, Base64, AES CBC, AES ECB, Android Keystore + AES GCM).
+- :lock: Built-in cryptography (PlainText, Base64, AES CBC, AES ECB, Android KeyStore + AES GCM / + RSA).
 - :symbols: Extensive type support.
 - :heart: Kotlin powered.
 
@@ -29,14 +29,14 @@ implementation 'com.cioccarellia:ksprefs:2.0.0-rc3'
 val prefs = KsPrefs(applicationContext)
 ```
 
-To _read_ from SharedPreferences, use `pull(key, default)`.<br>
+To _read_ from SharedPreferences, use `pull(key, fallback)`.<br>
 To _write_ to SharedPreferences, use `push(key, value)`.
 
 ## Introduction
 <img src="extras/light/png/scheme.png"><br><br>
 KsPrefs (<b>K</b>otlin <b>S</b>hared <b>Pref</b>erences) is a wrapper for the default Android SharedPreferences implementation.
-KsPrefs goal is to bring Kotlin & cryptography advanced features and standards on any Android codebase. 
-As a secondary purpose, this is meant as a replacement for the default SharedPreference API which lacks extensibility, customizability, security & coinciseness.
+KsPrefs goal is to bring both Kotlin & cryptography advanced features and standards on any Android app. 
+As a secondary purpose, this is meant as a replacement for the default SharedPreference API which lacks extensibility, customizability, security & conciseness.
 This library is different from its baseline because it creates and adds extra functionality, providing control and extensibility to the default API, to create a preference store with the following properties:
 - Strongly-typed
 - Null-safe & fail-safe reads
@@ -54,7 +54,7 @@ You should have only one `KsPrefs` instance among your codebase.
 val prefs = KsPrefs(applicationContext)
 ```
 
-It is recommanded to keep it inside your `Application` instance, so that it's accessible anywhere in code.
+It is recommended to keep it inside your `Application` class, so that it's accessible anywhere in code.
 
 ```kotlin
 class App : Application() {
@@ -71,9 +71,9 @@ class App : Application() {
 }
 ```
 
-### Config
-A lot of times, KsPrefs takes one or another action by viewing at the content of the configuration.<br>
-To configure KsPrefs, you just pass in a lambda which edits the configuration deaults.
+### Configuration
+KsPrefs takes one or another action depending on the content of its configuration.<br>
+To configure KsPrefs, you just pass in a lambda which modifies the configuration defaults.
 
 ```kotlin
 val prefs = KsPrefs(applicationContext) {
@@ -84,34 +84,34 @@ val prefs = KsPrefs(applicationContext) {
 
 | Field | Type | Description | Default Value |
 |-----------------|----------------|--------------------------------------------------------------------------------------------|----------------------|
+| encryptionType | EncryptionType | Encryption technique used to cipher and decipher data upon storage operations | PlainText |
+| commitStrategy | CommitStrategy | Strategy to use at the moment of writing the preferences into the persistent XML storage | CommitStrategy.APPLY |
+| autoSave | AutoSavePolicy | Whether after a `push()` operation changes are saved to the persistent XML storage; strategy according to `commitStrategy` | AutoSavePolicy.AUTO |
 | mode | Int | SharedPreferences access mode | Context.MODE_PRIVATE |
 | charset | Charset | Charset used for string-to-byte and byte-to-string conversions | Charsets.UTF_8 |
-| autoSave | AutoSavePolicy | Whether after a `push()` operation a commit is executed according to the `commitStrategy` | AutoSavePolicy.AUTO |
-| commitStrategy | CommitStrategy | Which strategy to use at the moment of writing the preferences onto the persistent XML storage | CommitStrategy.APPLY |
-| keyRegex | Regex? | Regex which, if non null, every key must match. | null |
-| encryptionType | EncryptionType | Byte transformation technique used to derive and integrate data upon storage operations | PlainText |
-| keySizeMismatch | KeySizeMFS | Action to be taken when the supplied encryption key does not match its expected size | CRASH |
+| keyRegex | Regex? | Regular Expression which, if non null, every key must match. | null |
 
 ### Read
 To retrieve values from the preference storage you can use `pull()`.<br>
 Pull comes in 4 variants, 3 of which are unsafe.
-A variant is defined *safe* is when you also supply the fallback (default) value, so that, for any given key, you always have a concrete value to return.
+A variant is defined *safe* is when you also supply the fallback (Android SharedPreferences calls it `default`) value, so that, for any given key, you always have a concrete value to return.<br>
+A variant is *unsafe* because there is no guarantee it will return a concrete value, as it only relies on the supplied key to pull the value from the persistent XML storage<br>
 
 ```kotlin
 val safePull = prefs.pull("username", "nobody")
 ```
 
-Even though the standard Android SharedPreferences API forces you to provide a default value, KsPrefs lets you leave that blank, as supplying an actual instance of an object may get verbose, and pointless if you are sure the key is present inside the storage.
+Even though the standard SharedPreferences API always forces you to provide a default (KsPrefs calls it `fallback`) value, KsPrefs lets you leave that out, because supplying an actual instance of an object may get verbose, redundant, and pointless if you are sure the key is present inside the storage, or if for some clever intuition you know that the key holds a value at some runtime point.
 
 ```kotlin
-val username = prefs.pull<String>("username")
-val usernameInferred: String = prefs.pull("username")
+val username = prefs.pull("username")
 ```
 
-*:pushpin: Other functions accept the type parameter as a class or as a generic. On the latter, the bytecode of the function is inlined, in order to allow the generic type to be reified.*
+*:pushpin: #1: Using an unsafe version of `pull()` isn't dangerous, as long as you know for sure that the target key contains a value.*
+*:pushpin: #2: The other 3 functions accept the type parameter as a kotlin class, as a java class or as a reified generic. For the latter, the bytecode of the function is inlined, in order to allow the generic type to be reified.*
 
 ### Write
-To save values to the preverence storage you can use `push()`<br>
+To save values to the preference storage you can use `push()`<br>
 Push takes the key and the value, and stores them inside the preferences.
 
 ```kotlin
