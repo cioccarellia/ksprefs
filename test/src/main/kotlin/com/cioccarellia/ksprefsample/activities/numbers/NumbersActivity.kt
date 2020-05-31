@@ -22,6 +22,7 @@ import com.cioccarellia.ksprefs.config.model.CommitStrategy
 import com.cioccarellia.ksprefsample.App
 import com.cioccarellia.ksprefsample.R
 import java.math.BigInteger
+import kotlin.system.measureTimeMillis
 
 class NumbersActivity : AppCompatActivity() {
 
@@ -31,29 +32,33 @@ class NumbersActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_numbers)
 
-        App.prefs.push("int", 1)
-        App.prefs.push("long", 3141592653589793238)
-        App.prefs.push("short", Short.MAX_VALUE)
-        App.prefs.push("float", 1.41421356237309504880F)
-        App.prefs.push("double", 2.71828182845904523536028747135266)
-        App.prefs.push(
-            "bigint",
-            BigInteger(8 * 8 * 8 * 2, java.util.Random(System.currentTimeMillis()))
-        )
-        App.prefs.push("enum", CommitStrategy.APPLY)
+        val t = measureTimeMillis {
+            App.prefs.push("int", 1)
+            App.prefs.push("long", 3141592653589793238)
+            App.prefs.push("short", Short.MAX_VALUE)
+            App.prefs.push("float", 1.41421356237309504880F)
+            App.prefs.push("double", 2.71828182845904523536028747135266)
+            App.prefs.push(
+                "bigint",
+                BigInteger(8 * 8 * 8 * 2, java.util.Random(System.currentTimeMillis()))
+            )
+            App.prefs.push("enum", CommitStrategy.APPLY)
 
-        log.text = buildString {
-            val int = App.prefs.pull<Int>("int")
-            val long = App.prefs.pull<Long>("long")
-            val short = App.prefs.pull<Short>("short")
-            val float = App.prefs.pull<Float>("float")
-            val double = App.prefs.pull<Double>("double")
-            val bigint = App.prefs.pull<BigInteger>("bigint")
-            val enum = App.prefs.pull<CommitStrategy>("enum")
+            log.text = buildString {
+                val int = App.prefs.pull<Int>("int")
+                val long = App.prefs.pull<Long>("long")
+                val short = App.prefs.pull<Short>("short")
+                val float = App.prefs.pull<Float>("float")
+                val double = App.prefs.pull<Double>("double")
+                val bigint = App.prefs.pull<BigInteger>("bigint")
+                val enum = App.prefs.pull<CommitStrategy>("enum")
 
-            listOf(int, long, short, float, double, bigint, enum).forEach {
-                appendln("${it::class.simpleName} -> $it")
+                listOf(int, long, short, float, double, bigint, enum).forEach {
+                    appendln("${it::class.simpleName} -> $it")
+                }
             }
         }
+
+        log.append("\n[elapsed: ${t}ms]")
     }
 }
