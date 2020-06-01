@@ -93,22 +93,22 @@ val prefs = KsPrefs(applicationContext) {
 
 ### Read
 To retrieve values from the preference storage you can use `pull()`.<br>
-Pull comes in 4 variants, 3 of which are unsafe.
-A variant is defined *safe* is when you also supply the fallback (Android SharedPreferences calls it `default`) value, so that, for any given key, you always have a concrete value to return.<br>
-A variant is *unsafe* because there is no guarantee it will return a concrete value, as it only relies on the supplied key to pull the value from the persistent XML storage<br>
+Pull comes in 4 functions, 3 of which are unsafe.
+A function is defined *safe* when you also supply the fallback (Android SharedPreferences calls it `default`) value, so that, for any given key, you always have a concrete value to return.<br>
+A function is *unsafe* because there is no guarantee it will return a concrete value, as it only relies on the supplied key to pull the value from the persistent XML storage<br>
 
 ```kotlin
 val safePull = prefs.pull("username", "nobody")
 ```
 
-Even though the standard SharedPreferences API always forces you to provide a default (KsPrefs calls it `fallback`) value, KsPrefs lets you leave that out, because supplying an actual instance of an object may get verbose, redundant, and pointless if you are sure the key is present inside the storage, or if for some clever intuition you know that the key holds a value at some runtime point.
+Even though the standard SharedPreferences API always forces you to provide a default (KsPrefs calls it `fallback`) value, KsPrefs lets you leave that out, because supplying an actual instance of an object may get verbose, redundant, and pointless if you are sure the key is present inside the storage, or if for some clever intuition you know that the key holds a value for some time being.
 
 ```kotlin
 val username = prefs.pull("username")
 ```
 
-*:pushpin: #1: Using an unsafe version of `pull()` isn't dangerous, as long as you know for sure that the target key contains a value.*
-*:pushpin: #2: The other 3 functions accept the type parameter as a kotlin class, as a java class or as a reified generic. For the latter, the bytecode of the function is inlined, in order to allow the generic type to be reified.*
+*:pushpin: #1: Using an unsafe version of `pull()` isn't dangerous, as long as you know for sure that the target key contains a value.*<br>
+*:pushpin: #2: The other 3 functions accept the type parameter as a kotlin class, as a java class or as a reified generic. For the latter, the bytecode of the function is inlined, in order to allow the generic type to be reified.*<br>
 
 ### Write
 To save values to the preference storage you can use `push()`<br>
