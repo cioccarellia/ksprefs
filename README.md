@@ -93,7 +93,7 @@ val prefs = KsPrefs(applicationContext) {
 
 ### Read
 To retrieve values from the preference storage you can use `pull()`.<br>
-Pull comes in 4 functions, 3 of which are unsafe helo.
+Pull comes in 4 functions, 3 of which are unsafe. <!-- helo -->
 A function is defined *safe* when you also supply the fallback (Android SharedPreferences calls it `default`) value, so that, for any given key, you always have a concrete value to return.<br>
 A function is *unsafe* because there is no guarantee it will return a concrete value, as it only relies on the supplied key to pull the value from the persistent XML storage<br>
 
