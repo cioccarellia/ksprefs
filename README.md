@@ -72,8 +72,8 @@ class App : Application() {
 ```
 
 ### Configuration
-KsPrefs takes one or another action depending on the content of its configuration.<br>
-To configure KsPrefs, you just pass in a lambda which modifies the configuration defaults.
+KsPrefs acts depending on the content of its configuration.<br>
+To configure KsPrefs, you have to pass in a lambda which modifies the configuration defaults.
 
 ```kotlin
 val prefs = KsPrefs(applicationContext) {
@@ -93,7 +93,7 @@ val prefs = KsPrefs(applicationContext) {
 
 ### Read
 To retrieve values from the preference storage you can use `pull()`.<br>
-Pull comes in 4 functions, 3 of which are unsafe.
+Pull comes in 4 functions, 3 of which are unsafe helo.
 A function is defined *safe* when you also supply the fallback (Android SharedPreferences calls it `default`) value, so that, for any given key, you always have a concrete value to return.<br>
 A function is *unsafe* because there is no guarantee it will return a concrete value, as it only relies on the supplied key to pull the value from the persistent XML storage<br>
 
@@ -112,7 +112,7 @@ val username = prefs.pull("username")
 
 ### Write
 To save values to the preference storage you can use `push()`<br>
-Push takes the key and the value, and stores them inside the preferences.
+Push takes a key and a value, and stores them inside the preferences.
 
 ```kotlin
 prefs.push("username", viewModel.username)
@@ -129,9 +129,9 @@ However, if `autoSave` is turned off (`AutoSavePolicy.MANUAL`), `push()` will sa
 Here is a table representing when values are saved, depending on the policy in use.
 | `AutoSavePolicy` | AUTO | MANUAL |
 |---------|--------------------|--------------------|
-| push() | :white_check_mark: | :x: |
+| push()  | :white_check_mark: | :x: |
 | queue() | :x: | :x: |
-| save() | :white_check_mark: | :white_check_mark: |
+| save()  | :white_check_mark: | :white_check_mark: |
 
 *:pushpin: The `AutoSavePolicy` involves when to write changes to the persistent XML storage.*<br>
 
@@ -149,13 +149,13 @@ The best (and default) practise is to use `APPLY`. Then, `COMMIT` is also availa
 
 ### Queuing
 To enqueue values to be written into the preference storage you can use `queue()`. It follows the `push()` syntax.<br>
-Not writing the changes to the file makes enqueuing a valid choice for batch computing or expensive and long-running operations.<br>
-`queue()` takes the key and the value, and saves the changes in-memory.<br>
-`queue()` does not actually write them to the storage. You can do so by calling `save()`.
+Not writing the changes to the file makes enqueuing a valid choice for both batch computing or expensive and long-running operations.<br>
+`queue()` takes a key and a value, and saves the changes in-memory.<br>
+`queue()` does not actually write them to the storage. You can do so by calling `save()` (Or by using `push()` subsequently).
 <br><br>
-This touches a broader concept, which is storing scope. There are two storing scopes for SharedPreferences: 
+This segment touches a broader concept, which is storing scope. There are two storing scopes for SharedPreferences:
 - in-memory (key-value pairs are kept in memory). This is fast to read to/write from, but does not persist application restarts.
-- XML (key-value pairs are kept on a file). Writng to a file is mildly expensive but it allows preferences to survive across application restarts.<br>
+- XML (key-value pairs are kept on a file). Writng to a file is mildly expensive but it allows preferences to survive across application restarts.<br><br>
 Here is a table explaining how different methods inside KsPrefs touch and go through those storing scopes
 
 | `StoringScope` | in-memory | XML |
@@ -166,7 +166,7 @@ Here is a table explaining how different methods inside KsPrefs touch and go thr
 
 *:pushpin: The `StoringScope` involves at which level changes are propagated.*<br>
 
-In the following snippet (Given that `autoSavePolicy` is set to `AUTO`), `n` in-memory and `x` XML write operations are performed. This, given  `tᴺ` and `tˣ` for how long those operations will take, takes `n×tᴺ + m×tˣ`. Given that, if using `push()`, `m=n`, then it resolves to `n×(tᴺ + tˣ)`
+In the following snippet (Given that `autoSavePolicy` is set to `AUTO`), `n` in-memory and `x` XML write operations are performed. This, given  `f(n)` and `f(x)` for how long those operations will take, takes `n×f(n) + m×f(x)`. Given that, if using `push()`, `m=n`, then it resolves to `n×(f(n) + f(x))`
 
 ```kotlin
 for ((index, pic) in picsArray.toList().withIndex()) {
@@ -175,7 +175,7 @@ for ((index, pic) in picsArray.toList().withIndex()) {
 }
 ```
 
-Even though this isn't an important speedup, as n (and m) grow, the computation takes longer, also given that `tᴺ < tˣ`. Enqueuing values makes `m=1`, and the time/op chart follows a more gentle curve: `n×tᴺ + tˣ`.
+Even though this isn't an important speedup, as n (and m) grow, the computation takes longer, also given that `f(n) < f(x)`. Enqueuing values makes `m=1`, and the time/op chart follows a more gentle curve: `n×f(n) + f(x)`.
 This improvements dramatically optimizes performances for a large amount of operations.
 
 ```kotlin
