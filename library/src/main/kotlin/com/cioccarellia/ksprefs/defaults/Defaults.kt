@@ -30,7 +30,7 @@ internal object Defaults {
     /** SharedPreferences */
     const val MODE = Context.MODE_PRIVATE
 
-    /** Encoding */
+    /** Charset */
     val CHARSET = Charsets.UTF_8
 
     /** Saving */
@@ -40,13 +40,13 @@ internal object Defaults {
     /** Base64 */
     const val DEFAULT_BASE64_FLAGS = Base64.NO_CLOSE or Base64.NO_WRAP
 
-    /** KeySize */
+    /** Key size */
     val KEY_TAG_SIZE = KeyTagSize.SIZE_128
 
-    /** Mismatch Strategy */
+    /** Mismatch strategy */
     val KEY_SIZE_MISMATCH_STRATEGY = KeySizeMismatchFallbackStrategy.CRASH
 
-    /** Rsa KeyPair duration */
+    /** Rsa [KeyPair] duration */
     val DEFAULT_RSA_KEY_DURATION: Pair<Date, Date>
         get() {
             val start = Calendar.getInstance()

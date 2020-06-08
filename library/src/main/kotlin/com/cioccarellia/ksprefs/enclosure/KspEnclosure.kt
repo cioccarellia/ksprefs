@@ -38,39 +38,21 @@ internal class KspEnclosure(
     private inline val defaultCommitStrategy
         get() = KsPrefs.config.commitStrategy
 
-    /**
-     * Value derivation, n times
-     * */
     private inline fun deriveVal(
         value: ByteArray
     ): ByteArray = engine.derive(
         Transmission(value)
     ).payload
 
-    /**
-     * Value integration, n times
-     * */
     private inline fun integrateVal(
         value: ByteArray
     ): ByteArray = engine.integrate(
         Transmission(value)
     ).payload
 
-    /**
-     * Key derivation, once
-     * */
     private inline fun deriveKey(
         value: String
     ): String = engine.derive(
-        Transmission(value.bytes())
-    ).payload.string()
-
-    /**
-     * Key integration, once
-     * */
-    private inline fun integrateKey(
-        value: String
-    ): String = engine.integrate(
         Transmission(value.bytes())
     ).payload.string()
 

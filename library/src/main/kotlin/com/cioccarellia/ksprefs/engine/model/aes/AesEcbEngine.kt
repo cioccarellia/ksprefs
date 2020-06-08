@@ -48,8 +48,8 @@ internal class AesEcbEngine(
     private val digest by lazy { MessageDigest.getInstance("SHA-256") }
 
     private fun keySpec(): SecretKeySpec = runSafely {
-        val _key = digest.digest(key.bytes).copyOf(keyByteCount)
-        SecretKeySpec(_key, algorithm)
+        val trimmedKey = digest.digest(key.bytes).copyOf(keyByteCount)
+        SecretKeySpec(trimmedKey, algorithm)
     }
 
     override fun encrypt(input: ByteArray): ByteArray = runSafely {

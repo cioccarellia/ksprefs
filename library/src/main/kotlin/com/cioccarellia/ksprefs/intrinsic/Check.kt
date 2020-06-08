@@ -16,8 +16,6 @@
 package com.cioccarellia.ksprefs.intrinsic
 
 import com.cioccarellia.ksprefs.KsPrefs
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.contract
 
 @PublishedApi
 internal object Check {
@@ -31,11 +29,3 @@ internal object Check {
 }
 
 internal fun checkKey(key: String) = require(Check.key(key))
-
-@OptIn(ExperimentalContracts::class)
-internal fun <T> checkValue(value: T) {
-    contract {
-        returns() implies (value != null)
-    }
-    require(Check.value(value))
-}

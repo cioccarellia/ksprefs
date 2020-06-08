@@ -13,11 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@file:Suppress("unused")
+
 package com.cioccarellia.ksprefs
 
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.annotation.CheckResult
+import androidx.annotation.RestrictTo
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
@@ -40,10 +43,6 @@ class KsPrefs(
     config: KspConfig.() -> Unit = {}
 ) : LifecycleObserver {
 
-    /**
-     * Creates a lifecycle-aware KsPref instance, so that you don't
-     * have to manually call [destroy] when you app is closing.
-     * */
     private constructor(
         appContext: Context,
         lifecycle: Lifecycle,
@@ -144,7 +143,6 @@ class KsPrefs(
         value: T
     ): Unit = dispatcher.push(key, value, CommitStrategy.NONE)
 
-
     /**
      * This function pulls a value from the [Shared Preferences][SharedPreferences] object.
      *
@@ -167,7 +165,6 @@ class KsPrefs(
         key: String,
         fallback: T
     ): T = dispatcher.pull(key, fallback)
-
 
     /**
      * This function (unsafely) pulls a value from the [Shared Preferences][SharedPreferences] object.
@@ -196,7 +193,6 @@ class KsPrefs(
     inline fun <reified T : Any> pull(
         key: String
     ): T = dispatcher.pull(key, T::class)
-
 
     /**
      * This function (unsafely) pulls a value from the [Shared Preferences][SharedPreferences] object.
@@ -227,7 +223,6 @@ class KsPrefs(
         kclass: KClass<T>
     ): T = dispatcher.pull(key, kclass)
 
-
     /**
      * This function (unsafely) pulls a value from the [Shared Preferences][SharedPreferences] object.
      *
@@ -256,7 +251,6 @@ class KsPrefs(
         key: String,
         jclass: Class<T>
     ): T = dispatcher.pull(key, jclass.kotlin)
-
 
     /**
      * Checks whether a value exists under a given [key].
@@ -313,6 +307,7 @@ class KsPrefs(
      * This method auto-calls for lifecycle aware instances.
      * */
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    @RestrictTo(RestrictTo.Scope.LIBRARY)
     private fun destroy() {
         lifecycle?.removeObserver(this)
     }

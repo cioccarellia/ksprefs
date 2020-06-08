@@ -5,15 +5,14 @@
 
     <application
         android:name=".App"
-        android:allowBackup="true"
-        android:icon="@mipmap/ksprefs"
         android:label="@string/app_name"
+        android:theme="@style/AppTheme"
+        android:icon="@mipmap/ksprefs"
         android:roundIcon="@mipmap/ksprefs"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:allowBackup="false"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".activities.dynamic.DynamicActivity"></activity>
-        <activity android:name=".activities.observer.ObserverActivity" />
+
         <activity android:name=".activities.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,10 +20,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".activities.dynamic.DynamicActivity" />
+        <activity android:name=".activities.observer.ObserverActivity" />
         <activity android:name=".activities.ambiguous.AmbiguousActivity" />
         <activity android:name=".activities.batch.BatchActivity" />
         <activity android:name=".activities.numbers.NumbersActivity" />
         <activity android:name=".activities.json.JsonActivity" />
     </application>
-
 </manifest>

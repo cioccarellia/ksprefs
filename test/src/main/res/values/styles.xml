@@ -10,13 +10,4 @@
         <item name="isLightTheme">false</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents" />
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents" />
-
 </resources>

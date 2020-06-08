@@ -32,7 +32,7 @@ class ObserverActivity : AppCompatActivity() {
 
     private val log by lazy { findViewById<TextView>(R.id.log) }
 
-    var e by prefs.dynamic("dynamic_enum", TestBranch.A)
+    private var e by prefs.dynamic("dynamic_enum", TestBranch.A)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
