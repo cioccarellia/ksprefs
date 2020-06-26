@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/github-ksprefs.iml" filepath="$PROJECT_DIR$/.idea/modules/github-ksprefs.iml" group="ksprefs" />
       <module fileurl="file://$PROJECT_DIR$/.idea/ksprefs.iml" filepath="$PROJECT_DIR$/.idea/ksprefs.iml" group="ksprefs" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/ksprefs-library.iml" filepath="$PROJECT_DIR$/.idea/modules/library/ksprefs-library.iml" group="ksprefs/library" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/test/ksprefs-test.iml" filepath="$PROJECT_DIR$/.idea/modules/test/ksprefs-test.iml" group="ksprefs/test" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" group="ksprefs/library" />
       <module fileurl="file://$PROJECT_DIR$/test/test.iml" filepath="$PROJECT_DIR$/test/test.iml" group="ksprefs/test" />
     </modules>

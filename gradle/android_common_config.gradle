@@ -23,8 +23,8 @@ android {
 
     sourceSets {
         main.res.srcDirs = [
-            "src/main/res",
-            "src/main/res-public"
+                "src/main/res",
+                "src/main/res-public"
         ]
 
         android.sourceSets.all {

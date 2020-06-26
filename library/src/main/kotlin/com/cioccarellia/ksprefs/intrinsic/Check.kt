@@ -20,11 +20,11 @@ import com.cioccarellia.ksprefs.KsPrefs
 @PublishedApi
 internal object Check {
     fun key(
-      key: String
+        key: String
     ) = key.isNotBlank() && KsPrefs.config.keyRegex?.matches(key) ?: true
 
     fun <T> value(
-      value: T
+        value: T
     ) = value != null
 }
 
