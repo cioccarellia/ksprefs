@@ -18,14 +18,10 @@ package com.cioccarellia.ksprefs.intrinsic
 import com.cioccarellia.ksprefs.KsPrefs
 
 @PublishedApi
-internal object Check {
+internal object Checks {
     fun key(
         key: String
     ) = key.isNotBlank() && KsPrefs.config.keyRegex?.matches(key) ?: true
-
-    fun <T> value(
-        value: T
-    ) = value != null
 }
 
-internal fun checkKey(key: String) = require(Check.key(key))
+internal fun checkKey(key: String) = require(Checks.key(key))

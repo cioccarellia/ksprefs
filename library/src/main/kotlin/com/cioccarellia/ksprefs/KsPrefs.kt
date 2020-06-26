@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@file:Suppress("unused")
+@file:Suppress("unused", "MemberVisibilityCanBePrivate")
 
 package com.cioccarellia.ksprefs
 
@@ -35,7 +35,7 @@ import com.cioccarellia.ksprefs.namespace.Namespace
 import kotlin.reflect.KClass
 
 /**
- * KsPrefs main class
+ * KsPrefs main launcher class
  * */
 class KsPrefs(
     appContext: Context,
@@ -49,23 +49,23 @@ class KsPrefs(
         namespace: String = Namespace.default(appContext),
         config: KspConfig.() -> Unit = {}
     ) : this(appContext, namespace, config) {
-        this.lifecycle = lifecycle
-        this.lifecycle?.run {
+        this.lifecycle = lifecycle.apply {
             addObserver(this@KsPrefs)
         }
     }
 
     companion object {
         /**
-         * Global library-wide configuration object used
+         * Library-wide configuration object used
          * to retrieve strategies and policies, to allow
-         * different modules of the library to pursue a
+         * different modules of the library to maintain a
          * consistent behaviour.
          * */
         internal val config: KspConfig by lazy { KspConfig() }
     }
 
     init {
+        // Configuration execution
         Companion.config.run(config)
     }
 

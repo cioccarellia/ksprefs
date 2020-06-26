@@ -15,6 +15,10 @@
  */
 package com.cioccarellia.ksprefs.internal
 
+/**
+ * Interface used to represent cryptographic
+ * values with consistency.
+ * */
 internal interface ByteSizeable {
     fun byteCount(): Int
     fun bitCount(): Int
