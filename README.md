@@ -35,26 +35,28 @@ To _write_ to SharedPreferences, use `push(key, value)`.
 ## Introduction
 <img src="extras/light/png/scheme.png"><br><br>
 KsPrefs (<b>K</b>otlin <b>S</b>hared <b>Pref</b>erences) is a wrapper for the default Android SharedPreferences implementation.
-KsPrefs goal is to bring both Kotlin & cryptography advanced features and standards on any Android app. 
-As a secondary purpose, this is meant as a replacement for the default SharedPreference API which lacks extensibility, customizability, security & conciseness.
-This library is different from its baseline because it creates and adds extra functionality, providing control and extensibility to the default API, to create a preference store with the following properties:
+KsPrefs goal is to bring both Kotlin & advanced cryptographic functions and standards over to an Android app. 
+This library is meant as a replacement for the default SharedPreference API, which lacks security, conciseness, modularity and style.
+
+KsPrefs is:
 - Strongly-typed
-- Null-safe & fail-safe reads
-- Encrypted
+- Null-safe & fail-safe
+- Secure
 - Optimized
 - Customizable
-- Non-verbose
+- Practical
+- Easy
 - Extensible
 - Open Source
 
 ## Functionality
 ### Constructor
-You should have only one `KsPrefs` instance among your codebase. 
+You should create `KsPrefs` only once among your codebase. 
 ```kotlin
 val prefs = KsPrefs(applicationContext)
 ```
 
-It is recommended to keep it inside your `Application` class, so that it's accessible anywhere in code.
+It is recommended to keep it inside your `Application` class, so that it's accessible anywhere in your code.
 
 ```kotlin
 class App : Application() {
@@ -72,11 +74,12 @@ class App : Application() {
 ```
 
 ### Configuration
-KsPrefs acts depending on the content of its configuration.<br>
-To configure KsPrefs, you have to pass in a lambda which modifies the configuration defaults.
+KsPrefs heavily depends on its configuration.<br>
+To customize KsPrefs, you can pass in a lambda which modifies the configuration defaults values.
 
 ```kotlin
 val prefs = KsPrefs(applicationContext) {
+	encryptionType = PlainText()
     autoSavePolicy = AutoSavePolicy.MANUAL
     commitStrategy = CommitStrategy.COMMIT
 }
@@ -93,22 +96,22 @@ val prefs = KsPrefs(applicationContext) {
 
 ### Read
 To retrieve values from the preference storage you can use `pull()`.<br>
-Pull comes in 4 functions, 3 of which are unsafe. <!-- helo -->
-A function is defined *safe* when you also supply the fallback (Android SharedPreferences calls it `default`) value, so that, for any given key, you always have a concrete value to return.<br>
+There are 4 different functions named `pull`, 3 of which are unsafe. <!-- helo -->
+A function is defined *safe* when you supply the fallback (Android SharedPreferences defines it `default`) value, so that, for *any* given key, you always have a concrete in-memory value to return.<br>
 A function is *unsafe* because there is no guarantee it will return a concrete value, as it only relies on the supplied key to pull the value from the persistent XML storage<br>
 
 ```kotlin
 val safePull = prefs.pull("username", "nobody")
 ```
 
-Even though the standard SharedPreferences API always forces you to provide a default (KsPrefs calls it `fallback`) value, KsPrefs lets you leave that out, because supplying an actual instance of an object may get verbose, redundant, and pointless if you are sure the key is present inside the storage, or if for some clever intuition you know that the key holds a value for some time being.
+Even though the standard SharedPreferences API always forces you to provide a default (KsPrefs defines it `fallback`) value, KsPrefs allows you to leave that out, because supplying an actual instance of an object, in some contexts is verbose and redundant if you are know that the key is present inside the persistent storage, or if for some clever intuition you know that the key holds a value at some specific time.
 
 ```kotlin
 val username = prefs.pull("username")
 ```
 
-*:pushpin: #1: Using an unsafe version of `pull()` isn't dangerous, as long as you know for sure that the target key contains a value.*<br>
-*:pushpin: #2: The other 3 functions accept the type parameter as a kotlin class, as a java class or as a reified generic. For the latter, the bytecode of the function is inlined, in order to allow the generic type to be reified.*<br>
+*:pushpin: #1: Using an unsafe version of `pull()` isn't dangerous, as long as you are sure the target key holds a value.*<br>
+*:pushpin: #2: The 3 unsafe functions accept the type parameter as a kotlin class, as a java class or as a kotlin generic. For the latter, the bytecode of the function is inlined, in order for the generic type to be reified.*<br>
 
 ### Write
 To save values to the preference storage you can use `push()`<br>
