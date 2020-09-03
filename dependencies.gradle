@@ -16,7 +16,7 @@
 
 ext.versions = [
         build_tools: "29.0.3",
-        kt         : "1.3.72"
+        kt         : "1.4.0"
 ]
 
 ext.deps = [
