@@ -9,13 +9,13 @@
   <a href="https://app.codacy.com/manual/cioccarellia/ksprefs/dashboard"><img src="https://api.codacy.com/project/badge/Grade/f10cdbdbe7b84d0ea7a03b755c104e03" alt="Codacy"></a>
   <a><img src="https://img.shields.io/badge/kotlin-1.4.10-orange.svg" alt="Kotlin"></a>
   <a><img src="https://img.shields.io/badge/min-19-00e676.svg" alt="Android Min Sdk"></a>
-  <a><img src="https://img.shields.io/badge/compile-29-00e676.svg" alt="Android Compile Version"></a>
+  <a><img src="https://img.shields.io/badge/compile-30-00e676.svg" alt="Android Compile Version"></a>
   <a href="https://github.com/cioccarellia/ksprefs/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="License"></a>
 </p>
 
 ### TLDR
 ```gradle
-implementation 'com.cioccarellia:ksprefs:2.0.0'
+implementation 'com.cioccarellia:ksprefs:2.2.0'
 ```
 
 - :zap: Powerful SharedPreferences wrapper.
