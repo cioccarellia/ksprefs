@@ -19,20 +19,31 @@ import android.app.Application
 import android.content.Context
 import com.cioccarellia.ksprefs.KsPrefs
 import com.cioccarellia.ksprefs.config.EncryptionType
+import com.cioccarellia.ksprefs.config.KspConfig
 import com.cioccarellia.ksprefs.config.model.KeySize
 
 class App : Application() {
 
+    /**
+     * DO NOT use this code inside a production application.
+     * This is shaped so that the library sample app is able
+     * to access ksprefs internal configuration, which is
+     * by default hidden.
+     * Follow the readme guidelines at ksprefs'github page
+     * to get started.
+     * */
     companion object {
         lateinit var appContext: Context
 
         private val aes = EncryptionType.AesEcb("dadaaaaaaaaaaaaa", KeySize.SIZE_128)
         private val keyStore = EncryptionType.KeyStore("alias0")
 
+        internal val globalConfigStateFx: KspConfig.() -> Unit = {
+            encryptionType = aes
+        }
+
         val prefs by lazy {
-            KsPrefs(appContext) {
-                encryptionType = aes
-            }
+            KsPrefs(appContext, config = globalConfigStateFx)
         }
     }
 

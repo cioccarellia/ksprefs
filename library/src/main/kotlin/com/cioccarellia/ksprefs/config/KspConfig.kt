@@ -16,6 +16,7 @@
 package com.cioccarellia.ksprefs.config
 
 import androidx.annotation.IntRange
+import androidx.annotation.RestrictTo
 import com.cioccarellia.ksprefs.config.model.AutoSavePolicy
 import com.cioccarellia.ksprefs.config.model.CommitStrategy
 import com.cioccarellia.ksprefs.config.model.KeySizeMismatchFallbackStrategy
@@ -25,7 +26,7 @@ import java.nio.charset.Charset
 /**
  * Global KsPrefs config object
  * */
-data class KspConfig internal constructor(
+data class KspConfig @RestrictTo(RestrictTo.Scope.LIBRARY) constructor(
     @IntRange(from = 0x0000, to = 0x0010)
     var mode: Int = Defaults.MODE,
     var charset: Charset = Defaults.CHARSET,

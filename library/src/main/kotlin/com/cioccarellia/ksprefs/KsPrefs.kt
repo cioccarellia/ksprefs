@@ -21,6 +21,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.annotation.CheckResult
 import androidx.annotation.RestrictTo
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
@@ -60,6 +61,9 @@ class KsPrefs(
          * to retrieve strategies and policies, to allow
          * different modules of the library to maintain a
          * consistent behaviour.
+         *
+         * It is kept internal to avoid changing settings at
+         * run-time, which may interfere with KsPrefs's logic.
          * */
         internal val config: KspConfig by lazy { KspConfig() }
     }
@@ -304,7 +308,7 @@ class KsPrefs(
     }
 
     /**
-     * This method auto-calls for lifecycle aware instances.
+     * This method self-calls for lifecycle aware instances.
      * */
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     @RestrictTo(RestrictTo.Scope.LIBRARY)

@@ -19,8 +19,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RestrictTo
 import androidx.appcompat.app.AppCompatActivity
+import com.cioccarellia.ksprefs.BuildConfig
+import com.cioccarellia.ksprefs.KsPrefs
+import com.cioccarellia.ksprefs.config.EncryptionType
+import com.cioccarellia.ksprefs.config.KspConfig
+import com.cioccarellia.ksprefsample.App
 import com.cioccarellia.ksprefsample.R
 import com.cioccarellia.ksprefsample.activities.ambiguous.AmbiguousActivity
 import com.cioccarellia.ksprefsample.activities.batch.BatchActivity
@@ -38,6 +45,8 @@ class MainActivity : AppCompatActivity() {
     private val batch by lazy { findViewById<Button>(R.id.batchActivity) }
     private val observer by lazy { findViewById<Button>(R.id.observerActivity) }
     private val dynamic by lazy { findViewById<Button>(R.id.dynamicActivity) }
+
+    private val detailsTestView by lazy { findViewById<TextView>(R.id.detailsTestView) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,9 +68,39 @@ class MainActivity : AppCompatActivity() {
                 )
             }
         }
+
+        detailsTestView.setText(
+            buildString {
+                append("KsPrefs ${BuildConfig.VERSION_NAME}")
+                append(" ")
+
+                append("@ ${BuildConfig.VERSION_CODE}")
+                append(", ")
+
+                append("tsdk ${com.cioccarellia.ksprefsample.BuildConfig.compileSdk}")
+                append(", ")
+
+                append("Kotlin ${com.cioccarellia.ksprefsample.BuildConfig.kotlinVersion}")
+                appendLine()
+
+                append(App.prefs.internalReport())
+            }
+        )
     }
 
+    private fun KsPrefs.internalReport() = buildString {
+        val config = KspConfig().apply(App.globalConfigStateFx)
+        
+        appendLine("Writing on '$namespace' using ${config.charset}")
+        appendLine("SP mode ${config.mode}, strategy ${config.commitStrategy.name}, autosave ${config.autoSave}")
+
+        if (config.encryptionType == EncryptionType.PlainText()) {
+            appendLine("Saved in plaintext")
+        } else {
+            appendLine("Encrypted using ${config.encryptionType.javaClass.simpleName}")
+        }
+    }
+    
     private fun log(str: String) = Log.d("KsPref", str)
-    private fun toast(str: String) =
-        Toast.makeText(this, str, Toast.LENGTH_SHORT).show().also { log(str) }
+    private fun toast(str: String) = Toast.makeText(this, str, Toast.LENGTH_SHORT).show().also { log(str) }
 }
