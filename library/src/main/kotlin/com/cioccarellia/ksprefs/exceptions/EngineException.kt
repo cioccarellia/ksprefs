@@ -13,31 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@file:Suppress("NOTHING_TO_INLINE")
+package com.cioccarellia.ksprefs.exceptions
 
-package com.cioccarellia.ksprefs.extensions
-
-import androidx.annotation.CheckResult
-import com.cioccarellia.ksprefs.KsPrefs
+import android.util.Log
 import com.cioccarellia.ksprefs.defaults.Defaults
-import com.cioccarellia.ksprefs.engines.SymmetricKey
 
-@CheckResult
-internal fun ByteArray.toSymmetricKey() = SymmetricKey(this)
+internal class EngineException(
+    message: String = "",
+    throwable: Throwable? = null
+) : RuntimeException(message.trim(), throwable) {
 
-@CheckResult
-internal fun ByteArray.string() = this.toString(
-    charset = try {
-        KsPrefs.config.charset
-    } catch (configNotInitialized: KotlinNullPointerException) {
-        Defaults.CHARSET
+    init {
+        Log.e(Defaults.TAG, "KsPrefs Engine Exception")
     }
-)
 
-@CheckResult
-internal fun ByteArray.bitCount() = size * 8
-
-@PublishedApi
-internal inline fun emptyByteArray(
-    byteCount: Int = 0
-) = ByteArray(byteCount)
+    companion object {
+        fun convertFrom(
+            throwable: Throwable?,
+            operation: String
+        ) = EngineException(
+            operation,
+            throwable
+        )
+    }
+}

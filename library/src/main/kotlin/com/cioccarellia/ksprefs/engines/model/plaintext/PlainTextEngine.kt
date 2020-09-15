@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.ksprefs.extensions
+package com.cioccarellia.ksprefs.engines.model.plaintext
 
-import com.cioccarellia.ksprefs.exceptions.EngineException
+import com.cioccarellia.ksprefs.engines.Transmission
+import com.cioccarellia.ksprefs.engines.base.Engine
 
-internal fun <T> Result<T>.getOrThrowException(
-    operation: String = ""
-): T = getOrElse { exception ->
-    throw EngineException.convertFrom(exception, operation)
+internal class PlainTextEngine : Engine() {
+    override fun derive(incoming: Transmission) = Transmission(incoming.payload)
+    override fun integrate(outgoing: Transmission) = Transmission(outgoing.payload)
 }

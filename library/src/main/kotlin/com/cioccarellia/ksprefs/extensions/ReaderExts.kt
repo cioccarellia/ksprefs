@@ -17,7 +17,7 @@ package com.cioccarellia.ksprefs.extensions
 
 import android.content.SharedPreferences
 import androidx.annotation.CheckResult
-import com.cioccarellia.ksprefs.exception.NoSuchKeyException
+import com.cioccarellia.ksprefs.exceptions.NoSuchKeyException
 
 internal typealias Reader = SharedPreferences
 

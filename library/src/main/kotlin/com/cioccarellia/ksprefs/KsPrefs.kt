@@ -26,8 +26,8 @@ import com.cioccarellia.ksprefs.config.KspConfig
 import com.cioccarellia.ksprefs.config.model.AutoSavePolicy
 import com.cioccarellia.ksprefs.config.model.CommitStrategy
 import com.cioccarellia.ksprefs.dispatcher.KspDispatcher
-import com.cioccarellia.ksprefs.engine.base.Engine
-import com.cioccarellia.ksprefs.exception.NoSuchKeyException
+import com.cioccarellia.ksprefs.engines.base.Engine
+import com.cioccarellia.ksprefs.exceptions.NoSuchKeyException
 import com.cioccarellia.ksprefs.namespace.Namespace
 import kotlin.reflect.KClass
 

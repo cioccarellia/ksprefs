@@ -17,7 +17,7 @@ package com.cioccarellia.ksprefs.dispatcher
 
 import android.content.Context
 import com.cioccarellia.ksprefs.config.model.CommitStrategy
-import com.cioccarellia.ksprefs.converter.TypeConverter
+import com.cioccarellia.ksprefs.converters.TypeConverter
 import com.cioccarellia.ksprefs.enclosure.KspEnclosure
 import com.cioccarellia.ksprefs.intrinsic.checkKey
 import kotlin.reflect.KClass

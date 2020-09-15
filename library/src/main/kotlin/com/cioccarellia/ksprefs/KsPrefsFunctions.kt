@@ -17,8 +17,8 @@
 
 package com.cioccarellia.ksprefs
 
-import com.cioccarellia.ksprefs.delegate.dynamic.DelegateDynamicKsPref
-import com.cioccarellia.ksprefs.delegate.dynamic.DelegateDynamicUnsafePref
+import com.cioccarellia.ksprefs.delegates.dynamic.DelegateDynamicKsPref
+import com.cioccarellia.ksprefs.delegates.dynamic.DelegateDynamicUnsafePref
 import com.cioccarellia.ksprefs.extensions.emptyByteArray
 import java.security.SecureRandom
 import kotlin.random.asKotlinRandom

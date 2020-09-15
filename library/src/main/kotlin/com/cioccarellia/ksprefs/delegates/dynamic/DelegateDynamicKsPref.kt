@@ -13,31 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@file:Suppress("NOTHING_TO_INLINE")
+package com.cioccarellia.ksprefs.delegates.dynamic
 
-package com.cioccarellia.ksprefs.extensions
-
-import androidx.annotation.CheckResult
 import com.cioccarellia.ksprefs.KsPrefs
-import com.cioccarellia.ksprefs.defaults.Defaults
-import com.cioccarellia.ksprefs.engines.SymmetricKey
+import kotlin.reflect.KProperty
 
-@CheckResult
-internal fun ByteArray.toSymmetricKey() = SymmetricKey(this)
-
-@CheckResult
-internal fun ByteArray.string() = this.toString(
-    charset = try {
-        KsPrefs.config.charset
-    } catch (configNotInitialized: KotlinNullPointerException) {
-        Defaults.CHARSET
+/**
+ * Provides a dynamic delegate property getter and setter.
+ * */
+class DelegateDynamicKsPref<T : Any>(
+    private val prefs: KsPrefs,
+    private val key: String,
+    private val value: T
+) {
+    operator fun getValue(thisRef: Any?, property: KProperty<*>): T {
+        return prefs.pull(key, value)
     }
-)
 
-@CheckResult
-internal fun ByteArray.bitCount() = size * 8
-
-@PublishedApi
-internal inline fun emptyByteArray(
-    byteCount: Int = 0
-) = ByteArray(byteCount)
+    operator fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
+        return prefs.push(key, value)
+    }
+}

@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.ksprefs.extensions
+package com.cioccarellia.ksprefs.converters
 
-import com.cioccarellia.ksprefs.exceptions.EngineException
+import com.cioccarellia.ksprefs.extensions.bytes
+import com.cioccarellia.ksprefs.extensions.string
 
-internal fun <T> Result<T>.getOrThrowException(
-    operation: String = ""
-): T = getOrElse { exception ->
-    throw EngineException.convertFrom(exception, operation)
+@PublishedApi
+internal class FloatConverter : TypeConverter<Float>() {
+    override fun derive(value: Float) = value.toString().bytes()
+    override fun integrate(value: ByteArray) = value.string().toFloat()
 }

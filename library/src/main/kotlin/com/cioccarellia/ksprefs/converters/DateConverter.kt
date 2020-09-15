@@ -13,12 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.ksprefs.extensions
+package com.cioccarellia.ksprefs.converters
 
-import com.cioccarellia.ksprefs.exceptions.EngineException
+import com.cioccarellia.ksprefs.extensions.bytes
+import com.cioccarellia.ksprefs.extensions.string
+import java.util.*
 
-internal fun <T> Result<T>.getOrThrowException(
-    operation: String = ""
-): T = getOrElse { exception ->
-    throw EngineException.convertFrom(exception, operation)
+@PublishedApi
+internal class DateConverter : TypeConverter<Date>() {
+    override fun derive(value: Date) = value.time.toString().bytes()
+    override fun integrate(value: ByteArray) = Date(value.string().toLong())
 }

@@ -13,12 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.ksprefs.extensions
+package com.cioccarellia.ksprefs.converters
 
-import com.cioccarellia.ksprefs.exceptions.EngineException
+import com.cioccarellia.ksprefs.extensions.string
+import kotlin.reflect.KClass
 
-internal fun <T> Result<T>.getOrThrowException(
-    operation: String = ""
-): T = getOrElse { exception ->
-    throw EngineException.convertFrom(exception, operation)
+@PublishedApi
+internal open class EnumConverter(
+    private val kclass: KClass<Enum<*>>
+) : TypeConverter<Enum<*>>() {
+
+    override fun derive(value: Enum<*>) = kclass.java.enumConstants
+        ?.map { it.toString() }
+        ?.indexOf(value.toString())
+        .toString()
+        .toByteArray()
+
+    override fun integrate(value: ByteArray): Enum<*> {
+        val enumIndex = value.string().toInt()
+        return kclass.java.enumConstants!![enumIndex]
+    }
 }

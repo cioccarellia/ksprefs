@@ -18,7 +18,7 @@ package com.cioccarellia.ksprefs.extensions
 import androidx.annotation.CheckResult
 import com.cioccarellia.ksprefs.KsPrefs
 import com.cioccarellia.ksprefs.defaults.Defaults
-import com.cioccarellia.ksprefs.engine.SymmetricKey
+import com.cioccarellia.ksprefs.engines.SymmetricKey
 
 @CheckResult
 internal fun String.toSymmetricKey() = SymmetricKey(this.bytes())
