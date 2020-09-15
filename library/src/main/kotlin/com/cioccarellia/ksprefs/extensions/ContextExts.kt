@@ -21,7 +21,8 @@ import com.cioccarellia.ksprefs.KsPrefs
 
 @RestrictTo(RestrictTo.Scope.LIBRARY)
 internal fun Context.sharedPrefs(namespace: String): Reader = try {
-    getSharedPreferences("ksp_$namespace", KsPrefs.config.mode)!!
+    val actualStorageFileName = "${KsPrefs.config.xmlPrefix}$namespace"
+    getSharedPreferences(actualStorageFileName, KsPrefs.config.mode)!!
 } catch (knpe: KotlinNullPointerException) {
     throw IllegalStateException("Could not get SharedPreferences instance")
 }
