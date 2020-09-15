@@ -20,11 +20,7 @@ package com.cioccarellia.ksprefs
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.annotation.CheckResult
-import androidx.annotation.RestrictTo
-import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
 import com.cioccarellia.ksprefs.config.EncryptionType
 import com.cioccarellia.ksprefs.config.KspConfig
 import com.cioccarellia.ksprefs.config.model.AutoSavePolicy

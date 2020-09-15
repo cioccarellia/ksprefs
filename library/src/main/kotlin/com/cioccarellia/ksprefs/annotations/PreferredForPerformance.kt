@@ -13,29 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cioccarellia.ksprefs.config.model
-
-import com.cioccarellia.ksprefs.annotations.PreferredForEncryption
-import com.cioccarellia.ksprefs.annotations.PreferredForPerformance
-import com.cioccarellia.ksprefs.internal.ByteSizeable
+package com.cioccarellia.ksprefs.annotations
 
 /**
- * Defines how many bits the encryption key length
- * should be.
+ * Annotates the best practise for performances among other options
  * */
-enum class KeySize : ByteSizeable {
-    @PreferredForPerformance
-    SIZE_128,
-    SIZE_192,
-
-    @PreferredForEncryption
-    SIZE_256;
-
-    override fun bitCount(): Int = when (this) {
-        SIZE_128 -> 128
-        SIZE_192 -> 192
-        SIZE_256 -> 256
-    }
-
-    override fun byteCount() = bitCount() / 8
-}
+@Retention(AnnotationRetention.SOURCE)
+@MustBeDocumented
+internal annotation class PreferredForPerformance

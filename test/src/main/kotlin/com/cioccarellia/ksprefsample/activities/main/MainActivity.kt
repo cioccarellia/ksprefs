@@ -21,7 +21,6 @@ import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RestrictTo
 import androidx.appcompat.app.AppCompatActivity
 import com.cioccarellia.ksprefs.BuildConfig
 import com.cioccarellia.ksprefs.KsPrefs
@@ -90,7 +89,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun KsPrefs.internalReport() = buildString {
         val config = KspConfig().apply(App.globalConfigStateFx)
-        
+
         appendLine("Writing on '$namespace' using ${config.charset}")
         appendLine("SP mode ${config.mode}, strategy ${config.commitStrategy.name}, autosave ${config.autoSave}")
 
@@ -100,7 +99,8 @@ class MainActivity : AppCompatActivity() {
             appendLine("Encrypted using ${config.encryptionType.javaClass.simpleName}")
         }
     }
-    
+
     private fun log(str: String) = Log.d("KsPref", str)
-    private fun toast(str: String) = Toast.makeText(this, str, Toast.LENGTH_SHORT).show().also { log(str) }
+    private fun toast(str: String) =
+        Toast.makeText(this, str, Toast.LENGTH_SHORT).show().also { log(str) }
 }

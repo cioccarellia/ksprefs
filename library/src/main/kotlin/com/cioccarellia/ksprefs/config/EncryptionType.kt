@@ -30,6 +30,7 @@ sealed class EncryptionType {
      * Default transformation, applies no transformation
      * to yhe bytes transferred to/from the storage.
      * */
+    @Suppress("CanSealedSubClassBeObject")
     class PlainText : EncryptionType()
 
     /**

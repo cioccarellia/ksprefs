@@ -15,6 +15,8 @@
  */
 package com.cioccarellia.ksprefs.config.model
 
+import com.cioccarellia.ksprefs.annotations.PreferredForEncryption
+import com.cioccarellia.ksprefs.annotations.PreferredForPerformance
 import com.cioccarellia.ksprefs.internal.ByteSizeable
 
 enum class KeyTagSize : ByteSizeable {
@@ -22,6 +24,9 @@ enum class KeyTagSize : ByteSizeable {
     SIZE_104,
     SIZE_112,
     SIZE_120,
+
+    @PreferredForPerformance
+    @PreferredForEncryption
     SIZE_128;
 
     override fun bitCount() = when (this) {

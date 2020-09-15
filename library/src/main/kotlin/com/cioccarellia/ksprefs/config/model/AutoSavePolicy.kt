@@ -15,6 +15,8 @@
  */
 package com.cioccarellia.ksprefs.config.model
 
+import com.cioccarellia.ksprefs.annotations.PreferredForPerformance
+
 enum class AutoSavePolicy {
     /**
      * Updates are propagated automatically to the XML
@@ -26,5 +28,6 @@ enum class AutoSavePolicy {
      * Changes are not sent to the XML persistent storage
      * and have to be saved manually with [KsPrefs.save()]
      * */
+    @PreferredForPerformance
     MANUAL
 }
