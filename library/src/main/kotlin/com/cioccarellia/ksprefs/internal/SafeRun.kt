@@ -15,8 +15,10 @@
  */
 package com.cioccarellia.ksprefs.internal
 
+import androidx.annotation.RestrictTo
 import com.cioccarellia.ksprefs.extensions.getOrThrowException
 
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal interface SafeRun {
     fun <T> runSafely(
         operation: String = "",

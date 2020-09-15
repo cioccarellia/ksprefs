@@ -16,9 +16,11 @@
 package com.cioccarellia.ksprefs.extensions
 
 import android.content.Context
+import androidx.annotation.RestrictTo
 import com.cioccarellia.ksprefs.KsPrefs
 
-internal fun Context.getPrefs(namespace: String): Reader = try {
+@RestrictTo(RestrictTo.Scope.LIBRARY)
+internal fun Context.sharedPrefs(namespace: String): Reader = try {
     getSharedPreferences("ksp_$namespace", KsPrefs.config.mode)!!
 } catch (knpe: KotlinNullPointerException) {
     throw IllegalStateException("Could not get SharedPreferences instance")

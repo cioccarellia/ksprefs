@@ -15,12 +15,14 @@
  */
 package com.cioccarellia.ksprefs.extensions
 
+import androidx.annotation.RestrictTo
 import java.security.PrivateKey
 import java.security.PublicKey
 import javax.crypto.Cipher
 import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
 
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal fun Cipher.initDecryptAesGcmKeystore(
     secretKey: SecretKey,
     keyTagSizeInBits: Int
@@ -32,6 +34,7 @@ internal fun Cipher.initDecryptAesGcmKeystore(
     )
 }
 
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal fun Cipher.initEncryptAesGcmKeystore(
     secretKey: SecretKey,
     keyTagSizeInBits: Int
@@ -43,12 +46,14 @@ internal fun Cipher.initEncryptAesGcmKeystore(
     )
 }
 
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal fun Cipher.initDecryptKeyPair(
     public: PrivateKey
 ) {
     init(Cipher.DECRYPT_MODE, public)
 }
 
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal fun Cipher.initEncryptKeyPair(
     private: PublicKey
 ) {

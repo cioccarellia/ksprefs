@@ -15,10 +15,13 @@
  */
 package com.cioccarellia.ksprefs.internal
 
+import androidx.annotation.RestrictTo
+
 /**
  * Interface used to represent cryptographic
  * values with consistency.
  * */
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal interface ByteSizeable {
     fun byteCount(): Int
     fun bitCount(): Int

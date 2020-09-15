@@ -18,14 +18,17 @@
 package com.cioccarellia.ksprefs.extensions
 
 import androidx.annotation.CheckResult
+import androidx.annotation.RestrictTo
 import com.cioccarellia.ksprefs.KsPrefs
 import com.cioccarellia.ksprefs.defaults.Defaults
 import com.cioccarellia.ksprefs.engines.SymmetricKey
 
 @CheckResult
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal fun ByteArray.toSymmetricKey() = SymmetricKey(this)
 
 @CheckResult
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal fun ByteArray.string() = this.toString(
     charset = try {
         KsPrefs.config.charset
@@ -35,9 +38,11 @@ internal fun ByteArray.string() = this.toString(
 )
 
 @CheckResult
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal fun ByteArray.bitCount() = size * 8
 
 @PublishedApi
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal inline fun emptyByteArray(
     byteCount: Int = 0
 ) = ByteArray(byteCount)

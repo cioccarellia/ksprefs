@@ -32,7 +32,7 @@ import com.cioccarellia.ksprefs.extensions.*
 internal class KspEnclosure(
     private val namespace: String,
     context: Context,
-    internal var sharedReader: Reader = context.getPrefs(namespace),
+    internal var sharedReader: Reader = context.sharedPrefs(namespace),
     internal val engine: Engine = EnginePicker.select(context)
 ) {
     private inline val defaultCommitStrategy

@@ -15,13 +15,16 @@
  */
 package com.cioccarellia.ksprefs.intrinsic
 
+import androidx.annotation.RestrictTo
 import com.cioccarellia.ksprefs.KsPrefs
 
 @PublishedApi
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal object Checks {
     fun key(
         key: String
     ) = key.isNotBlank() && KsPrefs.config.keyRegex?.matches(key) ?: true
 }
 
+@RestrictTo(RestrictTo.Scope.LIBRARY)
 internal fun checkKey(key: String) = require(Checks.key(key))
