@@ -20,6 +20,7 @@ import android.content.Context
 import com.cioccarellia.ksprefs.KsPrefs
 import com.cioccarellia.ksprefs.config.EncryptionType
 import com.cioccarellia.ksprefs.config.KspConfig
+import com.cioccarellia.ksprefs.config.model.AutoSavePolicy
 import com.cioccarellia.ksprefs.config.model.KeySize
 
 class App : Application() {
@@ -40,6 +41,7 @@ class App : Application() {
 
         internal val globalConfigStateFx: KspConfig.() -> Unit = {
             encryptionType = aes
+            autoSave = AutoSavePolicy.AUTOMATIC
         }
 
         val prefs by lazy {

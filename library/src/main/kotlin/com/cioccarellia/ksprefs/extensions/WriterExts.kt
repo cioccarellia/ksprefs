@@ -34,7 +34,7 @@ internal fun Writer.delete(
 internal fun Writer.finalize(
     commitStrategy: CommitStrategy
 ) {
-    if (KsPrefs.config.autoSave == AutoSavePolicy.AUTO) {
+    if (KsPrefs.config.autoSave == AutoSavePolicy.AUTOMATIC) {
         forceFinalization(commitStrategy)
     }
 }

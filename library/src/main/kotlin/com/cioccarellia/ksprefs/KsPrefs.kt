@@ -35,25 +35,11 @@ import com.cioccarellia.ksprefs.exception.NoSuchKeyException
 import com.cioccarellia.ksprefs.namespace.Namespace
 import kotlin.reflect.KClass
 
-/**
- * KsPrefs main launcher class
- * */
 class KsPrefs(
     appContext: Context,
     val namespace: String = Namespace.default(appContext),
     config: KspConfig.() -> Unit = {}
-) : LifecycleObserver {
-
-    private constructor(
-        appContext: Context,
-        lifecycle: Lifecycle,
-        namespace: String = Namespace.default(appContext),
-        config: KspConfig.() -> Unit = {}
-    ) : this(appContext, namespace, config) {
-        this.lifecycle = lifecycle.apply {
-            addObserver(this@KsPrefs)
-        }
-    }
+) {
 
     companion object {
         /**
@@ -69,7 +55,6 @@ class KsPrefs(
     }
 
     init {
-        // Configuration execution
         Companion.config.run(config)
     }
 
@@ -305,14 +290,5 @@ class KsPrefs(
         key: String
     ) {
         dispatcher.remove(key)
-    }
-
-    /**
-     * This method self-calls for lifecycle aware instances.
-     * */
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    @RestrictTo(RestrictTo.Scope.LIBRARY)
-    private fun destroy() {
-        lifecycle?.removeObserver(this)
     }
 }

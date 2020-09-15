@@ -87,15 +87,15 @@ val prefs = KsPrefs(applicationContext) {
 
 | Field | Type | Description | Default Value |
 |-----------------|----------------|--------------------------------------------------------------------------------------------|----------------------|
-| encryptionType | EncryptionType | Encryption technique used to cipher and decipher data upon storage operations | PlainText |
+| encryptionType | EncryptionType | Encryption technique used to cipher and decipher data upon storage operations | PlainText() |
 | commitStrategy | CommitStrategy | Strategy to use at the moment of writing the preferences into the persistent XML storage | CommitStrategy.APPLY |
-| autoSave | AutoSavePolicy | Whether after a `push()` operation changes are saved to the persistent XML storage; strategy according to `commitStrategy` | AutoSavePolicy.AUTO |
+| autoSave | AutoSavePolicy | Whether after a `push()` operation changes are saved to the persistent XML storage; saving strategy depending on `commitStrategy` | AutoSavePolicy.AUTOMATIC |
 | mode | Int | SharedPreferences access mode | Context.MODE_PRIVATE |
 | charset | Charset | Charset used for string-to-byte and byte-to-string conversions | Charsets.UTF_8 |
 | keyRegex | Regex? | Regular Expression which, if non null, every key must match. | null |
 
 ### Read
-To retrieve values from the preference storage you can use `pull()`.<br>
+To retrieve values from the preference storage you use `pull()`.<br>
 There are 4 different functions named `pull`, 3 of which are unsafe. <!-- helo -->
 A function is defined *safe* when you supply the fallback (Android SharedPreferences defines it `default`) value, so that, for *any* given key, you always have a concrete in-memory value to return.<br>
 A function is *unsafe* because there is no guarantee it will return a concrete value, as it only relies on the supplied key to pull the value from the persistent XML storage<br>
@@ -114,7 +114,7 @@ val username = prefs.pull("username")
 *:pushpin: #2: The 3 unsafe functions accept the type parameter as a kotlin class, as a java class or as a kotlin generic. For the latter, the bytecode of the function is inlined, in order for the generic type to be reified.*<br>
 
 ### Write
-To save values to the preference storage you can use `push()`<br>
+To save values to the preference storage you use `push()`<br>
 Push takes a key and a value, and stores them inside the preferences.
 
 ```kotlin
@@ -123,13 +123,14 @@ prefs.push("username", viewModel.username)
 
 ### Save, Auto Save Policies & Commit Strategies
 A pending transaction is a change which is registered in-memory but not on the XML preference file.<br>
-To commit any pending transaction to the persistent XML storage, you can use `save()`.
+To commit any pending transaction to the persistent XML storage, you use `save()`.
 
 By default, `autoSave` is set to `AutoSavePolicy.AUTO`, and therefore changes are automatically synchronized with the underlying XML file, as with each `push()` call the value is directly committed and saved. Therefore, no pending transaction is created.
 
 However, if `autoSave` is turned off (`AutoSavePolicy.MANUAL`), `push()` will save the change in-memory, but won't write it to the XML file until `save()` is called. This way it will create a pending transaction which will be kept in-memory until a commit operation happens.
 
 Here is a table representing when values are saved, depending on the policy in use.
+
 | `AutoSavePolicy` | AUTO | MANUAL |
 |---------|--------------------|--------------------|
 | push()  | :white_check_mark: | :x: |
@@ -139,7 +140,7 @@ Here is a table representing when values are saved, depending on the policy in u
 *:pushpin: The `AutoSavePolicy` involves when to write changes to the persistent XML storage.*<br>
 
 The best (and default) practise is to use `APPLY`. Then, `COMMIT` is also available, as well as `NONE`, for no-op (Does not write anything, used internally for `queue()`).<br>
-`save()` and `push()` use the configuration commit strategy to decide how to save their changes to the persistent XML storage
+`save()` and `push()` use the configuration commit strategy to decide how to save their changes to the persistent XML storage.
 
 | `CommitStrategy` | APPLY | COMMIT | NONE |
 |--------|--------------------|--------------------|------|
@@ -151,25 +152,26 @@ The best (and default) practise is to use `APPLY`. Then, `COMMIT` is also availa
 *:pushpin: The `CommitStrategy` involves how to write changes to the persistent XML storage.*<br>
 
 ### Queuing
-To enqueue values to be written into the preference storage you can use `queue()`. It follows the `push()` syntax.<br>
-Not writing the changes to the file makes enqueuing a valid choice for both batch computing or expensive and long-running operations.<br>
-`queue()` takes a key and a value, and saves the changes in-memory.<br>
-`queue()` does not actually write them to the storage. You can do so by calling `save()` (Or by using `push()` subsequently).
+To enqueue values to be written into the preference storage you use `queue()`. It follows `push()`'s syntax.<br>
+While `push`, by default, _pushes_ the update immediately on the XML persistent storage (By default, changable with `AutoSave`), `queue()` saves the update in-memory without writing it out to the storage.<br>
+Not writing the changes to the file makes enqueuing a valid choice for both batch computing or resource-expensive and long-running operations.<br>
+- `queue()` takes a key and a value, and saves the changes in-memory.<br>
+- `queue()` does not actually send updates to the storage. You can do so by calling `save()` (Or by using `push()` subsequently).
 <br><br>
 This segment touches a broader concept, which is storing scope. There are two storing scopes for SharedPreferences:
 - in-memory (key-value pairs are kept in memory). This is fast to read to/write from, but does not persist application restarts.
 - XML (key-value pairs are kept on a file). Writing to a file is mildly expensive but it allows preferences to survive across application restarts.<br>
-Here is a table explaining how different methods inside KsPrefs touch and go through those storing scopes
+Here is a table explaining how different methods inside KsPrefs touch and go through those storing scopes.
 
 | `StoringScope` | in-memory | XML |
 |---------|--------------------|---------------------------------|
-| push()  | :white_check_mark: | :white_check_mark: (By default) |
-| queue() | :white_check_mark: | :x: |
-| save()  | :white_check_mark: | :white_check_mark: |
+| push(k, v)  | :white_check_mark: | :white_check_mark: (By default) |
+| queue(k, v) | :white_check_mark: | :x: |
+| save()      | :white_check_mark: | :white_check_mark: |
 
-*:pushpin: The `StoringScope` involves at which level changes are propagated.*<br>
+*:pushpin: The `StoringScope` determines at which level changes are propagated.*<br>
 
-In the following snippet (Given that `autoSavePolicy` is set to `AUTO`), `n` in-memory and `x` XML write operations are performed. This, given  `f(n)` and `f(x)` for how long those operations will take, takes `n×f(n) + m×f(x)`. Given that, if using `push()`, `m=n`, then it resolves to `n×(f(n) + f(x))`
+In the following snippet (Given that `autoSavePolicy` is set to `AUTOMATIC`), `n` in-memory and `x` XML write operations are performed. This, given  `f(n)` and `f(x)` for how long those operations will take, takes `n×f(n) + m×f(x)`. Given that, if using `push()`, `m=n`, then it resolves to `n×(f(n) + f(x))`
 
 ```kotlin
 for ((index, pic) in picsArray.toList().withIndex()) {
@@ -178,8 +180,8 @@ for ((index, pic) in picsArray.toList().withIndex()) {
 }
 ```
 
-Even though this isn't a significant speedup, as n (and m) grow, the computation takes longer, also given that `f(n) < f(x)`. Enqueuing values makes `m=1`, and the time/op chart follows a more gentle curve: `n×f(n) + f(x)`.
-This improvements dramatically optimizes performances for a large amount of operations.
+Even though this isn't a significant speedup for small data sizes, as n (and m) grow the computation takes longer; since enqueuing values sets `m=1`, thus, `f(n) < f(x)`. The time/op chart follows a much more gentle curve: `n×f(n) + f(x)`.
+This improvements drastically optimizes performances for a large amount of operations.
 
 ```kotlin
 for ((index, pic) in picsArray.toList().withIndex()) {
@@ -201,3 +203,4 @@ val accentColor by prefs.dynamic("accent_color", "#2106F3")
 ```
 
 When you set a value for this property, it is also updated on the XML preference file, as it is a dynamic reference to the preference.
+

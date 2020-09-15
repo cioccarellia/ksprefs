@@ -16,6 +16,15 @@
 package com.cioccarellia.ksprefs.config.model
 
 enum class AutoSavePolicy {
-    AUTO,
+    /**
+     * Updates are propagated automatically to the XML
+     * persistent storage.
+     * */
+    AUTOMATIC,
+
+    /**
+     * Changes are not sent to the XML persistent storage
+     * and have to be saved manually with [KsPrefs.save()]
+     * */
     MANUAL
 }

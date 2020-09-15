@@ -34,7 +34,7 @@ internal object Defaults {
     val CHARSET = Charsets.UTF_8
 
     /** Saving */
-    val AUTO_SAVE_POLICY = AutoSavePolicy.AUTO
+    val AUTO_SAVE_POLICY = AutoSavePolicy.AUTOMATIC
     val COMMIT_STRATEGY = CommitStrategy.APPLY
 
     /** Base64 */
