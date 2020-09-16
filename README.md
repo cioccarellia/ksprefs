@@ -121,33 +121,43 @@ Push takes a key and a value, and stores them inside the preferences.
 prefs.push("username", viewModel.username)
 ```
 
-### Save, Auto Save Policies & Commit Strategies
-A pending transaction is a change which is registered in-memory but not on the XML preference file.<br>
-To commit any pending transaction to the persistent XML storage, you use `save()`.
+### Saving, Auto Save Policies & Commit Strategies
+A pending transaction is a change which is registered in-memory, but not yet on the XML preference file.
+Android SharedPreferences works that way; indeed, you can stack up pending transactions, but at some point you have to _actually_ save them.
+If out app were to shut down unexpectedly, those changes would be lost forever. <br>
+To commit any pending transaction to the persistent XML storage, in ksprefs you use `save()`. 
+This matches `commit()` and `apply()` SharedPreferences behaviour you may be accustomed to.<br>
 
-By default, `autoSave` is set to `AutoSavePolicy.AUTO`, and therefore changes are automatically synchronized with the underlying XML file, as with each `push()` call the value is directly committed and saved. Therefore, no pending transaction is created.
+#### Auto Save Policy
+By default, `autoSave` is set to `AutoSavePolicy.AUTOMATIC`, and therefore changes are automatically synchronized with the underlying XML file, because after each `push()` call, a `save()` follows, in order to automatically commit and save the preference. Therefore, no pending transaction is kept.
 
-However, if `autoSave` is turned off (`AutoSavePolicy.MANUAL`), `push()` will save the change in-memory, but won't write it to the XML file until `save()` is called. This way it will create a pending transaction which will be kept in-memory until a commit operation happens.
+However, if `autoSave` is turned off (using `AutoSavePolicy.MANUAL`), `push()` will save the change in-memory, but is not going to write it to the XML preferences file until `save()` is invoked. This way it's going to create a pending transaction which will be kept in-memory until a `save()` operation happens.
 
-Here is a table representing when values are saved, depending on the policy in use.
+Here is a table representing when values are saved to the storage, depending on the policy in use.
 
 | `AutoSavePolicy` | AUTO | MANUAL |
 |---------|--------------------|--------------------|
 | push()  | :white_check_mark: | :x: |
 | queue() | :x: | :x: |
 | save()  | :white_check_mark: | :white_check_mark: |
+| SharedPreferences.Editor.commit()  | :white_check_mark: | :white_check_mark: |
+| SharedPreferences.Editor.apply()  | :white_check_mark: | :white_check_mark: |
 
-*:pushpin: The `AutoSavePolicy` involves when to write changes to the persistent XML storage.*<br>
+*:pushpin: `AutoSavePolicy` chooses when to write changes to the persistent XML storage and when to keep them in memory.*<br>
 
-The best (and default) practise is to use `APPLY`. Then, `COMMIT` is also available, as well as `NONE`, for no-op (Does not write anything, used internally for `queue()`).<br>
-`save()` and `push()` use the configuration commit strategy to decide how to save their changes to the persistent XML storage.
+#### Commit Strategy
+The best (and default) practise while dealing with SharedPreferences is to use `APPLY`. It is asynchronous and fast. `COMMIT` is also available, though it should not be used unless you have a valid reason to, given its synchronous and strict nature, as well as `NONE`, for no-op (Does not save anything, used internally for `queue()`).<br>
+`save()` and `push()` always refer to the commit strategy to decide how to save their updates to the persistent XML preference storage.
+
+Here is a table representing various features of different commit strategies. See ![this](https://stackoverflow.com/questions/5960678/whats-the-difference-between-commit-and-apply-in-sharedpreferences) for more information.
 
 | `CommitStrategy` | APPLY | COMMIT | NONE |
 |--------|--------------------|--------------------|------|
 | in-memory | :white_check_mark: | :white_check_mark: | :white_check_mark: |
 | XML | :white_check_mark: | :white_check_mark: | :x: |
-| async | :white_check_mark: | :x: | :x: |
-| atomic | :x: | :white_check_mark: | :x: |
+| async | :white_check_mark: | :x: | :heavy_minus_sign:	 |
+| atomic | :white_check_mark: | :white_check_mark: | :heavy_minus_sign:	 |
+| error report | :x: | :white_check_mark: | :heavy_minus_sign:	 |
 
 *:pushpin: The `CommitStrategy` involves how to write changes to the persistent XML storage.*<br>
 
