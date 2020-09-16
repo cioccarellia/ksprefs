@@ -2,7 +2,7 @@
   <a href="https://github.com/cioccarellia/ksprefs" target="_blank"><img width="100" src="extras/ksprefs.png"></a>
 </p>
 <h1 align="center">KsPrefs</h1>
-<p align="center">Simplify SharedPreferences. 100% Kotlin.</p>
+<p align="center">SharedPreferences. 100% Kotlin.</p>
 <p align="center">
   <a href="https://bintray.com/cioccarellia/maven/ksprefs/_latestVersion"><img src="https://api.bintray.com/packages/cioccarellia/maven/ksprefs/images/download.svg" alt="Download from Bintray"></a>
   <a href="https://app.circleci.com/pipelines/github/cioccarellia/ksprefs"><img src="https://circleci.com/gh/cioccarellia/ksprefs.svg?style=svg" alt="CircleCI"></a>
@@ -149,7 +149,7 @@ Here is a table representing when values are saved to the storage, depending on 
 The best (and default) practise while dealing with SharedPreferences is to use `APPLY`. It is asynchronous and fast. `COMMIT` is also available, though it should not be used unless you have a valid reason to, given its synchronous and strict nature, as well as `NONE`, for no-op (Does not save anything, used internally for `queue()`).<br>
 `save()` and `push()` always refer to the commit strategy to decide how to save their updates to the persistent XML preference storage.
 
-Here is a table representing various features of different commit strategies. See ![this](https://stackoverflow.com/questions/5960678/whats-the-difference-between-commit-and-apply-in-sharedpreferences) for more information.
+Here is a table representing various features of different commit strategies. Check out the official documentation [here](https://developer.android.com/reference/android/content/SharedPreferences.Editor.html) and see [this](https://stackoverflow.com/questions/5960678/whats-the-difference-between-commit-and-apply-in-sharedpreferences) post for more intel.
 
 | `CommitStrategy` | APPLY | COMMIT | NONE |
 |--------|--------------------|--------------------|------|
