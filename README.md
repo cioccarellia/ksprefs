@@ -168,7 +168,9 @@ Not writing the changes to the file makes enqueuing a valid choice for both batc
 - `queue()` takes a key and a value, and saves the changes in-memory.<br>
 - `queue()` does not actually send updates to the storage. You can do so by calling `save()` (Or by using `push()` subsequently).
 <br><br>
-This segment touches a broader concept, which is storing scope. There are two storing scopes for SharedPreferences:
+
+This segment touches a broader concept, which is storing scope.
+There are two storing scopes for SharedPreferences:
 - in-memory (key-value pairs are kept in memory). This is fast to read to/write from, but does not persist application restarts.
 - XML (key-value pairs are kept on a file). Writing to a file is mildly expensive but it allows preferences to survive across application restarts.<br>
 Here is a table explaining how different methods inside KsPrefs touch and go through those storing scopes.
