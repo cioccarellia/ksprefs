@@ -16,7 +16,6 @@
 package com.cioccarellia.ksprefs.exceptions
 
 import android.util.Log
-import androidx.annotation.RestrictTo
 import com.cioccarellia.ksprefs.defaults.Defaults
 
 internal class EngineException(

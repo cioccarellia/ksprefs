@@ -21,6 +21,6 @@ import com.cioccarellia.ksprefsample.App
 object StartCounterPrefCenter : PrefsCenter(App.prefs) {
     private const val counterKey = "start_counter"
 
-    fun increment() = prefs.push(counterKey,  read() + 1)
+    fun increment() = prefs.push(counterKey, read() + 1)
     fun read() = prefs.pull(counterKey, 0)
 }
