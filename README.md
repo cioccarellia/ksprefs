@@ -230,3 +230,6 @@ object StartCounterPrefCenter : PrefsCenter(App.prefs) {
     fun read() = prefs.pull(counterKey, 0)
 }
 ```
+
+## Sample App
+<img src="https://raw.githubusercontent.com/cioccarellia/ksprefs/master/art/demo-app.png">
