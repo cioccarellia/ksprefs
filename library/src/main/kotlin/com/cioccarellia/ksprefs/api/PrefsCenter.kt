@@ -13,15 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.cioccarellia.ksprefs.api
 
-ext.library = [
-        min_sdk             : 19,
-        compile_sdk         : 30,
+import com.cioccarellia.ksprefs.KsPrefs
 
-        publish_group       : "com.cioccarellia",
-        publish_version     : "2.2.1",
-        publish_version_code: 221,
-
-        description         : "Kotlin SharedPreferences, Simplified",
-        website             : "https://github.com/cioccarellia/ksprefs"
-]
+open class PrefsCenter(
+    val prefs: KsPrefs
+)

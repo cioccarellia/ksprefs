@@ -13,15 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.cioccarellia.ksprefsample.prefcenter
 
-ext.library = [
-        min_sdk             : 19,
-        compile_sdk         : 30,
+import com.cioccarellia.ksprefs.api.PrefsCenter
+import com.cioccarellia.ksprefsample.App
 
-        publish_group       : "com.cioccarellia",
-        publish_version     : "2.2.1",
-        publish_version_code: 221,
+object StartCounterPrefCenter : PrefsCenter(App.prefs) {
+    private const val counterKey = "start_counter"
 
-        description         : "Kotlin SharedPreferences, Simplified",
-        website             : "https://github.com/cioccarellia/ksprefs"
-]
+    fun increment() = prefs.push(counterKey,  read() + 1)
+    fun read() = prefs.pull(counterKey, 0)
+}

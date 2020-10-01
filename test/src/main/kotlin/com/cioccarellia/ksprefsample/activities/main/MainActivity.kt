@@ -34,6 +34,7 @@ import com.cioccarellia.ksprefsample.activities.dynamic.DynamicActivity
 import com.cioccarellia.ksprefsample.activities.json.JsonActivity
 import com.cioccarellia.ksprefsample.activities.numbers.NumbersActivity
 import com.cioccarellia.ksprefsample.activities.observer.ObserverActivity
+import com.cioccarellia.ksprefsample.prefcenter.StartCounterPrefCenter
 import com.cioccarellia.ksprefsample.util.onClickDebounced
 
 class MainActivity : AppCompatActivity() {
@@ -46,6 +47,8 @@ class MainActivity : AppCompatActivity() {
     private val dynamic by lazy { findViewById<Button>(R.id.dynamicActivity) }
 
     private val detailsTestView by lazy { findViewById<TextView>(R.id.detailsTestView) }
+
+    private val startCount = StartCounterPrefCenter.read()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,6 +101,7 @@ class MainActivity : AppCompatActivity() {
         } else {
             appendLine("Encrypted using ${config.encryptionType.javaClass.simpleName}")
         }
+        appendLine("Start count $startCount")
     }
 
     private fun log(str: String) = Log.d("KsPref", str)

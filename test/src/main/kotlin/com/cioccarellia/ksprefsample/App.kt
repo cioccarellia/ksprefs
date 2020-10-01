@@ -22,6 +22,7 @@ import com.cioccarellia.ksprefs.config.EncryptionType
 import com.cioccarellia.ksprefs.config.KspConfig
 import com.cioccarellia.ksprefs.config.model.AutoSavePolicy
 import com.cioccarellia.ksprefs.config.model.KeySize
+import com.cioccarellia.ksprefsample.prefcenter.StartCounterPrefCenter
 
 class App : Application() {
 
@@ -52,5 +53,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         appContext = this
+
+        StartCounterPrefCenter.increment()
     }
 }
