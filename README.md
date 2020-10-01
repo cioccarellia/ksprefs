@@ -2,7 +2,7 @@
   <a href="https://github.com/cioccarellia/ksprefs" target="_blank"><img width="100" src="extras/ksprefs.png"></a>
 </p>
 <h1 align="center">KsPrefs</h1>
-<p align="center">Simplify SharedPreferences. 100% Kotlin.</p>
+<p align="center">SharedPreferences. 100% Kotlin.</p>
 <p align="center">
   <a href="https://bintray.com/cioccarellia/maven/ksprefs/_latestVersion"><img src="https://api.bintray.com/packages/cioccarellia/maven/ksprefs/images/download.svg" alt="Download from Bintray"></a>
   <a href="https://app.circleci.com/pipelines/github/cioccarellia/ksprefs"><img src="https://circleci.com/gh/cioccarellia/ksprefs.svg?style=svg" alt="CircleCI"></a>
@@ -15,10 +15,10 @@
 
 ### TLDR
 ```gradle
-implementation 'com.cioccarellia:ksprefs:2.2.0'
+implementation 'com.cioccarellia:ksprefs:2.2.1'
 ```
 
-- :zap: Powerful SharedPreferences wrapper.
+- :zap: Powerful SharedPreferences wrapper & API.
 - :rocket: Easy to pick up & use right away for any project.
 - :gear: Fully customizable behaviour.
 - :lock: Built-in cryptography (PlainText, Base64, AES CBC, AES ECB, Android KeyStore + AES GCM / + RSA).
@@ -149,7 +149,7 @@ Here is a table representing when values are saved to the storage, depending on 
 The best (and default) practise while dealing with SharedPreferences is to use `APPLY`. It is asynchronous and fast. `COMMIT` is also available, though it should not be used unless you have a valid reason to, given its synchronous and strict nature, as well as `NONE`, for no-op (Does not save anything, used internally for `queue()`).<br>
 `save()` and `push()` always refer to the commit strategy to decide how to save their updates to the persistent XML preference storage.
 
-Here is a table representing various features of different commit strategies. See ![this](https://stackoverflow.com/questions/5960678/whats-the-difference-between-commit-and-apply-in-sharedpreferences) for more information.
+Here is a table representing various features of different commit strategies. Check out the official documentation [here](https://developer.android.com/reference/android/content/SharedPreferences.Editor.html) and see [this](https://stackoverflow.com/questions/5960678/whats-the-difference-between-commit-and-apply-in-sharedpreferences) post for more intel.
 
 | `CommitStrategy` | APPLY | COMMIT | NONE |
 |--------|--------------------|--------------------|------|
@@ -168,7 +168,9 @@ Not writing the changes to the file makes enqueuing a valid choice for both batc
 - `queue()` takes a key and a value, and saves the changes in-memory.<br>
 - `queue()` does not actually send updates to the storage. You can do so by calling `save()` (Or by using `push()` subsequently).
 <br><br>
-This segment touches a broader concept, which is storing scope. There are two storing scopes for SharedPreferences:
+
+This segment touches a broader concept, which is storing scope.
+There are two storing scopes for SharedPreferences:
 - in-memory (key-value pairs are kept in memory). This is fast to read to/write from, but does not persist application restarts.
 - XML (key-value pairs are kept on a file). Writing to a file is mildly expensive but it allows preferences to survive across application restarts.<br>
 Here is a table explaining how different methods inside KsPrefs touch and go through those storing scopes.
@@ -214,3 +216,17 @@ val accentColor by prefs.dynamic("accent_color", "#2106F3")
 
 When you set a value for this property, it is also updated on the XML preference file, as it is a dynamic reference to the preference.
 
+## API
+KsPrefs provides some customizable data structures, to abstract preference reads/writes even further.
+
+### Preferences Center
+A `PrefsCenter` is an extremely simple and straightforward class. It is used to enclose and contain all the SharedPreferences-specific operations, like providing a key, doing some value specific post-read/pre-write operation, providing the fallback value or the return type.
+
+```kotlin
+object StartCounterPrefCenter : PrefsCenter(App.prefs) {
+    private const val counterKey = "start_counter"
+    
+    fun increment() = prefs.push(counterKey,  read() + 1)
+    fun read() = prefs.pull(counterKey, 0)
+}
+```
