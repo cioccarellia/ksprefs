@@ -18,7 +18,7 @@
 implementation 'com.cioccarellia:ksprefs:2.2.1'
 ```
 
-- :zap: Powerful SharedPreferences wrapper.
+- :zap: Powerful SharedPreferences wrapper & API.
 - :rocket: Easy to pick up & use right away for any project.
 - :gear: Fully customizable behaviour.
 - :lock: Built-in cryptography (PlainText, Base64, AES CBC, AES ECB, Android KeyStore + AES GCM / + RSA).
@@ -216,3 +216,17 @@ val accentColor by prefs.dynamic("accent_color", "#2106F3")
 
 When you set a value for this property, it is also updated on the XML preference file, as it is a dynamic reference to the preference.
 
+## API
+KsPrefs provides some customizable data structures, to abstract preference reads/writes even further.
+
+### Preferences Center
+A `PrefsCenter` is an extremely simple and straightforward class. It is used to enclose and contain all the SharedPreferences-specific operations, like providing a key, doing some value specific post-read/pre-write operation, providing the fallback value or the return type.
+
+```kotlin
+object StartCounterPrefCenter : PrefsCenter(App.prefs) {
+    private const val counterKey = "start_counter"
+    
+    fun increment() = prefs.push(counterKey,  read() + 1)
+    fun read() = prefs.pull(counterKey, 0)
+}
+```
