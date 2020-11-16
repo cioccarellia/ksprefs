@@ -42,7 +42,7 @@ publish {
     bintrayKey = getBintrayCredentialArray()[2]
 
     groupId = library.publish_group
-    artifactId = "ksprefs"
+    artifactId = library.artifact
     publishVersion = library.publish_version
     desc = library.description
     website = library.website
