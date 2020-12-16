@@ -71,23 +71,21 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        detailsTestView.setText(
-            buildString {
-                append("KsPrefs ${BuildConfig.VERSION_NAME}")
-                append(" ")
+        detailsTestView.text = buildString {
+            append("KsPrefs ${BuildConfig.VERSION_NAME}")
+            append(" ")
 
-                append("@ ${BuildConfig.VERSION_CODE}")
-                append(", ")
+            append("@ ${BuildConfig.VERSION_CODE}")
+            append(", ")
 
-                append("tsdk ${com.cioccarellia.ksprefsample.BuildConfig.compileSdk}")
-                append(", ")
+            append("tsdk ${com.cioccarellia.ksprefsample.BuildConfig.compileSdk}")
+            append(", ")
 
-                append("Kotlin ${com.cioccarellia.ksprefsample.BuildConfig.kotlinVersion}")
-                appendLine()
+            append("Kotlin ${com.cioccarellia.ksprefsample.BuildConfig.kotlinVersion}")
+            appendLine()
 
-                append(App.prefs.internalReport())
-            }
-        )
+            append(App.prefs.internalReport())
+        }
     }
 
     private fun KsPrefs.internalReport() = buildString {

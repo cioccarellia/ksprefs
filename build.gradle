@@ -16,7 +16,7 @@
 apply from: rootProject.file("gradle/versions_plugin_config.gradle")
 
 buildscript {
-    ext.kotlin_version = '1.4.10'
+    ext.kotlin_version = '1.4.21'
     apply from: rootProject.file("dependencies.gradle")
 
     repositories {

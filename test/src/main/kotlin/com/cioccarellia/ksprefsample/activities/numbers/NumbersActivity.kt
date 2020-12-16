@@ -54,7 +54,7 @@ class NumbersActivity : AppCompatActivity() {
                 val enum = App.prefs.pull<CommitStrategy>("enum")
 
                 listOf(int, long, short, float, double, bigint, enum).forEach {
-                    appendln("${it::class.simpleName} -> $it")
+                    appendLine("${it::class.simpleName} -> $it")
                 }
             }
         }
