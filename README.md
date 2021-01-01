@@ -14,9 +14,26 @@
 </p>
 
 ### TLDR
+<details open><summary>Gradle</summary>
+
 ```gradle
-implementation 'com.cioccarellia:ksprefs:2.2.3'
+dependencies {
+    implementation 'com.cioccarellia:ksprefs:2.2.3'
+}
 ```
+</details>
+
+<details><summary>Maven</summary>
+
+```xml
+<dependency>
+    <groupId>com.cioccarellia</groupId>
+    <artifactId>ksprefs</artifactId>
+    <version>2.2.3</version>
+    <type>pom</type>
+</dependency>
+```
+</details>
 
 - :zap: Powerful SharedPreferences wrapper & API.
 - :rocket: Easy to pick up & use right away for any project.
