@@ -13,7 +13,6 @@
   <a href="https://github.com/cioccarellia/ksprefs/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="License"></a>
 </p>
 
-### TLDR
 <details open><summary>Gradle</summary>
 
 ```gradle
