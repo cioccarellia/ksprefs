@@ -60,8 +60,7 @@ KsPrefs is:
 - Secure
 - Optimized
 - Customizable
-- Practical
-- Easy
+- Smooth to implement
 - Extensible
 - Open Source
 
