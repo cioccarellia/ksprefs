@@ -20,9 +20,9 @@ ext.library = [
 
         artifact            : "ksprefs",
 
-        publish_group       : "com.cioccarellia",
-        publish_version     : "2.2.3",
-        publish_version_code: 223,
+        publish_group       : "com.github.cioccarellia",
+        publish_version     : "2.2.4",
+        publish_version_code: 224,
 
         description         : "Kotlin SharedPreferences, Simplified",
         website             : "https://github.com/cioccarellia/ksprefs"

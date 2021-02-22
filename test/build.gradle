@@ -28,7 +28,7 @@ dependencies {
     if (dependsOnLocal) {
         implementation project(":library")
     } else {
-        implementation "com.cioccarellia:ksprefs:${library.publish_version}"
+        implementation "com.github.cioccarellia:ksprefs:${library.publish_version}"
     }
 
     implementation deps.kotlin.coroutines.android

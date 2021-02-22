@@ -14,21 +14,23 @@
  * limitations under the License.
  */
 apply from: rootProject.file("gradle/versions_plugin_config.gradle")
+apply plugin: 'io.codearte.nexus-staging'
 
 buildscript {
-    ext.kotlin_version = '1.4.21'
+    ext.kotlin_version = '1.4.30'
     apply from: rootProject.file("dependencies.gradle")
 
     repositories {
         google()
+        mavenCentral()
         jcenter()
     }
 
     dependencies {
         classpath deps.gradle_plugins.android
-        classpath deps.gradle_plugins.bintray_release
         classpath deps.gradle_plugins.kotlin
         classpath deps.gradle_plugins.versions
+        classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.22.0'
     }
 }
 
