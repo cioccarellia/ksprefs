@@ -52,7 +52,7 @@ To _read_ from SharedPreferences, use `pull(key, fallback)`.<br>
 To _write_ to SharedPreferences, use `push(key, value)`.
 
 ## Introduction
-<img src="extras/light/png/scheme.png"><br><br>
+<img src="extras/dark/png/scheme.png"><br><br>
 KsPrefs (<b>K</b>otlin <b>S</b>hared <b>Pref</b>erences) is a wrapper for the default Android SharedPreferences implementation.
 KsPrefs goal is to bring both Kotlin & advanced cryptographic functions and standards over to an Android app. 
 This library is meant as a replacement for the default SharedPreference API, which lacks security, conciseness, modularity and style.
