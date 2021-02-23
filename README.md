@@ -7,15 +7,14 @@
   <a href="https://search.maven.org/artifact/com.github.cioccarellia/ksprefs"><img src="https://img.shields.io/maven-central/v/com.github.cioccarellia/ksprefs.svg?label=Maven%20Central" alt="Download from MavenCentral"></a>
   <a href="https://app.circleci.com/pipelines/github/cioccarellia/ksprefs"><img src="https://circleci.com/gh/cioccarellia/ksprefs.svg?style=svg" alt="CircleCI"></a>
   <a href="https://app.codacy.com/manual/cioccarellia/ksprefs/dashboard"><img src="https://api.codacy.com/project/badge/Grade/f10cdbdbe7b84d0ea7a03b755c104e03" alt="Codacy"></a>
-  <a><img src="https://img.shields.io/badge/kotlin-1.4.30-orange.svg" alt="Kotlin"></a>
-  <a><img src="https://img.shields.io/badge/min-19-00e676.svg" alt="Android Min Sdk"></a>
-  <a><img src="https://img.shields.io/badge/compile-30-00e676.svg" alt="Android Compile Version"></a>
-  <a href="https://github.com/cioccarellia/ksprefs/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="License"></a>
+  <a href="kotlin versions maven"><img src="https://img.shields.io/badge/kotlin-1.4.30-orange.svg" alt="Kotlin"></a>
+  <a href="https://source.android.com/setup/start/build-numbers"><img src="https://img.shields.io/badge/min-19-00e676.svg" alt="Android Min Sdk"></a>
+  <a href="https://source.android.com/setup/start/build-numbers"><img src="https://img.shields.io/badge/compile-30-00e676.svg" alt="Android Compile Version"></a>
+  <a href="https://github.com/cioccarellia/ksprefs/blob/master/LICENSE.md"><img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="License"></a>
 </p>
 
 
-
-### ⚠️ since 2.2.4 ksprefs has been moved to mavenCentral. The publishing coordinates have changed.
+#### ⚠️ since 2.2.4 ksprefs has been moved to mavenCentral. The publishing coordinates have changed.
 <details open><summary>Gradle</summary>
 
 ```gradle
@@ -37,12 +36,12 @@ dependencies {
 ```
 </details>
 
-- :zap: Powerful SharedPreferences wrapper & API.
-- :rocket: Easy to pick up & use right away for any project.
-- :gear: Fully customizable behaviour.
-- :lock: Built-in cryptography (PlainText, Base64, AES CBC, AES ECB, Android KeyStore + AES GCM / + RSA).
-- :symbols: Extensive type support.
-- :heart: Kotlin powered.
+- ⚡️ Powerful SharedPreferences wrapper & API.
+- 🚀 Easy to pick up & use right away.
+- ⚙️ Fully customizable behaviour.
+- 🔒 Built-in cryptography & decoding engines (PlainText, Base64, AES-CBC, AES-ECB, Android KeyStore + AES-GCM / RSA KeyPair).
+- 🗂 Extensive type & enum support.
+- 🧡 Kotlin powered.
 
 ```kotlin
 val prefs = KsPrefs(applicationContext)
@@ -53,19 +52,9 @@ To _write_ to SharedPreferences, use `push(key, value)`.
 
 ## Introduction
 <img src="extras/dark/png/scheme.png"><br><br>
-KsPrefs (<b>K</b>otlin <b>S</b>hared <b>Pref</b>erences) is a wrapper for the default Android SharedPreferences implementation.
-KsPrefs goal is to bring both Kotlin & advanced cryptographic functions and standards over to an Android app. 
-This library is meant as a replacement for the default SharedPreference API, which lacks security, conciseness, modularity and style.
-
-KsPrefs is:
-- Strongly-typed
-- Null-safe & fail-safe
-- Secure
-- Optimized
-- Customizable
-- Smooth to implement
-- Extensible
-- Open Source
+KsPrefs (<b>K</b>otlin <b>S</b>hared <b>Pref</b>erences) is a wrapper for the default Android SharedPreferences (_SP_ for short) implementation.
+Its goal is to bring security to preference storage through cryptography. This library can be used as a replacement of SP whick lacks security and practicality, and which even Google is moving away from with [Jetpack DataStore](https://developer.android.com/topic/libraries/architecture/datastore).<br>
+On top of the SP API, KsPrefs extends with numerous features and extra bits which com pre-packed with the library, and can be used to enhance the development experience.
 
 ## Functionality
 ### Constructor
@@ -235,7 +224,7 @@ val accentColor by prefs.dynamic("accent_color", "#2106F3")
 When you set a value for this property, it is also updated on the XML preference file, as it is a dynamic reference to the preference.
 
 ## API
-KsPrefs provides some customizable data structures, to abstract preference reads/writes even further.
+KsPrefs provides some customizable data structures, to abstract preference reads/writes to function calls.
 
 ### Preferences Center
 A `PrefsCenter` is an extremely simple and straightforward class. It is used to enclose and contain all the SharedPreferences-specific operations, like providing a key, doing some value specific post-read/pre-write operation, providing the fallback value or the return type.
