@@ -19,7 +19,7 @@ ext.module_name = "ksprefs"
 apply from: rootProject.file("library_info.gradle")
 
 ext {
-    PUBLISH_GROUP_ID = "${library.publish_group}.${library.artifact}"
+    PUBLISH_GROUP_ID = library.publish_group
     PUBLISH_VERSION = library.publish_version
     PUBLISH_ARTIFACT_ID = library.artifact
     PUBLISH_ARTIFACT_DESC = library.description
