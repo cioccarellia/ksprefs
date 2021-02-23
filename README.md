@@ -4,7 +4,7 @@
 <h1 align="center">KsPrefs</h1>
 <p align="center">SharedPreferences. 100% Kotlin.</p>
 <p align="center">
-  <a href="https://search.maven.org/artifact/com.github.cioccarellia/ksprefs"><img src="https://maven-badges.herokuapp.com/maven-central/com.github.cioccarellia/ksprefs/badge.svg" alt="Download from MavenCentral"></a>
+  <a href="https://search.maven.org/artifact/com.github.cioccarellia/ksprefs"><img src="https://img.shields.io/maven-central/v/com.github.cioccarellia/ksprefs.svg?label=Maven%20Central" alt="Download from MavenCentral"></a>
   <a href="https://app.circleci.com/pipelines/github/cioccarellia/ksprefs"><img src="https://circleci.com/gh/cioccarellia/ksprefs.svg?style=svg" alt="CircleCI"></a>
   <a href="https://app.codacy.com/manual/cioccarellia/ksprefs/dashboard"><img src="https://api.codacy.com/project/badge/Grade/f10cdbdbe7b84d0ea7a03b755c104e03" alt="Codacy"></a>
   <a><img src="https://img.shields.io/badge/kotlin-1.4.30-orange.svg" alt="Kotlin"></a>
