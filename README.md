@@ -214,20 +214,11 @@ prefs.save()
 
 Please note, that if you set `autoSavePolicy` to `MANUAL`, `push()` will only change the in-memory values, and you will need to save them manually anyways.
 
-### Dynamic Delegates
-It is really useful and fun to have dynamic properties whose value is a direct representation of what the underlying XML preferences file contains.
-
-```kotlin
-val accentColor by prefs.dynamic("accent_color", "#2106F3")
-```
-
-When you set a value for this property, it is also updated on the XML preference file, as it is a dynamic reference to the preference.
-
 ## API
 KsPrefs provides some customizable data structures, to abstract preference reads/writes to function calls.
 
 ### Preferences Center
-A `PrefsCenter` is an extremely simple and straightforward class. It is used to enclose and contain all the SharedPreferences-specific operations, like providing a key, doing some value specific post-read/pre-write operation, providing the fallback value or the return type.
+A `PrefsCenter` is to be though as a task-specific abstractor. It is used to enclose and contain all the SP-specific operations, such as providing a key, doing some value specific post-read/pre-write operation, providing the fallback value or the explicit return type, handling logic / conditions and interacting with other app components.
 
 ```kotlin
 object StartCounterPrefCenter : PrefsCenter(App.prefs) {
@@ -237,6 +228,16 @@ object StartCounterPrefCenter : PrefsCenter(App.prefs) {
     fun read() = prefs.pull(counterKey, 0)
 }
 ```
+
+### Dynamic Delegates
+It is really useful and fun to have dynamic properties whose value is a direct representation of what the underlying XML preferences file contains.
+
+```kotlin
+val accentColor by prefs.dynamic("accent_color", "#2106F3")
+```
+
+When you set a value for this property, it is also updated on the XML preference file, as it is a dynamic reference to the preference.
+
 
 ## Sample App
 <img src="https://raw.githubusercontent.com/cioccarellia/ksprefs/master/art/demo-app.png">
