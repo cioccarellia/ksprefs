@@ -7,7 +7,7 @@
   <a href="https://search.maven.org/artifact/com.github.cioccarellia/ksprefs"><img src="https://img.shields.io/maven-central/v/com.github.cioccarellia/ksprefs.svg?label=Maven%20Central" alt="Download from MavenCentral"></a>
   <a href="https://app.circleci.com/pipelines/github/cioccarellia/ksprefs"><img src="https://circleci.com/gh/cioccarellia/ksprefs.svg?style=svg" alt="CircleCI"></a>
   <a href="https://app.codacy.com/manual/cioccarellia/ksprefs/dashboard"><img src="https://api.codacy.com/project/badge/Grade/f10cdbdbe7b84d0ea7a03b755c104e03" alt="Codacy"></a>
-  <a href="kotlin versions maven"><img src="https://img.shields.io/badge/kotlin-1.4.30-orange.svg" alt="Kotlin"></a>
+  <a href="https://kotlinlang.org/docs/releases.html"><img src="https://img.shields.io/badge/kotlin-1.4.30-orange.svg" alt="Kotlin"></a>
   <a href="https://source.android.com/setup/start/build-numbers"><img src="https://img.shields.io/badge/min-19-00e676.svg" alt="Android Min Sdk"></a>
   <a href="https://source.android.com/setup/start/build-numbers"><img src="https://img.shields.io/badge/compile-30-00e676.svg" alt="Android Compile Version"></a>
   <a href="https://github.com/cioccarellia/ksprefs/blob/master/LICENSE.md"><img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="License"></a>
@@ -20,6 +20,15 @@
 ```gradle
 dependencies {
     implementation 'com.github.cioccarellia:ksprefs:2.2.4'
+}
+```
+</details>
+
+<details><summary>Kotlin DSL</summary>
+
+```gradle
+dependencies {
+    implementation("com.github.cioccarellia:ksprefs:2.2.4")
 }
 ```
 </details>
