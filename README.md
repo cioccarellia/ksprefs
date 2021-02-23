@@ -15,6 +15,7 @@
 
 
 
+### ⚠️ since 2.2.4 ksprefs has been moved to mavenCentral. The publishing coordinates have changed.
 <details open><summary>Gradle</summary>
 
 ```gradle
