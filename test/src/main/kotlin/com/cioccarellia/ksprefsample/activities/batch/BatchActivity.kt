@@ -110,6 +110,7 @@ class BatchActivity : AppCompatActivity() {
                     withContext(Dispatchers.Default) {
                         for (i in 0..n) {
                             prefs.expose().edit().putString("dfu-$i", i.toString()).apply()
+
                             withContext(Dispatchers.Main) {
                                 progressDfu.progress++
                                 defaultTitle.text = "SharedPreferences.edit() -> $i"

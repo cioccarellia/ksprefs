@@ -104,4 +104,7 @@ internal class KspDispatcher(
 
     @PublishedApi
     internal fun remove(key: String) = enclosure.remove(key)
+
+    @PublishedApi
+    internal fun clear() = enclosure.clear()
 }

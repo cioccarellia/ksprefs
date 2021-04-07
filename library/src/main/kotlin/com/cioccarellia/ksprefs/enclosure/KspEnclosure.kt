@@ -32,19 +32,19 @@ import com.cioccarellia.ksprefs.extensions.*
 internal class KspEnclosure(
     private val namespace: String,
     context: Context,
-    internal var sharedReader: Reader = context.sharedPrefs(namespace),
+    internal var sharedReader: Reader = context.sharedprefs(namespace),
     internal val engine: Engine = EnginePicker.select(context)
 ) {
     private inline val defaultCommitStrategy
         get() = KsPrefs.config.commitStrategy
 
-    private inline fun deriveVal(
+    private inline fun deriveValue(
         value: ByteArray
     ): ByteArray = engine.derive(
         Transmission(value)
     ).payload
 
-    private inline fun integrateVal(
+    private inline fun integrateValue(
         value: ByteArray
     ): ByteArray = engine.integrate(
         Transmission(value)
@@ -59,13 +59,13 @@ internal class KspEnclosure(
     internal fun read(
         key: String,
         fallback: ByteArray
-    ) = integrateVal(
-        sharedReader.read(deriveKey(key), deriveVal(fallback))
+    ) = integrateValue(
+        sharedReader.read(deriveKey(key), deriveValue(fallback))
     )
 
     internal fun readUnsafe(
         key: String
-    ) = integrateVal(
+    ) = integrateValue(
         sharedReader.readOrThrow(deriveKey(key))
     )
 
@@ -74,7 +74,7 @@ internal class KspEnclosure(
         value: ByteArray,
         strategy: CommitStrategy
     ) = with(sharedReader.edit()) {
-        write(deriveKey(key), deriveVal(value))
+        write(deriveKey(key), deriveValue(value))
         finalize(strategy)
     }
 
@@ -95,5 +95,10 @@ internal class KspEnclosure(
     ) = with(sharedReader.edit()) {
         delete(deriveKey(key))
         finalize(defaultCommitStrategy)
+    }
+
+    internal fun clear() = with(sharedReader.edit()) {
+        clear()
+        finalize(commitStrategy = CommitStrategy.APPLY)
     }
 }

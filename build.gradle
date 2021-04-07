@@ -17,7 +17,7 @@ apply from: rootProject.file("gradle/versions_plugin_config.gradle")
 apply plugin: 'io.codearte.nexus-staging'
 
 buildscript {
-    ext.kotlin_version = '1.4.30'
+    ext.kotlin_version = '1.4.32'
     apply from: rootProject.file("dependencies.gradle")
 
     repositories {

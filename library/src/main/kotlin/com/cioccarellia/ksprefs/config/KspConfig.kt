@@ -30,7 +30,7 @@ data class KspConfig @RestrictTo(RestrictTo.Scope.LIBRARY) constructor(
     @IntRange(from = 0x0000, to = 0x0010)
     var mode: Int = Defaults.MODE,
     var charset: Charset = Defaults.CHARSET,
-    var xmlPrefix: String = Defaults.XMLPREFIX,
+    var xmlPrefix: String = Defaults.XML_PREFIX,
 
     var autoSave: AutoSavePolicy = Defaults.AUTO_SAVE_POLICY,
     var commitStrategy: CommitStrategy = Defaults.COMMIT_STRATEGY,

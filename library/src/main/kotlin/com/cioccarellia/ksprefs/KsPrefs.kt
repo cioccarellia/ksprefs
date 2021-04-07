@@ -287,4 +287,11 @@ class KsPrefs(
     ) {
         dispatcher.remove(key)
     }
+
+    /**
+     * Calls the [clear()] method on [Shared Preferences][SharedPreferences], and removes all entries.
+     * */
+    fun clear() {
+        dispatcher.clear()
+    }
 }
