@@ -246,6 +246,9 @@ val accentColor by prefs.dynamic("accent_color", "#2106F3")
 
 When you set a value for this property, it is also updated on the XML preference file, as it is a dynamic reference to the preference.
 
+## Encryption
+KsPrefs provides with different levels of encryption. From no encryption at all (`EncryptionType.PlainText` and `EncryptionType.Base64`), to standard [AES](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) with key size among 128, 192 & 256-bit and ECB/CBC modes (base64-wrapped ciphertext), to [Android's own keystore system](https://developer.android.com/training/articles/keystore) (though the implementation isn't nearly as fast as the AES-backed one).</br>
+It is recommended to store the AES key into a native library shipped with your application, which makes reverse engineering your code harder.
 
 ## Sample App
 <img src="https://raw.githubusercontent.com/cioccarellia/ksprefs/master/art/demo-app.png">
