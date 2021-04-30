@@ -82,6 +82,8 @@ internal class KspEnclosure(
         key: String
     ) = sharedReader.exists(key)
 
+    internal fun all(): Map<String, *> = sharedReader.all
+
     internal fun save(
         commitStrategy: CommitStrategy
     ) {

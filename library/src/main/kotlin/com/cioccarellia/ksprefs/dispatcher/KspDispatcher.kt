@@ -93,6 +93,9 @@ internal class KspDispatcher(
     }
 
     @PublishedApi
+    internal fun raw() = enclosure.all()
+
+    @PublishedApi
     internal fun exists(
         key: String
     ) = enclosure.exists(key)

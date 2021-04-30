@@ -76,6 +76,21 @@
         app:layout_constraintTop_toBottomOf="@+id/ambiguosCharActivity"
         app:layout_constraintWidth_percent=".30" />
 
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/allActivity"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="8dp"
+        android:text="ALL"
+        app:layout_constraintEnd_toStartOf="@+id/middle_x"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/observerActivity"
+        app:layout_constraintWidth_percent=".30" />
+
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/batchActivity"
         style="@style/Widget.MaterialComponents.Button"

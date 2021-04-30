@@ -237,6 +237,13 @@ class KsPrefs(
         jclass: Class<T>
     ): T = dispatcher.pull(key, jclass.kotlin)
 
+
+    /**
+     * Returns a map containing every key-value pair stored by SharedPreferences.
+     * */
+    @CheckResult
+    fun raw(): Map<String, *> = dispatcher.raw()
+
     /**
      * Checks whether a value exists under a given [key].
      *

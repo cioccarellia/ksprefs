@@ -33,6 +33,7 @@ import com.cioccarellia.ksprefsample.activities.batch.BatchActivity
 import com.cioccarellia.ksprefsample.activities.dynamic.DynamicActivity
 import com.cioccarellia.ksprefsample.activities.json.JsonActivity
 import com.cioccarellia.ksprefsample.activities.numbers.NumbersActivity
+import com.cioccarellia.ksprefsample.activities.all.AllActivity
 import com.cioccarellia.ksprefsample.activities.observer.ObserverActivity
 import com.cioccarellia.ksprefsample.prefcenter.StartCounterPrefCenter
 import com.cioccarellia.ksprefsample.util.onClickDebounced
@@ -45,6 +46,7 @@ class MainActivity : AppCompatActivity() {
     private val batch by lazy { findViewById<Button>(R.id.batchActivity) }
     private val observer by lazy { findViewById<Button>(R.id.observerActivity) }
     private val dynamic by lazy { findViewById<Button>(R.id.dynamicActivity) }
+    private val all by lazy { findViewById<Button>(R.id.allActivity) }
 
     private val detailsTestView by lazy { findViewById<TextView>(R.id.detailsTestView) }
 
@@ -60,7 +62,8 @@ class MainActivity : AppCompatActivity() {
             ambiguous to AmbiguousActivity::class.java,
             batch to BatchActivity::class.java,
             observer to ObserverActivity::class.java,
-            dynamic to DynamicActivity::class.java
+            dynamic to DynamicActivity::class.java,
+            all to AllActivity::class.java,
         )
 
         destinations.forEach { destination ->
@@ -78,7 +81,7 @@ class MainActivity : AppCompatActivity() {
             append("@ ${BuildConfig.VERSION_CODE}")
             append(", ")
 
-            append("tsdk ${com.cioccarellia.ksprefsample.BuildConfig.compileSdk}")
+            append("tgsdk ${com.cioccarellia.ksprefsample.BuildConfig.compileSdk}")
             append(", ")
 
             append("Kotlin ${com.cioccarellia.ksprefsample.BuildConfig.kotlinVersion}")

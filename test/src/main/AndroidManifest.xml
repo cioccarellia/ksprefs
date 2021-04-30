@@ -23,6 +23,7 @@
 
         <activity android:name=".activities.dynamic.DynamicActivity" />
         <activity android:name=".activities.observer.ObserverActivity" />
+        <activity android:name=".activities.all.AllActivity" />
         <activity android:name=".activities.ambiguous.AmbiguousActivity" />
         <activity android:name=".activities.batch.BatchActivity" />
         <activity android:name=".activities.numbers.NumbersActivity" />
