@@ -20,7 +20,6 @@ apply from: rootProject.file("gradle/android_application_config.gradle")
 apply from: rootProject.file("library_info.gradle")
 
 apply plugin: "kotlin-android"
-apply plugin: "kotlin-android-extensions"
 
 def dependsOnLocal = true
 

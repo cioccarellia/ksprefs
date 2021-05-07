@@ -19,7 +19,8 @@ import com.cioccarellia.ksprefs.config.model.KeySize
 import com.cioccarellia.ksprefs.extensions.string
 import com.cioccarellia.ksprefs.internal.ByteSizeable
 
-internal inline class SymmetricKey(
+@JvmInline
+internal value class SymmetricKey(
     val bytes: ByteArray
 ) : ByteSizeable {
 

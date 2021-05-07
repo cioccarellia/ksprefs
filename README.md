@@ -7,7 +7,7 @@
   <a href="https://search.maven.org/artifact/com.github.cioccarellia/ksprefs"><img src="https://img.shields.io/maven-central/v/com.github.cioccarellia/ksprefs.svg?label=Maven%20Central" alt="Download from MavenCentral"></a>
   <a href="https://app.circleci.com/pipelines/github/cioccarellia/ksprefs"><img src="https://circleci.com/gh/cioccarellia/ksprefs.svg?style=svg" alt="CircleCI"></a>
   <a href="https://app.codacy.com/manual/cioccarellia/ksprefs/dashboard"><img src="https://api.codacy.com/project/badge/Grade/f10cdbdbe7b84d0ea7a03b755c104e03" alt="Codacy"></a>
-  <a href="https://kotlinlang.org/docs/releases.html"><img src="https://img.shields.io/badge/kotlin-1.4.32-orange.svg" alt="Kotlin"></a>
+  <a href="https://kotlinlang.org/docs/releases.html"><img src="https://img.shields.io/badge/kotlin-1.5.0-orange.svg" alt="Kotlin"></a>
   <a href="https://source.android.com/setup/start/build-numbers"><img src="https://img.shields.io/badge/min-19-00e676.svg" alt="Android Min Sdk"></a>
   <a href="https://source.android.com/setup/start/build-numbers"><img src="https://img.shields.io/badge/compile-30-00e676.svg" alt="Android Compile Version"></a>
   <a href="https://github.com/cioccarellia/ksprefs/blob/master/LICENSE.md"><img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="License"></a>
@@ -18,7 +18,7 @@
 
 ```gradle
 dependencies {
-    implementation 'com.github.cioccarellia:ksprefs:2.2.5'
+    implementation 'com.github.cioccarellia:ksprefs:2.3.0'
 }
 ```
 </details>
@@ -27,7 +27,7 @@ dependencies {
 
 ```gradle
 dependencies {
-    implementation("com.github.cioccarellia:ksprefs:2.2.5")
+    implementation("com.github.cioccarellia:ksprefs:2.3.0")
 }
 ```
 </details>
@@ -38,7 +38,7 @@ dependencies {
 <dependency>
     <groupId>com.github.cioccarellia</groupId>
     <artifactId>ksprefs</artifactId>
-    <version>2.2.5</version>
+    <version>2.3.0</version>
     <type>pom</type>
 </dependency>
 ```
@@ -94,8 +94,8 @@ To customize KsPrefs, you can pass in a lambda which modifies the configuration 
 
 ```kotlin
 val prefs = KsPrefs(applicationContext) {
-	encryptionType = PlainText()
-    autoSavePolicy = AutoSavePolicy.MANUAL
+    encryptionType = PlainText()
+    autoSave = AutoSavePolicy.MANUAL
     commitStrategy = CommitStrategy.COMMIT
 }
 ```
@@ -247,7 +247,7 @@ val accentColor by prefs.dynamic("accent_color", "#2106F3")
 When you set a value for this property, it is also updated on the XML preference file, as it is a dynamic reference to the preference.
 
 ## Encryption
-KsPrefs provides with different levels of encryption. From no encryption at all (`EncryptionType.PlainText` and `EncryptionType.Base64`), to standard [AES](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) with key size among 128, 192 & 256-bit and ECB/CBC modes (base64-wrapped ciphertext), to [Android's own keystore system](https://developer.android.com/training/articles/keystore) (though the implementation isn't nearly as fast as the AES-backed one).</br>
+KsPrefs provides with different levels of encryption. From no encryption at all (`EncryptionType.PlainText` and `EncryptionType.Base64`), to standard [AES](https://en.wikipedia.org/wiki/Advanced_Encryption_Standard) with key size among 128, 192 & 256-bit and ECB/CBC modes (base64-wrapped ciphertext), to [Android's own keystore system](https://developer.android.com/training/articles/keystore) (though the ksprefs implementation isn't nearly as fast as the AES-backed one).</br>
 It is recommended to store the AES key into a native library shipped with your application, which makes reverse engineering your code harder.
 
 ## Sample App

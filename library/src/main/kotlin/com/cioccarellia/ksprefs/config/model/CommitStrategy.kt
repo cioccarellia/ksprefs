@@ -19,22 +19,23 @@ import com.cioccarellia.ksprefs.annotations.PreferredForPerformance
 
 enum class CommitStrategy {
     /**
+     * Asynchronous.
      * Safe to ignore return value, faster.
      * Updates the global SharedPreference in-memory values.
-     * Asynchronous.
      * */
     @PreferredForPerformance
     APPLY,
 
     /**
+     * Synchronous.
      * Atomically performs the operation, slower.
-     * Safe for multi threaded applications. Synchronous.
+     * Safe for multi threaded applications.
      * */
     COMMIT,
 
     /**
      * Nothing is done when this option is chosen.
-     * This should not be your configuration default, but
+     * This should never be your configuration default, but
      * it may happen to be a parameter you can pass to [push()]
      * to avoid writing the change back to the storage
      * and to keep it stashed in memory.

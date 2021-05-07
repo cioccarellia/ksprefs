@@ -20,7 +20,10 @@ import androidx.annotation.RestrictTo
 import com.cioccarellia.ksprefs.KsPrefs
 
 @RestrictTo(RestrictTo.Scope.LIBRARY)
-internal fun Context.sharedprefs(namespace: String, prefix: String = KsPrefs.config.xmlPrefix): Reader = try {
+internal fun Context.sharedprefs(
+    namespace: String,
+    prefix: String = KsPrefs.config.xmlPrefix
+): Reader = try {
     val actualStorageFileName = "${prefix}$namespace"
     getSharedPreferences(actualStorageFileName, KsPrefs.config.mode)!!
 } catch (knpe: KotlinNullPointerException) {

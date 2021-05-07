@@ -21,6 +21,10 @@ android {
         versionName library.publish_version
     }
 
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
+
     sourceSets {
         main.res.srcDirs = [
                 "src/main/res",

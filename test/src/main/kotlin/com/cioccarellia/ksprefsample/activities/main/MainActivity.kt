@@ -22,18 +22,18 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.cioccarellia.ksprefs.BuildConfig
 import com.cioccarellia.ksprefs.KsPrefs
 import com.cioccarellia.ksprefs.config.EncryptionType
 import com.cioccarellia.ksprefs.config.KspConfig
 import com.cioccarellia.ksprefsample.App
+import com.cioccarellia.ksprefsample.BuildConfig
 import com.cioccarellia.ksprefsample.R
+import com.cioccarellia.ksprefsample.activities.all.AllActivity
 import com.cioccarellia.ksprefsample.activities.ambiguous.AmbiguousActivity
 import com.cioccarellia.ksprefsample.activities.batch.BatchActivity
 import com.cioccarellia.ksprefsample.activities.dynamic.DynamicActivity
 import com.cioccarellia.ksprefsample.activities.json.JsonActivity
 import com.cioccarellia.ksprefsample.activities.numbers.NumbersActivity
-import com.cioccarellia.ksprefsample.activities.all.AllActivity
 import com.cioccarellia.ksprefsample.activities.observer.ObserverActivity
 import com.cioccarellia.ksprefsample.prefcenter.StartCounterPrefCenter
 import com.cioccarellia.ksprefsample.util.onClickDebounced
@@ -97,11 +97,18 @@ class MainActivity : AppCompatActivity() {
         appendLine("Writing on '$namespace' using ${config.charset}")
         appendLine("SP mode ${config.mode}, strategy ${config.commitStrategy.name}, autosave ${config.autoSave}")
 
-        if (config.encryptionType == EncryptionType.PlainText()) {
-            appendLine("Saved in plaintext")
-        } else {
-            appendLine("Encrypted using ${config.encryptionType.javaClass.simpleName}")
+        when (config.encryptionType) {
+            EncryptionType.PlainText() -> {
+                appendLine("Saved in plaintext")
+            }
+            EncryptionType.Base64() -> {
+                appendLine("Encoded in Base64")
+            }
+            else -> {
+                appendLine("Encrypted using ${config.encryptionType.javaClass.simpleName}")
+            }
         }
+
         appendLine("Start count $startCount")
     }
 

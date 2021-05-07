@@ -34,9 +34,14 @@ dependencies {
     implementation deps.kotlin.coroutines.android
     implementation deps.androidx.lifecycle.ext
 
-    testImplementation deps.kotlin.test.mockito
-    testImplementation deps.test.robolectric
-    testImplementation deps.test.junit
-    testImplementation deps.test.mockito_core
+    // Required -- JUnit 4 framework
+    testImplementation 'junit:junit:4.13.2'
+    // Optional -- Robolectric environment
+    testImplementation 'androidx.test:core:1.3.0'
+    // Optional -- Mockito framework
+    testImplementation 'org.mockito:mockito-core:3.9.0'
+
+    testImplementation "org.robolectric:robolectric:4.5.1"
+
     testImplementation deps.test.truth
 }

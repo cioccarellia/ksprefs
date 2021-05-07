@@ -242,7 +242,7 @@ class KsPrefs(
      * Returns a map containing every key-value pair stored by SharedPreferences.
      * */
     @CheckResult
-    fun raw(): Map<String, *> = dispatcher.raw()
+    internal fun raw(): Map<String, *> = dispatcher.raw()
 
     /**
      * Checks whether a value exists under a given [key].

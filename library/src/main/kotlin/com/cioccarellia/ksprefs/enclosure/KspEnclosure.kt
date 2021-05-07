@@ -50,6 +50,9 @@ internal class KspEnclosure(
         Transmission(value)
     ).payload
 
+    /**
+     * We can safely assume that key is a string
+     * */
     private inline fun deriveKey(
         value: String
     ): String = engine.derive(
@@ -80,7 +83,7 @@ internal class KspEnclosure(
 
     internal fun exists(
         key: String
-    ) = sharedReader.exists(key)
+    ) = sharedReader.exists(deriveKey(key))
 
     internal fun all(): Map<String, *> = sharedReader.all
 

@@ -15,17 +15,17 @@
  */
 
 ext.versions = [
-        build_tools: "29.0.3",
+        build_tools: "30.0.2",
         kt         : "$kotlin_version"
 ]
 
 ext.deps = [
         gradle_plugins: [
-                android        : "com.android.tools.build:gradle:3.6.4",
-                versions       : "com.github.ben-manes:gradle-versions-plugin:0.27.0",
-                kotlin         : "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kt}",
-                reflection     : "org.jetbrains.kotlin:kotlin-reflect:${versions.kt}",
-                serialization  : "org.jetbrains.kotlin:kotlin-serialization:${versions.kt}"
+                android      : "com.android.tools.build:gradle:4.2.0",
+                versions     : "com.github.ben-manes:gradle-versions-plugin:0.38.0",
+                kotlin       : "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kt}",
+                reflection   : "org.jetbrains.kotlin:kotlin-reflect:${versions.kt}",
+                serialization: "org.jetbrains.kotlin:kotlin-serialization:${versions.kt}"
         ],
 
         kotlin        : [
@@ -42,9 +42,9 @@ ext.deps = [
 
         androidx      : [
                 annotations      : "androidx.annotation:annotation:1.1.0",
-                app_compat       : "androidx.appcompat:appcompat:1.1.0",
-                constraint_layout: "com.android.support.constraint:constraint-layout:2.0.0",
-                material         : "com.google.android.material:material:1.1.0",
+                app_compat       : "androidx.appcompat:appcompat:1.2.0",
+                constraint_layout: "com.android.support.constraint:constraint-layout:2.0.4",
+                material         : "com.google.android.material:material:1.3.0",
                 lifecycle        : [
                         live_data : "androidx.lifecycle:lifecycle-livedata:2.2.0",
                         view_model: "androidx.lifecycle:lifecycle-viewmodel:2.2.0",
@@ -64,7 +64,7 @@ ext.deps = [
                 robolectric                  : "org.robolectric:robolectric:4.3.1",
                 androidx_test_core           : "androidx.test:core:1.0.0",
                 androidx_test_runner_espresso: "androidx.test.espresso:espresso-core:3.2.0",
-                mockito_core                 : "org.mockito:mockito-core:3.2.4",
-                truth                        : "com.google.truth:truth:1.0.1"
+                mockito_core                 : "org.mockito:mockito-core:3.9.0",
+                truth                        : "com.google.truth:truth:1.1.2"
         ]
 ]
