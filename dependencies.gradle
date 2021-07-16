@@ -21,7 +21,7 @@ ext.versions = [
 
 ext.deps = [
         gradle_plugins: [
-                android      : "com.android.tools.build:gradle:4.2.0",
+                android      : "com.android.tools.build:gradle:4.2.2",
                 versions     : "com.github.ben-manes:gradle-versions-plugin:0.38.0",
                 kotlin       : "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kt}",
                 reflection   : "org.jetbrains.kotlin:kotlin-reflect:${versions.kt}",

@@ -27,6 +27,7 @@ ext["signing.secretKeyRingFile"] = ''
 ext["ossrhUsername"] = ''
 ext["ossrhPassword"] = ''
 ext["sonatypeStagingProfileId"] = ''
+ext["stagingProfileId"] = ''
 
 File secretPropsFile = project.rootProject.file('local.properties')
 if (secretPropsFile.exists()) {
@@ -42,6 +43,7 @@ if (secretPropsFile.exists()) {
     ext["ossrhUsername"] = System.getenv('OSSRH_USERNAME')
     ext["ossrhPassword"] = System.getenv('OSSRH_PASSWORD')
     ext["sonatypeStagingProfileId"] = System.getenv('SONATYPE_STAGING_PROFILE_ID')
+    ext["stagingProfileId"] = System.getenv('SONATYPE_STAGING_PROFILE_ID')
 }
 
 publishing {

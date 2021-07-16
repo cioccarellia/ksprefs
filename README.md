@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/cioccarellia/ksprefs" target="_blank"><img width="100" src="extras/ksprefs.png"></a>
+  <a href="https://github.com/cioccarellia/ksprefs" target="_blank"><img width="100" src="https://raw.githubusercontent.com/cioccarellia/ksprefs/master/extras/ksprefs.png"></a>
 </p>
 <h1 align="center">KsPrefs</h1>
 <p align="center">SharedPreferences. 100% Kotlin.</p>
@@ -7,7 +7,7 @@
   <a href="https://search.maven.org/artifact/com.github.cioccarellia/ksprefs"><img src="https://img.shields.io/maven-central/v/com.github.cioccarellia/ksprefs.svg?label=Maven%20Central" alt="Download from MavenCentral"></a>
   <a href="https://app.circleci.com/pipelines/github/cioccarellia/ksprefs"><img src="https://circleci.com/gh/cioccarellia/ksprefs.svg?style=svg" alt="CircleCI"></a>
   <a href="https://app.codacy.com/manual/cioccarellia/ksprefs/dashboard"><img src="https://api.codacy.com/project/badge/Grade/f10cdbdbe7b84d0ea7a03b755c104e03" alt="Codacy"></a>
-  <a href="https://kotlinlang.org/docs/releases.html"><img src="https://img.shields.io/badge/kotlin-1.5.0-orange.svg" alt="Kotlin"></a>
+  <a href="https://kotlinlang.org/docs/releases.html"><img src="https://img.shields.io/badge/kotlin-1.5.21-orange.svg" alt="Kotlin"></a>
   <a href="https://source.android.com/setup/start/build-numbers"><img src="https://img.shields.io/badge/min-19-00e676.svg" alt="Android Min Sdk"></a>
   <a href="https://source.android.com/setup/start/build-numbers"><img src="https://img.shields.io/badge/compile-30-00e676.svg" alt="Android Compile Version"></a>
   <a href="https://github.com/cioccarellia/ksprefs/blob/master/LICENSE.md"><img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="License"></a>
@@ -53,25 +53,28 @@ dependencies {
 
 ```kotlin
 val prefs = KsPrefs(applicationContext)
+val count = prefs.pull<Int>("app_start_key")
 ```
 
 To _read_ from SharedPreferences, use `pull(key, fallback)`.<br>
 To _write_ to SharedPreferences, use `push(key, value)`.
 
 ## Introduction
-<img src="extras/dark/png/scheme.png"><br><br>
-KsPrefs (<b>K</b>otlin <b>S</b>hared <b>Pref</b>erences) is a wrapper for the default Android SharedPreferences (_SP_ for short) implementation.
-Its goal is to bring security to preference storage through cryptography. This library can be used as a replacement of SP whick lacks security and practicality, and which even Google is moving away from with [Jetpack DataStore](https://developer.android.com/topic/libraries/architecture/datastore).<br>
-On top of the SP API, KsPrefs extends with numerous features and extra bits which com pre-packed with the library, and can be used to enhance the development experience.
+<img src="https://raw.githubusercontent.com/cioccarellia/ksprefs/master/extras/dark/png/scheme.png"><br><br>
+KsPrefs (<b>K</b>otlin <b>S</b>hared <b>Pref</b>erences) is a wrapper for the default Android SharedPreferences (_SP_ for short) implementation.<br>
+Its purpuses are to bring security to preference storage through cryptography, to implement an elegant and practical SP API, and to do so with as little overhead as possible.<br>
+Ksprefs can be used as a replacement of direct _SP_ usage, whick lacks both security and practicality, and which even Google is moving away from with [Jetpack DataStore](https://developer.android.com/topic/libraries/architecture/datastore).<br>
+On top of the _SP_ API, KsPrefs extends with numerous features and extra bits which come pre-packed with the library, and can be used to enhance the development experience and productivity.
 
-## Functionality
-### Constructor
-You should create `KsPrefs` only once among your codebase. 
+## Basics
+### Initialization
+
+You should create `KsPrefs` only once in your codebase. 
 ```kotlin
 val prefs = KsPrefs(applicationContext)
 ```
 
-It is recommended to keep it inside your `Application` class, so that it's accessible anywhere in your code.
+It is recommended to keep it inside your `Application` class, so that it's reachable everywhere from your code.
 
 ```kotlin
 class App : Application() {
@@ -88,36 +91,37 @@ class App : Application() {
 }
 ```
 
-### Configuration
-KsPrefs heavily depends on its configuration.<br>
-To customize KsPrefs, you can pass in a lambda which modifies the configuration defaults values.
+### Terminology
+
+| Term                   | Description                                                                                                           |
+|------------------------|-----------------------------------------------------------------------------------------------------------------------|
+| SP                     | Android Shared Preferences                                                                                            |
+| Entry                  | Key-Value pair stored by _SP_. Thus the basic data entity which can be pushed and pulled                              |
+| Persistent XML Storage | _SP_ XML file containing actual entries. Stored in the application [private storage](https://developer.android.com/training/data-storage/app-specific) |
+|                        |                                                                                                                       |
+|                        |                                                                                                                       |
+
+
+### Read <small>(Pull)</small>
+To retrieve saved values from _SP_ you use `pull()`.<br>
+Key uniquely identifies a record, fallback is the default value if none is found in _SP_.
 
 ```kotlin
-val prefs = KsPrefs(applicationContext) {
-    encryptionType = PlainText()
-    autoSave = AutoSavePolicy.MANUAL
-    commitStrategy = CommitStrategy.COMMIT
-}
+val uname = prefs.pull(key = "username", fallback = nobody)
 ```
 
-| Field | Type | Description | Default Value |
-|-----------------|----------------|--------------------------------------------------------------------------------------------|----------------------|
-| encryptionType | EncryptionType | Encryption technique used to cipher and decipher data upon storage operations | PlainText() |
-| commitStrategy | CommitStrategy | Strategy to use at the moment of writing the preferences into the persistent XML storage | CommitStrategy.APPLY |
-| autoSave | AutoSavePolicy | Whether after a `push()` operation changes are saved to the persistent XML storage; saving strategy depending on `commitStrategy` | AutoSavePolicy.AUTOMATIC |
-| mode | Int | SharedPreferences access mode | Context.MODE_PRIVATE |
-| charset | Charset | Charset used for string-to-byte and byte-to-string conversions | Charsets.UTF_8 |
-| keyRegex | Regex? | Regular Expression which, if non null, every key must match. | null |
 
-### Read
-To retrieve values from the preference storage you use `pull()`.<br>
-There are 4 different functions named `pull`, 3 of which are unsafe. <!-- helo -->
+There are 4 different variants of `pull`. <!-- helo -->
+
+- `pull<T>(key, fallback<T>)`: Scans the preferences with the given key. If a record is found, the value is read from the persistent XML storage, deserialized as the requested type and returned. If the key isn't contained inside the storage, the fallback value is returned.
+- `pull<T>(key)`: No fallback value is supplied
+- `pull<T>(key, kclass<T>)`
+- `pull<T>(key, jclass<T>)`
+
+
 A function is defined *safe* when you supply the fallback (Android SharedPreferences defines it `default`) value, so that, for *any* given key, you always have a concrete in-memory value to return.<br>
 A function is *unsafe* because there is no guarantee it will return a concrete value, as it only relies on the supplied key to pull the value from the persistent XML storage<br>
 
-```kotlin
-val safePull = prefs.pull("username", "nobody")
-```
 
 Even though the standard SharedPreferences API always forces you to provide a default (KsPrefs defines it `fallback`) value, KsPrefs allows you to leave that out, because supplying an actual instance of an object, in some contexts is verbose and redundant if you are know that the key is present inside the persistent storage, or if for some clever intuition you know that the key holds a value at some specific time.
 
@@ -128,18 +132,45 @@ val username = prefs.pull("username")
 *:pushpin: #1: Using an unsafe version of `pull()` isn't dangerous, as long as you are sure the target key holds a value.*<br>
 *:pushpin: #2: The 3 unsafe functions accept the type parameter as a kotlin class, as a java class or as a kotlin generic. For the latter, the bytecode of the function is inlined, in order for the generic type to be reified.*<br>
 
-### Write
+### Write <small>(Push)</small>
 To save values to the preference storage you use `push()`<br>
-Push takes a key and a value, and stores them inside the preferences.
+Push takes a key and a value, and stores them inside the preferences, according to the commitStrategy, autoSavePoliciy.
 
 ```kotlin
 prefs.push("username", viewModel.username)
 ```
 
+
+
+### Configuration
+KsPrefs is configurable at initialization time with specific parameters.<br>
+Each parameters has a default value which will be used unless you specify otherwise.<br>
+Each parameter changes the internal behaviour and the algorithms used, so it is vital to choose the appropriate settings.<br>
+
+```kotlin
+val prefs = KsPrefs(applicationContext) {
+    // Configuration Parameters Lambda
+    encryptionType = PlainText()
+    autoSave = AutoSavePolicy.MANUAL
+    commitStrategy = CommitStrategy.COMMIT
+}
+```
+
+| Field | Type | Description | Default Value |
+|-----------------|----------------|--------------------------------------------------------------------------------------------|----------------------|
+| encryptionType | EncryptionType | Encryption technique used to encrypt and decrypt data | PlainText() |
+| commitStrategy | CommitStrategy | Strategy to use at the moment of writing preferences entries to the persistent XML storage | CommitStrategy.APPLY |
+| autoSave | AutoSavePolicy | Whether after a `push()` operation changes are saved to the persistent XML storage; saving strategy depending on `commitStrategy` | AutoSavePolicy.AUTOMATIC |
+| mode | Int | SharedPreferences access mode | Context.MODE_PRIVATE |
+| charset | Charset | Charset used for string-to-byte and byte-to-string conversions | Charsets.UTF_8 |
+| keyRegex | Regex? | Regular Expression which, if non null, every key must match. | null |
+
+
+
 ### Saving, Auto Save Policies & Commit Strategies
 A pending transaction is a change which is registered in-memory, but not yet on the XML preference file.
 Android SharedPreferences works that way; indeed, you can stack up pending transactions, but at some point you have to _actually_ save them.
-If out app were to shut down unexpectedly, those changes would be lost forever. <br>
+If the app were to shut down unexpectedly, those changes would be lost.<br>
 To commit any pending transaction to the persistent XML storage, in ksprefs you use `save()`. 
 This matches `commit()` and `apply()` SharedPreferences behaviour you may be accustomed to.<br>
 

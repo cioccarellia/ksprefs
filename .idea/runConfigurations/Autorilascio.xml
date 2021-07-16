@@ -11,9 +11,8 @@
       <option name="taskNames">
         <list>
           <option value="assembleRelease" />
-          <option value="createRepository" />
           <option value="publishReleasePublicationToSonatypeRepository" />
-          <option value="closeAndReleaseRepository" />
+          <option value="closeAndReleaseSonatypeStagingRepository" />
         </list>
       </option>
       <option name="vmOptions" value="" />

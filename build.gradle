@@ -17,7 +17,7 @@ apply from: rootProject.file("gradle/versions_plugin_config.gradle")
 apply plugin: 'io.codearte.nexus-staging'
 
 buildscript {
-    ext.kotlin_version = '1.5.0'
+    ext.kotlin_version = '1.5.21'
     apply from: rootProject.file("dependencies.gradle")
 
     repositories {
@@ -30,7 +30,6 @@ buildscript {
     dependencies {
         classpath deps.gradle_plugins.android
         classpath deps.gradle_plugins.kotlin
-        classpath deps.gradle_plugins.versions
         classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.30.0'
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.38.0'
     }
