@@ -18,7 +18,7 @@
 
 ```gradle
 dependencies {
-    implementation 'com.github.cioccarellia:ksprefs:2.3.0'
+    implementation 'com.github.cioccarellia:ksprefs:2.3.1'
 }
 ```
 </details>
@@ -27,7 +27,7 @@ dependencies {
 
 ```gradle
 dependencies {
-    implementation("com.github.cioccarellia:ksprefs:2.3.0")
+    implementation("com.github.cioccarellia:ksprefs:2.3.1")
 }
 ```
 </details>
@@ -38,7 +38,7 @@ dependencies {
 <dependency>
     <groupId>com.github.cioccarellia</groupId>
     <artifactId>ksprefs</artifactId>
-    <version>2.3.0</version>
+    <version>2.3.1</version>
     <type>pom</type>
 </dependency>
 ```
@@ -46,6 +46,7 @@ dependencies {
 
 - ⚡️ Powerful SharedPreferences wrapper & API.
 - 🚀 Easy to pick up & use right away.
+- 🧪 Tested and production-ready.
 - ⚙️ Fully customizable behaviour.
 - 🔒 Built-in cryptography & decoding engines (PlainText, Base64, AES-CBC, AES-ECB, Android KeyStore + AES-GCM / RSA KeyPair).
 - 🗂 Extensive type & enum support.

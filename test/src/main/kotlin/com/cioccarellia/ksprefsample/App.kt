@@ -37,7 +37,7 @@ class App : Application() {
     companion object {
         lateinit var appContext: Context
 
-        private val aes = EncryptionType.AesEcb("dadaaaaaaaaaaaaa", KeySize.SIZE_128)
+        private val aes = EncryptionType.AesEcb("dadaaaaaaaaaaaaa", KeySize.SIZE_128_BITS)
         private val keyStore = EncryptionType.KeyStore("alias0")
 
         internal val globalConfigStateFx: KspConfig.() -> Unit = {

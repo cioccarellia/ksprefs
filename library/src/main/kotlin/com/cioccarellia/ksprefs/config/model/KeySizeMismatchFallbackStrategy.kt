@@ -15,6 +15,9 @@
  */
 package com.cioccarellia.ksprefs.config.model
 
+/**
+ * Behaviour expected when the supplied key does not match its expected length
+ * */
 enum class KeySizeMismatchFallbackStrategy {
     TRIM,
     CRASH,

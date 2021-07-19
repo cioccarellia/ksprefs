@@ -15,26 +15,21 @@
  */
 package com.cioccarellia.ksprefs.config.model
 
-import com.cioccarellia.ksprefs.annotations.PreferredForEncryption
-import com.cioccarellia.ksprefs.annotations.PreferredForPerformance
 import com.cioccarellia.ksprefs.internal.ByteSizeable
 
 enum class KeyTagSize : ByteSizeable {
-    SIZE_96,
-    SIZE_104,
-    SIZE_112,
-    SIZE_120,
-
-    @PreferredForPerformance
-    @PreferredForEncryption
-    SIZE_128;
+    SIZE_96_BITS,
+    SIZE_104_BITS,
+    SIZE_112_BITS,
+    SIZE_120_BITS,
+    SIZE_128_BITS;
 
     override fun bitCount() = when (this) {
-        SIZE_96 -> 96
-        SIZE_104 -> 104
-        SIZE_112 -> 112
-        SIZE_120 -> 120
-        SIZE_128 -> 128
+        SIZE_96_BITS -> 96
+        SIZE_104_BITS -> 104
+        SIZE_112_BITS -> 112
+        SIZE_120_BITS -> 120
+        SIZE_128_BITS -> 128
     }
 
     override fun byteCount() = bitCount() / 8

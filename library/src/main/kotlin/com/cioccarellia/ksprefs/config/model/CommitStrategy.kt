@@ -15,15 +15,12 @@
  */
 package com.cioccarellia.ksprefs.config.model
 
-import com.cioccarellia.ksprefs.annotations.PreferredForPerformance
-
 enum class CommitStrategy {
     /**
      * Asynchronous.
      * Safe to ignore return value, faster.
      * Updates the global SharedPreference in-memory values.
      * */
-    @PreferredForPerformance
     APPLY,
 
     /**

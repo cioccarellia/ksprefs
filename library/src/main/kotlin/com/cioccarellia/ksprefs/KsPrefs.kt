@@ -23,7 +23,6 @@ import androidx.annotation.CheckResult
 import androidx.lifecycle.Lifecycle
 import com.cioccarellia.ksprefs.config.EncryptionType
 import com.cioccarellia.ksprefs.config.KspConfig
-import com.cioccarellia.ksprefs.config.PullConfig
 import com.cioccarellia.ksprefs.config.model.AutoSavePolicy
 import com.cioccarellia.ksprefs.config.model.CommitStrategy
 import com.cioccarellia.ksprefs.dispatcher.KspDispatcher
@@ -52,6 +51,7 @@ class KsPrefs(
     }
 
     init {
+        // Loads up the passed configuration
         Companion.config.run(config)
     }
 
@@ -149,8 +149,7 @@ class KsPrefs(
     @CheckResult
     fun <T : Any> pull(
         key: String,
-        fallback: T,
-        localConfig: PullConfig.() -> Unit,
+        fallback: T
     ): T = dispatcher.pull(key, fallback)
 
     /**
@@ -178,8 +177,7 @@ class KsPrefs(
      * */
     @CheckResult
     inline fun <reified T : Any> pull(
-        key: String,
-        localConfig: PullConfig.() -> Unit,
+        key: String
     ): T = dispatcher.pull(key, T::class)
 
     /**
@@ -208,8 +206,7 @@ class KsPrefs(
     @CheckResult
     fun <T : Any> pull(
         key: String,
-        kclass: KClass<T>,
-        localConfig: PullConfig.() -> Unit,
+        kclass: KClass<T>
     ): T = dispatcher.pull(key, kclass)
 
     /**
@@ -238,8 +235,7 @@ class KsPrefs(
     @CheckResult
     fun <T : Any> pull(
         key: String,
-        jclass: Class<T>,
-        localConfig: PullConfig.() -> Unit,
+        jclass: Class<T>
     ): T = dispatcher.pull(key, jclass.kotlin)
 
 

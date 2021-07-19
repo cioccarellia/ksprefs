@@ -15,26 +15,20 @@
  */
 package com.cioccarellia.ksprefs.config.model
 
-import com.cioccarellia.ksprefs.annotations.PreferredForEncryption
-import com.cioccarellia.ksprefs.annotations.PreferredForPerformance
 import com.cioccarellia.ksprefs.internal.ByteSizeable
 
 /**
- * Defines how many bits the encryption key length
- * should be.
+ * Defines how many bits the encryption key length should be.
  * */
 enum class KeySize : ByteSizeable {
-    @PreferredForPerformance
-    SIZE_128,
-    SIZE_192,
-
-    @PreferredForEncryption
-    SIZE_256;
+    SIZE_128_BITS,
+    SIZE_192_BITS,
+    SIZE_256_BITS;
 
     override fun bitCount(): Int = when (this) {
-        SIZE_128 -> 128
-        SIZE_192 -> 192
-        SIZE_256 -> 256
+        SIZE_128_BITS -> 128
+        SIZE_192_BITS -> 192
+        SIZE_256_BITS -> 256
     }
 
     override fun byteCount() = bitCount() / 8

@@ -42,7 +42,7 @@ internal object Defaults {
     const val DEFAULT_BASE64_FLAGS = Base64.NO_CLOSE or Base64.NO_WRAP
 
     /** Key size */
-    val KEY_TAG_SIZE = KeyTagSize.SIZE_128
+    val KEY_TAG_SIZE = KeyTagSize.SIZE_128_BITS
 
     /** Mismatch strategy */
     val KEY_SIZE_MISMATCH_STRATEGY = KeySizeMismatchFallbackStrategy.CRASH
