@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 /**
  * Designed and developed by Andrea Cioccarelli (@cioccarellia)
  *
@@ -13,12 +15,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 apply from: rootProject.file("gradle/versions_plugin_config.gradle")
-apply plugin: 'io.codearte.nexus-staging'
+apply plugin: "io.codearte.nexus-staging"
 
 buildscript {
-    ext.kotlin_version = '1.5.31'
-    apply from: rootProject.file("dependencies.gradle")
+    ext.kotlin_version = "1.9.0"
 
     repositories {
         google()
@@ -28,10 +30,10 @@ buildscript {
     }
 
     dependencies {
-        classpath deps.gradle_plugins.android
-        classpath deps.gradle_plugins.kotlin
-        classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.30.0'
-        classpath 'com.github.ben-manes:gradle-versions-plugin:0.39.0'
+        classpath "com.android.tools.build:gradle:8.1.1"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlin_version}"
+        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.30.0"
+        classpath "com.github.ben-manes:gradle-versions-plugin:0.47.0"
     }
 }
 
@@ -41,19 +43,5 @@ allprojects {
         google()
         mavenCentral()
         gradlePluginPortal()
-    }
-}
-
-subprojects {
-    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-
-        kotlinOptions {
-            jvmTarget = 1.8
-
-            freeCompilerArgs += ["-module-name", project.path.replace(':', '')]
-            freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn"]
-        }
     }
 }

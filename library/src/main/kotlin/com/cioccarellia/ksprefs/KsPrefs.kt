@@ -127,7 +127,7 @@ class KsPrefs(
     fun <T : Any> queue(
         key: String,
         value: T
-    ): Unit = dispatcher.push(key, value, CommitStrategy.NONE)
+    ): Unit = dispatcher.push(key, value, strategy = CommitStrategy.NONE)
 
     /**
      * This function pulls a value from the [Shared Preferences][SharedPreferences] object.
@@ -178,7 +178,7 @@ class KsPrefs(
     @CheckResult
     inline fun <reified T : Any> pull(
         key: String
-    ): T = dispatcher.pull(key, T::class)
+    ): T = dispatcher.pull(key, kclass = T::class)
 
     /**
      * This function (unsafely) pulls a value from the [Shared Preferences][SharedPreferences] object.
@@ -207,7 +207,7 @@ class KsPrefs(
     fun <T : Any> pull(
         key: String,
         kclass: KClass<T>
-    ): T = dispatcher.pull(key, kclass)
+    ): T = dispatcher.pull(key, kclass = kclass)
 
     /**
      * This function (unsafely) pulls a value from the [Shared Preferences][SharedPreferences] object.

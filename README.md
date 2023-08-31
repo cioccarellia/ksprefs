@@ -7,9 +7,9 @@
   <a href="https://search.maven.org/artifact/com.github.cioccarellia/ksprefs"><img src="https://img.shields.io/maven-central/v/com.github.cioccarellia/ksprefs.svg?label=Maven%20Central" alt="Download from MavenCentral"></a>
   <a href="https://app.circleci.com/pipelines/github/cioccarellia/ksprefs"><img src="https://circleci.com/gh/cioccarellia/ksprefs.svg?style=svg" alt="CircleCI"></a>
   <a href="https://app.codacy.com/manual/cioccarellia/ksprefs/dashboard"><img src="https://api.codacy.com/project/badge/Grade/f10cdbdbe7b84d0ea7a03b755c104e03" alt="Codacy"></a>
-  <a href="https://kotlinlang.org/docs/releases.html"><img src="https://img.shields.io/badge/kotlin-1.5.31-orange.svg" alt="Kotlin"></a>
+  <a href="https://kotlinlang.org/docs/releases.html"><img src="https://img.shields.io/badge/kotlin-1.9.0-orange.svg" alt="Kotlin"></a>
   <a href="https://source.android.com/setup/start/build-numbers"><img src="https://img.shields.io/badge/min-19-00e676.svg" alt="Android Min Sdk"></a>
-  <a href="https://source.android.com/setup/start/build-numbers"><img src="https://img.shields.io/badge/compile-30-00e676.svg" alt="Android Compile Version"></a>
+  <a href="https://source.android.com/setup/start/build-numbers"><img src="https://img.shields.io/badge/compile-33-00e676.svg" alt="Android Compile Version"></a>
   <a href="https://github.com/cioccarellia/ksprefs/blob/master/LICENSE.md"><img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="License"></a>
 </p>
 
@@ -50,7 +50,6 @@ dependencies {
 - ⚙️ Fully customizable behaviour.
 - 🔒 Built-in cryptography & decoding engines (PlainText, Base64, AES-CBC, AES-ECB, Android KeyStore + AES-GCM / RSA KeyPair).
 - 🗂 Extensive type & enum support.
-- 🧡 Kotlin powered.
 
 ```kotlin
 val prefs = KsPrefs(applicationContext)
@@ -94,13 +93,13 @@ class App : Application() {
 
 ### Terminology
 
-| Term                   | Description                                                                                                           |
-|------------------------|-----------------------------------------------------------------------------------------------------------------------|
-| SP                     | Android Shared Preferences                                                                                            |
-| Entry                  | Key-Value pair stored by _SP_. Thus the basic data entity which can be pushed and pulled                              |
+| Term                   | Description                                                                                                                                            |
+|------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
+| SP                     | Android Shared Preferences                                                                                                                             |
+| Entry                  | Key-Value pair stored by _SP_. Thus the basic data entity which can be pushed and pulled                                                               |
 | Persistent XML Storage | _SP_ XML file containing actual entries. Stored in the application [private storage](https://developer.android.com/training/data-storage/app-specific) |
-|                        |                                                                                                                       |
-|                        |                                                                                                                       |
+|                        |                                                                                                                                                        |
+|                        |                                                                                                                                                        |
 
 
 ### Read <small>(Pull)</small>
@@ -157,14 +156,14 @@ val prefs = KsPrefs(applicationContext) {
 }
 ```
 
-| Field | Type | Description | Default Value |
-|-----------------|----------------|--------------------------------------------------------------------------------------------|----------------------|
-| encryptionType | EncryptionType | Encryption technique used to encrypt and decrypt data | PlainText() |
-| commitStrategy | CommitStrategy | Strategy to use at the moment of writing preferences entries to the persistent XML storage | CommitStrategy.APPLY |
-| autoSave | AutoSavePolicy | Whether after a `push()` operation changes are saved to the persistent XML storage; saving strategy depending on `commitStrategy` | AutoSavePolicy.AUTOMATIC |
-| mode | Int | SharedPreferences access mode | Context.MODE_PRIVATE |
-| charset | Charset | Charset used for string-to-byte and byte-to-string conversions | Charsets.UTF_8 |
-| keyRegex | Regex? | Regular Expression which, if non null, every key must match. | null |
+| Field          | Type           | Description                                                                                                                       | Default Value            |
+|----------------|----------------|-----------------------------------------------------------------------------------------------------------------------------------|--------------------------|
+| encryptionType | EncryptionType | Encryption technique used to encrypt and decrypt data                                                                             | PlainText()              |
+| commitStrategy | CommitStrategy | Strategy to use at the moment of writing preferences entries to the persistent XML storage                                        | CommitStrategy.APPLY     |
+| autoSave       | AutoSavePolicy | Whether after a `push()` operation changes are saved to the persistent XML storage; saving strategy depending on `commitStrategy` | AutoSavePolicy.AUTOMATIC |
+| mode           | Int            | SharedPreferences access mode                                                                                                     | Context.MODE_PRIVATE     |
+| charset        | Charset        | Charset used for string-to-byte and byte-to-string conversions                                                                    | Charsets.UTF_8           |
+| keyRegex       | Regex?         | Regular Expression which, if non null, every key must match.                                                                      | null                     |
 
 
 
@@ -182,12 +181,12 @@ However, if `autoSave` is turned off (using `AutoSavePolicy.MANUAL`), `push()` w
 
 Here is a table representing when values are saved to the storage, depending on the policy in use.
 
-| `AutoSavePolicy` | AUTO | MANUAL |
-|---------|--------------------|--------------------|
-| push()  | :white_check_mark: | :x: |
-| queue() | :x: | :x: |
-| save()  | :white_check_mark: | :white_check_mark: |
-| SharedPreferences.Editor.commit()  | :white_check_mark: | :white_check_mark: |
+| `AutoSavePolicy`                  | AUTO               | MANUAL             |
+|-----------------------------------|--------------------|--------------------|
+| push()                            | :white_check_mark: | :x:                |
+| queue()                           | :x:                | :x:                |
+| save()                            | :white_check_mark: | :white_check_mark: |
+| SharedPreferences.Editor.commit() | :white_check_mark: | :white_check_mark: |
 | SharedPreferences.Editor.apply()  | :white_check_mark: | :white_check_mark: |
 
 *:pushpin: `AutoSavePolicy` chooses when to write changes to the persistent XML storage and when to keep them in memory.*<br>
@@ -198,13 +197,13 @@ The best (and default) practise while dealing with SharedPreferences is to use `
 
 Here is a table representing various features of different commit strategies. Check out the official documentation [here](https://developer.android.com/reference/android/content/SharedPreferences.Editor.html) and see [this](https://stackoverflow.com/questions/5960678/whats-the-difference-between-commit-and-apply-in-sharedpreferences) post for more intel.
 
-| `CommitStrategy` | APPLY | COMMIT | NONE |
-|--------|--------------------|--------------------|------|
-| in-memory | :white_check_mark: | :white_check_mark: | :white_check_mark: |
-| XML | :white_check_mark: | :white_check_mark: | :x: |
-| async | :white_check_mark: | :x: | :heavy_minus_sign:	 |
-| atomic | :white_check_mark: | :white_check_mark: | :heavy_minus_sign:	 |
-| error report | :x: | :white_check_mark: | :heavy_minus_sign:	 |
+| `CommitStrategy` | APPLY              | COMMIT             | NONE                |
+|------------------|--------------------|--------------------|---------------------|
+| in-memory        | :white_check_mark: | :white_check_mark: | :white_check_mark:  |
+| XML              | :white_check_mark: | :white_check_mark: | :x:                 |
+| async            | :white_check_mark: | :x:                | :heavy_minus_sign:	 |
+| atomic           | :white_check_mark: | :white_check_mark: | :heavy_minus_sign:	 |
+| error report     | :x:                | :white_check_mark: | :heavy_minus_sign:	 |
 
 *:pushpin: The `CommitStrategy` involves how to write changes to the persistent XML storage.*<br>
 
@@ -222,11 +221,11 @@ There are two storing scopes for SharedPreferences:
 - XML (key-value pairs are kept on a file). Writing to a file is mildly expensive but it allows preferences to survive across application restarts.<br>
 Here is a table explaining how different methods inside KsPrefs touch and go through those storing scopes.
 
-| `StoringScope` | in-memory | XML |
-|---------|--------------------|---------------------------------|
-| push(k, v)  | :white_check_mark: | :white_check_mark: (By default) |
-| queue(k, v) | :white_check_mark: | :x: |
-| save()      | :white_check_mark: | :white_check_mark: |
+| `StoringScope` | in-memory          | XML                             |
+|----------------|--------------------|---------------------------------|
+| push(k, v)     | :white_check_mark: | :white_check_mark: (By default) |
+| queue(k, v)    | :white_check_mark: | :x:                             |
+| save()         | :white_check_mark: | :white_check_mark:              |
 
 *:pushpin: The `StoringScope` determines at which level changes are propagated.*<br>
 

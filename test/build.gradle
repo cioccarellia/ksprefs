@@ -30,21 +30,23 @@ dependencies {
         implementation "com.github.cioccarellia:ksprefs:${library.publish_version}"
     }
 
-    implementation deps.kotlin.coroutines.android
-    implementation deps.androidx.app_compat
-    implementation deps.androidx.constraint_layout
-    implementation deps.kotlin.stdlib8
 
-    implementation deps.androidx.lifecycle.ext
-    implementation deps.androidx.app_compat
-    implementation deps.androidx.material
-    implementation deps.androidx.constraint_layout
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
+    implementation "androidx.appcompat:appcompat:1.6.1"
+    implementation "com.android.support.constraint:constraint-layout:2.0.4"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlin_version}"
+
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    implementation "androidx.appcompat:appcompat:1.6.1"
+    implementation "com.google.android.material:material:1.9.0"
+    implementation "com.android.support.constraint:constraint-layout:2.0.4"
 }
 
 android {
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     defaultConfig {
@@ -52,7 +54,5 @@ android {
         buildConfigField "String", "compileSdk", "\"${library.compile_sdk}\""
     }
 
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+    namespace 'com.cioccarellia.ksprefsample'
 }

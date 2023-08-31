@@ -32,7 +32,7 @@ internal object Defaults {
 
     /** Charset */
     val CHARSET = Charsets.UTF_8
-    val XML_PREFIX = "ksp_"
+    const val XML_PREFIX = "ksp_"
 
     /** Saving */
     val AUTO_SAVE_POLICY = AutoSavePolicy.AUTOMATIC

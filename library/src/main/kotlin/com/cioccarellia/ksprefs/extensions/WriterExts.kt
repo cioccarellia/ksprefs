@@ -19,6 +19,7 @@ import android.content.SharedPreferences
 import com.cioccarellia.ksprefs.KsPrefs
 import com.cioccarellia.ksprefs.config.model.AutoSavePolicy
 import com.cioccarellia.ksprefs.config.model.CommitStrategy
+import com.cioccarellia.ksprefs.config.model.CommitStrategy.*
 
 internal typealias Writer = SharedPreferences.Editor
 
@@ -39,12 +40,12 @@ internal fun Writer.finalize(
     }
 }
 
-@Suppress("NON_EXHAUSTIVE_WHEN")
 internal fun Writer.forceFinalization(
     commitStrategy: CommitStrategy
 ) {
     when (commitStrategy) {
-        CommitStrategy.APPLY -> apply()
-        CommitStrategy.COMMIT -> commit()
+        APPLY -> apply()
+        COMMIT -> commit()
+        NONE -> {}
     }
 }

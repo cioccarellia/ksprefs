@@ -2,9 +2,15 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/github.ksprefs.iml" filepath="$PROJECT_DIR$/.idea/modules/github.ksprefs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ksprefs.iml" filepath="$PROJECT_DIR$/.idea/modules/ksprefs.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/ksprefs.library.iml" filepath="$PROJECT_DIR$/.idea/modules/library/ksprefs.library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/ksprefs.library.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/library/ksprefs.library.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/ksprefs.library.main.iml" filepath="$PROJECT_DIR$/.idea/modules/library/ksprefs.library.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/ksprefs.library.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/library/ksprefs.library.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/test/ksprefs.test.iml" filepath="$PROJECT_DIR$/.idea/modules/test/ksprefs.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/test/ksprefs.test.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/test/ksprefs.test.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/test/ksprefs.test.main.iml" filepath="$PROJECT_DIR$/.idea/modules/test/ksprefs.test.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/test/ksprefs.test.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/test/ksprefs.test.unitTest.iml" />
     </modules>
   </component>
 </project>

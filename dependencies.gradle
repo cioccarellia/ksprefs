@@ -15,7 +15,6 @@
  */
 
 ext.versions = [
-        build_tools: "30.0.2",
         kt         : "$kotlin_version"
 ]
 
