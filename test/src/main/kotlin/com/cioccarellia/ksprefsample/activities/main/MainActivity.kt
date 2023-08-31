@@ -89,6 +89,9 @@ class MainActivity : AppCompatActivity() {
 
             append(App.prefs.internalReport())
         }
+
+
+
     }
 
     private fun KsPrefs.internalReport() = buildString {

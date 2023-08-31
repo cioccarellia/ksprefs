@@ -16,10 +16,15 @@
 package com.cioccarellia.ksprefsample.activities.json
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.cioccarellia.ksprefsample.App
 import com.cioccarellia.ksprefsample.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 class JsonActivity : AppCompatActivity() {
@@ -50,6 +55,28 @@ class JsonActivity : AppCompatActivity() {
                 .getString("description"),
             Toast.LENGTH_LONG
         ).show()
+
+
+/*
+        // multithreading tests
+        for (i in 1..1000){
+            CoroutineScope(Dispatchers.Default).launch() {
+                App.prefs.push("xxx", true)
+                val isEnabled = App.prefs.pull("xxx", true)
+                Log.d("Testing", isEnabled.toString())
+            }
+        }
+
+
+
+        for (i in 1..1000){
+            CoroutineScope(Dispatchers.Default).launch() {
+                App.prefs.push("xxx", false)
+                val isEnabled = App.prefs.pull("xxx", true)
+                Log.d("Testing", isEnabled.toString())
+            }
+        }
+*/
 
         finish()
     }

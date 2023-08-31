@@ -2,7 +2,7 @@
   <a href="https://github.com/cioccarellia/ksprefs" target="_blank"><img width="100" src="https://raw.githubusercontent.com/cioccarellia/ksprefs/master/extras/ksprefs.png"></a>
 </p>
 <h1 align="center">KsPrefs</h1>
-<p align="center">SharedPreferences. 100% Kotlin.</p>
+<p align="center">Secure SharedPreferences</p>
 <p align="center">
   <a href="https://search.maven.org/artifact/com.github.cioccarellia/ksprefs"><img src="https://img.shields.io/maven-central/v/com.github.cioccarellia/ksprefs.svg?label=Maven%20Central" alt="Download from MavenCentral"></a>
   <a href="https://app.circleci.com/pipelines/github/cioccarellia/ksprefs"><img src="https://circleci.com/gh/cioccarellia/ksprefs.svg?style=svg" alt="CircleCI"></a>
@@ -18,7 +18,7 @@
 
 ```gradle
 dependencies {
-    implementation 'com.github.cioccarellia:ksprefs:2.3.2'
+    implementation 'com.github.cioccarellia:ksprefs:2.4.0'
 }
 ```
 </details>
@@ -27,7 +27,7 @@ dependencies {
 
 ```gradle
 dependencies {
-    implementation("com.github.cioccarellia:ksprefs:2.3.2")
+    implementation("com.github.cioccarellia:ksprefs:2.4.0")
 }
 ```
 </details>
@@ -38,7 +38,7 @@ dependencies {
 <dependency>
     <groupId>com.github.cioccarellia</groupId>
     <artifactId>ksprefs</artifactId>
-    <version>2.3.2</version>
+    <version>2.4.0</version>
     <type>pom</type>
 </dependency>
 ```

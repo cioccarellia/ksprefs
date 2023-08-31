@@ -19,6 +19,6 @@ import com.cioccarellia.ksprefs.exceptions.EngineException
 
 internal fun <T> Result<T>.getOrThrowException(
     operation: String = ""
-): T = getOrElse { exception ->
+): T = this.getOrElse { exception ->
     throw EngineException.convertFrom(exception, operation)
 }

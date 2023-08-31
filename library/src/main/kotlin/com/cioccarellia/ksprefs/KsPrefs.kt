@@ -100,6 +100,7 @@ class KsPrefs(
      * @param[value] The value to be derived and stored.
      * @param[commitStrategy] The strategy defining how to finalize this operation.
      * */
+    @Synchronized
     fun <T : Any> push(
         key: String,
         value: T,
@@ -124,6 +125,7 @@ class KsPrefs(
      * @param[key] The key for the target field.
      * @param[value] The value to be derived and stored.
      * */
+    @Synchronized
     fun <T : Any> queue(
         key: String,
         value: T
@@ -147,6 +149,7 @@ class KsPrefs(
      * @return The value KsPref got back for the matching key, or [fallback].
      * */
     @CheckResult
+    @Synchronized
     fun <T : Any> pull(
         key: String,
         fallback: T
@@ -178,7 +181,11 @@ class KsPrefs(
     @CheckResult
     inline fun <reified T : Any> pull(
         key: String
-    ): T = dispatcher.pull(key, kclass = T::class)
+    ): T {
+        synchronized(this) {
+            return dispatcher.pull(key, kclass = T::class)
+        }
+    }
 
     /**
      * This function (unsafely) pulls a value from the [Shared Preferences][SharedPreferences] object.
@@ -204,6 +211,7 @@ class KsPrefs(
      * @throws NoSuchKeyException If no value is found for the given [key].
      * */
     @CheckResult
+    @Synchronized
     fun <T : Any> pull(
         key: String,
         kclass: KClass<T>
@@ -233,6 +241,7 @@ class KsPrefs(
      * @throws NoSuchKeyException If no value is found for the given [key].
      * */
     @CheckResult
+    @Synchronized
     fun <T : Any> pull(
         key: String,
         jclass: Class<T>
@@ -259,6 +268,7 @@ class KsPrefs(
      * @return Whether the value exists inside the storage or not.
      * */
     @CheckResult
+    @Synchronized
     fun exists(
         key: String
     ): Boolean = dispatcher.exists(key)
@@ -277,6 +287,7 @@ class KsPrefs(
      *
      * @param[commitStrategy] Optional parameterization for the [commit strategy][KspConfig.commitStrategy].
      * */
+    @Synchronized
     fun save(
         commitStrategy: CommitStrategy = config.commitStrategy
     ): Unit = dispatcher.save(commitStrategy)
@@ -290,6 +301,7 @@ class KsPrefs(
      *
      * @param[key] The key for the target field.
      * */
+    @Synchronized
     fun remove(
         key: String
     ) {
@@ -299,6 +311,7 @@ class KsPrefs(
     /**
      * Calls the [clear()] method on [Shared Preferences][SharedPreferences], and removes all entries.
      * */
+    @Synchronized
     fun clear() {
         dispatcher.clear()
     }
