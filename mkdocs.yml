@@ -1,0 +1,118 @@
+# Project information
+site_name: KsPrefs
+site_url: https://cioccarellia.github.io/ksprefs
+site_author: cioccarellia
+site_description: >-
+    Android SharedPreferences Toolkit
+
+repo_name: ksprefs
+repo_url: https://github.com/cioccarellia/ksprefs
+remote_branch: gh-pages
+edit_uri: ""
+
+
+theme:
+    name: material
+    language: en
+
+    logo: assets/images/ksprefs_white.png
+    favicon: assets/images/ksprefs_black.png
+
+    features:
+        - content.code.annotate
+        # - content.tabs.link
+        # - header.autohide
+        - navigation.instant
+        # - navigation.expand
+        - navigation.sections
+        - navigation.tabs
+        - navigation.indexes
+        # - navigation.tabs.sticky
+        # - navigation.tracking
+        - navigation.indexes
+        - search.highlight
+        - search.share
+        - search.suggest
+        # - toc.integrate
+
+    palette:
+        - media: "(prefers-color-scheme: light)"
+          scheme: default
+          primary: custom
+          accent: custom
+          toggle:
+              icon: material/lightbulb-outline
+              name: Switch to dark mode
+        - media: "(prefers-color-scheme: dark)"
+          scheme: slate
+          primary: custom
+          accent: custom
+          toggle:
+              icon: material/lightbulb
+              name: Switch to light mode
+
+
+plugins:
+    - search:
+          lang: en
+    - redirects:
+          redirect_maps:
+    - minify:
+          minify_html: true
+          minify_js: true
+          minify_css: true
+          htmlmin_opts:
+              remove_comments: true
+          cache_safe: true
+
+
+
+nav:
+    - 'Index':
+          - 'Overview': index.md
+          - 'Dependencies & Integration': pages/overview/dependencies_integration.md
+          - 'Motivation & Use Cases': pages/overview/motif.md
+          - 'Philosophy': pages/overview/philosophy.md
+          - 'Technical Material': pages/overview/material.md
+    - 'Documentation':
+          - 'Configuration' : pages/documentation/config.md
+          - 'Reading' : pages/documentation/reading.md
+          - 'Writing' : pages/documentation/writing.md
+          - 'Save Policy' : pages/documentation/save_policy.md
+          - 'Commit Strategy' : pages/documentation/commit_strategy.md
+          - 'Cryptography' : pages/documentation/cryptography.md
+
+markdown_extensions:
+    - tables
+    - footnotes
+    - pymdownx.highlight:
+          anchor_linenums: true
+    - pymdownx.inlinehilite
+    - pymdownx.snippets
+    - pymdownx.details
+    - pymdownx.superfences:
+          custom_fences:
+              - name: mermaid
+                class: mermaid
+                format: !!python/name:pymdownx.superfences.fence_code_format
+    - abbr
+    - admonition
+    - pymdownx.emoji:
+          emoji_index: !!python/name:material.extensions.emoji.twemoji
+          emoji_generator: !!python/name:materialx.emoji.to_svg
+    - def_list
+    - md_in_html
+    - toc:
+          permalink: true
+
+extra:
+    social:
+        - icon: fontawesome/brands/github
+          link: https://github.com/cioccarellia
+
+        - icon: fontawesome/brands/twitter
+          link: https://twitter.com/cioccarellia
+
+extra_css:
+    - 'assets/css/app.css'
+    - 'assets/css/extra.css'

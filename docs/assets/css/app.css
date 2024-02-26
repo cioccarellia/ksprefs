@@ -1,0 +1,44 @@
+@font-face {
+    font-family: 'JetBrains Mono', monospace;
+    src: url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap");
+    font-weight: 400;
+    font-style: normal
+}
+
+@font-face {
+    font-family: 'JetBrains Mono', monospace;
+    src: url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&display=swap");
+    font-weight: 500;
+    font-style: normal
+}
+
+@font-face {
+    font-family: 'JetBrains Mono', monospace;
+    src: url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&display=swap");
+    font-weight: 700;
+    font-style: normal
+}
+
+
+body, input {
+    font-family: 'JetBrains Mono', monospace;
+}
+
+
+.md-typeset h1, .md-typeset h2, .md-typeset h3, .md-typeset h4 {
+    font-family: 'JetBrains Mono', monospace;
+    line-height: normal;
+    font-weight: bold;
+}
+
+
+.md-typeset h1, .md-typeset h2, .md-typeset h3, .md-typeset h4 {
+    font-family: 'JetBrains Mono', monospace;
+    line-height: normal;
+    font-weight: bold;
+}
+
+.logo {
+  text-align: center;
+  margin-top: 150px;
+}

@@ -22,6 +22,12 @@ import com.cioccarellia.ksprefs.enclosure.KspEnclosure
 import com.cioccarellia.ksprefs.intrinsic.checkKey
 import kotlin.reflect.KClass
 
+
+/**
+ *
+ * note: centralized single-threaded class, needs synchronization primitives when accessed
+ *
+ * */
 @PublishedApi
 internal class KspDispatcher(
     namespace: String,

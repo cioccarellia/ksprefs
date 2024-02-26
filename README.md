@@ -5,7 +5,6 @@
 <p align="center">Secure SharedPreferences</p>
 <p align="center">
   <a href="https://search.maven.org/artifact/com.github.cioccarellia/ksprefs"><img src="https://img.shields.io/maven-central/v/com.github.cioccarellia/ksprefs.svg?label=Maven%20Central" alt="Download from MavenCentral"></a>
-  <a href="https://app.circleci.com/pipelines/github/cioccarellia/ksprefs"><img src="https://circleci.com/gh/cioccarellia/ksprefs.svg?style=svg" alt="CircleCI"></a>
   <a href="https://app.codacy.com/manual/cioccarellia/ksprefs/dashboard"><img src="https://api.codacy.com/project/badge/Grade/f10cdbdbe7b84d0ea7a03b755c104e03" alt="Codacy"></a>
   <a href="https://kotlinlang.org/docs/releases.html"><img src="https://img.shields.io/badge/kotlin-1.9.0-orange.svg" alt="Kotlin"></a>
   <a href="https://source.android.com/setup/start/build-numbers"><img src="https://img.shields.io/badge/min-19-00e676.svg" alt="Android Min Sdk"></a>
@@ -62,8 +61,8 @@ To _write_ to SharedPreferences, use `push(key, value)`.
 ## Introduction
 <img src="https://raw.githubusercontent.com/cioccarellia/ksprefs/master/extras/dark/png/scheme.png"><br><br>
 KsPrefs (<b>K</b>otlin <b>S</b>hared <b>Pref</b>erences) is a wrapper for the default Android SharedPreferences (_SP_ for short) implementation.<br>
-Its purpuses are to bring security to preference storage through cryptography, to implement an elegant and practical SP API, and to do so with as little overhead as possible.<br>
-Ksprefs can be used as a replacement of direct _SP_ usage, whick lacks both security and practicality, and which even Google is moving away from with [Jetpack DataStore](https://developer.android.com/topic/libraries/architecture/datastore).<br>
+Its purposes are to bring security to preference storage through cryptography, to implement an elegant and practical SP API, and to do so with as little overhead as possible.<br>
+Ksprefs can be used as a replacement of direct _SP_ usage, which lacks both security and practicality, and which even Google is moving away from with [Jetpack DataStore](https://developer.android.com/topic/libraries/architecture/datastore).<br>
 On top of the _SP_ API, KsPrefs extends with numerous features and extra bits which come pre-packed with the library, and can be used to enhance the development experience and productivity.
 
 ## Basics
@@ -134,7 +133,7 @@ val username = prefs.pull("username")
 
 ### Write <small>(Push)</small>
 To save values to the preference storage you use `push()`<br>
-Push takes a key and a value, and stores them inside the preferences, according to the commitStrategy, autoSavePoliciy.
+Push takes a key and a value, and stores them inside the preferences, according to the `commitStrategy`, `autoSavePoliciy`.
 
 ```kotlin
 prefs.push("username", viewModel.username)
@@ -209,7 +208,7 @@ Here is a table representing various features of different commit strategies. Ch
 
 ### Queuing
 To enqueue values to be written into the preference storage you use `queue()`. It follows `push()`'s syntax.<br>
-While `push`, by default, _pushes_ the update immediately on the XML persistent storage (By default, changable with `AutoSave`), `queue()` saves the update in-memory without writing it out to the storage.<br>
+While `push`, by default, _pushes_ the update immediately on the XML persistent storage (By default, changeable with `AutoSave`), `queue()` saves the update in-memory without writing it out to the storage.<br>
 Not writing the changes to the file makes enqueuing a valid choice for both batch computing or resource-expensive and long-running operations.<br>
 - `queue()` takes a key and a value, and saves the changes in-memory.<br>
 - `queue()` does not actually send updates to the storage. You can do so by calling `save()` (Or by using `push()` subsequently).
