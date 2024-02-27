@@ -2,21 +2,21 @@
 
 ## Abstract
 KsPrefs is a SharedPreferences wrapper for Android applications.
-It has a powerful and flexible interface designed to provide unified and simplified primitives to access the Android SharedPreferences system. It offers a consistent syntax for reading and writing values, whilst parameterizing configurations (Auto save policies and Commit strategies) and enabling fine-grained control over the system's behaviour.
-
-
-
-
+It has a powerful and flexible interface designed to provide unified and simplified primitives to access the Android SharedPreferences system.
+It offers a consistent syntax for reading and writing values, whilst parameterizing configurations (Encryption, Mode, Auto Save Policies, Commit Strategies) and enabling fine-grained control over the library's behaviour.
 
 
 ## Design
+The library is built with different stages in mind, each taking input from the previous one:
+
+1. The KsPrefs API allows developers to interface with the SharedPreferences APIs primitives: `getString`, `setInt`
+
 ``` mermaid
 graph LR
-  I[Inizialization] -.Settings..-> K{k};
-  AREQ[Attestation Requests] --> K
-  K --> ARES[Attestation Result]
-  ARES --> |Clear| P[Passed];
-  ARES --> |Failed| NP[Not Passed];
+  I[KsPrefs API] --pull()/push()---> D(Dispatcher);
+  D --encrypt---> E[Enclosure]
+  E --write---> S[Storage];
 ```
 
 
+## Samples

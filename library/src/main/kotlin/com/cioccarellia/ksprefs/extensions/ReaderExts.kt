@@ -19,16 +19,30 @@ import android.content.SharedPreferences
 import androidx.annotation.CheckResult
 import com.cioccarellia.ksprefs.exceptions.NoSuchKeyException
 
-internal typealias Reader = SharedPreferences
-
+/**
+ *
+ * */
 @CheckResult
-internal fun Reader.read(
+internal fun SharedPreferences.read(
     key: String,
-    default: ByteArray
-): ByteArray = getString(key, default.string())?.bytes() ?: "".bytes()
+    default: ByteArray,
+    null_dfu: ByteArray = "".bytes()
+): ByteArray = getString(key, default.string())?.bytes() ?: null_dfu
+
+
+/**
+ * Faster than `read`: we don't compute the derivative of the default parameter
+ * unless we have to (null value from shared preferences)
+ * */
+@CheckResult
+internal inline fun SharedPreferences.read_efficient(
+    key: String,
+    default: () -> ByteArray,
+): ByteArray = getString(key, null)?.bytes() ?: default()
+
 
 @CheckResult
-internal fun Reader.readOrThrow(
+internal fun SharedPreferences.readOrThrow(
     key: String
 ): ByteArray = try {
     getString(key, null)!!.bytes()
@@ -37,6 +51,6 @@ internal fun Reader.readOrThrow(
 }
 
 @CheckResult
-internal fun Reader.exists(
+internal fun SharedPreferences.exists(
     key: String
 ): Boolean = getString(key, null) != null

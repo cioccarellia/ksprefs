@@ -28,10 +28,10 @@ import com.cioccarellia.ksprefs.engines.model.keystore.RsaKeyPairKeyStoreEngine
 import com.cioccarellia.ksprefs.engines.model.plaintext.PlainTextEngine
 import com.cioccarellia.ksprefs.extensions.toSymmetricKey
 
-internal object EnginePicker {
+internal object EncryptionSelector {
     private val config = KsPrefs.config.encryptionType
 
-    fun select(
+    fun selectEngine(
         context: Context
     ): Engine = when (config) {
         is EncryptionType.PlainText -> PlainTextEngine()

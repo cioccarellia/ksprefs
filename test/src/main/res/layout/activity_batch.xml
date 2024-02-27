@@ -81,6 +81,67 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
+
+
+
+
+
+
+
+
+    <TextView
+        android:id="@+id/readDfu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SharedPreferences.getString"
+        android:layout_marginTop="128dp"
+        app:layout_constraintEnd_toStartOf="@+id/middle_x"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/defaultProgress" />
+
+
+
+    <ProgressBar
+        android:id="@+id/readDfuprogress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="220dp"
+        app:layout_constraintEnd_toStartOf="@+id/middle_x"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/defaultTitle" />
+
+
+    <TextView
+        android:id="@+id/readKsp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="128dp"
+        android:text="pull(*)"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/middle_x"
+        app:layout_constraintTop_toBottomOf="@+id/defaultProgress" />
+
+
+    <ProgressBar
+        android:id="@+id/readKspprogress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="220dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/middle_x"
+        app:layout_constraintTop_toBottomOf="@+id/defaultTitle" />
+
+
+
+
+
+
+
+
+
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/middle_x"
         android:layout_width="wrap_content"

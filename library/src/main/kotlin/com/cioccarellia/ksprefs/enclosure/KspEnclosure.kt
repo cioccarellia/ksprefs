@@ -17,53 +17,68 @@
 
 package com.cioccarellia.ksprefs.enclosure
 
-import android.annotation.SuppressLint
 import android.content.Context
+import android.content.SharedPreferences
 import com.cioccarellia.ksprefs.KsPrefs
 import com.cioccarellia.ksprefs.config.model.CommitStrategy
-import com.cioccarellia.ksprefs.engines.EnginePicker
+import com.cioccarellia.ksprefs.engines.EncryptionSelector
 import com.cioccarellia.ksprefs.engines.Transmission
 import com.cioccarellia.ksprefs.engines.base.Engine
 import com.cioccarellia.ksprefs.extensions.*
 
-@Suppress("MemberVisibilityCanBePrivate")
-@SuppressLint("CommitPrefEdits")
+
+/**
+ * Low-level enclosure, encrypting and decrypting the raw bytes sent and retrieved from the actual
+ * SharedPreferences APIs.
+ * */
 @PublishedApi
 internal class KspEnclosure(
     private val namespace: String,
     context: Context,
-    internal var sharedReader: Reader = context.sharedprefs(namespace),
-    internal val engine: Engine = EnginePicker.select(context)
+    internal var sharedReader: SharedPreferences = context.sharedprefs(namespace),
+    internal val engine: Engine = EncryptionSelector.selectEngine(context)
 ) {
-    private inline val defaultCommitStrategy
+
+    /**
+     * Loads the default commit strategy from the library configuration
+     * */
+    private inline val commitStrategy
         get() = KsPrefs.config.commitStrategy
 
+    /**
+     * Derives (encrypts) the given value
+     * */
     private inline fun deriveValue(
         value: ByteArray
     ): ByteArray = engine.derive(
         Transmission(value)
     ).payload
 
+    /**
+     * Integrate (decrypts) the given value
+     * */
     private inline fun integrateValue(
         value: ByteArray
     ): ByteArray = engine.integrate(
         Transmission(value)
     ).payload
 
-    /**
-     * We can safely assume that key is a string
-     * */
     private inline fun deriveKey(
         value: String
     ): String = engine.derive(
         Transmission(value.bytes())
     ).payload.string()
 
+    /**
+     * Reads a value from storage
+     * */
     internal fun read(
         key: String,
         fallback: ByteArray
     ) = integrateValue(
-        sharedReader.read(deriveKey(key), deriveValue(fallback))
+        sharedReader.read_efficient(deriveKey(key)) {
+            deriveValue(fallback)
+        }
     )
 
     internal fun readUnsafe(
@@ -99,7 +114,7 @@ internal class KspEnclosure(
         key: String
     ) = with(sharedReader.edit()) {
         delete(deriveKey(key))
-        finalize(defaultCommitStrategy)
+        finalize(commitStrategy)
     }
 
     internal fun clear() = with(sharedReader.edit()) {

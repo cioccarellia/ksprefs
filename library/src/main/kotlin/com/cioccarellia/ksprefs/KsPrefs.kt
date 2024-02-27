@@ -81,7 +81,7 @@ class KsPrefs(
      *
      * @return A reference to the internal [Shared Preferences][SharedPreferences] object.
      * */
-    fun expose(): SharedPreferences = dispatcher.expose()
+    fun getSharedPreferences(): SharedPreferences = dispatcher.expose()
 
     /**
      * This function pushes a value in the [Shared Preferences][SharedPreferences] object,

@@ -56,7 +56,7 @@ internal class KspDispatcher(
         checkKey(key)
 
         // Bytes for the given input value
-        val pureBytes = transform(value)
+        val pureBytes: ByteArray = transform(value)
 
         // Writes the converted bytes to the shared pre
         enclosure.write(key, pureBytes, strategy)
@@ -71,12 +71,12 @@ internal class KspDispatcher(
 
         // Bytes for the given input fallback value
         // plugged into a type converter
-        val pureBytes = transform(fallback)
+        val pureBytes: ByteArray = transform(fallback)
 
         // Reads and passes bytes through an engine
         // which applies the required transformation
         // to it
-        val returnedBytes = enclosure.read(key, pureBytes)
+        val returnedBytes: ByteArray = enclosure.read(key, pureBytes)
 
         // Reifies and returns the read data as an object
         // plugging it through a converter
@@ -91,7 +91,7 @@ internal class KspDispatcher(
         checkKey(key)
 
         // Reads the value found for the exact key
-        val returnedBytes = enclosure.readUnsafe(key)
+        val returnedBytes: ByteArray = enclosure.readUnsafe(key)
 
         // Reifies and returns the read data as an object
         // plugging it through a converter
