@@ -12,11 +12,11 @@ repositories {
 
 ### Project Requirements
 
-- Java 8+ is required;
+- Java 17+ is required;
 	```groovy
 	compileOptions {
-	    sourceCompatibility JavaVersion.VERSION_1_8
-	    targetCompatibility JavaVersion.VERSION_1_8
+	    sourceCompatibility JavaVersion.VERSION_17
+	    targetCompatibility JavaVersion.VERSION_17
 	}
 	```
 - `minSdk` 19+ is required.

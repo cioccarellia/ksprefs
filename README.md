@@ -8,7 +8,7 @@
   <a href="https://app.codacy.com/manual/cioccarellia/ksprefs/dashboard"><img src="https://api.codacy.com/project/badge/Grade/f10cdbdbe7b84d0ea7a03b755c104e03" alt="Codacy"></a>
   <a href="https://kotlinlang.org/docs/releases.html"><img src="https://img.shields.io/badge/kotlin-1.9.22-orange.svg" alt="Kotlin"></a>
   <a href="https://source.android.com/setup/start/build-numbers"><img src="https://img.shields.io/badge/min-19-00e676.svg" alt="Android Min Sdk"></a>
-  <a href="https://source.android.com/setup/start/build-numbers"><img src="https://img.shields.io/badge/compile-33-00e676.svg" alt="Android Compile Version"></a>
+  <a href="https://source.android.com/setup/start/build-numbers"><img src="https://img.shields.io/badge/compile-34-00e676.svg" alt="Android Compile Version"></a>
   <a href="https://github.com/cioccarellia/ksprefs/blob/master/LICENSE.md"><img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="License"></a>
 </p>
 
