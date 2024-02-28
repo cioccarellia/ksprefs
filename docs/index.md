@@ -9,7 +9,8 @@ It offers a consistent syntax for reading and writing values, whilst parameteriz
 ## Design
 The library is built with different stages in mind, each taking input from the previous one:
 
-1. The KsPrefs API allows developers to interface with the SharedPreferences APIs primitives: `getString`, `setInt`
+1. The KsPrefs API allows developers to interface with the main primitives: `pull` and `push`, to read and write values to the storage, respectively;
+2. 
 
 ``` mermaid
 graph LR

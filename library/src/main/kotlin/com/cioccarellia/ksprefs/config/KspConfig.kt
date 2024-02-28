@@ -26,7 +26,7 @@ import java.nio.charset.Charset
 /**
  * Global KsPrefs config object
  * */
-data class KspConfig @RestrictTo(RestrictTo.Scope.LIBRARY) constructor(
+data class KspConfig(
     @IntRange(from = 0x0000, to = 0x0010)
     var mode: Int = Defaults.MODE,
     var charset: Charset = Defaults.CHARSET,
