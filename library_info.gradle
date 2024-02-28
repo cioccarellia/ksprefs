@@ -16,13 +16,13 @@
 
 ext.library = [
         min_sdk             : 19,
-        compile_sdk         : 33,
+        compile_sdk         : 34,
 
         artifact            : "ksprefs",
 
         publish_group       : "com.github.cioccarellia",
-        publish_version     : "2.4.0",
-        publish_version_code: 240,
+        publish_version     : "2.4.1",
+        publish_version_code: 241,
 
         description         : "Kotlin SharedPreferences, Simplified",
         website             : "https://github.com/cioccarellia/ksprefs"

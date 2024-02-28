@@ -26,7 +26,7 @@ repositories {
 
 	``` java
 	dependencies {
-    	implementation "com.github.cioccarellia:ksprefs:2.4.0"
+    	implementation "com.github.cioccarellia:ksprefs:2.4.1"
 	}
 	```
 
@@ -34,7 +34,7 @@ repositories {
 
 	``` kotlin
 	dependencies {
-	    implementation("com.github.cioccarellia:ksprefs:2.4.0")
+	    implementation("com.github.cioccarellia:ksprefs:2.4.1")
 	}
 	```
 
@@ -44,7 +44,7 @@ repositories {
 	<dependency>
 	    <groupId>com.github.cioccarellia</groupId>
 	    <artifactId>ksprefs</artifactId>
-	    <version>2.4.0</version>
+	    <version>2.4.1</version>
 	    <type>pom</type>
 	</dependency>
 	```

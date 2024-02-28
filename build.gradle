@@ -20,7 +20,7 @@ apply from: rootProject.file("gradle/versions_plugin_config.gradle")
 apply plugin: "io.codearte.nexus-staging"
 
 buildscript {
-    ext.kotlin_version = "1.9.20"
+    ext.kotlin_version = "1.9.22"
 
     repositories {
         google()
